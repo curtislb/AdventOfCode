@@ -38,14 +38,16 @@ Find the input noun and verb that cause the program to produce the output 196907
 
 package com.adventofcode.curtislb.year2019.day02.part2
 
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day02.intcode.Intcode
 import java.io.File
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day02\input.txt"""
+private val INPUT_PATH = pathToInput(day = 2, fileName = "input.txt")
+
 private const val TARGET_OUTPUT = 19690720
 
 fun main() {
-    val intcode = Intcode(File(INPUT_FILE).readText().trim())
+    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
     for (noun in 0..99) {
         for (verb in 0..99) {
             intcode[1] = noun

@@ -26,13 +26,13 @@ mass of the added fuel? (Calculate the fuel requirements for each module separat
 
 package com.adventofcode.curtislb.year2019.day01.part2
 
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day01.fuel.calculateTotalFuel
-import java.io.File
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day01\input.txt"""
+private val INPUT_PATH = pathToInput(day = 1, fileName = "input.txt")
 
 fun main() {
     var totalFuel = 0
-    File(INPUT_FILE).forEachLine { totalFuel += calculateTotalFuel(it.trim().toInt()) }
+    INPUT_PATH.toFile().forEachLine { totalFuel += calculateTotalFuel(it.trim().toInt()) }
     println(totalFuel)
 }

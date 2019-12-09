@@ -30,13 +30,13 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 
 package com.adventofcode.curtislb.year2019.day01.part1
 
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day01.fuel.calculateFuel
-import java.io.File
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day01\input.txt"""
+private val INPUT_PATH = pathToInput(day = 1, fileName = "input.txt")
 
 fun main() {
     var totalFuel = 0
-    File(INPUT_FILE).forEachLine { totalFuel += calculateFuel(it.trim().toInt()) }
+    INPUT_PATH.toFile().forEachLine { totalFuel += calculateFuel(it.trim().toInt()) }
     println(totalFuel)
 }

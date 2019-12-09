@@ -22,13 +22,14 @@ How many different passwords within the range given in your puzzle input meet th
 
 package com.adventofcode.curtislb.year2019.day04.part1
 
-import com.adventofcode.curtislb.year2019.day04.password.countValidPasswords
-import java.io.File
+import com.adventofcode.curtislb.common.io.pathToInput
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day04\input.txt"""
+private val INPUT_PATH = pathToInput(day = 4, fileName = "input.txt")
+
 private const val PASSWORD_LENGTH = 6
 
 fun main() {
-    val (minPassword, maxPassword) = File(INPUT_FILE).readText().trim().split('-').map { it.trim().toInt() }
-    println(countValidPasswords(PASSWORD_LENGTH, minPassword, maxPassword))
+    val (minPassword, maxPassword) = INPUT_PATH.toFile().readText().trim().split('-').map { it.trim().toInt() }
+    println("minPassword: $minPassword")
+    println("maxPassword: $maxPassword")
 }

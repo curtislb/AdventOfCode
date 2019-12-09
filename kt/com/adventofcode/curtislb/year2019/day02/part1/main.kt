@@ -74,13 +74,13 @@ the program halts?
 
 package com.adventofcode.curtislb.year2019.day02.part1
 
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day02.intcode.Intcode
-import java.io.File
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day02\input.txt"""
+private val INPUT_PATH = pathToInput(day = 2, fileName = "input.txt")
 
 fun main() {
-    val intcode = Intcode(File(INPUT_FILE).readText().trim())
+    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
     intcode[1] = 12
     intcode[2] = 2
     intcode.run()

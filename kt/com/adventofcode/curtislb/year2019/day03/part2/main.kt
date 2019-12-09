@@ -39,13 +39,14 @@ What is the fewest combined steps the wires must take to reach an intersection?
 
 package com.adventofcode.curtislb.year2019.day03.part2
 
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day03.wires.Wire
 import java.io.File
 
-private const val INPUT_FILE = """C:\Users\curti\AdventOfCode\input\day03\input.txt"""
+private val INPUT_PATH = pathToInput(day = 3, fileName = "input.txt")
 
 fun main() {
-    val (wireA, wireB) = File(INPUT_FILE).readLines().slice(0..1).map { Wire(it.trim()) }
+    val (wireA, wireB) = INPUT_PATH.toFile().readLines().slice(0..1).map { Wire(it.trim()) }
     val (intersection, pathLength) = wireA.findShortestPathIntersectionWith(wireB)
     if (intersection != null) {
         println(pathLength)
