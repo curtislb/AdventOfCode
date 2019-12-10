@@ -24,7 +24,8 @@ class Intcode(programString: String) {
     /**
      * The number of integer values contained in the program.
      */
-    val size: Int get() = currentValues.size
+    val size: Int
+        get() = currentValues.size
 
     /**
      * Gets the current value of an integer at a given position in the program.

@@ -29,7 +29,7 @@ data class Point(val x: Int, val y: Int) {
      * The Manhattan distance represents the shortest possible path (in grid units) between two points, while moving
      * only up, down, left, or right.
      *
-     * @param other The point with which this one will be compared.
+     * @param other The [Point] with which this one will be compared.
      * @return The Manhattan distance between this point and [other].
      */
     fun manhattanDistanceTo(other: Point) = abs(x - other.x) + abs(y - other.y)

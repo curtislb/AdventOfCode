@@ -3,7 +3,7 @@ package com.adventofcode.curtislb.year2019.day03.wires
 /**
  * A wire consisting of a series of segments in a 2D grid.
  * @param wireString A string representation of the wire, where each comma-separated value represents the direction
- *                   ('U' for up, 'R' for right, etc.) and the integer length of the next wire segment.
+ *                   (`'U'` for up, `'R'` for right, etc.) and the integer length of the next wire segment.
  */
 class Wire(wireString: String) {
     /**
@@ -34,13 +34,13 @@ class Wire(wireString: String) {
      * Note that any two parallel wire segments are not considered to be intersecting, even if they overlap at one or
      * more points.
      *
-     * @param other The wire to be checked for intersections with this one.
-     * @param origin The point from which the Manhattan distance of each intersection will be calculated in order to
+     * @param other The [Wire] to be checked for intersections with this one.
+     * @param origin The [Point] from which the Manhattan distance of each intersection will be calculated in order to
      *  determine the nearest one. Any intersections that occur at this point are ignored.
      * @return A [Pair] containing the nearest intersection point and its Manhattan distance from [origin]. If this wire
      *  and [other] intersect at one or more points (other than [origin]), then the [Point] and distance returned will
      *  be that of the intersection with the smallest Manhattan distance to [origin]. If this wire and [other] do not
-     *  intersect, the [Pair] (null, [Int.MAX_VALUE]) will be returned instead.
+     *  intersect, the [Pair] (`null`, [Int.MAX_VALUE]) will be returned instead.
      */
     fun findNearestIntersectionWith(other: Wire, origin: Point = Point(0, 0)): Pair<Point?, Int> {
         var nearestIntersection: Point? = null
@@ -65,13 +65,14 @@ class Wire(wireString: String) {
      * The total distance to an intersection point is given by the sum of the distances to that point (in grid units)
      * along each of the two wires.
      *
-     * @param other The wire to be checked for intersections with this one.
-     * @param origin The point from which the Manhattan distance of each intersection will be calculated in order to
-     *  determine the nearest one. Any intersections that occur at this point are ignored.
-     * @return A [Pair] containing the nearest intersection point and its Manhattan distance from [origin]. If this wire
-     *  and [other] intersect at one or more points (other than [origin]), then the [Point] and distance returned will
-     *  be that of the intersection with the smallest Manhattan distance to [origin]. If this wire and [other] do not
-     *  intersect, the [Pair] (null, [Int.MAX_VALUE]) will be returned instead.
+     * Note that any two parallel wire segments are not considered to be intersecting, even if they overlap at one or
+     * more points.
+     *
+     * @param other The [Wire] to be checked for intersections with this one.
+     * @return A [Pair] containing the shortest path intersection point and its total distance along both wires. If this
+     *  wire and [other] intersect at one or more points, then the [Point] and distance returned will be that of the
+     *  intersection with the shortest total distance, as defined above. If this wire and [other] do not intersect, the
+     *  [Pair] (`null`, [Int.MAX_VALUE]) will be returned instead.
      */
     fun findShortestPathIntersectionWith(other: Wire): Pair<Point?, Int> {
         var shortestPathIntersection: Point? = null

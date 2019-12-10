@@ -3,8 +3,8 @@ package com.adventofcode.curtislb.year2019.day01.fuel
 /**
  * Determines the amount of fuel required to launch an object of a given mass.
  *
- * Note that this calculation does not take into account the additional mass of the fuel itself. For that, use
- * [calculateTotalFuel].
+ * Note that this calculation does not take into account the additional mass of the fuel itself. Use the method
+ * [calculateTotalFuel] instead for this purpose.
  *
  * @param mass The integer mass of the object to be launched.
  * @return The integer mass of fuel needed to launch this object alone.
