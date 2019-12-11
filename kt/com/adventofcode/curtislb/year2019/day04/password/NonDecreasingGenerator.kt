@@ -1,7 +1,7 @@
 package com.adventofcode.curtislb.year2019.day04.password
 
 /**
- * TODO
+ * Generates passwords whose digits are monotonically increasing.
  */
 class NonDecreasingGenerator(prevDigit: Int = 0) : PasswordGenerator() {
     override val isValid: Boolean = true

@@ -18,7 +18,7 @@ fun pathToInput(day: Int, fileName: String): Path {
  * Reads the text of a file and interprets it as a single contiguous integer range.
  * @receiver The [File] whose contents will be read.
  * @param separator The [String] separating the start and end of the range.
- * @return A [Pair]
+ * @return A [Pair] consisting of the minimum and maximum (inclusive) range values.
  */
 fun File.readIntRange(separator: String = "-"): Pair<Int, Int> {
     val (minValue, maxValue) = readText().trim().split(separator).map { it.trim().toInt() }

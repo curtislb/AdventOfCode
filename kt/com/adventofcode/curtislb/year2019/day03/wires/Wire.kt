@@ -3,7 +3,7 @@ package com.adventofcode.curtislb.year2019.day03.wires
 /**
  * A wire consisting of a series of segments in a 2D grid.
  * @param wireString A string representation of the wire, where each comma-separated value represents the direction
- *                   (`'U'` for up, `'R'` for right, etc.) and the integer length of the next wire segment.
+ *  (`'U'` for up, `'R'` for right, etc.) and the integer length of the next wire segment.
  */
 class Wire(wireString: String) {
     /**

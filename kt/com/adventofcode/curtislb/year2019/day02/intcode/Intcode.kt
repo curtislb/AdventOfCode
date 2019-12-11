@@ -51,9 +51,9 @@ class Intcode(programString: String) {
      *
      * Opcodes and their arguments are processed from left to right as follows:
      * - Opcode 1: Takes three arguments (A, B, C). Adds the value at position A to the value at position B and stores
-     *             the resulting sum at position C.
+     *   the resulting sum at position C.
      * - Opcode 2: Takes three arguments (A, B, C). Multiplies the value at position A with the value at B and stores
-     *             the resultint product at position C.
+     *   the resultint product at position C.
      * - Opcode 99: Takes no arguments. Halts execution of the program.
      *
      * The program will also halt if the cursor advances past the end of the program (all opcodes have been processed).

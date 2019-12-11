@@ -1,9 +1,10 @@
 package com.adventofcode.curtislb.year2019.day04.password
 
-import com.adventofcode.curtislb.common.math.Digits
+import com.adventofcode.curtislb.common.math.allDigits
 
 /**
- * TODO
+ * Generates passwords containing at least one digit that is repeated an exact number of times in sequence.
+ * @param repCount The exact number of times that a digit must repeat in sequence for a password to be valid.
  */
 class ExactRepCountDigitGenerator(
     private val repCount: Int,
@@ -14,7 +15,7 @@ class ExactRepCountDigitGenerator(
 
     override val isValid: Boolean = foundRepCountDigit || currentCount == repCount
 
-    override val nextDigits: Set<Int> = Digits.ALL
+    override val nextDigits: Set<Int> = allDigits
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return if (digit == currentDigit) {
