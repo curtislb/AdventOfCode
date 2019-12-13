@@ -1,18 +1,19 @@
 package com.adventofcode.curtislb.common.intcode
 
+import com.adventofcode.curtislb.common.intcode.operation.Operation
+
 /**
  * An Intcode program, consisting of a sequence of integer values that may be modified during execution.
  *
  * @param programString A string representation of the Intcode program, with comma-separated values.
- * @param input An [Iterable] over all input values to be given in order to the program.
  *
  * @throws IllegalArgumentException If given an empty program string.
  * @throws NumberFormatException If any value doesn't represent a valid integer.
  */
-class Intcode(programString: String, input: Iterable<Int> = emptyList()) {
+class Intcode(programString: String) {
     private val initialValues: List<Int>
     private var currentValues: MutableList<Int>
-    private val inputStream: Iterator<Int>
+    private lateinit var inputStream: Iterator<Int>
 
     init {
         val tokens = programString.split(',')
@@ -21,7 +22,6 @@ class Intcode(programString: String, input: Iterable<Int> = emptyList()) {
         }
         initialValues = tokens.map { it.toInt() }
         currentValues = initialValues.toMutableList()
-        inputStream = input.iterator()
     }
 
     /**
@@ -52,142 +52,77 @@ class Intcode(programString: String, input: Iterable<Int> = emptyList()) {
     /**
      * Runs the program by processing operations one at a time until a halting condition is reached.
      *
-     * Operations and their arguments are processed from left to right as follows:
-     * - Opcode 01: Takes three parameters `(A, B, C)`. Adds `A` and `B` and stores the result at position `C`.
-     * - Opcode 02: Takes three parameters `(A, B, C)`. Multiplies `A` with `B` and stores the result at position `C`.
-     * - Opcode 03: Takes one parameter `(A)`. Reads a single value from [inputStream] and stores it at position `A`.
-     * - Opcode 04: Takes one parameter `(A)`. Writes `A` to standard output.
-     * - Opcode 99: Takes no parameters. Halts execution of the program.
+     * The program begins with its cursor at position 0 and processes the operation located there. Each operation is
+     * identified by a two-digit opcode and may read from [input], modify the program's state, move the cursor to a new
+     * position, and have side effects such as printing to standard output (see [Operation]). The program will continue
+     * processing operations at the position of the cursor until the cursor is moved outside the range of the program.
+     * At that point the program will halt, and this function will return.
      *
-     * In addition, the integer representing each operation may also contain additional 0 or 1 digits (read from lowest
-     * to highest order digit, following the two-digit opcode). These digits represent the mode in which each
-     * parameter's value should be interpreted and are as follows:
-     * - Mode 0 (default): Position mode. This parameter's value refers to a 0-indexed position in the Intcode program.
-     * - Mode 1: Immediate mode. This parameter's value should be used directly as an argument.
+     * The integer representing each operation may also contain additional digits (read from lowest to highest order)
+     * following the opcode. These digits represent the mode in which each parameter should be interpreted (see
+     * [com.adventofcode.curtislb.common.intcode.mode.Mode]).
      *
-     * Note that the program will also halt if the cursor advances or is otherwise moved outside of the range of
-     * integer value positions that make up the program.
+     * @param input A (possibly infinite) [Sequence] of input values to be given to the program.
      *
-     * @throws IllegalStateException If an unknown opcode is encountered, or if the number or value of parameters
-     *  provided to any opcode is invalid.
+     * @throws IllegalArgumentException If an unknown opcode or parameter mode is encountered, or if the number or value
+     *  of parameters provided to any operation is invalid.
+     * @throws IllegalStateException If an operation attempts to read a value from an empty input stream.
+     * @throws IndexOutOfBoundsException If an operation attempts to access a position outside the range of the program.
      */
-    fun run() {
+    fun run(input: Sequence<Int> = emptySequence()) {
+        inputStream = input.iterator()
+
         var cursor = 0
         while (cursor in currentValues.indices) {
-            cursor = processOpcode(cursor)
+            cursor = Operation.process(this, cursor)
         }
     }
 
     /**
-     * Processes a single opcode and returns a new position for the program cursor.
-     *
-     * @param cursor The 0-indexed position of the current opcode to be processed.
-     * @return The new position to which [cursor] should advance.
-     *
-     * @throws IllegalStateException If an unknown opcode is encountered, or if the number or value of parameters
-     *  provided to any opcode is invalid.
+     * Reads the next input value for the program.
+     * @return The next value from the [Sequence] [inputStream].
+     * @throws IllegalStateException If [inputStream] has no next value.
      */
-    private fun processOpcode(cursor: Int): Int {
-        return when (val opcode = currentValues[cursor] % 100) {
-            OP_ADD -> processAdd(cursor)
-            OP_MULTIPLY -> processMultiply(cursor)
-            OP_READ -> processRead(cursor)
-            OP_WRITE -> processWrite(cursor)
-            OP_STOP -> -1 // Stop program by returning OOB cursor position.
-            else -> throw IllegalStateException("Unknown opcode $opcode at position $cursor")
-        }
-    }
-
-    /**
-     * Processes a single add operation (opcode 1).
-     *
-     * @param cursor The 0-indexed position of the current opcode to be processed.
-     * @return The new position to which [cursor] should advance.
-     *
-     * @throws IllegalStateException If there are fewer than three parameters, or if any position argument is invalid.
-     */
-    private fun processAdd(cursor: Int): Int = processBinaryOp(cursor) { a, b -> a + b }
-
-    /**
-     * Processes a single multiply operation (opcode 2).
-     *
-     * @param cursor The 0-indexed position of the current opcode to be processed.
-     * @return The new position to which [cursor] should advance.
-     *
-     * @throws IllegalStateException If there are fewer than three parameters, or if any position argument is invalid.
-     */
-    private fun processMultiply(cursor: Int): Int = processBinaryOp(cursor) { a, b -> a * b }
-
-    /**
-     * Processes a single operation which combines two operands and stores the result.
-     *
-     * @param cursor The 0-indexed position of the current opcode to be processed.
-     * @param binaryOp The operation that will be used to combine the two operands
-     * @return The new position to which [cursor] should advance.
-     *
-     * @throws IllegalStateException If there are fewer than three parameters, or if any position argument is invalid.
-     */
-    private fun processBinaryOp(cursor: Int, binaryOp: (Int, Int) -> Int): Int {
-        val opcode = currentValues[cursor]
-        checkSufficientParameters(3, cursor, opcode)
-
-        val (operand1, operand2, result) = currentValues.slice((cursor + 1)..(cursor + 3))
-        val validIndices = currentValues.indices
-        if (operand1 !in validIndices || operand2 !in validIndices || result !in validIndices) {
-            throw IllegalStateException("Invalid position parameter(s) for opcode $opcode at position $cursor")
-        }
-
-        currentValues[result] = binaryOp(currentValues[operand1], currentValues[operand2])
-        return cursor + 4
-    }
-
-    /**
-     * TODO
-     */
-    private fun processRead(cursor: Int): Int {
-        checkSufficientParameters(1, cursor, OP_READ)
+    internal fun nextInput(): Int {
         if (!inputStream.hasNext()) {
             throw IllegalStateException("Can't read next value. Input stream exhausted.")
         }
-
-        val dest = currentValues[cursor + 1]
-        if (dest !in currentValues.indices) {
-            throw IllegalStateException("Invalid position parameter for opcode $OP_READ at position $cursor")
-        }
-
-        currentValues[dest] = inputStream.next()
-        return cursor + 2
+        return inputStream.next()
     }
 
     /**
-     * TODO
+     * Gets the first parameter of the operation at a given position.
+     * @param cursor The 0-indexed position of the operation in the program.
+     * @return The value of the the operation's first parameter (before applying parameter modes).
      */
-    private fun processWrite(cursor: Int): Int {
-        checkSufficientParameters(1, cursor, OP_WRITE)
-
-        val source = currentValues[cursor + 1]
-        if (source !in currentValues.indices) {
-            throw IllegalStateException("Invalid position parameter for opcode $OP_READ at position $cursor")
-        }
-
-        println(currentValues[source])
-        return cursor + 2
+    internal fun readParameter(cursor: Int): Int {
+        checkSufficientParameters(cursor, 1)
+        return currentValues[cursor + 1]
     }
 
     /**
-     * TODO
+     * Gets the parameters of the operation at a given position.
+     * @param cursor The 0-indexed position of the operation in the program.
+     * @param paramCount The number of parameters required by the operation.
+     * @return A [List] containing the values of the operation's parameters (before applying parameter modes).
      */
-    private fun checkSufficientParameters(paramCount: Int, cursor: Int, opcode: Int) {
+    internal fun readParameters(cursor: Int, paramCount: Int): List<Int> {
+        checkSufficientParameters(cursor, paramCount)
+        return currentValues.slice((cursor + 1)..(cursor + paramCount))
+    }
+
+    /**
+     * Checks that there is a sufficient number of parameters following an operation.
+     *
+     * @param cursor The position in the program that contains the current operation.
+     * @param paramCount The number of parameters required for the current operation.
+     *
+     * @throws IllegalArgumentException If fewer than [paramCount] parameters follow [cursor] in the program.
+     */
+    private fun checkSufficientParameters(cursor: Int, paramCount: Int) {
         if (cursor + paramCount >= currentValues.size) {
-            throw IllegalStateException("Fewer than $paramCount parameters for opcode $opcode at position $cursor")
+            val operation = currentValues[cursor]
+            throw IllegalArgumentException("Too few parameters for operation $operation at position $cursor")
         }
-    }
-
-    companion object {
-        private const val OP_ADD = 1
-        private const val OP_MULTIPLY = 2
-        private const val OP_READ = 3
-        private const val OP_WRITE = 4
-        private const val OP_STOP = 99
     }
 }

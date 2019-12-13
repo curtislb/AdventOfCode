@@ -37,10 +37,10 @@ abstract class PasswordGenerator {
 
     /**
      * Recursive helper function for [generatePasswords].
-     * @param digitStrings An [ArrayList] containing [String] digits of the currently constructed password prefix.
+     * @param digitStrings A [MutableList] containing [String] digits of the currently constructed password prefix.
      * @return A [Sequence] of all valid passwords that can be generated from the prefix [digitStrings].
      */
-    private fun generatePasswordsInternal(digitStrings: ArrayList<String> = ArrayList()): Sequence<String> {
+    private fun generatePasswordsInternal(digitStrings: MutableList<String> = mutableListOf()): Sequence<String> {
         return sequence {
             if (isValid) {
                 yield(digitStrings.joinToString(separator = ""))

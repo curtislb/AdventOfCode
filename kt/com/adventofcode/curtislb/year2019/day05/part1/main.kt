@@ -48,7 +48,10 @@ DE - two-digit opcode,      02 == opcode 2
  A - mode of 3rd parameter,  0 == position mode,
                                   omitted due to being a leading zero
 
-This instruction multiplies its first two parameters. The first parameter, 4 in position mode, works like it did before - its value is the value stored at address 4 (33). The second parameter, 3 in immediate mode, simply has value 3. The result of this operation, 33 * 3 = 99, is written according to the third parameter, 4 in position mode, which also works like it did before - 99 is written to address 4.
+This instruction multiplies its first two parameters. The first parameter, 4 in position mode, works like it did before
+- its value is the value stored at address 4 (33). The second parameter, 3 in immediate mode, simply has value 3. The
+result of this operation, 33 * 3 = 99, is written according to the third parameter, 4 in position mode, which also
+works like it did before - 99 is written to address 4.
 
 Parameters that an instruction writes to will never be in immediate mode.
 
@@ -76,10 +79,14 @@ produce?
 
 package com.adventofcode.curtislb.year2019.day05.part1
 
+import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 
 private val INPUT_PATH = pathToInput(day = 5, fileName = "input.txt")
 
+private const val SYSTEM_ID = 1
+
 fun main() {
-    // TODO: Solution goes here
+    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
+    intcode.run(sequenceOf(SYSTEM_ID))
 }
