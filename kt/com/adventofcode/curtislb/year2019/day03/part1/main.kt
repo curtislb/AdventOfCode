@@ -58,7 +58,7 @@ package com.adventofcode.curtislb.year2019.day03.part1
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day03.wires.Wire
 
-private val INPUT_PATH = pathToInput(day = 3, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt")
 
 fun main() {
     val (wireA, wireB) = INPUT_PATH.toFile().readLines().slice(0..1).map { Wire(it.trim()) }

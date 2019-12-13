@@ -41,7 +41,7 @@ package com.adventofcode.curtislb.year2019.day02.part2
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 
-private val INPUT_PATH = pathToInput(day = 2, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
 
 private const val TARGET_OUTPUT = 19690720
 

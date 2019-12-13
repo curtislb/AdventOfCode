@@ -82,7 +82,7 @@ package com.adventofcode.curtislb.year2019.day05.part1
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 
-private val INPUT_PATH = pathToInput(day = 5, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 5, fileName = "input.txt")
 
 private const val SYSTEM_ID = 1
 
