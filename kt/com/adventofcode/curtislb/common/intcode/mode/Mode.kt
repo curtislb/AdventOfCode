@@ -46,6 +46,15 @@ object Mode {
     }
 
     /**
+     * Checks that the [Mode] for the given parameter is [Mode.POSITION].
+     *
+     * @param
+     */
+    fun checkIsPosition(intcode: Intcode, cursor: Int, paramIndex: Int) {
+
+    }
+
+    /**
      * Converts the value of a parameter according to a given parameter mode.
      * @param mode An integer representing the parameter mode to apply.
      * @param intcode The currently running Intcode program.

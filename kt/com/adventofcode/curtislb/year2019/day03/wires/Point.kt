@@ -9,7 +9,7 @@ import kotlin.math.abs
  */
 data class Point(val x: Int, val y: Int) {
     /**
-     * Finds the point given by moving in a given direction for a given distance from this point.
+     * Finds the [Point] given by moving in a given direction for a given distance from this point.
      * @param direction The direction in which to move.
      * @param distance The number of grid units to move.
      * @return A new [Point] corresponding to the grid position [distance] units in [direction] from this point.
@@ -24,7 +24,7 @@ data class Point(val x: Int, val y: Int) {
     }
 
     /**
-     * Finds the Manhattan distance between this point and another one.
+     * Finds the Manhattan distance between this [Point] and another one.
      *
      * The Manhattan distance represents the shortest possible path (in grid units) between two points, while moving
      * only up, down, left, or right.

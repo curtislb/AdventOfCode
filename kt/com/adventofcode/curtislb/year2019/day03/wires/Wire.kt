@@ -3,7 +3,7 @@ package com.adventofcode.curtislb.year2019.day03.wires
 /**
  * A wire consisting of a series of segments in a 2D grid.
  * @param wireString A string representation of the wire, where each comma-separated value represents the direction
- *  (`'U'` for up, `'R'` for right, etc.) and the integer length of the next wire segment.
+ *  (`U` for up, `R` for right, etc.) and the integer length of the next wire segment.
  */
 class Wire(wireString: String) {
     /**
@@ -29,7 +29,7 @@ class Wire(wireString: String) {
     }
 
     /**
-     * Looks for the intersection between this and another wire that is closest to a given point.
+     * Looks for the intersection between this and another [Wire] that is closest to a given [Point].
      *
      * Note that any two parallel wire segments are not considered to be intersecting, even if they overlap at one or
      * more points.
@@ -60,9 +60,9 @@ class Wire(wireString: String) {
     }
 
     /**
-     * Looks for the intersection between this and another wire that is the shortest distance along both wires.
+     * Looks for the intersection between this and another [Wire] that is the shortest distance along both wires.
      *
-     * The total distance to an intersection point is given by the sum of the distances to that point (in grid units)
+     * The total distance to an intersection [Point] is given by the sum of the distances to that point (in grid units)
      * along each of the two wires.
      *
      * Note that any two parallel wire segments are not considered to be intersecting, even if they overlap at one or

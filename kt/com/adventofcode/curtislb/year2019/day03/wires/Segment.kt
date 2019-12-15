@@ -8,29 +8,29 @@ package com.adventofcode.curtislb.year2019.day03.wires
  */
 data class Segment(val start: Point, val direction: Direction, val length: Int) {
     /**
-     * The end point of this segment on the grid.
+     * The end point of this [Segment] on the grid.
      */
     val end: Point
         get() = start.move(direction, length)
 
     /**
-     * Whether or not this segment is horizontal, as opposed to vertical.
+     * Whether or not this [Segment] is horizontal, as opposed to vertical.
      */
     val isHorizontal: Boolean
         get() = direction == Direction.RIGHT || direction == Direction.LEFT
 
     /**
-     * Determines if this and another segment are perpendicular to one another.
+     * Determines if this and another [Segment] are perpendicular to one another.
      * @param other The [Segment] to be compared with this one.
      * @return `true` if the two segments are perpendicular, or `false` otherwise.
      */
     fun isPerpendicularTo(other: Segment): Boolean = isHorizontal != other.isHorizontal
 
     /**
-     * Checks for a single intersection point between this and another segment.
+     * Checks for a single intersection point between this and another [Segment].
      *
      * Note that this function only checks for an intersection between perpendicular segments. This means that it will
-     * always return null for a segment that is parallel to this one, even if the two overlap at one or more points.
+     * always return null for a [Segment] that is parallel to this one, even if the two overlap at one or more points.
      *
      * @param other The [Segment] to be checked for intersections with this one.
      * @return The [Point] at which the two segments intersect, or `null` if they do not intersect.

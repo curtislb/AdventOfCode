@@ -1,6 +1,7 @@
 package com.adventofcode.curtislb.common.intcode.operation
 
 import com.adventofcode.curtislb.common.intcode.Intcode
+import com.adventofcode.curtislb.common.intcode.mode.Mode
 
 /**
  * Processes a single read operation (opcode: [Operation.READ]).
@@ -14,6 +15,7 @@ import com.adventofcode.curtislb.common.intcode.Intcode
  */
 fun processRead(intcode: Intcode, cursor: Int): Int {
     val dest = intcode.readParameter(cursor)
+    Mode.checkIsPosition(intcode, cursor, 0)
     intcode[dest] = intcode.nextInput()
     return cursor + 2
 }

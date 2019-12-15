@@ -71,7 +71,6 @@ class Intcode(programString: String) {
      */
     fun run(input: Sequence<Int> = emptySequence()) {
         inputStream = input.iterator()
-
         var cursor = 0
         while (cursor in currentValues.indices) {
             cursor = Operation.process(this, cursor)

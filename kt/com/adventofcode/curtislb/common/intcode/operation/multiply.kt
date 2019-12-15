@@ -15,6 +15,7 @@ import com.adventofcode.curtislb.common.intcode.mode.Mode
 fun processMultiply(intcode: Intcode, cursor: Int): Int {
     val (param1, param2, dest) = intcode.readParameters(cursor, 3)
     val (operand1, operand2) = Mode.applyAll(intcode, cursor, param1, param2)
+    Mode.checkIsPosition(intcode, cursor, 2)
     intcode[dest] = operand1 * operand2
     return cursor + 4
 }
