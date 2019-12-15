@@ -1,4 +1,4 @@
-package com.adventofcode.curtislb.common.io
+package com.adventofcode.curtislb.common.fileio
 
 import java.io.File
 import java.nio.file.Path
@@ -19,9 +19,9 @@ fun pathToInput(year: Int, day: Int, fileName: String): Path {
  * Reads the text of a file and interprets it as a single contiguous integer range.
  * @receiver The [File] whose contents will be read.
  * @param separator The [String] separating the start and end of the range.
- * @return A [Pair] consisting of the minimum and maximum (inclusive) range values.
+ * @return An [IntRange] representing the contents of the file.
  */
-fun File.readIntRange(separator: String = "-"): Pair<Int, Int> {
+fun File.readIntRange(separator: String = "-"): IntRange {
     val (minValue, maxValue) = readText().trim().split(separator).map { it.trim().toInt() }
-    return Pair(minValue, maxValue)
+    return minValue..maxValue
 }

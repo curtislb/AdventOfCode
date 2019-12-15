@@ -13,7 +13,7 @@ import com.adventofcode.curtislb.common.intcode.mode.Mode
  * @throws IllegalArgumentException If there are fewer than two parameters, or if any parameter is invalid.
  */
 fun processJumpIfTrue(intcode: Intcode, cursor: Int): Int {
-    val (param1, param2) = intcode.readParameters(cursor, 2)
+    val (param1, param2) = intcode.getParameters(cursor, 2)
     val (condition, position) = Mode.applyAll(intcode, cursor, param1, param2)
     return if (condition != 0) position else cursor + 3
 }

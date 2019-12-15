@@ -7,8 +7,8 @@ import com.adventofcode.curtislb.common.intcode.Intcode
  * program input, perform some action(s), and move the program cursor to a new location. Supported operations are:
  * - Opcode 01: Takes three parameters `(A, B, C)`. Adds `A` and `B` and stores the result at position `C`.
  * - Opcode 02: Takes three parameters `(A, B, C)`. Multiplies `A` with `B` and stores the result at position `C`.
- * - Opcode 03: Takes one parameter `(A)`. Reads a single value from the program input and stores it at position `A`.
- * - Opcode 04: Takes one parameter `(A)`. Writes `A` to standard output.
+ * - Opcode 03: Takes one parameter `(A)`. Reads a single input value from the program and stores it at position `A`.
+ * - Opcode 04: Takes one parameter `(A)`. Sends `A` as output to the program.
  * - Opcode 05: Takes two parameters `(A, B)`. If `A` is non-zero, sets the cursor to `B`.
  * - Opcode 06: Takes two parameters `(A, B)`. If `A` is zero, sets the cursor to `B`.
  * - Opcode 07: Takes three parameters `(A, B, C)`. Stores the value `if (A < B) 1 else 0` at position `C`.
@@ -18,8 +18,8 @@ import com.adventofcode.curtislb.common.intcode.Intcode
 object Operation {
     private const val ADD = 1
     private const val MULTIPLY = 2
-    private const val READ = 3
-    private const val WRITE = 4
+    private const val INPUT = 3
+    private const val OUTPUT = 4
     private const val JUMP_TRUE = 5
     private const val JUMP_FALSE = 6
     private const val LESS_THAN = 7
@@ -40,8 +40,8 @@ object Operation {
         return when (val opcode = intcode[cursor] % 100) {
             ADD -> processAdd(intcode, cursor)
             MULTIPLY -> processMultiply(intcode, cursor)
-            READ -> processRead(intcode, cursor)
-            WRITE -> processWrite(intcode, cursor)
+            INPUT -> processInput(intcode, cursor)
+            OUTPUT -> processOutput(intcode, cursor)
             JUMP_TRUE -> processJumpIfTrue(intcode, cursor)
             JUMP_FALSE -> processJumpIfFalse(intcode, cursor)
             LESS_THAN -> processLessThan(intcode, cursor)

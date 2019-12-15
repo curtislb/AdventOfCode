@@ -61,7 +61,7 @@ What is the diagnostic code for system ID 5?
 package com.adventofcode.curtislb.year2019.day05.part2
 
 import com.adventofcode.curtislb.common.intcode.Intcode
-import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.common.fileio.pathToInput
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 5, fileName = "input.txt")
 
@@ -69,5 +69,6 @@ private const val SYSTEM_ID = 5
 
 fun main() {
     val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
-    intcode.run(sequenceOf(SYSTEM_ID))
+    intcode.sendInput(SYSTEM_ID)
+    intcode.run()
 }

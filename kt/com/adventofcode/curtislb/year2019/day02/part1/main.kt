@@ -75,7 +75,7 @@ the program halts?
 package com.adventofcode.curtislb.year2019.day02.part1
 
 import com.adventofcode.curtislb.common.intcode.Intcode
-import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.common.fileio.pathToInput
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
 

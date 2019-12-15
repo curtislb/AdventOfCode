@@ -13,7 +13,7 @@ import com.adventofcode.curtislb.common.intcode.mode.Mode
  * @throws IllegalArgumentException If there are fewer than three parameters, or if any parameter is invalid.
  */
 fun processMultiply(intcode: Intcode, cursor: Int): Int {
-    val (param1, param2, dest) = intcode.readParameters(cursor, 3)
+    val (param1, param2, dest) = intcode.getParameters(cursor, 3)
     val (operand1, operand2) = Mode.applyAll(intcode, cursor, param1, param2)
     Mode.checkIsPosition(intcode, cursor, 2)
     intcode[dest] = operand1 * operand2

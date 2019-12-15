@@ -39,9 +39,8 @@ What is the fewest combined steps the wires must take to reach an intersection?
 
 package com.adventofcode.curtislb.year2019.day03.part2
 
-import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.common.fileio.pathToInput
 import com.adventofcode.curtislb.year2019.day03.wires.Wire
-import java.io.File
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt")
 
