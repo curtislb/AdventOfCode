@@ -1,18 +1,28 @@
 package com.adventofcode.curtislb.common.collection
 
 /**
- * TODO
+ * Produces all ordered permutations of a collection of items.
+ * @receiver A collection of unique items from which to generate permutations.
+ * @return A finite [Sequence] of all possible permutations of the items in [this].
  */
 fun <T> Collection<T>.permutations(): Sequence<List<T>> {
-    return permutationsInternal(this.toSet(), mutableSetOf())
+    return permutationsInternal(this, mutableListOf(), mutableSetOf())
 }
 
 /**
- * TODO
+ * Recursive helper function for [permutations].
+ * @param items A collection of unique items from which to generate permutations.
+ * @param prefix A list of values from [items] that will be used to generate future permutations.
+ * @param used All values from [items] which have already been included in [prefix].
+ * @return A [Sequence] of all possible permutations of [items] starting with [prefix].
  */
-private fun <T> permutationsInternal(items: Set<T>, used: MutableSet<T>): Sequence<List<T>> = sequence {
-    if (items.size == used.size) {
-        yield(listOf())
+private fun <T> permutationsInternal(
+    items: Collection<T>,
+    prefix: MutableList<T>,
+    used: MutableSet<T>
+): Sequence<List<T>> = sequence {
+    if (prefix.size == items.size) {
+        yield(prefix)
     } else {
         for (item in items) {
             if (item in used) {
@@ -20,10 +30,9 @@ private fun <T> permutationsInternal(items: Set<T>, used: MutableSet<T>): Sequen
             }
 
             used.add(item)
-            val itemList = listOf(item)
-            for (subPermutation in permutationsInternal(items, used)) {
-                yield(itemList + subPermutation)
-            }
+            prefix.add(item)
+            yieldAll(permutationsInternal(items, prefix, used))
+            prefix.removeAt(prefix.size - 1)
             used.remove(item)
         }
     }

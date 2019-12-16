@@ -39,7 +39,7 @@ Find the input noun and verb that cause the program to produce the output 196907
 package com.adventofcode.curtislb.year2019.day02.part2
 
 import com.adventofcode.curtislb.common.intcode.Intcode
-import com.adventofcode.curtislb.common.fileio.pathToInput
+import com.adventofcode.curtislb.common.io.pathToInput
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
 

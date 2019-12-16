@@ -66,12 +66,37 @@ thrusters?
 
 package com.adventofcode.curtislb.year2019.day07.part1
 
-import com.adventofcode.curtislb.common.fileio.pathToInput
+import com.adventofcode.curtislb.common.collection.permutations
+import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.common.intcode.Intcode
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 7, fileName = "test_input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 7, fileName = "input.txt")
+
+private const val AMPLIFIER_COUNT = 5
+private val PHASE_SETTINGS = 0..4
 
 fun main() {
+    // Initialize the amplifier configuration
     val programString = INPUT_PATH.toFile().readText().trim()
-    val amplifiers = Array(5) { Intcode(programString) }
+    val amplifiers = Array(AMPLIFIER_COUNT) { Intcode(programString) }
+    var maxSignal = 0
+    amplifiers.forEachIndexed { index, amplifier ->
+        if (index < AMPLIFIER_COUNT - 1) {
+            amplifier.onOutput = { amplifiers[index + 1].sendInput(it) }
+        } else {
+            amplifier.onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
+        }
+    }
+
+    // Try all possible phase setting combinations
+    for (settings in PHASE_SETTINGS.toList().permutations()) {
+        amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
+        amplifiers[0].sendInput(0)
+        amplifiers.forEach {
+            it.run()
+            it.reset()
+        }
+    }
+
+    println(maxSignal)
 }

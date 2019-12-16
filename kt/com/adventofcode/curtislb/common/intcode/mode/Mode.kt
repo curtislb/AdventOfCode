@@ -41,21 +41,30 @@ object Mode {
      * @throws IllegalArgumentException If an unknown parameter mode is encountered.
      */
     fun applyAll(intcode: Intcode, cursor: Int, vararg params: Int): List<Int> {
-        val modes = intcode[cursor] / 100
+        val modes = getModes(intcode, cursor)
         return params.mapIndexed { index, param -> applyInternal(modes.digit(index), intcode, param) }
     }
 
     /**
      * Checks that the [Mode] for the given parameter is [Mode.POSITION].
      *
-     * @param
+     * @param intcode The currently running Intcode program.
+     * @param cursor The 0-indexed position of the current operation in [intcode].
+     * @param paramIndex The 0-indexed ordinal number of the parameter whose mode should be checked.
+     *
+     * @throws IllegalArgumentException If the mode for the given parameter is not [Mode.POSITION].
      */
     fun checkIsPosition(intcode: Intcode, cursor: Int, paramIndex: Int) {
-
+        val modes = getModes(intcode, cursor)
+        val mode = modes.digit(paramIndex)
+        if (mode != POSITION) {
+            throw IllegalArgumentException("Expecting parameter mode $POSITION, but got $mode")
+        }
     }
 
     /**
      * Converts the value of a parameter according to a given parameter mode.
+     *
      * @param mode An integer representing the parameter mode to apply.
      * @param intcode The currently running Intcode program.
      * @param param The parameter value to be converted.
@@ -70,4 +79,12 @@ object Mode {
             else -> throw IllegalArgumentException("Unknown parameter mode $mode")
         }
     }
+
+    /**
+     * Produces an integer representing the parameter modes for a given operation.
+     * @param intcode The currently running Intcode program.
+     * @param cursor The 0-indexed position of the current operation in [intcode].
+     * @return An [Int] where the `n`th least significant digit represents the mode for the `n`th parameter.
+     */
+    private fun getModes(intcode: Intcode, cursor: Int) = intcode[cursor] / 100
 }

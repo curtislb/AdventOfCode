@@ -1,4 +1,4 @@
-package com.adventofcode.curtislb.common.fileio
+package com.adventofcode.curtislb.common.io
 
 import java.io.File
 import java.nio.file.Path

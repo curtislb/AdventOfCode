@@ -15,8 +15,8 @@ How many different passwords within the range given in your puzzle input meet al
 
 package com.adventofcode.curtislb.year2019.day04.part2
 
-import com.adventofcode.curtislb.common.fileio.pathToInput
-import com.adventofcode.curtislb.common.fileio.readIntRange
+import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.common.io.readIntRange
 import com.adventofcode.curtislb.year2019.day04.password.ExactLengthGenerator
 import com.adventofcode.curtislb.year2019.day04.password.ExactRepCountDigitGenerator
 import com.adventofcode.curtislb.year2019.day04.password.InRangeGenerator
