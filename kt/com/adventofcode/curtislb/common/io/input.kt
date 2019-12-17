@@ -1,6 +1,7 @@
 package com.adventofcode.curtislb.common.io
 
 import java.io.File
+import java.nio.charset.Charset
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -24,4 +25,16 @@ fun pathToInput(year: Int, day: Int, fileName: String): Path {
 fun File.readIntRange(separator: String = "-"): IntRange {
     val (minValue, maxValue) = readText().trim().split(separator).map { it.trim().toInt() }
     return minValue..maxValue
+}
+
+/**
+ * TODO
+ */
+fun File.forEachChar(charset: Charset = Charsets.UTF_8, action: (char: Char) -> Unit) {
+    val reader = this.reader(charset)
+    var c = reader.read()
+    while (c != -1) {
+        action(c.toChar())
+        c = reader.read()
+    }
 }
