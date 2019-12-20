@@ -73,6 +73,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 6, fileName = "input.txt
 
 private const val CENTER = "COM"
 
+// Answer: 253104
 fun main() {
     val universe = Universe(INPUT_PATH.toFile())
     println(universe.countOrbits(CENTER))

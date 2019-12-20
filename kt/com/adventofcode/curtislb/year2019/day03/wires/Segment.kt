@@ -30,7 +30,7 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
      * Checks for a single intersection point between this and another [Segment].
      *
      * Note that this function only checks for an intersection between perpendicular segments. This means that it will
-     * always return null for a [Segment] that is parallel to this one, even if the two overlap at one or more points.
+     * always return `null` for a [Segment] that is parallel to this one, even if the two overlap at one or more points.
      *
      * @param other The [Segment] to be checked for intersections with this one.
      * @return The [Point] at which the two segments intersect, or `null` if they do not intersect.

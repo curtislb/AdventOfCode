@@ -64,10 +64,11 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 6, fileName = "input.txt
 private const val START = "YOU"
 private const val TARGET = "SAN"
 
+// Answer: 499
 fun main() {
     val universe = Universe(INPUT_PATH.toFile())
 
-    // Find the planets orbited by source and target.
+    // Find the planets orbited by start and target.
     val planets = universe.planetMap
     val startPlanet = planets[START]?.parent
     val targetPlanet = planets[TARGET]?.parent

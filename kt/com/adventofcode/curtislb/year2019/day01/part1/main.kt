@@ -35,6 +35,7 @@ import com.adventofcode.curtislb.year2019.day01.fuel.calculateFuel
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 1, fileName = "input.txt")
 
+// Answer: 3384232
 fun main() {
     var totalFuel = 0
     INPUT_PATH.toFile().forEachLine { totalFuel += calculateFuel(it.trim().toInt()) }

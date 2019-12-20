@@ -52,6 +52,7 @@ private const val IMAGE_HEIGHT = 6
 private const val WHITE = 1
 private const val TRANSPARENT = 2
 
+// Answer: ZUKCJ
 fun main() {
     // Calculate pixel values for the composed image
     val image = Array(IMAGE_HEIGHT) { IntArray(IMAGE_WIDTH) { TRANSPARENT } }

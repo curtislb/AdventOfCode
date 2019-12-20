@@ -1,26 +1,31 @@
 package com.adventofcode.curtislb.common.intcode
 
 import com.adventofcode.curtislb.common.collection.ValueSequencer
+import com.adventofcode.curtislb.common.intcode.mode.Mode
+import com.adventofcode.curtislb.common.intcode.mode.PositionMode
+import com.adventofcode.curtislb.common.intcode.mode.toMode
 import com.adventofcode.curtislb.common.intcode.operation.Operation
+import com.adventofcode.curtislb.common.intcode.operation.toOperation
+import java.io.File
+import java.math.BigInteger
 
 /**
- * An Intcode program, consisting of a sequence of integer values that may be modified during execution.
- *
- * @param programString A string representation of the Intcode program, with comma-separated values.
- *
+ * An Intcode program, consisting of arbitrary-length integer values that may be modified during execution.
+ * @param programString A string representation of the program, with comma-separated values.
  * @throws IllegalArgumentException If given an empty program string.
- * @throws NumberFormatException If any value doesn't represent a valid integer.
  */
 class Intcode(programString: String) {
     // Program values
-    private val initialValues: List<Int>
-    private var currentValues: MutableList<Int>
+    private val initialValues: List<BigInteger>
+    private var currentValues: Array<BigInteger>
+    private var extendedValues: MutableMap<Int, BigInteger> = mutableMapOf()
 
     // Program I/O
-    private val input: ValueSequencer<Int> = ValueSequencer()
-    var onOutput: (Int) -> Unit = { println(it) }
+    private val input: ValueSequencer<BigInteger> = ValueSequencer()
+    var onOutput: (BigInteger) -> Unit = { println(it) }
 
     // Additional program state
+    internal var relativeBase: Int = 0
     private var cursorStart: Int = 0
     private var isPaused: Boolean = false
 
@@ -29,15 +34,16 @@ class Intcode(programString: String) {
         if (tokens.isEmpty()) {
             throw IllegalArgumentException("Program must not be empty")
         }
-        initialValues = tokens.map { it.toInt() }
-        currentValues = initialValues.toMutableList()
+        initialValues = tokens.map { it.toBigInteger() }
+        currentValues = initialValues.toTypedArray()
     }
 
     /**
-     * The number of integer values contained in the program.
+     * An Intcode program, consisting of arbitrary-length integer values that may be modified during execution.
+     * @param file A [File] containing a representation of the program with comma-separated values.
+     * @throws IllegalArgumentException If given an empty file.
      */
-    val size: Int
-        get() = currentValues.size
+    constructor(file: File) : this(file.readText().trim())
 
     /**
      * Whether this program has halted and no more operations can be run.
@@ -46,78 +52,48 @@ class Intcode(programString: String) {
         get() = cursorStart !in currentValues.indices
 
     /**
-     * Gets the current value of an integer at a given position in the program.
-     * @param i The 0-indexed position of the desired program value.
-     * @return The current integer value stored at position [i].
+     * Gets the current value at a given position in the program.
+     * @param index The 0-indexed position of the desired value.
+     * @return The current value stored at position [index].
      */
-    operator fun get(i: Int): Int = currentValues[i]
-
-    /**
-     * Sets the value of an integer at a given position in the program.
-     * @param i The 0-indexed position of the program value to be set.
-     * @param value The new integer value to be stored at position [i].
-     */
-    operator fun set(i: Int, value: Int) { currentValues[i] = value }
-
-    /**
-     * Runs the program by processing operations one at a time until a halting condition is reached.
-     *
-     * The program begins processing operations at its last cursor position (0 for a new program). Each operation is
-     * identified by a two-digit opcode and may read from [input], modify the program's state, move the cursor to a new
-     * position, and have side effects such as printing to standard output (see [Operation]).
-     *
-     * The integer representing each operation may also contain additional digits (read from lowest to highest order)
-     * following the opcode. These digits represent the mode in which each parameter should be interpreted (see
-     * [com.adventofcode.curtislb.common.intcode.mode.Mode]).
-     *
-     * The program will continue processing operations at the position of the cursor until one of the following occurs:
-     * - The cursor is moved outside the range of the program, at which point the program will halt.
-     * - The program requests input, but no next input has been provided, at which point the program will pause.
-     *
-     * In either case, this function will return, and the cursor position from which execution will resume is stored.
-     * Once the program has halted (as opposed to paused), any future call to this function will immediately return
-     * until [reset] is invoked.
-     *
-     * @throws IllegalArgumentException If an unknown opcode or parameter mode is encountered, or if the number or value
-     *  of parameters provided to any operation is invalid.
-     * @throws IndexOutOfBoundsException If an operation attempts to access a position outside the range of the program.
-     */
-    fun run() {
-        var cursor = cursorStart
-        isPaused = false
-        while (cursor in currentValues.indices && !isPaused) {
-            cursor = Operation.process(this, cursor)
+    operator fun get(index: Int): BigInteger {
+        return when {
+            index in currentValues.indices -> currentValues[index]
+            index > currentValues.lastIndex -> extendedValues.getOrDefault(index, DEFAULT_VALUE)
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
         }
-        cursorStart = cursor
     }
 
     /**
-     * Restores various aspects of the program to their starting states. These include:
-     * - Any program values modified during execution
-     * - Any input provided to the program
-     * - The last cursor position of the program
-     * - Whether the program has been paused
-     *
-     * In particular, note that the value of [onOutput] is *not* reset by this method.
+     * Sets the value at a given position in the program.
+     * @param index The 0-indexed position of the value to be set.
+     * @param value The new value to be stored at position [index].
      */
-    fun reset() {
-        currentValues = initialValues.toMutableList()
-        input.clear()
-        cursorStart = 0
-        isPaused = false
+    operator fun set(index: Int, value: BigInteger) {
+        when {
+            index in currentValues.indices -> currentValues[index] = value
+            index > currentValues.lastIndex -> {
+                if (index in extendedValues && value == DEFAULT_VALUE) {
+                    extendedValues.remove(index)
+                } else if (index in extendedValues || value != DEFAULT_VALUE) {
+                    extendedValues[index] = value
+                }
+            }
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
+        }
     }
 
     /**
      * Queues new input values for the program.
-     * @param inputValues New or additional values to be read (in order) as input.
+     * @param inputValues Additional values to be read (in order) as input.
      */
-    fun sendInput(vararg inputValues: Int) { sendInput(inputValues.asSequence()) }
+    fun sendInput(vararg inputValues: BigInteger) { sendInput(inputValues.asSequence()) }
 
     /**
      * Queues new input values for the program.
-     * @param inputSequence A (possibly infinite) [Sequence] of new or additional input values to be read.
+     * @param inputSequence A (possibly infinite) [Sequence] of additional values to be read as input.
      */
-    fun sendInput(inputSequence: Sequence<Int>) { input.queue(inputSequence) }
+    fun sendInput(inputSequence: Sequence<BigInteger>) { input.queue(inputSequence) }
 
     /**
      * Reads the next input value for the program.
@@ -127,7 +103,7 @@ class Intcode(programString: String) {
      *
      * @return The next value read from [input], or `null` if none is available.
      */
-    internal fun nextInput(): Int? {
+    internal fun nextInput(): BigInteger? {
         if (!input.hasNext()) {
             isPaused = true
             return null
@@ -136,44 +112,91 @@ class Intcode(programString: String) {
     }
 
     /**
-     * Gets the first parameter of the operation at a given position.
+     * Runs the program by processing operations one at a time until a halting condition is reached.
      *
-     * @param cursor The 0-indexed position of the operation in the program.
-     * @return The value of the the operation's first parameter (before applying parameter modes).
+     * The program begins processing operations at its last cursor position (0 for a new program). Each operation
+     * contains a two-digit opcode (see [Operation]) and may contain additional digits representing the mode(s) in which
+     * parameters for that operation should be interpreted (see [Mode]). After processing an operation, the program will
+     * move its cursor to a new position and repeat the process. This will continue until one of the following occurs:
+     * - The cursor is moved to an invalid (negative) position, at which point the program will halt.
+     * - The program requests input, but no next input is available, at which point the program will pause.
      *
-     * @throws IllegalArgumentException If no parameters follow [cursor] in the program.
+     * In either case, this function will return, and the program's last cursor position will be stored. Note that once
+     * the program has halted (as opposed to paused), any future calls to [run] will immediately return, until [reset]
+     * is invoked.
      */
-    internal fun getParameter(cursor: Int): Int {
-        checkSufficientParameters(cursor, 1)
-        return currentValues[cursor + 1]
-    }
-
-    /**
-     * Gets the parameters of the operation at a given position.
-     *
-     * @param cursor The 0-indexed position of the operation in the program.
-     * @param paramCount The number of parameters required by the operation.
-     * @return A [List] containing the values of the operation's parameters (before applying parameter modes).
-     *
-     * @throws IllegalArgumentException If fewer than [paramCount] parameters follow [cursor] in the program.
-     */
-    internal fun getParameters(cursor: Int, paramCount: Int): List<Int> {
-        checkSufficientParameters(cursor, paramCount)
-        return currentValues.slice((cursor + 1)..(cursor + paramCount))
-    }
-
-    /**
-     * Checks that there is a sufficient number of parameters following an operation.
-     *
-     * @param cursor The position in the program that contains the current operation.
-     * @param paramCount The number of parameters required for the current operation.
-     *
-     * @throws IllegalArgumentException If fewer than [paramCount] parameters follow [cursor] in the program.
-     */
-    private fun checkSufficientParameters(cursor: Int, paramCount: Int) {
-        if (cursor + paramCount >= currentValues.size) {
-            val operation = currentValues[cursor]
-            throw IllegalArgumentException("Too few parameters for operation $operation at position $cursor")
+    fun run() {
+        var cursor = cursorStart
+        isPaused = false
+        while (cursor >= 0 && !isPaused) {
+            val (operation, modes) = parseOperation(cursor)
+            val parameters = getParameters(cursor, operation.parameterCount)
+            cursor = operation.process(this, cursor, parameters, modes)
         }
+        cursorStart = cursor
+    }
+
+    /**
+     * Parses the value of an operation at a given position in the program.
+     * @param cursor The position in the program containing the operation value to be parsed.
+     * @return A [Pair] containing the [Operation] to be performed and an [Array] of modes to be applied to its
+     *  parameters.
+     */
+    private fun parseOperation(cursor: Int): Pair<Operation, Array<Mode>> {
+        var (modesInt, opcodeInt) = this[cursor].divideAndRemainder(OPCODE_MOD)
+        val operation = opcodeInt.toInt().toOperation()
+
+        val modes = Array<Mode>(operation.parameterCount) { PositionMode }
+        for (i in 0 until operation.parameterCount) {
+            if (modesInt == BigInteger.ZERO) {
+                break
+            }
+            val (newModesInt, modeInt) = modesInt.divideAndRemainder(BigInteger.TEN)
+            modesInt = newModesInt
+            modes[i] = modeInt.toInt().toMode()
+        }
+
+        return Pair(operation, modes)
+    }
+
+    /**
+     * Gets the parameters for an operation at a given position.
+     * @param cursor The position of the operation in the program.
+     * @param parameterCount The number of parameters required by the operation.
+     * @return An [Array] containing the parameters for the operation (before applying parameter modes).
+     */
+    private fun getParameters(cursor: Int, parameterCount: Int): Array<BigInteger> {
+        return Array(parameterCount) { this[cursor + it + 1] }
+    }
+
+    /**
+     * Restores various aspects of the program to their starting states. These include:
+     * - Any values modified during execution
+     * - Any input provided to the program
+     * - The relative base position of the program
+     * - The last cursor position of the program
+     * - Whether the program has been paused
+     *
+     * In particular, note that [onOutput] is **not** reset by this method.
+     */
+    fun reset() {
+        currentValues = initialValues.toTypedArray()
+        extendedValues = mutableMapOf()
+        input.clear()
+        relativeBase = 0
+        cursorStart = 0
+        isPaused = false
+    }
+
+    private companion object {
+        /**
+         * The default value to be assumed for any position in the program that isn't explicitly set.
+         */
+        val DEFAULT_VALUE: BigInteger = BigInteger.ZERO
+
+        /**
+         * The divisor used to separate the opcode and parameter modes of an operation value.
+         */
+        val OPCODE_MOD: BigInteger = BigInteger("100")
     }
 }

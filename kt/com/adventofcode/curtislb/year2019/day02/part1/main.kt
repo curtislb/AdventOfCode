@@ -76,13 +76,18 @@ package com.adventofcode.curtislb.year2019.day02.part1
 
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import java.math.BigInteger
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
 
+private val NOUN_VALUE = BigInteger("12")
+private val VERB_VALUE = BigInteger.TWO
+
+// Answer: 4138687
 fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
-    intcode[1] = 12
-    intcode[2] = 2
+    val intcode = Intcode(INPUT_PATH.toFile())
+    intcode[1] = NOUN_VALUE
+    intcode[2] = VERB_VALUE
     intcode.run()
     println(intcode[0])
 }

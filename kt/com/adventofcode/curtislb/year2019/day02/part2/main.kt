@@ -40,20 +40,24 @@ package com.adventofcode.curtislb.year2019.day02.part2
 
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import java.math.BigInteger
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
 
-private const val TARGET_OUTPUT = 19690720
+private val NOUN_VERB_VALUES = (0..99).map { it.toBigInteger() }
+private val NOUN_FACTOR = BigInteger("100")
+private val TARGET_OUTPUT = BigInteger("19690720")
 
+// Answer: 6635
 fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
-    for (noun in 0..99) {
-        for (verb in 0..99) {
+    val intcode = Intcode(INPUT_PATH.toFile())
+    for (noun in NOUN_VERB_VALUES) {
+        for (verb in NOUN_VERB_VALUES) {
             intcode[1] = noun
             intcode[2] = verb
             intcode.run()
             if (intcode[0] == TARGET_OUTPUT) {
-                println(noun * 100 + verb)
+                println(noun * NOUN_FACTOR + verb)
                 return
             }
             intcode.reset()

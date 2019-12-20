@@ -60,6 +60,7 @@ import com.adventofcode.curtislb.year2019.day03.wires.Wire
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt")
 
+// Answer: 709
 fun main() {
     val (wireA, wireB) = INPUT_PATH.toFile().readLines().slice(0..1).map { Wire(it.trim()) }
     val (intersection, distance) = wireA.findNearestIntersectionWith(wireB)

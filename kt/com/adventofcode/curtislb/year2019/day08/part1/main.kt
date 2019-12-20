@@ -45,6 +45,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 8, fileName = "input.txt
 private const val IMAGE_WIDTH = 25
 private const val IMAGE_HEIGHT = 6
 
+// Answer: 1820
 fun main() {
     var result = 0
     var minZeros = Int.MAX_VALUE

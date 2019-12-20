@@ -35,6 +35,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 4, fileName = "input.txt
 
 private const val PASSWORD_LENGTH = 6
 
+// Answer: 460
 fun main() {
     val passwordRange = INPUT_PATH.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(

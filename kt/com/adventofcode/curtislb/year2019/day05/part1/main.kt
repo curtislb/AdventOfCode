@@ -81,13 +81,15 @@ package com.adventofcode.curtislb.year2019.day05.part1
 
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import java.math.BigInteger
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 5, fileName = "input.txt")
 
-private const val SYSTEM_ID = 1
+private val SYSTEM_ID = BigInteger.ONE
 
+// Answer: 5044655
 fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile().readText().trim())
+    val intcode = Intcode(INPUT_PATH.toFile())
     intcode.sendInput(SYSTEM_ID)
     intcode.run()
 }

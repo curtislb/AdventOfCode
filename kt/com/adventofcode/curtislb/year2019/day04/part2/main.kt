@@ -28,6 +28,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 4, fileName = "input.txt
 private const val PASSWORD_LENGTH = 6
 private const val REPEAT_COUNT = 2
 
+// Answer: 290
 fun main() {
     val passwordRange = INPUT_PATH.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(

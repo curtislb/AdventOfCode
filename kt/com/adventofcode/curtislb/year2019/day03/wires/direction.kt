@@ -7,10 +7,8 @@ enum class Direction { UP, RIGHT, DOWN, LEFT }
 
 /**
  * Converts a [Char] to its corresponding [Direction].
- *
  * @receiver The [Char] to be converted. Must be one of {'U', 'R', 'D', 'L'}.
  * @return The [Direction] corresponding to this [Char].
- *
  * @throws IllegalArgumentException If called for any [Char] not specified above.
  */
 fun Char.toDirection(): Direction {

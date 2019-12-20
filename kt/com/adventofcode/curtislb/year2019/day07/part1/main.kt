@@ -67,21 +67,23 @@ thrusters?
 package com.adventofcode.curtislb.year2019.day07.part1
 
 import com.adventofcode.curtislb.common.collection.permutations
-import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.common.intcode.Intcode
+import com.adventofcode.curtislb.common.io.pathToInput
+import java.math.BigInteger
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 7, fileName = "input.txt")
 
 private const val AMPLIFIER_COUNT = 5
-private val PHASE_SETTINGS = 0..4
+private val PHASE_SETTINGS = (0..4).map { it.toBigInteger() }
 
+// Answer: 272368
 fun main() {
     // Initialize the amplifier configuration
     val programString = INPUT_PATH.toFile().readText().trim()
     val amplifiers = Array(AMPLIFIER_COUNT) { Intcode(programString) }
-    var maxSignal = 0
+    var maxSignal = BigInteger.ZERO
     amplifiers.forEachIndexed { index, amplifier ->
-        if (index < AMPLIFIER_COUNT - 1) {
+        if (index < amplifiers.lastIndex) {
             amplifier.onOutput = { amplifiers[index + 1].sendInput(it) }
         } else {
             amplifier.onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
@@ -89,9 +91,9 @@ fun main() {
     }
 
     // Try all possible phase setting combinations
-    for (settings in PHASE_SETTINGS.toList().permutations()) {
+    for (settings in PHASE_SETTINGS.permutations()) {
         amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
-        amplifiers[0].sendInput(0)
+        amplifiers[0].sendInput(BigInteger.ZERO)
         amplifiers.forEach {
             it.run()
             it.reset()
