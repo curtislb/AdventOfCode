@@ -56,7 +56,7 @@ What is the Manhattan distance from the central port to the closest intersection
 package com.adventofcode.curtislb.year2019.day03.part1
 
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.year2019.day03.wires.Wire
+import com.adventofcode.curtislb.year2019.day03.wire.Wire
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt")
 

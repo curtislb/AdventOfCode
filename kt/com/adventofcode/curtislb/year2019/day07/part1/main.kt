@@ -67,8 +67,8 @@ thrusters?
 package com.adventofcode.curtislb.year2019.day07.part1
 
 import com.adventofcode.curtislb.common.collection.permutations
-import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.year2019.day07.amplifier.createAmplifierSeries
 import java.math.BigInteger
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 7, fileName = "input.txt")
@@ -79,16 +79,9 @@ private val PHASE_SETTINGS = (0..4).map { it.toBigInteger() }
 // Answer: 272368
 fun main() {
     // Initialize the amplifier configuration
-    val programString = INPUT_PATH.toFile().readText().trim()
-    val amplifiers = Array(AMPLIFIER_COUNT) { Intcode(programString) }
     var maxSignal = BigInteger.ZERO
-    amplifiers.forEachIndexed { index, amplifier ->
-        if (index < amplifiers.lastIndex) {
-            amplifier.onOutput = { amplifiers[index + 1].sendInput(it) }
-        } else {
-            amplifier.onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
-        }
-    }
+    val amplifiers = createAmplifierSeries(INPUT_PATH.toFile(), AMPLIFIER_COUNT)
+    amplifiers.last().onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
 
     // Try all possible phase setting combinations
     for (settings in PHASE_SETTINGS.permutations()) {

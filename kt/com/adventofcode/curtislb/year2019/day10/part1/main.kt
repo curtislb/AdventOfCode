@@ -122,7 +122,7 @@ package com.adventofcode.curtislb.year2019.day10.part1
 
 import com.adventofcode.curtislb.common.io.pathToInput
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "test_input.txt")
 
 // Answer: ???
 fun main() {

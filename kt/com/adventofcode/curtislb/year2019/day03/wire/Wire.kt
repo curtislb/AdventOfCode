@@ -1,4 +1,8 @@
-package com.adventofcode.curtislb.year2019.day03.wires
+package com.adventofcode.curtislb.year2019.day03.wire
+
+import com.adventofcode.curtislb.common.grid.Point
+import com.adventofcode.curtislb.common.grid.Segment
+import com.adventofcode.curtislb.common.grid.toDirection
 
 /**
  * A wire consisting of a series of segments in a 2D grid.
@@ -7,7 +11,7 @@ package com.adventofcode.curtislb.year2019.day03.wires
  */
 class Wire(wireString: String) {
     /**
-     * A list containing all segments of the wire in order.
+     * A list containing all segments of the [Wire] in order.
      */
     val segments: List<Segment>
 

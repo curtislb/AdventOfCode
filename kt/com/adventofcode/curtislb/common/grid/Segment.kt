@@ -1,4 +1,4 @@
-package com.adventofcode.curtislb.year2019.day03.wires
+package com.adventofcode.curtislb.common.grid
 
 /**
  * A horizontal or vertical segment on a 2D grid with positive and negative integer coordinates.
