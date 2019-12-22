@@ -35,4 +35,6 @@ data class Point(val x: Int, val y: Int) {
      * @return The Manhattan distance between this [Point] and [other].
      */
     fun manhattanDistanceTo(other: Point) = abs(x - other.x) + abs(y - other.y)
+
+    override fun toString() = "($x, $y)"
 }
