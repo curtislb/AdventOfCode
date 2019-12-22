@@ -1,4 +1,4 @@
-package com.adventofcode.curtislb.year2019.day10.part1.asteroid
+package com.adventofcode.curtislb.year2019.day10.asteroid
 
 import com.adventofcode.curtislb.common.grid.Point
 import java.io.File

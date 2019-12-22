@@ -124,11 +124,11 @@ import com.adventofcode.curtislb.common.collection.uniquePairs
 import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.grid.Ray
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.year2019.day10.part1.asteroid.findAsteroids
+import com.adventofcode.curtislb.year2019.day10.asteroid.findAsteroids
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
 
-// Answer: ???
+// Answer: 263
 fun main() {
     val asteroids = findAsteroids(INPUT_PATH.toFile())
     val asteroidRays = mutableMapOf<Point, MutableSet<Ray>>()
