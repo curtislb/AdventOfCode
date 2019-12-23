@@ -1,7 +1,9 @@
 package com.adventofcode.curtislb.common.collection
 
 /**
- * TODO
+ * Produces all unique pairs of elements in a list.
+ * @receiver The [List] whose elements will be paired.
+ * @return A finite [Sequence] yielding all unique pairs of elements.
  */
 fun <T> List<T>.uniquePairs(): Sequence<Pair<T, T>> = sequence {
     val list = this@uniquePairs

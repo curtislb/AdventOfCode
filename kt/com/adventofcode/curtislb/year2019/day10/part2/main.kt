@@ -78,10 +78,52 @@ example, 8,2 becomes 802.)
 package com.adventofcode.curtislb.year2019.day10.part2
 
 import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.year2019.day10.asteroid.findBestStation
+import com.adventofcode.curtislb.year2019.day10.asteroid.findVisibleAsteroids
+import com.adventofcode.curtislb.year2019.day10.asteroid.getAsteroids
+import com.adventofcode.curtislb.year2019.day10.asteroid.relativeAngleTo
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "test_input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
 
-// Answer: ???
+private const val TARGET_NUMBER = 200
+
+// Answer: 1110
 fun main() {
-    // TODO: Solution goes here
+    // Find all asteroid locations
+    val asteroids = getAsteroids(INPUT_PATH.toFile())
+    if (asteroids.size <= TARGET_NUMBER) {
+        println("Number of asteroids to vaporize (${asteroids.size - 1}) is less than target ($TARGET_NUMBER)")
+        return
+    }
+
+    // Find the best station location
+    val station = findBestStation(asteroids).first
+    if (station == null) {
+        println("No station location found")
+        return
+    }
+
+    // Start vaporizing asteroids until target is reached
+    var vaporizedCount = 0
+    val remainingAsteroids = asteroids.toMutableSet()
+    while (vaporizedCount < TARGET_NUMBER) {
+        // Get all asteroids currently visible from the station
+        val visibleAsteroids = findVisibleAsteroids(station, remainingAsteroids)
+
+        // Check if target is among the currently visible asteroids
+        if (TARGET_NUMBER - vaporizedCount <= visibleAsteroids.size) {
+            val sortedAsteroids = visibleAsteroids.sortedBy {
+                if (it == station) Double.POSITIVE_INFINITY else station.relativeAngleTo(it)
+            }
+            val targetAsteroid = sortedAsteroids[TARGET_NUMBER - vaporizedCount - 1]
+            println(targetAsteroid.x * 100 + targetAsteroid.y)
+            return
+        }
+
+        // Remove all vaporized asteroids and continue
+        vaporizedCount += visibleAsteroids.size
+        remainingAsteroids.removeAll(visibleAsteroids)
+    }
+
+    println("Finished without vaporizing $TARGET_NUMBER asteroids")
 }

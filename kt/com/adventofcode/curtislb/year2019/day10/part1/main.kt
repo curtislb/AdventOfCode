@@ -120,22 +120,18 @@ Find the best location for a new monitoring station. How many other asteroids ca
 
 package com.adventofcode.curtislb.year2019.day10.part1
 
-import com.adventofcode.curtislb.common.collection.uniquePairs
-import com.adventofcode.curtislb.common.grid.Point
-import com.adventofcode.curtislb.common.grid.Ray
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.year2019.day10.asteroid.findAsteroids
+import com.adventofcode.curtislb.year2019.day10.asteroid.findBestStation
+import com.adventofcode.curtislb.year2019.day10.asteroid.getAsteroids
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
 
 // Answer: 263
 fun main() {
-    val asteroids = findAsteroids(INPUT_PATH.toFile())
-    val asteroidRays = mutableMapOf<Point, MutableSet<Ray>>()
-    for (asteroidPair in asteroids.uniquePairs()) {
-        val (asteroid1, asteroid2) = asteroidPair
-        asteroidRays.getOrPut(asteroid1) { mutableSetOf() }.add(Ray(asteroid1, asteroid2))
-        asteroidRays.getOrPut(asteroid2) { mutableSetOf() }.add(Ray(asteroid2, asteroid1))
+    val (bestStation, asteroidCount) = findBestStation(getAsteroids(INPUT_PATH.toFile()))
+    if (bestStation != null) {
+        println("$bestStation: $asteroidCount")
+    } else {
+        println("No station location found")
     }
-    println(asteroids.map { asteroidRays.getOrDefault(it, mutableSetOf()).size }.max() ?: 0)
 }

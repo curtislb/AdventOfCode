@@ -1,5 +1,6 @@
 package com.adventofcode.curtislb.common.grid
 
+import com.adventofcode.curtislb.common.math.pow
 import kotlin.math.abs
 
 /**
@@ -8,6 +9,8 @@ import kotlin.math.abs
  * @param y The y-coordinate of the point.
  */
 data class Point(val x: Int, val y: Int) {
+    override fun toString() = "($x, $y)"
+
     /**
      * Finds the [Point] reached by moving a given direction and distance from this point.
      * @receiver The [Point] from which to begin moving.
@@ -25,16 +28,20 @@ data class Point(val x: Int, val y: Int) {
     }
 
     /**
-     * Finds the Manhattan distance between this [Point] and another one.
+     * Finds the Manhattan distance between this and another [Point].
      *
      * The Manhattan distance represents the shortest possible path (in grid units) between two points, while moving
      * only up, down, left, or right.
      *
-     * @receiver The [Point] to be compared with [other].
-     * @param other The [Point] with which this one will be compared.
+     * @param other The [Point] to which the distance will be determined.
      * @return The Manhattan distance between this [Point] and [other].
      */
     fun manhattanDistanceTo(other: Point) = abs(x - other.x) + abs(y - other.y)
 
-    override fun toString() = "($x, $y)"
+    /**
+     * Finds the squared distance between this and another [Point].
+     * @param other The [Point] to which the squared distance will be determined.
+     * @return The squared value of the Euclidean distance between this [Point] and [other].
+     */
+    fun squaredDistanceTo(other: Point): Int = (x - other.x).pow(2) + (y - other.y).pow(2)
 }
