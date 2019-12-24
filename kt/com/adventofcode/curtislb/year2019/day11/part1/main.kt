@@ -1,5 +1,6 @@
 /*
 --- Day 11: Space Police ---
+
 On the way to Jupiter, you're pulled over by the Space Police.
 
 "Attention, unmarked spacecraft! You are in violation of Space Law! All spacecraft must have a clearly visible
@@ -84,11 +85,15 @@ once?
 
 package com.adventofcode.curtislb.year2019.day11.part1
 
+import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.year2019.day11.painting.Robot
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 11, fileName = "input.txt")
 
-// Answer: ???
+// Answer: 1747
 fun main() {
-    // TODO: Solution goes here
+    val robot = Robot()
+    robot.executeProgram(Intcode(INPUT_PATH.toFile()))
+    println(robot.paintedPanels.size)
 }

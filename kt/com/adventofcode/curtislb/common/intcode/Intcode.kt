@@ -27,7 +27,6 @@ class Intcode(programString: String) {
     // Additional program state
     internal var relativeBase: Int = 0
     private var cursorStart: Int = 0
-    private var isPaused: Boolean = false
 
     init {
         val tokens = programString.split(',')
@@ -50,6 +49,12 @@ class Intcode(programString: String) {
      */
     val isDone: Boolean
         get() = cursorStart !in currentValues.indices
+
+    /**
+     * Whether this program has paused and may be resumed by calling [run].
+     */
+    var isPaused: Boolean = false
+        private set
 
     /**
      * Gets the current value at a given position in the program.

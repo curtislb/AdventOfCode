@@ -1,5 +1,6 @@
 /*
 --- Part Two ---
+
 Once you give them the coordinates, the Elves quickly deploy an Instant Monitoring Station to the location and discover
 the worst: there are simply too many asteroids.
 
