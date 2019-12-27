@@ -9,8 +9,6 @@ import kotlin.math.abs
  * @param y The y-coordinate of the point.
  */
 data class Point(val x: Int, val y: Int) {
-    override fun toString() = "($x, $y)"
-
     /**
      * Finds the [Point] reached by moving a given direction and distance from this point.
      * @receiver The [Point] from which to begin moving.
@@ -44,4 +42,6 @@ data class Point(val x: Int, val y: Int) {
      * @return The squared value of the Euclidean distance between this [Point] and [other].
      */
     fun squaredDistanceTo(other: Point): Int = (x - other.x).pow(2) + (y - other.y).pow(2)
+
+    override fun toString() = "($x, $y)"
 }

@@ -44,8 +44,7 @@ fun getAsteroids(file: File): List<Point> {
  */
 fun findBestStation(asteroids: List<Point>): Pair<Point?, Int> {
     val asteroidRays = mutableMapOf<Point, MutableSet<Ray>>()
-    for (asteroidPair in asteroids.uniquePairs()) {
-        val (asteroid1, asteroid2) = asteroidPair
+    for ((asteroid1, asteroid2) in asteroids.uniquePairs()) {
         asteroidRays.getOrPut(asteroid1) { mutableSetOf() }.add(Ray(asteroid1, asteroid2))
         asteroidRays.getOrPut(asteroid2) { mutableSetOf() }.add(Ray(asteroid2, asteroid1))
     }
