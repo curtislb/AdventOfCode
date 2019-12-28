@@ -28,7 +28,7 @@ interface Operation {
 }
 
 /**
- * Converts an integer opcode recognized by [Intcode] to its corresponding [Operation].
+ * Converts an [Int] opcode recognized by [Intcode] to its corresponding [Operation].
  * @receiver An [Int] representing a valid opcode.
  * @return The [Operation] object corresponding to this [Int].
  * @throws IllegalArgumentException If called for an [Int] with no corresponding [Operation].
@@ -48,3 +48,11 @@ fun Int.toOperation(): Operation {
         else -> throw IllegalArgumentException("Unknown operation: $this")
     }
 }
+
+/**
+ * Converts a [BigInteger] opcode recognized by [Intcode] to its corresponding [Operation].
+ * @receiver A [BigInteger] representing a valid opcode.
+ * @return The [Operation] object corresponding to this [BigInteger].
+ * @throws IllegalArgumentException If called for a [BigInteger] with no corresponding [Operation].
+ */
+fun BigInteger.toOperation(): Operation = this.toInt().toOperation()

@@ -28,7 +28,7 @@ interface Mode {
 }
 
 /**
- * Converts an integer representing an [Intcode] parameter mode to its corresponding [Mode].
+ * Converts an [Int] representing an [Intcode] parameter mode to its corresponding [Mode].
  * @receiver An [Int] representing a valid parameter mode.
  * @return The [Mode] object corresponding to this [Int].
  * @throws IllegalArgumentException If called for an [Int] with no corresponding [Mode].
@@ -41,3 +41,11 @@ fun Int.toMode(): Mode {
         else -> throw IllegalArgumentException("Unknown parameter mode: $this")
     }
 }
+
+/**
+ * Converts a [BigInteger] representing an [Intcode] parameter mode to its corresponding [Mode].
+ * @receiver A [BigInteger] representing a valid parameter mode.
+ * @return The [Mode] object corresponding to this [BigInteger].
+ * @throws IllegalArgumentException If called for a [BigInteger] with no corresponding [Mode].
+ */
+fun BigInteger.toMode(): Mode = this.toInt().toMode()

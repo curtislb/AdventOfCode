@@ -149,7 +149,7 @@ class Intcode(programString: String) {
      */
     private fun parseOperation(cursor: Int): Pair<Operation, Array<Mode>> {
         var (modesInt, opcodeInt) = this[cursor].divideAndRemainder(OPCODE_MOD)
-        val operation = opcodeInt.toInt().toOperation()
+        val operation = opcodeInt.toOperation()
 
         val modes = Array<Mode>(operation.parameterCount) { PositionMode }
         for (i in 0 until operation.parameterCount) {
@@ -158,7 +158,7 @@ class Intcode(programString: String) {
             }
             val (newModesInt, modeInt) = modesInt.divideAndRemainder(BigInteger.TEN)
             modesInt = newModesInt
-            modes[i] = modeInt.toInt().toMode()
+            modes[i] = modeInt.toMode()
         }
 
         return Pair(operation, modes)
