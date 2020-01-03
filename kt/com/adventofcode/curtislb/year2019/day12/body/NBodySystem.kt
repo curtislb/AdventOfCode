@@ -43,7 +43,7 @@ class NBodySystem(file: File) {
      */
     fun simulate(steps: Int = 1) {
         for (step in 1..steps) {
-            for ((body1, body2) in bodies.uniquePairs()) {
+            bodies.uniquePairs().forEach { (body1, body2) ->
                 body1.applyGravity(body2)
                 body2.applyGravity(body1)
             }

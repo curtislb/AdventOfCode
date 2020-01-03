@@ -63,7 +63,7 @@ class Robot {
             }
 
             val grid = Array(maxY - minY + 1) { BooleanArray(maxX - minX + 1) }
-            panels.forEach { (point, white) -> grid[point.y - minY][point.x - minX] = white }
+            panels.forEach { (point, white) -> grid[maxY - point.y][point.x - minX] = white }
             return grid
         }
 

@@ -30,7 +30,6 @@ fun main() {
 
     // Print the painted grid (with its y-axis reversed)
     val grid = robot.paintedGrid
-    grid.reverse()
     grid.forEach { row ->
         row.forEach { value -> print(if (value) "\u2588" else " ") }
         println()

@@ -76,11 +76,11 @@ fun main() {
     }
 
     // Try all possible phase setting combinations
-    for (settings in PHASE_SETTINGS.permutations()) {
+    PHASE_SETTINGS.permutations().forEach {
         // Send phase settings and initial input
         amplifiers.forEachIndexed { index, amplifier ->
             amplifier.reset()
-            amplifier.sendInput(settings[index])
+            amplifier.sendInput(it[index])
         }
         amplifiers[0].sendInput(BigInteger.ZERO)
 

@@ -51,8 +51,8 @@ private val TARGET_OUTPUT = BigInteger("19690720")
 // Answer: 6635
 fun main() {
     val intcode = Intcode(INPUT_PATH.toFile())
-    for (noun in NOUN_VERB_VALUES) {
-        for (verb in NOUN_VERB_VALUES) {
+    NOUN_VERB_VALUES.forEach { noun ->
+        NOUN_VERB_VALUES.forEach { verb ->
             intcode[1] = noun
             intcode[2] = verb
             intcode.run()

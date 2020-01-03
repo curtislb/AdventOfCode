@@ -84,8 +84,8 @@ fun main() {
     amplifiers.last().onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
 
     // Try all possible phase setting combinations
-    for (settings in PHASE_SETTINGS.permutations()) {
-        amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
+    PHASE_SETTINGS.permutations().forEach {
+        amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(it[index]) }
         amplifiers[0].sendInput(BigInteger.ZERO)
         amplifiers.forEach {
             it.run()

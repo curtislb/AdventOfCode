@@ -47,8 +47,8 @@ fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
  */
 private fun takeLargestPowers(factorization1: Map<Long, Int>, factorization2: Map<Long, Int>): Map<Long, Int> {
     val largestPowers = mutableMapOf<Long, Int>()
-    for (factor in factorization1.keys + factorization2.keys) {
-        largestPowers[factor] = max(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
+    (factorization1.keys + factorization2.keys).forEach {
+        largestPowers[it] = max(factorization1[it] ?: 0, factorization2[it] ?: 0)
     }
     return largestPowers.toMap()
 }

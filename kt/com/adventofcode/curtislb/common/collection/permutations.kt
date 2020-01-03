@@ -24,16 +24,14 @@ private fun <T> permutationsInternal(
     if (prefix.size == items.size) {
         yield(prefix)
     } else {
-        for (item in items) {
-            if (item in used) {
-                continue
+        items.forEach {
+            if (it !in used) {
+                used.add(it)
+                prefix.add(it)
+                yieldAll(permutationsInternal(items, prefix, used))
+                prefix.removeAt(prefix.size - 1)
+                used.remove(it)
             }
-
-            used.add(item)
-            prefix.add(item)
-            yieldAll(permutationsInternal(items, prefix, used))
-            prefix.removeAt(prefix.size - 1)
-            used.remove(item)
         }
     }
 }
