@@ -87,9 +87,9 @@ fun main() {
     PHASE_SETTINGS.permutations().forEach {
         amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(it[index]) }
         amplifiers[0].sendInput(BigInteger.ZERO)
-        amplifiers.forEach {
-            it.run()
-            it.reset()
+        amplifiers.forEach { amplifier ->
+            amplifier.run()
+            amplifier.reset()
         }
     }
 

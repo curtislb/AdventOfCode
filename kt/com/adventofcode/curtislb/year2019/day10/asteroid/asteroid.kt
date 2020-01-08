@@ -51,10 +51,10 @@ fun findBestStation(asteroids: List<Point>): Pair<Point?, Int> {
 
     var bestStation: Point? = null
     var mostAsteroids = 0
-    asteroids.forEach {
-        val asteroidCount = if (it in asteroidRays) asteroidRays[it]!!.size else 0
+    asteroids.forEach { point ->
+        val asteroidCount = asteroidRays[point]?.size ?: 0
         if (asteroidCount > mostAsteroids) {
-            bestStation = it
+            bestStation = point
             mostAsteroids = asteroidCount
         }
     }
@@ -73,12 +73,12 @@ fun findBestStation(asteroids: List<Point>): Pair<Point?, Int> {
  */
 fun findVisibleAsteroids(source: Point, asteroids: Collection<Point>): List<Point> {
     val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>()
-    asteroids.forEach {
-        if (it != source) {
-            val ray = Ray(source, it)
-            val squaredDistance = source.squaredDistanceTo(it)
+    asteroids.forEach { asteroid ->
+        if (asteroid != source) {
+            val ray = Ray(source, asteroid)
+            val squaredDistance = source.squaredDistanceTo(asteroid)
             if (ray !in closestAsteroids || closestAsteroids[ray]!!.second > squaredDistance) {
-                closestAsteroids[ray] = Pair(it, squaredDistance)
+                closestAsteroids[ray] = Pair(asteroid, squaredDistance)
             }
         }
     }

@@ -32,7 +32,7 @@ fun Int.toTile(): Tile {
         2 -> BlockTile
         3 -> PaddleTile
         4 -> BallTile
-        else -> throw IllegalArgumentException("Unknown tile value: $this")
+        else -> throw IllegalArgumentException("Unknown tile value: $this.")
     }
 }
 

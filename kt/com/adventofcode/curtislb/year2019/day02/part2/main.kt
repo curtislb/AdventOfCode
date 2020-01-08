@@ -63,5 +63,5 @@ fun main() {
             intcode.reset()
         }
     }
-    println("No solution found")
+    println("No solution found.")
 }

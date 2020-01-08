@@ -18,13 +18,13 @@ class NBodySystem(file: File) {
     /**
      * The initial states (positions and velocities) of all bodies in this [NBodySystem].
      */
-    private val initialState: List<Body>
+    private val initialStates: List<Body>
 
     init {
-        val listBuilder = mutableListOf<Body>()
-        file.forEachLine { listBuilder.add(Body(it)) }
-        initialState = listBuilder.toList()
-        bodies = initialState.deepCopy { it.copy() }
+        val bodiesBuilder = mutableListOf<Body>()
+        file.forEachLine { bodiesBuilder.add(Body(it)) }
+        bodies = bodiesBuilder
+        initialStates = bodies.deepCopy { it.copy() }
     }
 
     /**
@@ -55,7 +55,7 @@ class NBodySystem(file: File) {
      * Resets the positions and velocities of all bodies in this [NBodySystem] to their initial values.
      */
     fun reset() {
-        bodies = initialState.deepCopy { it.copy() }
+        bodies = initialStates.deepCopy { it.copy() }
     }
 
     /**

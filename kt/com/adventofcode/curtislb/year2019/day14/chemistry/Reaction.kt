@@ -1,37 +1,32 @@
 package com.adventofcode.curtislb.year2019.day14.chemistry
 
-import com.adventofcode.curtislb.common.math.nextMultipleAtLeast
-
 /**
- * TODO
+ * A chemical reaction that consumes one or more input materials to produce an output material.
+ * @param reactants A [Map] from each input material to the amount of it that is consumed by this [Reaction].
+ * @param product A [MaterialAmount] representing the name and amount of the material produced by this [Reaction].
  */
-data class Reaction(val reactants: List<Material>, val product: Material) {
-    /**
-     * TODO
-     */
-    fun getRequiredMaterials(requiredProductAmount: Int): List<Material> {
-        println("$this (need $requiredProductAmount)")
-        val ratio = if (product.amount >= requiredProductAmount) {
-            1
-        } else {
-            product.amount.nextMultipleAtLeast(requiredProductAmount) / product.amount
+data class Reaction(val reactants: Map<String, Long>, val product: MaterialAmount) {
+    override fun toString(): String {
+        val reactantsString = reactants.entries.joinToString(separator = ", ") { (material, amount) ->
+            MaterialAmount(material, amount).toString()
         }
-        val result = reactants.map { Material(it.name, it.amount * ratio) }
-        println(result)
-        return result
+        return "$reactantsString => $product"
     }
-
-    override fun toString(): String = "${reactants.joinToString(separator = ", ") { it.toString() }} => $product"
 
     companion object {
         /**
-         * TODO
+         * Creates a [Reaction] from the given [String] representation.
+         * @param reactionString A [String] representation of a [Reaction].
+         * @return A new [Reaction] corresponding to [reactionString].
          */
         fun fromString(reactionString: String): Reaction {
             val (reactantsString, productString) = reactionString.split("=>")
-            val reactants = reactantsString.trim().split(',').map { Material.fromString(it) }
-            val product = Material.fromString(productString)
-            return Reaction(reactants, product)
+            val reactantsBuilder = mutableMapOf<String, Long>()
+            reactantsString.trim().split(',').forEach { reactantString ->
+                val reactant = MaterialAmount.fromString(reactantString)
+                reactantsBuilder[reactant.material] = reactant.amount
+            }
+            return Reaction(reactantsBuilder, MaterialAmount.fromString(productString))
         }
     }
 }

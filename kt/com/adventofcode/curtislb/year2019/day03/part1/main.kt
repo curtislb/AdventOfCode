@@ -67,6 +67,6 @@ fun main() {
     if (intersection != null) {
         println(distance)
     } else {
-        println("No intersection found")
+        println("No intersection found.")
     }
 }

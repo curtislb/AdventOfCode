@@ -38,7 +38,7 @@ fun Int.toMode(): Mode {
         0 -> PositionMode
         1 -> ImmediateMode
         2 -> RelativeMode
-        else -> throw IllegalArgumentException("Unknown parameter mode: $this")
+        else -> throw IllegalArgumentException("Unknown parameter mode: $this.")
     }
 }
 

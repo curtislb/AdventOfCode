@@ -119,13 +119,13 @@ class Robot {
      */
     fun executeProgram(intcode: Intcode) {
         var didPaint = false
-        intcode.onOutput = {
+        intcode.onOutput = { output ->
             if (didPaint) {
                 // Turn the robot and move it forward one space
-                when (it) {
+                when (output) {
                     BigInteger.ZERO -> turnLeft()
                     BigInteger.ONE -> turnRight()
-                    else -> throw IllegalArgumentException("Invalid program output: $it")
+                    else -> throw IllegalArgumentException("Invalid program output: $output.")
                 }
                 moveForward()
 
@@ -133,10 +133,10 @@ class Robot {
                 intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
             } else {
                 // Have the robot paint the current panel
-                when (it) {
+                when (output) {
                     BigInteger.ZERO -> paint(white = false)
                     BigInteger.ONE -> paint(white = true)
-                    else -> throw IllegalArgumentException("Invalid program output: $it")
+                    else -> throw IllegalArgumentException("Invalid program output: $output.")
                 }
             }
 

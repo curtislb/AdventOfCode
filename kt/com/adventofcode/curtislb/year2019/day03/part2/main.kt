@@ -51,6 +51,6 @@ fun main() {
     if (intersection != null) {
         println(pathLength)
     } else {
-        println("No intersection found")
+        println("No intersection found.")
     }
 }

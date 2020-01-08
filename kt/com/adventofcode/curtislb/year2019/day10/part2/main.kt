@@ -93,14 +93,14 @@ fun main() {
     // Find all asteroid locations
     val asteroids = getAsteroids(INPUT_PATH.toFile())
     if (asteroids.size <= TARGET_NUMBER) {
-        println("Number of asteroids to vaporize (${asteroids.size - 1}) is less than target ($TARGET_NUMBER)")
+        println("Number of asteroids to vaporize (${asteroids.size - 1}) is less than target ($TARGET_NUMBER).")
         return
     }
 
     // Find the best station location
     val station = findBestStation(asteroids).first
     if (station == null) {
-        println("No station location found")
+        println("No station location found.")
         return
     }
 
@@ -113,8 +113,8 @@ fun main() {
 
         // Check if target is among the currently visible asteroids
         if (TARGET_NUMBER - vaporizedCount <= visibleAsteroids.size) {
-            val sortedAsteroids = visibleAsteroids.sortedBy {
-                if (it == station) Double.POSITIVE_INFINITY else station.relativeAngleTo(it)
+            val sortedAsteroids = visibleAsteroids.sortedBy { asteroid ->
+                if (asteroid == station) Double.POSITIVE_INFINITY else station.relativeAngleTo(asteroid)
             }
             val targetAsteroid = sortedAsteroids[TARGET_NUMBER - vaporizedCount - 1]
             println(targetAsteroid.x * 100 + targetAsteroid.y)
@@ -126,5 +126,5 @@ fun main() {
         remainingAsteroids.removeAll(visibleAsteroids)
     }
 
-    println("Finished without vaporizing $TARGET_NUMBER asteroids")
+    println("Finished without vaporizing $TARGET_NUMBER asteroids.")
 }

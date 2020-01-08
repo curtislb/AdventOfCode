@@ -13,13 +13,13 @@ data class Vector(var x: Int, var y: Int, var z: Int) {
      */
     constructor(vectorString: String) : this(0, 0, 0) {
         val fieldStrings = vectorString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
-        fieldStrings.forEach {
-            val (field, value) = it.trim().split('=')
+        fieldStrings.forEach { fieldString ->
+            val (field, value) = fieldString.trim().split('=')
             when (field) {
                 "x" -> x = value.toInt()
                 "y" -> y = value.toInt()
                 "z" -> z = value.toInt()
-                else -> throw IllegalArgumentException("Unknown field: $field")
+                else -> throw IllegalArgumentException("Unknown field: $field.")
             }
         }
     }

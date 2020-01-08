@@ -20,8 +20,8 @@ class Universe() {
      * such as `A)B`, indicating that planet B orbits planet A.
      */
     constructor(inputFile: File) : this() {
-        inputFile.forEachLine {
-            val (orbited, orbiter) = it.trim().split(')')
+        inputFile.forEachLine { line ->
+            val (orbited, orbiter) = line.trim().split(')')
             addOrbit(orbited, orbiter)
         }
     }

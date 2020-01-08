@@ -7,5 +7,5 @@ package com.adventofcode.curtislb.common.collection
  * @return A [List] containing deep copies of the elements in this list in the same order.
  */
 fun <T> List<T>.deepCopy(copy: (T) -> T): List<T> {
-    return mutableListOf<T>().apply { addAll(this@deepCopy.map(copy)) }.toList()
+    return mutableListOf<T>().apply { addAll(this@deepCopy.map(copy)) }
 }

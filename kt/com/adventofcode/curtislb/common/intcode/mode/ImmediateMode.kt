@@ -13,6 +13,6 @@ object ImmediateMode : Mode {
     override fun getValue(intcode: Intcode, parameter: BigInteger): BigInteger = parameter
 
     override fun setValue(intcode: Intcode, parameter: BigInteger, value: BigInteger) {
-        throw UnsupportedOperationException("Can't set the value of a parameter in immediate mode")
+        throw UnsupportedOperationException("Can't set the value of a parameter in immediate mode.")
     }
 }

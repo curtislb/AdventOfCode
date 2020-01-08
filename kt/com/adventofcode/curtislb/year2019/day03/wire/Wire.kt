@@ -19,10 +19,10 @@ class Wire(wireString: String) {
         val segmentStrings = wireString.split(',')
         val segmentArrayList = ArrayList<Segment>(segmentStrings.size)
         var start = Point(0, 0)
-        segmentStrings.forEach {
+        segmentStrings.forEach { segmentString ->
             // Construct each segment and add it to the list in order.
-            val direction = it[0].toDirection()
-            val length = it.substring(1).toInt()
+            val direction = segmentString[0].toDirection()
+            val length = segmentString.substring(1).toInt()
             val segment = Segment(start, direction, length)
             segmentArrayList.add(segment)
 

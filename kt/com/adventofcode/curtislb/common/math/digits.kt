@@ -26,6 +26,6 @@ fun Int.digit(position: Int, base: Int = 10): Int = (this / base.pow(position)) 
 fun Char.toDigit(): Int {
     return when (this) {
         in '0'..'9' -> this - '0'
-        else -> throw IllegalArgumentException("'$this' can't be converted to a digit")
+        else -> throw IllegalArgumentException("'$this' can't be converted to a digit.")
     }
 }

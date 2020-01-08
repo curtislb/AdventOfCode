@@ -39,7 +39,7 @@ class ValueSequencer<T> {
     fun next(): T {
         dropEmptySequences()
         if (sequences.isEmpty()) {
-            throw IllegalStateException("Can't get next value. All queued values have been exhausted")
+            throw IllegalStateException("Can't get next value. All queued values have been exhausted.")
         }
         return sequences.first.next()
     }

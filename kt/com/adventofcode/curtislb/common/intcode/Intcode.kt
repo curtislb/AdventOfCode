@@ -22,7 +22,7 @@ class Intcode(programString: String) {
 
     // Program I/O
     private val input: ValueSequencer<BigInteger> = ValueSequencer()
-    var onOutput: (BigInteger) -> Unit = { println(it) }
+    var onOutput: (output: BigInteger) -> Unit = { println(it) }
 
     // Additional program state
     internal var relativeBase: Int = 0
@@ -31,7 +31,7 @@ class Intcode(programString: String) {
     init {
         val tokens = programString.split(',')
         if (tokens.isEmpty()) {
-            throw IllegalArgumentException("Program must not be empty")
+            throw IllegalArgumentException("Program must not be empty.")
         }
         initialValues = tokens.map { it.toBigInteger() }
         currentValues = initialValues.toTypedArray()
@@ -65,7 +65,7 @@ class Intcode(programString: String) {
         return when {
             index in currentValues.indices -> currentValues[index]
             index > currentValues.lastIndex -> extendedValues.getOrDefault(index, DEFAULT_VALUE)
-            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index.")
         }
     }
 
@@ -84,7 +84,7 @@ class Intcode(programString: String) {
                     extendedValues[index] = value
                 }
             }
-            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index.")
         }
     }
 

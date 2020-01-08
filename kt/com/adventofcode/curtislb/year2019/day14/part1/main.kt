@@ -108,14 +108,21 @@ Given the list of reactions in your puzzle input, what is the minimum amount of 
 package com.adventofcode.curtislb.year2019.day14.part1
 
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.year2019.day14.chemistry.Material
+import com.adventofcode.curtislb.year2019.day14.chemistry.MaterialAmount
 import com.adventofcode.curtislb.year2019.day14.chemistry.Nanofactory
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 14, fileName = "test_input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 14, fileName = "input.txt")
 
-// Answer: ???
+private const val RAW_MATERIAL = "ORE"
+private val DESIRED_PRODUCT = MaterialAmount("FUEL", 1L)
+
+// Answer: 843220
 fun main() {
     val factory = Nanofactory(INPUT_PATH.toFile())
-    val requiredMaterials = factory.getRequiredMaterials(setOf("ORE"), Material("FUEL", 1))
-    println(requiredMaterials ?: "Failed to produce fuel from ore")
+    val materials = factory.getRequiredMaterials(setOf(RAW_MATERIAL), mapOf(DESIRED_PRODUCT.toPair()))
+    if (materials != null) {
+        println(materials[RAW_MATERIAL])
+    } else {
+        println("Failed to produce $DESIRED_PRODUCT.")
+    }
 }

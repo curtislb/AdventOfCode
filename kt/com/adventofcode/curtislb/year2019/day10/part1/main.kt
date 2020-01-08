@@ -130,8 +130,8 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.tx
 fun main() {
     val (bestStation, asteroidCount) = findBestStation(getAsteroids(INPUT_PATH.toFile()))
     if (bestStation != null) {
-        println("$bestStation: $asteroidCount")
+        println("$bestStation: $asteroidCount.")
     } else {
-        println("No station location found")
+        println("No station location found.")
     }
 }

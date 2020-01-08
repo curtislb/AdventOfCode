@@ -82,6 +82,6 @@ fun main() {
     if (distance != null) {
         println(distance)
     } else {
-        println("No path found")
+        println("No path found.")
     }
 }

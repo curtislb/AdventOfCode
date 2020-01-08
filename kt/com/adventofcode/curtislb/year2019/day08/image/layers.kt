@@ -18,7 +18,7 @@ fun processLayers(
     onLayerFinished: () -> Unit = { }
 ) {
     var indexInLayer = 0
-    file.forEachChar {
+    file.forEachChar { char ->
         // Check if we're done with the current layer
         if (indexInLayer == imageArea) {
             onLayerFinished()
@@ -26,8 +26,8 @@ fun processLayers(
         }
 
         // Process the next digit for this layer
-        if (it in '0'..'9') {
-            onDigit(indexInLayer, it.toDigit())
+        if (char in '0'..'9') {
+            onDigit(indexInLayer, char.toDigit())
             indexInLayer++
         }
     }

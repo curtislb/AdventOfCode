@@ -36,11 +36,11 @@ class Game(file: File) {
     private var tileY: Int = 0
 
     init {
-        intcode.onOutput = {
+        intcode.onOutput = { output ->
             when (outputCounter) {
-                0 -> tileX = it.toInt()
-                1 -> tileY = it.toInt()
-                2 -> board[tileX, tileY] = it
+                0 -> tileX = output.toInt()
+                1 -> tileY = output.toInt()
+                2 -> board[tileX, tileY] = output
             }
             outputCounter = (outputCounter + 1) % 3
         }

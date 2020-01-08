@@ -19,7 +19,7 @@ object InteractiveStrategy : Strategy {
             "<" -> BigInteger("-1")
             ".", "" -> BigInteger.ZERO
             ">" -> BigInteger.ONE
-            else -> throw IllegalArgumentException("Invalid input: $input")
+            else -> throw IllegalArgumentException("Invalid input: $input.")
         }
     }
 }

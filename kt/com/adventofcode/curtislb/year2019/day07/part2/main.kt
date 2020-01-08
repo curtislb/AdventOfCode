@@ -67,28 +67,28 @@ fun main() {
     // Initialize the amplifier configuration
     var maxSignal = BigInteger.ZERO
     val amplifiers = createAmplifierSeries(INPUT_PATH.toFile(), AMPLIFIER_COUNT)
-    amplifiers.last().onOutput = {
+    amplifiers.last().onOutput = { output ->
         if (amplifiers[0].isDone) {
-            maxSignal = maxSignal.coerceAtLeast(it)
+            maxSignal = maxSignal.coerceAtLeast(output)
         } else {
-            amplifiers[0].sendInput(it)
+            amplifiers[0].sendInput(output)
         }
     }
 
     // Try all possible phase setting combinations
-    PHASE_SETTINGS.permutations().forEach {
+    PHASE_SETTINGS.permutations().forEach { settings ->
         // Send phase settings and initial input
         amplifiers.forEachIndexed { index, amplifier ->
             amplifier.reset()
-            amplifier.sendInput(it[index])
+            amplifier.sendInput(settings[index])
         }
         amplifiers[0].sendInput(BigInteger.ZERO)
 
         // Continue running amplifier programs until all have halted
         while (!amplifiers.all { it.isDone }) {
-            amplifiers.forEach {
-                if (!it.isDone) {
-                    it.run()
+            amplifiers.forEach { amplifier ->
+                if (!amplifier.isDone) {
+                    amplifier.run()
                 }
             }
         }

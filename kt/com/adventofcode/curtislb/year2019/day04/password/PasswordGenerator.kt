@@ -45,9 +45,9 @@ abstract class PasswordGenerator {
             if (isValid) {
                 yield(digitStrings.joinToString(separator = ""))
             }
-            nextDigits.forEach {
-                digitStrings.add(it.toString())
-                yieldAll(addDigit(it).generatePasswordsInternal(digitStrings))
+            nextDigits.forEach { digit ->
+                digitStrings.add(digit.toString())
+                yieldAll(addDigit(digit).generatePasswordsInternal(digitStrings))
                 digitStrings.removeAt(digitStrings.size - 1)
             }
         }

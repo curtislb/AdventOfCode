@@ -17,6 +17,6 @@ fun Char.toDirection(): Direction {
         'R' -> Direction.RIGHT
         'D' -> Direction.DOWN
         'L' -> Direction.LEFT
-        else -> throw IllegalArgumentException("Invalid direction character: $this")
+        else -> throw IllegalArgumentException("Invalid direction character: $this.")
     }
 }

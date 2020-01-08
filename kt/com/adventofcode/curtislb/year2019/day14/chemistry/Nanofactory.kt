@@ -1,43 +1,53 @@
 package com.adventofcode.curtislb.year2019.day14.chemistry
 
+import com.adventofcode.curtislb.common.collection.Counter
+import com.adventofcode.curtislb.common.math.Fraction
 import java.io.File
 
 /**
- * TODO
+ * A factory that can perform a number of chemical reactions in order to transform materials.
+ * @param file A [File] in which each line represents a [Reaction] that can be performed by this [Nanofactory].
  */
 class Nanofactory(file: File) {
     /**
-     * TODO
+     * A [Map] from each material that can be produced by this [Nanofactory] to the [Reaction] that will produce it.
      */
-    private val reactionsMap: Map<String, List<Reaction>>
+    private val reactions: Map<String, Reaction>
 
     init {
-        val mapBuilder = mutableMapOf<String, MutableList<Reaction>>()
-        file.forEachLine {
-            val reaction = Reaction.fromString(it)
-            mapBuilder.getOrPut(reaction.product.name) { mutableListOf() }.add(reaction)
-        }
-        val entries = mapBuilder.map { (productName, reactions) -> Pair(productName, reactions.toList()) }
-        reactionsMap = mapOf(*(entries.toTypedArray()))
-    }
-
-    fun getRequiredMaterials(rawMaterials: Set<String>, product: Material): Set<Material>? {
-        var materials = setOf(product)
-        while (materials.map { it.name }.toSet() != rawMaterials) {
-            val newMaterials = Material.combineByName(materials.flatMap {
-                reactionsMap[it.name]?.getOrNull(0)?.getRequiredMaterials(it.amount) ?: listOf(it)
-            }).toSet()
-            if (newMaterials == materials) {
-                break
+        val reactionsBuilder = mutableMapOf<String, Reaction>()
+        file.forEachLine { line ->
+            val reaction = Reaction.fromString(line)
+            val material = reaction.product.material
+            if (material in reactionsBuilder) {
+                throw IllegalArgumentException("Found more than one reaction to produce $material.")
             }
-            materials = newMaterials
+            reactionsBuilder[material] = reaction
         }
-        return if (materials.map { it.name }.toSet() == rawMaterials) materials else null
+        reactions = reactionsBuilder
     }
 
-    override fun toString(): String {
-        return reactionsMap.entries.joinToString(separator = "\n") { (_, reactions) ->
-            reactions.joinToString(separator = "\n") { it.toString() }
+    /**
+     * Determines the raw material quantities required to produce certain amounts of other materials.
+     * @param rawMaterials A [Set] of input materials (of arbitrary quantity) that do not need to be produced.
+     * @param products A [Map] from each desired material to the amount of it that should be produced.
+     * @return If all [products] can be produced starting from [rawMaterials], returns a [Map] from each raw material to
+     *  the amount of it that is required. Otherwise, returns `null`.
+     */
+    fun getRequiredMaterials(rawMaterials: Set<String>, products: Map<String, Long>): Map<String, Long>? {
+        val requiredMaterials = Counter(products)
+        while (requiredMaterials.keysWithPositiveCount != rawMaterials) {
+            val (requiredMaterial, requiredAmount) = requiredMaterials.entriesWithPositiveCount.find { (material, _) ->
+                material !in rawMaterials
+            } ?: break
+            val reaction = reactions[requiredMaterial] ?: break
+            val coefficient = Fraction(requiredAmount, reaction.product.amount).ceil()
+            reaction.reactants.forEach { (material, amount) -> requiredMaterials[material] += coefficient * amount }
+            requiredMaterials[reaction.product.material] -= coefficient * reaction.product.amount
         }
+        requiredMaterials.dropNegativeCounts()
+        return if (requiredMaterials.keysWithNonzeroCount == rawMaterials) requiredMaterials.toMap() else null
     }
+
+    override fun toString(): String = reactions.values.joinToString(separator = "\n") { it.toString() }
 }

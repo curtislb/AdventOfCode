@@ -21,7 +21,7 @@ data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boo
     constructor(source: Point, member: Point) : this(
         source,
         when {
-            member == source -> throw IllegalArgumentException("Source and member points must be distinct")
+            member == source -> throw IllegalArgumentException("Source and member points must be distinct.")
             member.x == source.x -> null
             else -> Fraction(member.y - source.y, member.x - source.x)
         },
