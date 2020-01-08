@@ -47,7 +47,7 @@ class Board {
      * Gets the type of [Tile] currently at a given position on the board.
      * @param positionX The x-coordinate position of a [Point] on the board.
      * @param positionY The y-coordinate position of a [Point] on the board.
-     * @return The type of the tile at the [Point] `([positionX], [positionY])` on the [Board].
+     * @return The type of the tile at the [Point] `(positionX, positionY)` on the [Board].
      */
     operator fun get(positionX: Int, positionY: Int): Tile = tiles.getOrDefault(Point(positionX, positionY), EmptyTile)
 
@@ -55,7 +55,7 @@ class Board {
      * Updates the type of [Tile] at a given position on the board.
      * @param positionX The x-coordinate position of a [Point] on the board.
      * @param positionY The y-coordinate position of a [Point] on the board.
-     * @param value A value representing the new [Tile] at [Point] `([positionX], [positionY])` on the [Board].
+     * @param value A value representing the new [Tile] at [Point] `(positionX, positionY)` on the [Board].
      */
     operator fun set(positionX: Int, positionY: Int, value: BigInteger) {
         if (positionX < 0) {

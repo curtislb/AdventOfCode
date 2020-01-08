@@ -5,12 +5,12 @@ package com.adventofcode.curtislb.common.search
  * @param knownFalse An index for which [predicate] is known to return `false`. Sets the lower bound of the search.
  * @param knownTrue An index for which [predicate] is known to return `true`. If [knownTrue] is `null`, the search will
  *  be conducted forward from [knownFalse] without bound.
- * @param predicate A boolean function over [Long] values in the range `[knownFalse]..[knownTrue]`, or all [Long] values
+ * @param predicate A boolean function over [Long] values in the range `knownFalse..knownTrue`, or all [Long] values
  *  `>= knownFalse` if `knownTrue == null`. In this range, there must be some [Long] index `i` such that
  *  `predicate(j) == (j >= i)` for all `j` in the range.
- * @return The least index in the range `[knownFalse]..[knownTrue]` such that `predicate(index) == true`, or `null` if
- *  no such index exists.
-*  @throws IllegalArgumentException If no [predicate] function is provided.
+ * @return The least index in the range `knownFalse..knownTrue` such that `predicate(index) == true`, or `null` if no
+ *  such index exists.
+ * @throws IllegalArgumentException If no [predicate] function is provided.
  */
 fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((Long) -> Boolean)? = null): Long? {
     if (predicate == null) {
