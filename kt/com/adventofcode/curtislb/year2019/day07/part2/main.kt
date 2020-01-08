@@ -52,7 +52,6 @@ sent to the thrusters?
 package com.adventofcode.curtislb.year2019.day07.part2
 
 import com.adventofcode.curtislb.common.collection.permutations
-import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day07.amplifier.createAmplifierSeries
 import java.math.BigInteger

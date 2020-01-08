@@ -1,7 +1,6 @@
 package com.adventofcode.curtislb.common.intcode.mode
 
 import com.adventofcode.curtislb.common.intcode.Intcode
-import java.lang.IllegalArgumentException
 import java.math.BigInteger
 
 /**

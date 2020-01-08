@@ -6,8 +6,8 @@ import java.math.BigInteger
 /**
  * An [Intcode] parameter mode for getting the immediate value of a parameter.
  *
- * In this [Mode], a parameter is interpreted as being its own value. Hence, [getValue] returns the parameter directly.
- * Note that [setValue] is not supported by this mode.
+ * In this [Mode], a parameter is interpreted as being its own value. Hence, [ImmediateMode.getValue] returns the
+ * parameter directly. Note that [ImmediateMode.setValue] is not supported by this mode.
  */
 object ImmediateMode : Mode {
     override fun getValue(intcode: Intcode, parameter: BigInteger): BigInteger = parameter

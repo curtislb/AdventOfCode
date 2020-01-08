@@ -1,7 +1,5 @@
 package com.adventofcode.curtislb.common.math
 
-import java.lang.IllegalArgumentException
-
 /**
  * A set containing all base-10 digits.
  */

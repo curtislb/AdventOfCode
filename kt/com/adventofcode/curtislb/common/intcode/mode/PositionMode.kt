@@ -6,8 +6,8 @@ import java.math.BigInteger
 /**
  * An [Intcode] parameter mode for getting the positional value of a parameter.
  *
- * In this [Mode], a parameter is interpreted as an absolute position in an [Intcode] program. Hence, [getValue] returns
- * the value at that position, and [setValue] sets it.
+ * In this [Mode], a parameter is interpreted as an absolute position in an [Intcode] program. Hence,
+ * [PositionMode.getValue] returns the value at that position, and [PositionMode.setValue] sets it.
  */
 object PositionMode : Mode {
     override fun getValue(intcode: Intcode, parameter: BigInteger): BigInteger = intcode[parameter.toInt()]
