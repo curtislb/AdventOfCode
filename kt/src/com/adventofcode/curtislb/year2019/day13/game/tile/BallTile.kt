@@ -5,5 +5,5 @@ package com.adventofcode.curtislb.year2019.day13.game.tile
  */
 object BallTile : Tile() {
     override val value: Int = 4
-    override val symbol: String = "\u2022"
+    override val symbol: Char = 'o'
 }

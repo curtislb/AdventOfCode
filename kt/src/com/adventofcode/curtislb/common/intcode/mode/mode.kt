@@ -47,4 +47,4 @@ fun Int.toMode(): Mode {
  * @return The [Mode] object corresponding to this [BigInteger].
  * @throws IllegalArgumentException If called for a [BigInteger] with no corresponding [Mode].
  */
-fun BigInteger.toMode(): Mode = this.toInt().toMode()
+fun BigInteger.toMode(): Mode = toInt().toMode()

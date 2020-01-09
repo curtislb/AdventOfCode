@@ -5,5 +5,5 @@ package com.adventofcode.curtislb.year2019.day13.game.tile
  */
 object PaddleTile : Tile() {
     override val value: Int = 3
-    override val symbol: String = "\u25ac"
+    override val symbol: Char = '='
 }

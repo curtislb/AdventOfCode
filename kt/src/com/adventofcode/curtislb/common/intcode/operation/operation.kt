@@ -55,4 +55,4 @@ fun Int.toOperation(): Operation {
  * @return The [Operation] object corresponding to this [BigInteger].
  * @throws IllegalArgumentException If called for a [BigInteger] with no corresponding [Operation].
  */
-fun BigInteger.toOperation(): Operation = this.toInt().toOperation()
+fun BigInteger.toOperation(): Operation = toInt().toOperation()

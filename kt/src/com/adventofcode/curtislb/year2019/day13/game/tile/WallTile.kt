@@ -5,5 +5,5 @@ package com.adventofcode.curtislb.year2019.day13.game.tile
  */
 object WallTile : Tile() {
     override val value: Int = 1
-    override val symbol: String = "\u2588"
+    override val symbol: Char = '#'
 }

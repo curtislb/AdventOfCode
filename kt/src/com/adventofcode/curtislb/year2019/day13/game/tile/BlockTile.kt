@@ -5,5 +5,5 @@ package com.adventofcode.curtislb.year2019.day13.game.tile
  */
 object BlockTile : Tile() {
     override val value: Int = 2
-    override val symbol: String = "\u25a0"
+    override val symbol: Char = 'X'
 }

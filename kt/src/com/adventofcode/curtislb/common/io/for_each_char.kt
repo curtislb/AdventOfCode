@@ -9,10 +9,10 @@ import java.nio.charset.Charset
  * @param action An action to be performed on each [Char] read from this file.
  */
 fun File.forEachChar(charset: Charset = Charsets.UTF_8, action: (char: Char) -> Unit) {
-    val reader = this.reader(charset)
-    var c = reader.read()
+    val charReader = reader(charset)
+    var c = charReader.read()
     while (c != -1) {
         action(c.toChar())
-        c = reader.read()
+        c = charReader.read()
     }
 }

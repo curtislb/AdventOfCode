@@ -5,5 +5,5 @@ package com.adventofcode.curtislb.year2019.day13.game.tile
  */
 object EmptyTile : Tile() {
     override val value: Int = 0
-    override val symbol: String = " "
+    override val symbol: Char = '.'
 }

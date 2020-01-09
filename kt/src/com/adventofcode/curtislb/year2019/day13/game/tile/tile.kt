@@ -12,11 +12,11 @@ abstract class Tile {
     abstract val value: Int
 
     /**
-     * A [String] symbol which is used to represent this [Tile] on the game board.
+     * A [Char] symbol that is used to represent this [Tile] on the game board.
      */
-    abstract val symbol: String
+    abstract val symbol: Char
 
-    override fun toString() = symbol
+    override fun toString() = symbol.toString()
 }
 
 /**
@@ -42,4 +42,4 @@ fun Int.toTile(): Tile {
  * @return The [Tile] object corresponding to this [BigInteger].
  * @throws IllegalArgumentException If called for a [BigInteger] with no corresponding [Tile].
  */
-fun BigInteger.toTile(): Tile = this.toInt().toTile()
+fun BigInteger.toTile(): Tile = toInt().toTile()
