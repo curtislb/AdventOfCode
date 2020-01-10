@@ -19,7 +19,7 @@ data class Vector(var x: Int, var y: Int, var z: Int) {
                 "x" -> x = value.toInt()
                 "y" -> y = value.toInt()
                 "z" -> z = value.toInt()
-                else -> throw IllegalArgumentException("Unknown field: $field.")
+                else -> throw IllegalArgumentException("Unknown field: $field")
             }
         }
     }
@@ -29,7 +29,7 @@ data class Vector(var x: Int, var y: Int, var z: Int) {
      * @param transform A function to apply to each of the current components of this [Vector].
      * @return The sum of [transform] applied to all components of this [Vector].
      */
-    fun sumBy(transform: (Int) -> Int): Int = transform(x) + transform(y) + transform(z)
+    fun sumBy(transform: (component: Int) -> Int): Int = transform(x) + transform(y) + transform(z)
 
     operator fun plus(other: Vector): Vector = Vector(x + other.x, y + other.y, z + other.z)
 

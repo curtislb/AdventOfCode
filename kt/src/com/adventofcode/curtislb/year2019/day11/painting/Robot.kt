@@ -2,17 +2,18 @@ package com.adventofcode.curtislb.year2019.day11.painting
 
 import com.adventofcode.curtislb.common.grid.Direction
 import com.adventofcode.curtislb.common.grid.Point
+import com.adventofcode.curtislb.common.grid.constructGrid
 import com.adventofcode.curtislb.common.intcode.Intcode
 import java.math.BigInteger
 
 /**
- * A robot which navigates and paints panels in an infinite 2D grid.
+ * A robot that navigates and paints panels in an infinite 2D grid.
  */
 class Robot {
     /**
      * The current [Point] position of the [Robot] in the grid.
      */
-    var position: Point = Point(0, 0)
+    var position: Point = Point.ORIGIN
         private set
 
     /**
@@ -26,57 +27,36 @@ class Robot {
      *
      * See [paintedPanels] for the corresponding public field.
      */
-    private val panels: MutableMap<Point, Boolean> = mutableMapOf()
+    private val panels: MutableMap<Point, Color> = mutableMapOf()
 
     /**
      * A [Map] of all panels on the grid that the [Robot] has painted.
-     *
-     * Each [Point] key represents a painted panel on the grid, and each value represents the color that the panel has
-     * been painted, with `true` representing white and `false` representing black.
      */
-    val paintedPanels: Map<Point, Boolean>
+    val paintedPanels: Map<Point, Color>
         get() = panels.toMap()
 
     /**
      * Whether the panel that the [Robot] is currently on has been painted white.
      */
     private val isOnWhitePanel: Boolean
-        get() = panels[position] == true
+        get() = panels[position] == Color.WHITE
 
     /**
-     * A 2D [Array] representing the portion of the grid that the [Robot] has painted.
-     *
-     * The value at each position in `paintedGrid` represents the color of the panel at the corresponding relative
-     * position in the grid, with `true` representing white and `false` representing black.
+     * A [List] of lists representing the portion of the grid that the [Robot] has painted.
      */
-    val paintedGrid: Array<BooleanArray>
-        get() {
-            var minX = 0
-            var minY = 0
-            var maxX = 0
-            var maxY = 0
-            panels.forEach { (point, _) ->
-                minX = minX.coerceAtMost(point.x)
-                minY = minY.coerceAtMost(point.y)
-                maxX = maxX.coerceAtLeast(point.x)
-                maxY = maxY.coerceAtLeast(point.y)
-            }
-
-            val grid = Array(maxY - minY + 1) { BooleanArray(maxX - minX + 1) }
-            panels.forEach { (point, white) -> grid[maxY - point.y][point.x - minX] = white }
-            return grid
-        }
+    val paintedGrid: List<List<Color>>
+        get() = constructGrid(panels.keys) { panels.getOrDefault(it, Color.BLACK) }
 
     /**
      * Moves the [Robot] forward one space from its current [position], in the [direction] it's currently facing.
      */
-    fun moveForward() { position = position.move(direction, 1) }
+    fun moveForward() { position = position.move(direction) }
 
     /**
-     * Paints the panel at the current [position] of the [Robot] with the specified color.
-     * @param white Whether the panel should be painted white. If `false`, the panel will be painted black instead.
+     * Paints the panel at the current [position] of the [Robot] with the specified [Color].
+     * @param color The [Color] that the current panel should be painted.
      */
-    fun paint(white: Boolean) { panels[position] = white }
+    fun paint(color: Color) { panels[position] = color }
 
     /**
      * Turns the [Robot] to face 90 degrees to the left from its current [direction].
@@ -121,30 +101,30 @@ class Robot {
         var didPaint = false
         intcode.onOutput = { output ->
             if (didPaint) {
-                // Turn the robot and move it forward one space
+                // Turn the robot and move it forward one space.
                 when (output) {
                     BigInteger.ZERO -> turnLeft()
                     BigInteger.ONE -> turnRight()
-                    else -> throw IllegalArgumentException("Invalid program output: $output.")
+                    else -> throw IllegalArgumentException("Invalid program output: $output")
                 }
                 moveForward()
 
-                // Send new panel color as input to the program
+                // Send new panel color as input to the program.
                 intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
             } else {
-                // Have the robot paint the current panel
+                // Have the robot paint the current panel.
                 when (output) {
-                    BigInteger.ZERO -> paint(white = false)
-                    BigInteger.ONE -> paint(white = true)
-                    else -> throw IllegalArgumentException("Invalid program output: $output.")
+                    BigInteger.ZERO -> paint(Color.BLACK)
+                    BigInteger.ONE -> paint(Color.WHITE)
+                    else -> throw IllegalArgumentException("Invalid program output: $output")
                 }
             }
 
-            // Toggle flag for how program output should be interpreted
+            // Toggle flag for how program output should be interpreted.
             didPaint = !didPaint
         }
 
-        // Send initial input and run the program until it halts
+        // Send initial input and run the program until it halts.
         intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
         while (!intcode.isDone) {
             intcode.run()

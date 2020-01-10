@@ -45,7 +45,7 @@ fun Int.toOperation(): Operation {
         8 -> EqualsOperation
         9 -> MoveRelativeBaseOperation
         99 -> StopOperation
-        else -> throw IllegalArgumentException("Unknown operation: $this.")
+        else -> throw IllegalArgumentException("Unknown operation: $this")
     }
 }
 

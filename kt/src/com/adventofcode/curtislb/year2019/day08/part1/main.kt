@@ -53,7 +53,7 @@ fun main() {
     processLayers(INPUT_PATH.toFile(), IMAGE_WIDTH * IMAGE_HEIGHT,
         onDigit = { _, digit -> digitCounts[digit]++ },
         onLayerFinished = {
-            // If layer has fewer zeros than the best so far, save (# of 1s) * (# of 2s)
+            // If layer has fewer zeros than the best so far, save (# of 1s) * (# of 2s).
             if (digitCounts[0] < minZeros) {
                 result = digitCounts[1] * digitCounts[2]
                 minZeros = digitCounts[0]

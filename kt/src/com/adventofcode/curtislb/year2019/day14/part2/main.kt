@@ -28,7 +28,7 @@ private const val RAW_MATERIAL_AVAILABLE = 1_000_000_000_000L
 fun main() {
     val factory = Nanofactory(INPUT_PATH.toFile())
 
-    // Binary search for the first product amount requiring more raw material than available
+    // Binary search for the first product amount requiring more raw material than available.
     val rawMaterials = setOf(RAW_MATERIAL)
     val productAmountLimit = bisectIndex { amount ->
         val products = mapOf(MaterialAmount(DESIRED_PRODUCT, amount).toPair())

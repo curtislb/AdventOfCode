@@ -19,13 +19,13 @@ fun processLayers(
 ) {
     var indexInLayer = 0
     file.forEachChar { char ->
-        // Check if we're done with the current layer
+        // Check if we're done with the current layer.
         if (indexInLayer == imageArea) {
             onLayerFinished()
             indexInLayer = 0
         }
 
-        // Process the next digit for this layer
+        // Process the next digit for this layer.
         if (char in '0'..'9') {
             onDigit(indexInLayer, char.toDigit())
             indexInLayer++

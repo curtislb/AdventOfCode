@@ -63,7 +63,7 @@ private val PHASE_SETTINGS = (5..9).map { it.toBigInteger() }
 
 // Answer: 19741286
 fun main() {
-    // Initialize the amplifier configuration
+    // Initialize the amplifier configuration.
     var maxSignal = BigInteger.ZERO
     val amplifiers = createAmplifierSeries(INPUT_PATH.toFile(), AMPLIFIER_COUNT)
     amplifiers.last().onOutput = { output ->
@@ -74,16 +74,16 @@ fun main() {
         }
     }
 
-    // Try all possible phase setting combinations
+    // Try all possible phase setting combinations.
     PHASE_SETTINGS.permutations().forEach { settings ->
-        // Send phase settings and initial input
+        // Send phase settings and initial input.
         amplifiers.forEachIndexed { index, amplifier ->
             amplifier.reset()
             amplifier.sendInput(settings[index])
         }
         amplifiers[0].sendInput(BigInteger.ZERO)
 
-        // Continue running amplifier programs until all have halted
+        // Continue running amplifier programs until all have halted.
         while (!amplifiers.all { it.isDone }) {
             amplifiers.forEach { amplifier ->
                 if (!amplifier.isDone) {

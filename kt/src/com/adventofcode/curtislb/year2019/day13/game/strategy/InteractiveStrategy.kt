@@ -1,6 +1,6 @@
 package com.adventofcode.curtislb.year2019.day13.game.strategy
 
-import com.adventofcode.curtislb.year2019.day13.game.board.Board
+import com.adventofcode.curtislb.year2019.day13.game.Board
 import java.math.BigInteger
 
 /**
@@ -19,7 +19,7 @@ object InteractiveStrategy : Strategy {
             "<" -> BigInteger("-1")
             ".", "" -> BigInteger.ZERO
             ">" -> BigInteger.ONE
-            else -> throw IllegalArgumentException("Invalid input: $input.")
+            else -> throw IllegalArgumentException("Invalid input: $input")
         }
     }
 }

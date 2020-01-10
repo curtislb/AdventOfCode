@@ -1,9 +1,6 @@
-package com.adventofcode.curtislb.year2019.day13.game.board
+package com.adventofcode.curtislb.year2019.day13.game
 
 import com.adventofcode.curtislb.common.grid.Point
-import com.adventofcode.curtislb.year2019.day13.game.tile.EmptyTile
-import com.adventofcode.curtislb.year2019.day13.game.tile.Tile
-import com.adventofcode.curtislb.year2019.day13.game.tile.toTile
 import java.math.BigInteger
 
 /**
@@ -49,7 +46,9 @@ class Board {
      * @param positionY The y-coordinate position of a [Point] on the board.
      * @return The type of the tile at the [Point] `(positionX, positionY)` on the [Board].
      */
-    operator fun get(positionX: Int, positionY: Int): Tile = tiles.getOrDefault(Point(positionX, positionY), EmptyTile)
+    operator fun get(positionX: Int, positionY: Int): Tile {
+        return tiles.getOrDefault(Point(positionX, positionY), Tile.EMPTY)
+    }
 
     /**
      * Updates the type of [Tile] at a given position on the board.
@@ -71,7 +70,7 @@ class Board {
         val stringBuilder = StringBuilder("Score: $score\n")
         for (row in 0 until height) {
             for (col in 0 until width) {
-                stringBuilder.append(tiles.getOrDefault(Point(x = col, y = row), EmptyTile))
+                stringBuilder.append(tiles.getOrDefault(Point(col, row), Tile.EMPTY).symbol)
             }
             stringBuilder.append('\n')
         }

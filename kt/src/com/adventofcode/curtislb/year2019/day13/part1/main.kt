@@ -29,11 +29,11 @@ package com.adventofcode.curtislb.year2019.day13.part1
 
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day13.game.Game
-import com.adventofcode.curtislb.year2019.day13.game.tile.BlockTile
+import com.adventofcode.curtislb.year2019.day13.game.Tile
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 13, fileName = "input.txt")
 
-private val TILE_TYPE = BlockTile
+private val TILE_TYPE = Tile.BLOCK
 
 // Answer: 286
 fun main() {

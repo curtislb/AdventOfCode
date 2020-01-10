@@ -45,7 +45,7 @@ class Nanofactory(file: File) {
             reaction.reactants.forEach { (material, amount) -> requiredMaterials[material] += coefficient * amount }
             requiredMaterials[reaction.product.material] -= coefficient * reaction.product.amount
         }
-        requiredMaterials.dropNegativeCounts()
+        requiredMaterials.clearNegativeCounts()
         return if (requiredMaterials.keysWithNonzeroCount == rawMaterials) requiredMaterials.toMap() else null
     }
 

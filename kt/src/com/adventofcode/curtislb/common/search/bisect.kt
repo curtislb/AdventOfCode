@@ -1,7 +1,7 @@
 package com.adventofcode.curtislb.common.search
 
 /**
- * Finds the first index for which a predicate switches from `false` to `true`.
+ * Finds the first index in a range for which a monotonic predicate function begins returning `true`.
  * @param knownFalse An index for which [predicate] is known to return `false`. Sets the lower bound of the search.
  * @param knownTrue An index for which [predicate] is known to return `true`. If [knownTrue] is `null`, the search will
  *  be conducted forward from [knownFalse] without bound.
@@ -12,12 +12,12 @@ package com.adventofcode.curtislb.common.search
  *  such index exists.
  * @throws IllegalArgumentException If no [predicate] function is provided.
  */
-fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((Long) -> Boolean)? = null): Long? {
+fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((index: Long) -> Boolean)? = null): Long? {
     if (predicate == null) {
         throw IllegalArgumentException("Must specify a predicate.")
     }
 
-    // If only a false index is known, search for a true index
+    // If only a false index is known, search for a true index.
     var falseIndex = knownFalse
     var trueIndex = if (knownTrue != null) {
         knownTrue
@@ -31,12 +31,12 @@ fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((Lon
         index
     }
 
-    // Known true index should be greater than known false index
+    // Known true index should be greater than known false index.
     if (trueIndex <= falseIndex) {
         return null
     }
 
-    // Binary search over indices to find the first true index
+    // Binary search over indices to find the first true index.
     while (falseIndex < trueIndex - 1L) {
         val midIndex = falseIndex + (trueIndex - falseIndex) / 2L
         if (predicate(midIndex)) {

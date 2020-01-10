@@ -16,7 +16,7 @@ data class Point(val x: Int, val y: Int) {
      * @param distance The number of grid units to move.
      * @return A new [Point] corresponding to the grid position [distance] units in [direction] from this point.
      */
-    fun move(direction: Direction, distance: Int): Point {
+    fun move(direction: Direction, distance: Int = 1): Point {
         return when (direction) {
             Direction.UP -> Point(x, y + distance)
             Direction.RIGHT -> Point(x + distance, y)
@@ -44,4 +44,11 @@ data class Point(val x: Int, val y: Int) {
     fun squaredDistanceTo(other: Point): Int = (x - other.x).pow(2) + (y - other.y).pow(2)
 
     override fun toString() = "($x, $y)"
+
+    companion object {
+        /**
+         * A point representing the 2D origin (0, 0).
+         */
+        val ORIGIN = Point(0, 0)
+    }
 }

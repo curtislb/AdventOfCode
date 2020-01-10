@@ -65,7 +65,7 @@ class Intcode(programString: String) {
         return when {
             index in currentValues.indices -> currentValues[index]
             index > currentValues.lastIndex -> extendedValues.getOrDefault(index, DEFAULT_VALUE)
-            else -> throw IndexOutOfBoundsException("Can't access negative position: $index.")
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
         }
     }
 
@@ -84,7 +84,7 @@ class Intcode(programString: String) {
                     extendedValues[index] = value
                 }
             }
-            else -> throw IndexOutOfBoundsException("Can't access negative position: $index.")
+            else -> throw IndexOutOfBoundsException("Can't access negative position: $index")
         }
     }
 

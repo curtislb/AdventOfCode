@@ -1,8 +1,7 @@
 package com.adventofcode.curtislb.year2019.day13.game.strategy
 
-import com.adventofcode.curtislb.year2019.day13.game.board.Board
-import com.adventofcode.curtislb.year2019.day13.game.tile.BallTile
-import com.adventofcode.curtislb.year2019.day13.game.tile.PaddleTile
+import com.adventofcode.curtislb.year2019.day13.game.Board
+import com.adventofcode.curtislb.year2019.day13.game.Tile
 import java.math.BigInteger
 import kotlin.math.abs
 
@@ -15,9 +14,9 @@ object GreedyStrategy : Strategy {
         var paddleX: Int? = null
         var minDistance = Int.MAX_VALUE
 
-        // Find the closest ball and paddle on the board
-        val balls = board.findAll(BallTile)
-        val paddles = board.findAll(PaddleTile)
+        // Find the closest ball and paddle on the board.
+        val balls = board.findAll(Tile.BALL)
+        val paddles = board.findAll(Tile.PADDLE)
         for (ball in balls) {
             for (paddle in paddles) {
                 val distance = abs(ball.x - paddle.x)
@@ -29,7 +28,7 @@ object GreedyStrategy : Strategy {
             }
         }
 
-        // Move the closest paddle towards the closest ball
+        // Move the closest paddle towards the closest ball.
         return when {
             ballX == null || paddleX == null -> BigInteger.ZERO
             ballX < paddleX -> BigInteger("-1")

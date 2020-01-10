@@ -7,6 +7,9 @@ import java.util.LinkedList
  * Produces values from one or more sequences in the order they were provided.
  */
 class ValueSequencer<T> {
+    /**
+     * All currently queued sequences of values.
+     */
     private var sequences: Deque<Iterator<T>> = LinkedList()
 
     /**

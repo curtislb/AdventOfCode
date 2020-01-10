@@ -18,7 +18,7 @@ class Wire(wireString: String) {
     init {
         val segmentStrings = wireString.split(',')
         val segmentArrayList = ArrayList<Segment>(segmentStrings.size)
-        var start = Point(0, 0)
+        var start = Point.ORIGIN
         segmentStrings.forEach { segmentString ->
             // Construct each segment and add it to the list in order.
             val direction = segmentString[0].toDirection()
@@ -46,7 +46,7 @@ class Wire(wireString: String) {
      *  be that of the intersection with the smallest Manhattan distance to [origin]. If this wire and [other] do not
      *  intersect, the [Pair] (`null`, [Int.MAX_VALUE]) will be returned instead.
      */
-    fun findNearestIntersectionWith(other: Wire, origin: Point = Point(0, 0)): Pair<Point?, Int> {
+    fun findNearestIntersectionWith(other: Wire, origin: Point = Point.ORIGIN): Pair<Point?, Int> {
         var nearestIntersection: Point? = null
         var nearestDistance: Int = Int.MAX_VALUE
         segments.forEach { segment ->

@@ -24,12 +24,12 @@ class Fraction(numer: Long, denom: Long = 1L) {
         when {
             denom == 0L -> throw IllegalArgumentException("Fraction can't have a denominator of 0.")
             numer == 0L -> {
-                // All fractions with a numerator of 0 are equivalent
+                // All fractions with a numerator of 0 are equivalent.
                 this.numer = 0L
                 this.denom = 1L
             }
             else -> {
-                // Apply sign to numerator and reduce to lowest terms
+                // Apply sign to numerator and reduce to lowest terms.
                 val isNegative = (numer < 0L) != (denom < 0L)
                 val absNumer = abs(numer)
                 val absDenom = abs(denom)

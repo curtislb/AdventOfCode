@@ -17,21 +17,21 @@ package com.adventofcode.curtislb.year2019.day11.part2
 
 import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.year2019.day11.painting.Color
 import com.adventofcode.curtislb.year2019.day11.painting.Robot
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 11, fileName = "input.txt")
 
 // Answer: ZCGRHKLB
 fun main() {
-    // Run the robot from a white starting panel
+    // Run the robot from a white starting panel.
     val robot = Robot()
-    robot.paint(white = true)
+    robot.paint(Color.WHITE)
     robot.executeProgram(Intcode(INPUT_PATH.toFile()))
 
-    // Print the painted grid (with its y-axis reversed)
-    val grid = robot.paintedGrid
-    grid.forEach { row ->
-        row.forEach { value -> print(if (value) "\u2588" else " ") }
+    // Print the painted grid (with its y-axis reversed).
+    robot.paintedGrid.forEach { row ->
+        row.forEach { print(it.symbol) }
         println()
     }
 }

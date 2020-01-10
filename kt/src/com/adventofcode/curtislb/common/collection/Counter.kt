@@ -6,7 +6,7 @@ package com.adventofcode.curtislb.common.collection
  */
 class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     /**
-     * Internal [Map] which holds the nonzero item counts for this [Counter].
+     * An internal [Map] that holds the nonzero item counts for this [Counter].
      */
     private val counts: MutableMap<T, Long> = initialCounts.toMutableMap()
 
@@ -70,7 +70,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     /**
      * Removes all items with negative counts from this [Counter], resetting their counts to 0.
      */
-    fun dropNegativeCounts() {
+    fun clearNegativeCounts() {
         counts.entries.filter { (_, count) -> count < 0 }.forEach { (key, _) -> counts.remove(key) }
     }
 }

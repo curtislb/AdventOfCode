@@ -54,7 +54,7 @@ private const val TRANSPARENT = 2
 
 // Answer: ZUKCJ
 fun main() {
-    // Calculate pixel values for the composed image
+    // Calculate pixel values for the composed image.
     val image = Array(IMAGE_HEIGHT) { IntArray(IMAGE_WIDTH) { TRANSPARENT } }
     processLayers(INPUT_PATH.toFile(), IMAGE_WIDTH * IMAGE_HEIGHT,
         onDigit = { indexInLayer, digit ->
@@ -65,7 +65,7 @@ fun main() {
             }
         })
 
-    // Print image with white pixels filled in
+    // Print image with white pixels filled in.
     image.forEach { row ->
         row.forEach { value -> print(if (value == WHITE) "\u2588" else " ") }
         println()

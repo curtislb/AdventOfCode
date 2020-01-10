@@ -13,7 +13,7 @@ fun <T> Collection<T>.permutations(): Sequence<List<T>> {
  * Recursive helper function for [permutations].
  * @param items A collection of unique items from which to generate permutations.
  * @param prefix A list of values from [items] that will be used to generate future permutations.
- * @param used All values from [items] which have already been included in [prefix].
+ * @param used All values from [items] that have already been included in [prefix].
  * @return A [Sequence] of all possible permutations of [items] starting with [prefix].
  */
 private fun <T> permutationsInternal(

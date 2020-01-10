@@ -90,28 +90,28 @@ private const val TARGET_NUMBER = 200
 
 // Answer: 1110
 fun main() {
-    // Find all asteroid locations
+    // Find all asteroid locations.
     val asteroids = getAsteroids(INPUT_PATH.toFile())
     if (asteroids.size <= TARGET_NUMBER) {
         println("Number of asteroids to vaporize (${asteroids.size - 1}) is less than target ($TARGET_NUMBER).")
         return
     }
 
-    // Find the best station location
+    // Find the best station location.
     val station = findBestStation(asteroids).first
     if (station == null) {
         println("No station location found.")
         return
     }
 
-    // Start vaporizing asteroids until target is reached
+    // Start vaporizing asteroids until target is reached.
     var vaporizedCount = 0
     val remainingAsteroids = asteroids.toMutableSet()
     while (vaporizedCount < TARGET_NUMBER) {
-        // Get all asteroids currently visible from the station
+        // Get all asteroids currently visible from the station.
         val visibleAsteroids = findVisibleAsteroids(station, remainingAsteroids)
 
-        // Check if target is among the currently visible asteroids
+        // Check if target is among the currently visible asteroids.
         if (TARGET_NUMBER - vaporizedCount <= visibleAsteroids.size) {
             val sortedAsteroids = visibleAsteroids.sortedBy { asteroid ->
                 if (asteroid == station) Double.POSITIVE_INFINITY else station.relativeAngleTo(asteroid)
@@ -121,7 +121,7 @@ fun main() {
             return
         }
 
-        // Remove all vaporized asteroids and continue
+        // Remove all vaporized asteroids and continue.
         vaporizedCount += visibleAsteroids.size
         remainingAsteroids.removeAll(visibleAsteroids)
     }

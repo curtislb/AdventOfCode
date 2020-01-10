@@ -82,7 +82,7 @@ Then, perhaps west (3) gets a reply of 0, south (2) gets a reply of 1, south aga
   #..#
   D.#
    #
-   
+
 
 Now, because of the reply of 2, you know you've found the oxygen system! In this example, it was only 2 moves away from
 the repair droid's starting position.
@@ -93,11 +93,30 @@ location of the oxygen system?
 
 package com.adventofcode.curtislb.year2019.day15.part1
 
+import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.io.pathToInput
+import com.adventofcode.curtislb.common.search.bfsDistance
+import com.adventofcode.curtislb.year2019.day15.repair.Droid
+import com.adventofcode.curtislb.year2019.day15.repair.Space
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 15, fileName = "input.txt")
 
-// Answer: ???
+// Answer: 270
 fun main() {
-    // TODO: Solution goes here
+    // Have the droid fully explore the grid.
+    val droid = Droid(INPUT_PATH.toFile())
+    droid.explore()
+
+    // Use BFS to determine the distance to the oxygen system.
+    val distance = bfsDistance(
+        start = Point.ORIGIN,
+        getNeighbors = droid::adjacentOpenSpaces,
+        isGoal = { droid.spaceAt(it) == Space.OXYGEN }
+    )
+
+    if (distance == null) {
+        println("Unable to find oxygen system.")
+    } else {
+        println(distance)
+    }
 }
