@@ -62,6 +62,13 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     }
 
     /**
+     * Updates the count of an item in this [Counter]. The item is removed if its new count is 0.
+     * @param key The item whose count should be set.
+     * @param count The new count to be set for [key].
+     */
+    operator fun set(key: T, count: Int) { counts[key] = count.toLong() }
+
+    /**
      * Creates a read-only [Map] containing all `(key, count)` pairs in this [Counter] for which `count` is nonzero.
      * @return A new [Map] from each shallow-copied item key currently in [Counter] to its corresponding nonzero count.
      */

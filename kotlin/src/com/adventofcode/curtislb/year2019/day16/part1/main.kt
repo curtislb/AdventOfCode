@@ -89,28 +89,19 @@ After 100 phases of FFT, what are the first eight digits in the final output lis
 
 package com.adventofcode.curtislb.year2019.day16.part1
 
-import com.adventofcode.curtislb.common.io.forEachChar
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.common.math.toDigit
 import com.adventofcode.curtislb.year2019.day16.fft.FFT
+import com.adventofcode.curtislb.year2019.day16.fft.readSignal
 
 private val INPUT_PATH = pathToInput(year = 2019, day = 16, fileName = "input.txt")
 
-private const val NUM_PHASES = 100
-private const val NUM_DIGITS = 8
+private const val PHASE_COUNT = 100
+private const val DIGIT_COUNT = 8
 
 // Answer: 96136976
 fun main() {
-    val inputSignal = mutableListOf<Int>()
-    INPUT_PATH.toFile().forEachChar { char ->
-        if (char.isDigit()) {
-            inputSignal.add(char.toDigit())
-        }
-    }
-
+    val inputSignal = INPUT_PATH.toFile().readSignal()
     val fft = FFT(inputSignal)
-    fft.run(NUM_PHASES)
-
-    val leadingDigits = fft.signal.slice(0 until NUM_DIGITS)
-    println(leadingDigits.joinToString(separator = "") { it.toString() })
+    fft.run(PHASE_COUNT)
+    println(fft.signal.slice(0 until DIGIT_COUNT).joinToString(separator = ""))
 }

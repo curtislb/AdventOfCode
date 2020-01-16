@@ -106,5 +106,5 @@ class NBodySystem(file: File) {
         return Vector(periodX, periodY, periodZ)
     }
 
-    override fun toString(): String = bodies.joinToString(separator = "\n") { it.toString() }
+    override fun toString(): String = bodies.joinToString(separator = "\n")
 }

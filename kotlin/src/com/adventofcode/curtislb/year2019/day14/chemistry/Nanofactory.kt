@@ -49,5 +49,5 @@ class Nanofactory(file: File) {
         return if (requiredMaterials.keysWithNonzeroCount == rawMaterials) requiredMaterials.toMap() else null
     }
 
-    override fun toString(): String = reactions.values.joinToString(separator = "\n") { it.toString() }
+    override fun toString(): String = reactions.values.joinToString(separator = "\n")
 }

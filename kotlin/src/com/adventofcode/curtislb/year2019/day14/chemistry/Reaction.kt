@@ -7,7 +7,7 @@ package com.adventofcode.curtislb.year2019.day14.chemistry
  */
 data class Reaction(val reactants: Map<String, Long>, val product: MaterialAmount) {
     override fun toString(): String {
-        val reactantsString = reactants.entries.joinToString(separator = ", ") { (material, amount) ->
+        val reactantsString = reactants.entries.joinToString { (material, amount) ->
             MaterialAmount(material, amount).toString()
         }
         return "$reactantsString => $product"
