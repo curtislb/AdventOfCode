@@ -16,11 +16,11 @@ data class MaterialAmount(val material: String, val amount: Long) {
 
     companion object {
         /**
-         * Creates a [MaterialAmount] from the given [String] representation.
+         * Creates a [MaterialAmount] from a given [String] representation.
          * @param materialAmountString A [String] of the form `"$amount $material"`.
          * @return A new [MaterialAmount] corresponding to [materialAmountString].
          */
-        fun fromString(materialAmountString: String): MaterialAmount {
+        fun from(materialAmountString: String): MaterialAmount {
             val (amountString, material) = materialAmountString.trim().split(' ')
             return MaterialAmount(material, amountString.toLong())
         }

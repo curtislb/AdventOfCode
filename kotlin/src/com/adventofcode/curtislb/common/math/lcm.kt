@@ -33,6 +33,7 @@ fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
     assert(m > 0L)
     assert(n > 0L)
     val factorization = nums.fold(takeLargestPowers(m.primeFactorization(), n.primeFactorization())) { partial, num ->
+        assert(num > 0L)
         takeLargestPowers(partial, num.primeFactorization())
     }
     return factorization.entries.fold(1L) { product, (factor, power) -> product * factor.pow(power) }

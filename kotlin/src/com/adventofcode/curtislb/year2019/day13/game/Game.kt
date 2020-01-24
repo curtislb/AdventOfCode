@@ -7,6 +7,7 @@ import java.math.BigInteger
 
 /**
  * An interactive game, represented by a [Board] and powered by an [Intcode] computer.
+ * @param file A [File] containing the [Intcode] program that controls the [Game].
  */
 class Game(file: File) {
     /**
@@ -43,26 +44,24 @@ class Game(file: File) {
             }
             outputCounter = (outputCounter + 1) % 3
         }
+        intcode[0] = BigInteger.TWO
+        intcode.run()
     }
 
     /**
-     * Allows the [Game] to run until it either ends or pauses to wait for player input.
+     * Restores the [Game] to its starting state, immediately after initialization.
      */
-    fun runUntilIdle() { intcode.run() }
+    fun reset() {
+        intcode.reset()
+        intcode[0] = BigInteger.TWO
+    }
 
     /**
-     * Resets the [Game] to its starting state, immediately after initialization.
-     */
-    fun reset() { intcode.reset() }
-
-    /**
-     * Plays the [Game] according to a particular [Strategy], after inserting a number of tokens.
+     * Plays the [Game] according to a particular [Strategy].
      * @param strategy The [Strategy] that will be used to select a move at each step of the [Game].
-     * @param tokens The number of tokens to insert before the [Game] is played.
      * @return The player's final score after the game has ended.
      */
-    fun play(strategy: Strategy, tokens: Int = 2): BigInteger {
-        intcode[0] = tokens.toBigInteger()
+    fun play(strategy: Strategy): BigInteger {
         while (!intcode.isDone) {
             intcode.run()
             intcode.sendInput(strategy.nextMove(board))

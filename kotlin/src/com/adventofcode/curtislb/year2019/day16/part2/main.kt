@@ -41,7 +41,7 @@ private const val MESSAGE_LENGTH = 8
 // Answer: 85600369
 fun main() {
     val baseSignal = INPUT_PATH.toFile().readSignal()
-    val offset = baseSignal.slice(0 until OFFSET_DIGITS).joinToString(separator = "").toInt()
+    val offset = baseSignal.subList(0, OFFSET_DIGITS).joinToString(separator = "").toInt()
     val fft = FastFFT(baseSignal, SIGNAL_REPEAT_COUNT, offset)
     fft.run(PHASE_COUNT)
     println(fft.readFromOffset(MESSAGE_LENGTH).joinToString(separator = ""))

@@ -3,13 +3,13 @@ package com.adventofcode.curtislb.year2019.day15.repair
 import com.adventofcode.curtislb.common.grid.Direction
 import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.grid.constructGrid
-import com.adventofcode.curtislb.common.grid.reverse
 import com.adventofcode.curtislb.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
 
 /**
  * A repair droid that navigates and paints panels in an infinite 2D grid.
+ * @param file A [File] containing the [Intcode] program that controls the [Droid].
  */
 class Droid(file: File) {
     /**
@@ -46,7 +46,7 @@ class Droid(file: File) {
 
     init {
         intcode.onOutput = { output ->
-            lastSpace = output.toSpace()
+            lastSpace = Space.from(output)
             knownSpaces[currentPosition.move(currentDirection)] = lastSpace
         }
     }
@@ -86,9 +86,11 @@ class Droid(file: File) {
      *  identified by the [Droid] as either an [Space.EMPTY] or an [Space.OXYGEN].
      */
     fun adjacentOpenSpaces(position: Point = currentPosition): List<Point> {
-        return Direction.values().map { position.move(it) }.filter { adjacentPosition ->
-            val space = knownSpaces[adjacentPosition]
-            space == Space.EMPTY || space == Space.OXYGEN
+        return position.neighbors.filter { neighbor ->
+            when (knownSpaces[neighbor]) {
+                Space.EMPTY, Space.OXYGEN -> true
+                else -> false
+            }
         }
     }
 

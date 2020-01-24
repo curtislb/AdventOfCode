@@ -103,5 +103,5 @@ fun main() {
     val inputSignal = INPUT_PATH.toFile().readSignal()
     val fft = FFT(inputSignal)
     fft.run(PHASE_COUNT)
-    println(fft.signal.slice(0 until DIGIT_COUNT).joinToString(separator = ""))
+    println(fft.signal.subList(0, DIGIT_COUNT).joinToString(separator = ""))
 }

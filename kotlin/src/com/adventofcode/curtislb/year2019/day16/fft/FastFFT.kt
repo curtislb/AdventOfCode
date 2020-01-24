@@ -53,7 +53,7 @@ class FastFFT(
      * @param length The number of signal values that should be read.
      * @return A [List] of [length] digits representing a portion of the transformed signal starting from [offset].
      */
-    fun readFromOffset(length: Int): List<Int> = offsetSignal.slice(0 until length)
+    fun readFromOffset(length: Int): List<Int> = offsetSignal.subList(0, length)
 
     /**
      * Creates the portion of the repeated signal starting from [offset].

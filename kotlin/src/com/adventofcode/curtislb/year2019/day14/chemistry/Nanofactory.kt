@@ -17,7 +17,7 @@ class Nanofactory(file: File) {
     init {
         val reactionsBuilder = mutableMapOf<String, Reaction>()
         file.forEachLine { line ->
-            val reaction = Reaction.fromString(line)
+            val reaction = Reaction.from(line)
             val material = reaction.product.material
             if (material in reactionsBuilder) {
                 throw IllegalArgumentException("Found more than one reaction to produce $material.")

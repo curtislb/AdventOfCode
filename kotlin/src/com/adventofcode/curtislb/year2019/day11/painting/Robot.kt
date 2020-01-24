@@ -1,6 +1,7 @@
 package com.adventofcode.curtislb.year2019.day11.painting
 
 import com.adventofcode.curtislb.common.grid.Direction
+import com.adventofcode.curtislb.common.grid.Orientation
 import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.grid.constructGrid
 import com.adventofcode.curtislb.common.intcode.Intcode
@@ -11,15 +12,9 @@ import java.math.BigInteger
  */
 class Robot {
     /**
-     * The current [Point] position of the [Robot] in the grid.
+     * The current [Orientation] of the [Robot] in the grid.
      */
-    var position: Point = Point.ORIGIN
-        private set
-
-    /**
-     * The current [Direction] in which the [Robot] is facing.
-     */
-    var direction: Direction = Direction.UP
+    var orientation: Orientation = Orientation(Point.ORIGIN, Direction.UP)
         private set
 
     /**
@@ -39,7 +34,7 @@ class Robot {
      * Whether the panel that the [Robot] is currently on has been painted white.
      */
     private val isOnWhitePanel: Boolean
-        get() = panels[position] == Color.WHITE
+        get() = panels[orientation.position] == Color.WHITE
 
     /**
      * A [List] of lists representing the portion of the grid that the [Robot] has painted.
@@ -48,39 +43,25 @@ class Robot {
         get() = constructGrid(panels.keys) { panels.getOrDefault(it, Color.BLACK) }
 
     /**
-     * Moves the [Robot] forward one space from its current [position], in the [direction] it's currently facing.
+     * Moves the [Robot] forward one space from its current position, in the direction it's currently facing.
      */
-    fun moveForward() { position = position.move(direction) }
+    fun moveForward() { orientation = orientation.moveForward() }
 
     /**
-     * Paints the panel at the current [position] of the [Robot] with the specified [Color].
+     * Turns the [Robot] to face 90 degrees to the left from the direction it's currently facing.
+     */
+    fun turnLeft() { orientation = orientation.turnLeft() }
+
+    /**
+     * Turns the [Robot] to face 90 degrees to the right from the direction it's currently facing.
+     */
+    fun turnRight() { orientation = orientation.turnRight() }
+
+    /**
+     * Paints the panel under the [Robot] with the specified [Color].
      * @param color The [Color] that the current panel should be painted.
      */
-    fun paint(color: Color) { panels[position] = color }
-
-    /**
-     * Turns the [Robot] to face 90 degrees to the left from its current [direction].
-     */
-    fun turnLeft() {
-        direction = when (direction) {
-            Direction.UP -> Direction.LEFT
-            Direction.RIGHT -> Direction.UP
-            Direction.DOWN -> Direction.RIGHT
-            Direction.LEFT -> Direction.DOWN
-        }
-    }
-
-    /**
-     * Turns the [Robot] to face 90 degrees to the right from its current [direction].
-     */
-    fun turnRight() {
-        direction = when (direction) {
-            Direction.UP -> Direction.RIGHT
-            Direction.RIGHT -> Direction.DOWN
-            Direction.DOWN -> Direction.LEFT
-            Direction.LEFT -> Direction.UP
-        }
-    }
+    fun paint(color: Color) { panels[orientation.position] = color }
 
     /**
      * Causes the [Robot] to follow the instructions given by an [Intcode] program.

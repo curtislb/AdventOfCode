@@ -1,8 +1,8 @@
 package com.adventofcode.curtislb.year2019.day03.wire
 
+import com.adventofcode.curtislb.common.grid.Direction
 import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.grid.Segment
-import com.adventofcode.curtislb.common.grid.toDirection
 
 /**
  * A wire consisting of a series of segments in a 2D grid.
@@ -21,7 +21,7 @@ class Wire(wireString: String) {
         var start = Point.ORIGIN
         segmentStrings.forEach { segmentString ->
             // Construct each segment and add it to the list in order.
-            val direction = segmentString[0].toDirection()
+            val direction = Direction.from(segmentString[0])
             val length = segmentString.substring(1).toInt()
             val segment = Segment(start, direction, length)
             segmentArrayList.add(segment)

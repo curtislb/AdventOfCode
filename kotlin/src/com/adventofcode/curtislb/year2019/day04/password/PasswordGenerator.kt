@@ -1,5 +1,7 @@
 package com.adventofcode.curtislb.year2019.day04.password
 
+import com.adventofcode.curtislb.common.collection.removeLast
+
 /**
  * A generator for producing numeric passwords that satisfy a given criterion.
  */
@@ -48,7 +50,7 @@ abstract class PasswordGenerator {
             nextDigits.forEach { digit ->
                 digitStrings.add(digit.toString())
                 yieldAll(addDigit(digit).generatePasswordsInternal(digitStrings))
-                digitStrings.removeAt(digitStrings.size - 1)
+                digitStrings.removeLast()
             }
         }
     }

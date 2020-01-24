@@ -38,6 +38,5 @@ private val TILE_TYPE = Tile.BLOCK
 // Answer: 286
 fun main() {
     val game = Game(INPUT_PATH.toFile())
-    game.runUntilIdle()
     println(game.board.findAll(TILE_TYPE).size)
 }

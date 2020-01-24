@@ -47,7 +47,7 @@ class Board {
      * @return The type of the tile at the [Point] `(positionX, positionY)` on the [Board].
      */
     operator fun get(positionX: Int, positionY: Int): Tile {
-        return tiles.getOrDefault(Point(positionX, positionY), Tile.EMPTY)
+        return tiles.getOrDefault(Point(positionX, -positionY), Tile.EMPTY)
     }
 
     /**
@@ -60,7 +60,7 @@ class Board {
         if (positionX < 0) {
             score = value
         } else {
-            tiles[Point(positionX, positionY)] = value.toTile()
+            tiles[Point(positionX, -positionY)] = Tile.from(value)
             height = height.coerceAtLeast(positionY + 1)
             width = width.coerceAtLeast(positionX + 1)
         }
@@ -70,7 +70,7 @@ class Board {
         val stringBuilder = StringBuilder("Score: $score\n")
         for (row in 0 until height) {
             for (col in 0 until width) {
-                stringBuilder.append(tiles.getOrDefault(Point(col, row), Tile.EMPTY).symbol)
+                stringBuilder.append(tiles.getOrDefault(Point.fromMatrixCoordinates(row, col), Tile.EMPTY).symbol)
             }
             stringBuilder.append('\n')
         }

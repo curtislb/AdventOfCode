@@ -15,18 +15,18 @@ data class Reaction(val reactants: Map<String, Long>, val product: MaterialAmoun
 
     companion object {
         /**
-         * Creates a [Reaction] from the given [String] representation.
+         * Creates a [Reaction] from a given [String] representation.
          * @param reactionString A [String] representation of a [Reaction].
          * @return A new [Reaction] corresponding to [reactionString].
          */
-        fun fromString(reactionString: String): Reaction {
+        fun from(reactionString: String): Reaction {
             val (reactantsString, productString) = reactionString.split("=>")
             val reactantsBuilder = mutableMapOf<String, Long>()
             reactantsString.trim().split(',').forEach { reactantString ->
-                val reactant = MaterialAmount.fromString(reactantString)
+                val reactant = MaterialAmount.from(reactantString)
                 reactantsBuilder[reactant.material] = reactant.amount
             }
-            return Reaction(reactantsBuilder, MaterialAmount.fromString(productString))
+            return Reaction(reactantsBuilder, MaterialAmount.from(productString))
         }
     }
 }

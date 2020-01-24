@@ -10,11 +10,17 @@ import kotlin.math.abs
  */
 data class Point(val x: Int, val y: Int) {
     /**
-     * Finds the [Point] reached by moving a given direction and distance from this point.
+     * A [List] of all grid points that are horizontally or vertically adjacent to this [Point].
+     */
+    val neighbors: List<Point>
+        get() = listOf(Point(x, y - 1), Point(x + 1, y), Point(x, y + 1), Point(x - 1, y))
+
+    /**
+     * Finds the [Point] that results from moving a given distance in a given direction.
      * @receiver The [Point] from which to begin moving.
-     * @param direction The direction in which to move.
+     * @param direction The [Direction] in which to move.
      * @param distance The number of grid units to move.
-     * @return A new [Point] corresponding to the grid position [distance] units in [direction] from this point.
+     * @return The [Point] reached by moving [distance] units in [direction] from this [Point].
      */
     fun move(direction: Direction, distance: Int = 1): Point {
         return when (direction) {
@@ -43,12 +49,26 @@ data class Point(val x: Int, val y: Int) {
      */
     fun squaredDistanceTo(other: Point): Int = (x - other.x).pow(2) + (y - other.y).pow(2)
 
+    /**
+     * Converts this [Point] to corresponding row and column indices in a 2D matrix.
+     * @return A [Pair] `(rowIndex, columnIndex)`, representing the row and column matrix indices for this [Point].
+     */
+    fun toMatrixCoordinates(): Pair<Int, Int> = Pair(-y, x)
+
     override fun toString() = "($x, $y)"
 
     companion object {
         /**
-         * A point representing the 2D origin (0, 0).
+         * A [Point] representing the 2D origin (0, 0).
          */
-        val ORIGIN = Point(0, 0)
+        val ORIGIN: Point = Point(0, 0)
+
+        /**
+         * Creates a [Point] from a given pair of matrix coordinates.
+         * @param rowIndex The row index of a position in matrix coordinates.
+         * @param colIndex The column index of a position in matrix coordinates.
+         * @return The [Point] corresponding to the matrix indices [rowIndex] and [colIndex].
+         */
+        fun fromMatrixCoordinates(rowIndex: Int, colIndex: Int): Point = Point(colIndex, -rowIndex)
     }
 }

@@ -6,30 +6,29 @@ package com.adventofcode.curtislb.common.collection
  * @return A finite [Sequence] of all possible permutations of the items in [this].
  */
 fun <T> Collection<T>.permutations(): Sequence<List<T>> {
-    return permutationsInternal(this, mutableListOf(), mutableSetOf())
+    return permutationsInternal(mutableListOf(), mutableSetOf())
 }
 
 /**
  * Recursive helper function for [permutations].
- * @param items A collection of unique items from which to generate permutations.
- * @param prefix A list of values from [items] that will be used to generate future permutations.
- * @param used All values from [items] that have already been included in [prefix].
- * @return A [Sequence] of all possible permutations of [items] starting with [prefix].
+ * @receiver A collection of unique items from which to generate permutations.
+ * @param prefix A list of items from this collection that will be used to generate future permutations.
+ * @param used All items from this collection that have already been included in [prefix].
+ * @return A [Sequence] of all possible permutations of items in this collection starting with [prefix].
  */
-private fun <T> permutationsInternal(
-    items: Collection<T>,
+private fun <T> Collection<T>.permutationsInternal(
     prefix: MutableList<T>,
     used: MutableSet<T>
 ): Sequence<List<T>> = sequence {
-    if (prefix.size == items.size) {
+    if (prefix.size == size) {
         yield(prefix)
     } else {
-        items.forEach { item ->
+        forEach { item ->
             if (item !in used) {
                 used.add(item)
                 prefix.add(item)
-                yieldAll(permutationsInternal(items, prefix, used))
-                prefix.removeAt(prefix.size - 1)
+                yieldAll(permutationsInternal(prefix, used))
+                prefix.removeLast()
                 used.remove(item)
             }
         }

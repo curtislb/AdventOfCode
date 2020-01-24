@@ -46,7 +46,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt
 
 // Answer: 13836
 fun main() {
-    val (wireA, wireB) = INPUT_PATH.toFile().readLines().slice(0..1).map { Wire(it.trim()) }
+    val (wireA, wireB) = INPUT_PATH.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
     val (intersection, pathLength) = wireA.findShortestPathIntersectionWith(wireB)
     if (intersection != null) {
         println(pathLength)
