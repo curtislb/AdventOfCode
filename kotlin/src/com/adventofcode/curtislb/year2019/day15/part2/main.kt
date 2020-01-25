@@ -79,7 +79,10 @@ fun main() {
     bfsApply(
         start = oxygenStartPosition,
         getNeighbors = droid::adjacentOpenSpaces,
-        action = { _, distance -> maxDistance = maxDistance.coerceAtLeast(distance) }
+        process = { _, distance ->
+            maxDistance = maxDistance.coerceAtLeast(distance)
+            false // Not done searching.
+        }
     )
     println(maxDistance)
 }
