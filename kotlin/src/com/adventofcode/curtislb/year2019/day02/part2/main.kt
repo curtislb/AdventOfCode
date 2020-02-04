@@ -42,7 +42,7 @@ import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 import java.math.BigInteger
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 2)
 
 private val NOUN_VERB_VALUES = (0..99).map { it.toBigInteger() }
 private val NOUN_FACTOR = BigInteger("100")

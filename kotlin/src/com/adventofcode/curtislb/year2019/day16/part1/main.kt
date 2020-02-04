@@ -93,7 +93,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day16.fft.FFT
 import com.adventofcode.curtislb.year2019.day16.fft.readSignal
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 16, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 16)
 
 private const val PHASE_COUNT = 100
 private const val DIGIT_COUNT = 8

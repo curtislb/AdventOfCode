@@ -18,7 +18,7 @@ import com.adventofcode.curtislb.common.search.bisectIndex
 import com.adventofcode.curtislb.year2019.day14.chemistry.MaterialAmount
 import com.adventofcode.curtislb.year2019.day14.chemistry.Nanofactory
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 14, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 14)
 
 private const val RAW_MATERIAL = "ORE"
 private const val DESIRED_PRODUCT = "FUEL"

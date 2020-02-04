@@ -69,7 +69,7 @@ package com.adventofcode.curtislb.year2019.day06.part1
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day06.orbits.Universe
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 6, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 6)
 
 private const val CENTER = "COM"
 

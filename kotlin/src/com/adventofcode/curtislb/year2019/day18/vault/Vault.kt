@@ -7,11 +7,12 @@ import com.adventofcode.curtislb.year2019.day18.vault.space.Space
 import java.io.File
 
 /**
- * TODO
+ * A vault consisting of a grid of tunnels, which contain doors that may be unlocked by corresponding keys.
+ * @param file A [File] from which the spaces that make up the grid of tunnels for this [Vault] should be read.
  */
 class Vault(file: File) {
     /**
-     * TODO
+     * A [List] of lists representing each [Space] in the grid of tunnels for this [Vault].
      */
     private val grid: List<List<Space>>
 
@@ -22,30 +23,43 @@ class Vault(file: File) {
     }
 
     /**
-     * TODO
+     * A [Set] of all [Point] positions in this [Vault] where an [EntranceSpace] is located.
      */
-    val entrance: Point? by lazy {
+    val entranceLocations: Set<Point> by lazy {
+        val entrancesBuilder = mutableSetOf<Point>()
         for (i in grid.indices) {
             for (j in grid[i].indices) {
                 if (grid[i][j] == EntranceSpace) {
-                    return@lazy Point.fromMatrixCoordinates(i, j)
+                    entrancesBuilder.add(Point.fromMatrixCoordinates(i, j))
                 }
             }
         }
-        null
+        entrancesBuilder
     }
 
     /**
-     * TODO
+     * A [Map] from each key [Char] to the [Point] in this [Vault] where the corresponding [KeySpace] is located.
      */
-    val keyCount: Int by lazy { grid.sumBy { row -> row.sumBy { space -> if (space is KeySpace) 1 else 0 } } }
+    val keyLocations: Map<Char, Point> by lazy {
+        val keyLocationsBuilder = mutableMapOf<Char, Point>()
+        grid.forEachIndexed { i, row ->
+            row.forEachIndexed { j, space ->
+                if (space is KeySpace) {
+                    keyLocationsBuilder[space.symbol] = Point.fromMatrixCoordinates(i, j)
+                }
+            }
+        }
+        keyLocationsBuilder
+    }
 
     /**
-     * TODO
+     * Gets the [Space] located at a given [Point] in this [Vault].
+     * @param point The [Point] position of the desired [Space].
+     * @return The [Space] located at position [point] in the grid, or `null` if [point] is outside the grid bounds.
      */
-    operator fun get(point: Point): Space {
+    operator fun get(point: Point): Space? {
         val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return grid[rowIndex][colIndex]
+        return if (rowIndex in grid.indices && colIndex in grid[rowIndex].indices) grid[rowIndex][colIndex] else null
     }
 
     override fun toString(): String {

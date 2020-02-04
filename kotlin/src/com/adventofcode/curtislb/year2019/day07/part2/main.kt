@@ -56,7 +56,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day07.amplifier.createAmplifierSeries
 import java.math.BigInteger
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 7, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 7)
 
 private const val AMPLIFIER_COUNT = 5
 private val PHASE_SETTINGS = (5..9).map { it.toBigInteger() }

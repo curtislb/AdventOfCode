@@ -1,5 +1,6 @@
 package com.adventofcode.curtislb.common.math
 
+import com.adventofcode.curtislb.common.collection.mapToMap
 import kotlin.math.max
 
 /**
@@ -47,9 +48,7 @@ fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
  *  the original two factorizations.
  */
 private fun takeLargestPowers(factorization1: Map<Long, Int>, factorization2: Map<Long, Int>): Map<Long, Int> {
-    val largestPowers = mutableMapOf<Long, Int>()
-    (factorization1.keys + factorization2.keys).forEach { factor ->
-        largestPowers[factor] = max(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
+    return (factorization1.keys + factorization2.keys).mapToMap { factor ->
+        Pair(factor, max(factorization1[factor] ?: 0, factorization2[factor] ?: 0))
     }
-    return largestPowers
 }

@@ -6,8 +6,8 @@ import java.io.File
 
 /**
  * Reads in and processes digits representing pixels in a multi-layer image.
- * @param file The file from which digits should be read.
- * @param imageArea The area (width * height) of the final image.
+ * @param file The [File] from which digits should be read.
+ * @param imageArea The [Int] area (width * height) of the final image.
  * @param onDigit An optional callback to be run each time a digit is encountered.
  * @param onLayerFinished An optional callback to be run each time all digits in a layer have been read.
  */

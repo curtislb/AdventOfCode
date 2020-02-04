@@ -124,7 +124,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day10.asteroid.findBestStation
 import com.adventofcode.curtislb.year2019.day10.asteroid.getAsteroids
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 10)
 
 // Answer: 263
 fun main() {

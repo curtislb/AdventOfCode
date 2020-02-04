@@ -54,7 +54,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.common.math.leastCommonMultiple
 import com.adventofcode.curtislb.year2019.day12.body.NBodySystem
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 12, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 12)
 
 // Answer: 281691380235984
 fun main() {

@@ -114,50 +114,18 @@ How many steps is the shortest path that collects all of the keys?
 package com.adventofcode.curtislb.year2019.day18.part1
 
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.common.search.bfsDistance
-import com.adventofcode.curtislb.year2019.day18.vault.SearchState
 import com.adventofcode.curtislb.year2019.day18.vault.Vault
-import com.adventofcode.curtislb.year2019.day18.vault.space.DoorSpace
-import com.adventofcode.curtislb.year2019.day18.vault.space.EntranceSpace
-import com.adventofcode.curtislb.year2019.day18.vault.space.KeySpace
-import com.adventofcode.curtislb.year2019.day18.vault.space.OpenSpace
-import com.adventofcode.curtislb.year2019.day18.vault.space.WallSpace
+import com.adventofcode.curtislb.year2019.day18.vault.search.KeySearch
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 18, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 18, part = 1)
 
-// Answer: ???
+// Answer: 3048
 fun main() {
     val vault = Vault(INPUT_PATH.toFile())
-    val steps = bfsDistance(
-        start = SearchState(position = vault.entrance!!, keys = emptySet()),
-        getNeighbors = { oldState ->
-            val neighbors = mutableListOf<SearchState>()
-            for (point in oldState.position.neighbors) {
-                val newState = when (val space = vault[point]) {
-                    OpenSpace, EntranceSpace -> SearchState(point, oldState.keys)
-                    WallSpace -> null
-                    is KeySpace -> {
-                        val key = space.symbol
-                        val newKeys = if (key !in oldState.keys) {
-                            oldState.keys.toMutableSet().apply { add(key) }
-                        } else {
-                            oldState.keys
-                        }
-                        SearchState(point, newKeys)
-                    }
-                    is DoorSpace -> {
-                        val key = space.symbol.toLowerCase()
-                        if (key in oldState.keys) SearchState(point, oldState.keys) else null
-                    }
-                    else -> throw IllegalStateException("Encountered unknown space: ${space.symbol}")
-                }
-                if (newState != null) {
-                    neighbors.add(newState)
-                }
-            }
-            neighbors
-        },
-        isGoal = { it.keys.size == vault.keyCount }
-    )
-    println(steps)
+    val distance = KeySearch(vault).searchDistance
+    if (distance != null) {
+        println(distance)
+    } else {
+        println("No path found.")
+    }
 }

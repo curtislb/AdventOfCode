@@ -78,7 +78,7 @@ import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 import java.math.BigInteger
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 2, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 2)
 
 private val NOUN_VALUE = BigInteger("12")
 private val VERB_VALUE = BigInteger.TWO

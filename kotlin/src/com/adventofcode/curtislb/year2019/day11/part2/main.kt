@@ -20,7 +20,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day11.painting.Color
 import com.adventofcode.curtislb.year2019.day11.painting.Robot
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 11, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 11)
 
 // Answer: ZCGRHKLB
 fun main() {

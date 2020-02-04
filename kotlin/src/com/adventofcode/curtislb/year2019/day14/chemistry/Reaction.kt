@@ -1,5 +1,7 @@
 package com.adventofcode.curtislb.year2019.day14.chemistry
 
+import com.adventofcode.curtislb.common.collection.mapToMap
+
 /**
  * A chemical reaction that consumes one or more input materials to produce an output material.
  * @param reactants A [Map] from each input material to the amount of it that is consumed by this [Reaction].
@@ -21,12 +23,10 @@ data class Reaction(val reactants: Map<String, Long>, val product: MaterialAmoun
          */
         fun from(reactionString: String): Reaction {
             val (reactantsString, productString) = reactionString.split("=>")
-            val reactantsBuilder = mutableMapOf<String, Long>()
-            reactantsString.trim().split(',').forEach { reactantString ->
-                val reactant = MaterialAmount.from(reactantString)
-                reactantsBuilder[reactant.material] = reactant.amount
+            val reactants = reactantsString.trim().split(',').mapToMap { reactantString ->
+                MaterialAmount.from(reactantString).toPair()
             }
-            return Reaction(reactantsBuilder, MaterialAmount.from(productString))
+            return Reaction(reactants, MaterialAmount.from(productString))
         }
     }
 }

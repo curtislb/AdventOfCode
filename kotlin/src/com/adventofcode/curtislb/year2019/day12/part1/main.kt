@@ -205,7 +205,7 @@ package com.adventofcode.curtislb.year2019.day12.part1
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day12.body.NBodySystem
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 12, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 12)
 
 private const val NUM_STEPS = 1000
 

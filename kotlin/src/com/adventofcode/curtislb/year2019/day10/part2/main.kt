@@ -84,7 +84,7 @@ import com.adventofcode.curtislb.year2019.day10.asteroid.findVisibleAsteroids
 import com.adventofcode.curtislb.year2019.day10.asteroid.getAsteroids
 import com.adventofcode.curtislb.year2019.day10.asteroid.relativeAngleTo
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 10, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 10)
 
 private const val TARGET_NUMBER = 200
 

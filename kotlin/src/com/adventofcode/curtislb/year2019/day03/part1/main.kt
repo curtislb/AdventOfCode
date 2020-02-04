@@ -58,7 +58,7 @@ package com.adventofcode.curtislb.year2019.day03.part1
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day03.wire.Wire
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 3, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 3)
 
 // Answer: 709
 fun main() {

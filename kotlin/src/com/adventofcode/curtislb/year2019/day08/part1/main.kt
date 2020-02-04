@@ -40,7 +40,7 @@ package com.adventofcode.curtislb.year2019.day08.part1
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day08.image.processLayers
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 8, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 8)
 
 private const val IMAGE_WIDTH = 25
 private const val IMAGE_HEIGHT = 6
@@ -50,7 +50,9 @@ fun main() {
     var result = 0
     var minZeros = Int.MAX_VALUE
     var digitCounts = IntArray(10)
-    processLayers(INPUT_PATH.toFile(), IMAGE_WIDTH * IMAGE_HEIGHT,
+    processLayers(
+        file = INPUT_PATH.toFile(),
+        imageArea = IMAGE_WIDTH * IMAGE_HEIGHT,
         onDigit = { _, digit -> digitCounts[digit]++ },
         onLayerFinished = {
             // If layer has fewer zeros than the best so far, save (# of 1s) * (# of 2s).
@@ -59,6 +61,7 @@ fun main() {
                 minZeros = digitCounts[0]
             }
             digitCounts = IntArray(10)
-        })
+        }
+    )
     println(result)
 }

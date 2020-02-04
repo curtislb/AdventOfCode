@@ -93,13 +93,13 @@ location of the oxygen system?
 
 package com.adventofcode.curtislb.year2019.day15.part1
 
+import com.adventofcode.curtislb.common.graph.bfsDistance
 import com.adventofcode.curtislb.common.grid.Point
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.common.search.bfsDistance
 import com.adventofcode.curtislb.year2019.day15.repair.Droid
 import com.adventofcode.curtislb.year2019.day15.repair.Space
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 15, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 15)
 
 // Answer: 270
 fun main() {
@@ -110,8 +110,8 @@ fun main() {
     // Use BFS to determine the distance to the oxygen system.
     val distance = bfsDistance(
         start = Point.ORIGIN,
-        getNeighbors = droid::adjacentOpenSpaces,
-        isGoal = { droid.spaceAt(it) == Space.OXYGEN }
+        isGoal = { droid.spaceAt(it) == Space.OXYGEN },
+        getNeighbors = { droid.adjacentOpenSpaces(it).asSequence() }
     )
 
     if (distance == null) {

@@ -64,7 +64,7 @@ import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 import java.math.BigInteger
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 5, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 5)
 
 private val SYSTEM_ID = BigInteger("5")
 

@@ -89,7 +89,7 @@ import com.adventofcode.curtislb.common.intcode.Intcode
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day11.painting.Robot
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 11, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 11)
 
 // Answer: 1747
 fun main() {

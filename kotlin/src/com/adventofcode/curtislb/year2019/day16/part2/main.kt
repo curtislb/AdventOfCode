@@ -31,7 +31,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day16.fft.FastFFT
 import com.adventofcode.curtislb.year2019.day16.fft.readSignal
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 16, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 16)
 
 private const val OFFSET_DIGITS = 7
 private const val SIGNAL_REPEAT_COUNT = 10_000

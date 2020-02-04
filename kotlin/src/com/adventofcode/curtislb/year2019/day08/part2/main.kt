@@ -44,7 +44,7 @@ package com.adventofcode.curtislb.year2019.day08.part2
 import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day08.image.processLayers
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 8, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 8)
 
 private const val IMAGE_WIDTH = 25
 private const val IMAGE_HEIGHT = 6
@@ -56,14 +56,17 @@ private const val TRANSPARENT = 2
 fun main() {
     // Calculate pixel values for the composed image.
     val image = Array(IMAGE_HEIGHT) { IntArray(IMAGE_WIDTH) { TRANSPARENT } }
-    processLayers(INPUT_PATH.toFile(), IMAGE_WIDTH * IMAGE_HEIGHT,
+    processLayers(
+        file = INPUT_PATH.toFile(),
+        imageArea = IMAGE_WIDTH * IMAGE_HEIGHT,
         onDigit = { indexInLayer, digit ->
             val row = indexInLayer / IMAGE_WIDTH
             val col = indexInLayer % IMAGE_WIDTH
             if (image[row][col] == TRANSPARENT) {
                 image[row][col] = digit
             }
-        })
+        }
+    )
 
     // Print image with white pixels filled in.
     image.forEach { row ->

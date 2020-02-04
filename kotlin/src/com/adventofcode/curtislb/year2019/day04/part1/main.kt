@@ -31,7 +31,7 @@ import com.adventofcode.curtislb.year2019.day04.password.InRangeGenerator
 import com.adventofcode.curtislb.year2019.day04.password.NonDecreasingGenerator
 import com.adventofcode.curtislb.year2019.day04.password.SatisfiesAllGenerator
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 4, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 4)
 
 private const val PASSWORD_LENGTH = 6
 

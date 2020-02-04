@@ -103,7 +103,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day17.ascii.ASCII
 import com.adventofcode.curtislb.year2019.day17.ascii.Routine
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 17, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 17)
 
 private const val FUNCTION_COUNT = 3
 private const val MAX_CHAR_COUNT = 20

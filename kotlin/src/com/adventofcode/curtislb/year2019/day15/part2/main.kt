@@ -55,11 +55,11 @@ Use the repair droid to get a complete map of the area. How many minutes will it
 
 package com.adventofcode.curtislb.year2019.day15.part2
 
+import com.adventofcode.curtislb.common.graph.bfsApply
 import com.adventofcode.curtislb.common.io.pathToInput
-import com.adventofcode.curtislb.common.search.bfsApply
 import com.adventofcode.curtislb.year2019.day15.repair.Droid
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 15, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 15)
 
 // Answer: 364
 fun main() {
@@ -78,11 +78,10 @@ fun main() {
     var maxDistance = 0L
     bfsApply(
         start = oxygenStartPosition,
-        getNeighbors = droid::adjacentOpenSpaces,
-        process = { _, distance ->
-            maxDistance = maxDistance.coerceAtLeast(distance)
-            false // Not done searching.
-        }
-    )
+        getNeighbors = { droid.adjacentOpenSpaces(it).asSequence() }
+    ) { _, distance ->
+        maxDistance = maxDistance.coerceAtLeast(distance)
+        false // Not done searching.
+    }
     println(maxDistance)
 }

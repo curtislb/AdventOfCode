@@ -32,5 +32,5 @@ fun Long.primeFactorization(): Map<Long, Int> {
         factorization[n] = 1
     }
 
-    return factorization.toMap()
+    return factorization
 }

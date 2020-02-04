@@ -68,7 +68,7 @@ import com.adventofcode.curtislb.common.io.pathToInput
 import com.adventofcode.curtislb.year2019.day17.ascii.ASCII
 import kotlin.math.abs
 
-private val INPUT_PATH = pathToInput(year = 2019, day = 17, fileName = "input.txt")
+private val INPUT_PATH = pathToInput(year = 2019, day = 17)
 
 // Answer: 7720
 fun main() {
