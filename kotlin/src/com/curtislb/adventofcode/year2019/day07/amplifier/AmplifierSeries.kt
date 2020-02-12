@@ -97,7 +97,7 @@ class AmplifierSeries(file: File, count: Int) {
     }
 
     /**
-     * TODO
+     * Restores all amplifiers in this series to their original states, immediately following initialization.
      */
     private fun resetAmplifiers() {
         amplifiers.forEach { it.reset() }

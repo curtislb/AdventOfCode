@@ -25,11 +25,6 @@ data class MutableVector(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
     }
 
     /**
-     * Returns the sum of [transform] applied to each component of this vector.
-     */
-    fun sumBy(transform: (component: Int) -> Int): Int = transform(x) + transform(y) + transform(z)
-
-    /**
      * Returns a new vector by summing the corresponding components of this vector and [other].
      */
     operator fun plus(other: MutableVector): MutableVector = MutableVector(x + other.x, y + other.y, z + other.z)
@@ -37,11 +32,16 @@ data class MutableVector(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
     /**
      * Adds each component of [other] to the corresponding component of this vector.
      */
-    operator fun plusAssign(other: MutableVector) {
+    fun add(other: MutableVector) {
         x += other.x
         y += other.y
         z += other.z
     }
+
+    /**
+     * Returns the sum of [transform] applied to each component of this vector.
+     */
+    fun sumBy(transform: (component: Int) -> Int): Int = transform(x) + transform(y) + transform(z)
 
     override fun toString(): String = "<x=$x, y=$y, z=$z>"
 }

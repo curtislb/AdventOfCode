@@ -38,7 +38,7 @@ class Body(val position: MutableVector = MutableVector(), val velocity: MutableV
     /**
      * Updates the [position] of this body based on its current velocity.
      */
-    fun applyVelocity() { position += velocity }
+    fun applyVelocity() { position.add(velocity) }
 
     /**
      * Returns a deep copy of this body, with the same current position and velocity.

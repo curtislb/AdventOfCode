@@ -40,6 +40,7 @@ package com.curtislb.adventofcode.year2019.day02.part2
 
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.common.range.BigIntegerRange
 import java.math.BigInteger
 
 /**
@@ -50,7 +51,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 2)
 /**
  * All valid values for the noun (position 1) and verb (position 2) of the program.
  */
-private val NOUN_VERB_VALUES = (0..99).map { it.toBigInteger() }
+private val NOUN_VERB_VALUES = BigIntegerRange(0..99)
 
 /**
  * The number by which the target noun value should be multiplied.
@@ -65,8 +66,8 @@ private val TARGET_OUTPUT = BigInteger("19690720")
 // Answer: 6635
 fun main() {
     val intcode = Intcode(INPUT_PATH.toFile())
-    NOUN_VERB_VALUES.forEach { noun ->
-        NOUN_VERB_VALUES.forEach { verb ->
+    for (noun in NOUN_VERB_VALUES) {
+        for (verb in NOUN_VERB_VALUES) {
             intcode[1] = noun
             intcode[2] = verb
             intcode.run()

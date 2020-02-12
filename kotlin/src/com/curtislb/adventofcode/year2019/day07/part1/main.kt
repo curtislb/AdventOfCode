@@ -66,6 +66,7 @@ thrusters?
 
 package com.curtislb.adventofcode.year2019.day07.part1
 
+import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day07.amplifier.AmplifierSeries
 
@@ -82,7 +83,7 @@ private const val AMPLIFIER_COUNT = 5
 /**
  * All possible phase settings for the amplifiers.
  */
-private val PHASE_SETTINGS = (0..4).map { it.toBigInteger() }
+private val PHASE_SETTINGS = BigIntegerRange(0..4).toList()
 
 // Answer: 272368
 fun main() {

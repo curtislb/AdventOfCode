@@ -51,6 +51,7 @@ sent to the thrusters?
 
 package com.curtislb.adventofcode.year2019.day07.part2
 
+import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day07.amplifier.AmplifierSeries
 
@@ -67,7 +68,7 @@ private const val AMPLIFIER_COUNT = 5
 /**
  * All possible phase settings for the amplifiers.
  */
-private val PHASE_SETTINGS = (5..9).map { it.toBigInteger() }
+private val PHASE_SETTINGS = BigIntegerRange(5..9).toList()
 
 // Answer: 19741286
 fun main() {
