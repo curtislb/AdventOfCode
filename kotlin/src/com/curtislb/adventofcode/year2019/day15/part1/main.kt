@@ -114,7 +114,7 @@ fun main() {
     val distance = bfsDistance(
         start = Point.ORIGIN,
         isGoal = { droid.spaceAt(it) == Space.OXYGEN },
-        getNeighbors = { droid.adjacentOpenSpaces(it).asSequence() }
+        getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }
     )
 
     if (distance == null) {

@@ -79,10 +79,7 @@ fun main() {
 
     // Use BFS to find the furthest open space from the oxygen system.
     var maxDistance = 0L
-    bfsApply(
-        start = oxygenStartPosition,
-        getNeighbors = { droid.adjacentOpenSpaces(it).asSequence() }
-    ) { _, distance ->
+    bfsApply(oxygenStartPosition, getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() } ) { _, distance ->
         maxDistance = maxDistance.coerceAtLeast(distance)
         false // Not done searching.
     }

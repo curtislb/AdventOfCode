@@ -201,15 +201,15 @@ class Intcode(programString: String) {
         isPaused = false
     }
 
-    private companion object {
+    companion object {
         /**
          * The default value to be assumed for any position in the program that isn't explicitly set.
          */
-        val DEFAULT_VALUE: BigInteger = BigInteger.ZERO
+        private val DEFAULT_VALUE: BigInteger = BigInteger.ZERO
 
         /**
          * The divisor used to separate the opcode and parameter modes of an operation value.
          */
-        val OPCODE_MOD: BigInteger = BigInteger("100")
+        private val OPCODE_MOD: BigInteger = BigInteger("100")
     }
 }

@@ -5,14 +5,14 @@ import java.math.BigInteger
 /**
  * Returns the [IntRange] that is equivalent to this [ClosedRange].
  */
-fun ClosedRange<out Int>.toIterableRange(): IntRange = start..endInclusive
+fun ClosedRange<Int>.toIterableRange(): IntRange = start..endInclusive
 
 /**
  * Returns the [LongRange] that is equivalent to this [ClosedRange].
  */
-fun ClosedRange<out Long>.toIterableRange(): LongRange = start..endInclusive
+fun ClosedRange<Long>.toIterableRange(): LongRange = start..endInclusive
 
 /**
  * Returns the [BigIntegerRange] that is equivalent to this [ClosedRange].
  */
-fun ClosedRange<out BigInteger>.toIterableRange(): BigIntegerRange = start..endInclusive
+fun ClosedRange<BigInteger>.toIterableRange(): BigIntegerRange = start..endInclusive

@@ -3,6 +3,7 @@ package com.curtislb.adventofcode.year2019.day12.body
 import com.curtislb.adventofcode.common.collection.MutableVector
 import com.curtislb.adventofcode.common.collection.deepCopy
 import com.curtislb.adventofcode.common.collection.uniquePairs
+import com.curtislb.adventofcode.common.io.mapLines
 import java.io.File
 
 /**
@@ -23,9 +24,7 @@ class NBodySystem(file: File) {
     private val initialStates: List<Body>
 
     init {
-        val bodiesBuilder = mutableListOf<Body>()
-        file.forEachLine { bodiesBuilder.add(Body(it)) }
-        bodies = bodiesBuilder
+        bodies = file.mapLines { Body(it) }
         initialStates = bodies.deepCopy { it.copy() }
     }
 

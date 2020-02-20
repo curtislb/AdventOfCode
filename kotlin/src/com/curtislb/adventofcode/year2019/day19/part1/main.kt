@@ -39,8 +39,8 @@ tractor beam in the 50x50 area closest to the emitter? (For each of X and Y, thi
 
 package com.curtislb.adventofcode.year2019.day19.part1
 
-import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 
 /**

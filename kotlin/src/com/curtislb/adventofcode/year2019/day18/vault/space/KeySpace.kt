@@ -3,7 +3,9 @@ package com.curtislb.adventofcode.year2019.day18.vault.space
 /**
  * A space representing a key in the vault, which opens any corresponding door when collected.
  */
-class KeySpace(symbol: Char) : Space(symbol) {
+class KeySpace(override val symbol: Char) : Space {
+    override val isOccupiable: Boolean = true
+
     init {
         if (!symbol.isLowerCase()) {
             throw IllegalArgumentException("Key symbol '$symbol' should be a lowercase letter.")

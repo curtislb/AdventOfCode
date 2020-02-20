@@ -34,12 +34,12 @@ class Droid(file: File) {
     /**
      * A map from each position that the repair droid has identified to the space at that position.
      */
-    private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Pair(Point.ORIGIN, Space.EMPTY))
+    private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Pair(Point.ORIGIN, Space.OPEN))
 
     /**
      * The most recent space identified by the repair droid.
      */
-    private var lastSpace: Space = Space.EMPTY
+    private var lastSpace: Space = Space.OPEN
 
     init {
         intcode.onOutput = { output ->
@@ -57,9 +57,7 @@ class Droid(file: File) {
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored.
      */
-    fun constructKnownGrid(): List<List<Space>> {
-        return constructGrid(knownSpaces.keys) { knownSpaces.getOrDefault(it, Space.UNKNOWN) }
-    }
+    fun constructKnownGrid(): List<List<Space>> = constructGrid(knownSpaces.keys) { spaceAt(it) }
 
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored, including the droid's
@@ -67,7 +65,7 @@ class Droid(file: File) {
      */
     fun constructKnownGridWithDroid(): List<List<Space>> {
         return constructGrid(knownSpaces.keys) { point ->
-            if (point == orientation.position) Space.DROID else knownSpaces.getOrDefault(point, Space.UNKNOWN)
+            if (point == orientation.position) Space.DROID else spaceAt(point)
         }
     }
 
@@ -80,13 +78,8 @@ class Droid(file: File) {
     /**
      * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
      */
-    fun adjacentOpenSpaces(position: Point = orientation.position): List<Point> {
-        return position.neighbors.filter { neighbor ->
-            when (knownSpaces[neighbor]) {
-                Space.EMPTY, Space.OXYGEN -> true
-                else -> false
-            }
-        }
+    fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
+        return position.neighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
 
     /**
@@ -109,11 +102,11 @@ class Droid(file: File) {
         intcode.sendInput(input)
         intcode.run()
 
-        if (lastSpace != Space.WALL) {
+        if (lastSpace.isOccupiable == true) {
             // Update the droid's position to the new space.
             orientation = orientation.moveForward()
 
-            // Check if we've found the location of the goal.
+            // Check if we've found the location of the oxygen system.
             if (lastSpace == Space.OXYGEN) {
                 goalPosition = orientation.position
             }
@@ -132,7 +125,7 @@ class Droid(file: File) {
         visited.add(orientation.position)
         for (direction in Direction.values()) {
             val newPosition = orientation.position.move(direction)
-            if (newPosition !in knownSpaces) {
+            if (newPosition !in visited && spaceAt(newPosition).isOccupiable != false) {
                 move(direction)
                 if (orientation.position == newPosition) {
                     exploreInternal(visited)

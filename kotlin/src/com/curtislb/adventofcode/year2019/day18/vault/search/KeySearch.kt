@@ -6,11 +6,8 @@ import com.curtislb.adventofcode.common.graph.dfsPaths
 import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.year2019.day18.vault.Vault
-import com.curtislb.adventofcode.year2019.day18.vault.space.DoorSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.EntranceSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
-import com.curtislb.adventofcode.year2019.day18.vault.space.OpenSpace
-import com.curtislb.adventofcode.year2019.day18.vault.space.WallSpace
 
 /**
  * A search for the shortest path through [vault] that collects all keys.
@@ -60,10 +57,9 @@ class KeySearch(private val vault: Vault) {
             val pathsFromStart = dfsPaths(startPosition, keyPositions) { point ->
                 sequence {
                     for (neighbor in point.neighbors) {
-                        when (val space = vault[neighbor]) {
-                            OpenSpace, EntranceSpace, is KeySpace, is DoorSpace -> yield(neighbor)
-                            WallSpace, null -> {}
-                            else -> throw IllegalArgumentException("Encountered unknown space: ${space.symbol}")
+                        val space = vault[neighbor]
+                        if (space != null && space.isOccupiable) {
+                            yield(neighbor)
                         }
                     }
                 }

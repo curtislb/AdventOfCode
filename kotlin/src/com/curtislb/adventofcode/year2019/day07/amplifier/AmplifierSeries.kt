@@ -15,9 +15,11 @@ class AmplifierSeries(file: File, count: Int) {
     /**
      * An array containing the Intcode programs for all amplifiers in order.
      */
-    private val amplifiers: Array<Intcode> = Array(count) { Intcode(file) }
+    private val amplifiers: Array<Intcode>
 
     init {
+        val programString = file.readText().trim()
+        amplifiers =  Array(count) { Intcode(programString) }
         for (i in 0 until amplifiers.lastIndex) {
             amplifiers[i].onOutput = { amplifiers[i + 1].sendInput(it) }
         }

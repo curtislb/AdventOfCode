@@ -97,15 +97,15 @@ class ASCII(file: File, private val showAllOutput: Boolean = false) {
         }
     }
 
-    private companion object {
+    companion object {
         /**
          * The maximum value of a printable ASCII character.
          */
-        val MAX_CHAR_CODE: BigInteger = BigInteger("127")
+        private val MAX_CHAR_CODE: BigInteger = BigInteger("127")
 
         /**
          * The ASCII value of the newline character.
          */
-        val NEWLINE_CODE: BigInteger = BigInteger.TEN
+        private val NEWLINE_CODE: BigInteger = BigInteger.TEN
     }
 }

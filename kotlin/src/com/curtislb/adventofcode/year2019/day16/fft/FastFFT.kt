@@ -64,10 +64,10 @@ class FastFFT(
         return halfSignal
     }
 
-    private companion object {
+    companion object {
         /**
          * Returns the minimum allowable offset for a given [baseSignal] repeated [repeatCount] times.
          */
-        fun getMinimumOffset(baseSignal: List<Int>, repeatCount: Int): Int = (baseSignal.size * repeatCount) / 2
+        private fun getMinimumOffset(baseSignal: List<Int>, repeatCount: Int): Int = (baseSignal.size * repeatCount) / 2
     }
 }

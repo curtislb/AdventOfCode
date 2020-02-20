@@ -4,6 +4,7 @@ import com.curtislb.adventofcode.common.collection.removeLast
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.grid.getCellOrNull
 import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Instruction
 import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Move
 import com.curtislb.adventofcode.year2019.day17.ascii.instruction.TurnLeft
@@ -48,9 +49,7 @@ class ScaffoldGrid {
                 if (space == Space.SCAFFOLD) {
                     val point = Point.fromMatrixCoordinates(i, j)
                     val isIntersection = point.neighbors.all { neighbor ->
-                        val (neighborRow, neighborCol) = neighbor.toMatrixCoordinates()
-                        neighborRow in grid.indices && neighborCol in grid[neighborRow].indices
-                                && grid[neighborRow][neighborCol] == Space.SCAFFOLD
+                        grid.getCellOrNull(neighbor) == Space.SCAFFOLD
                     }
                     if (isIntersection) {
                         intersections.add(point)
@@ -133,10 +132,7 @@ class ScaffoldGrid {
     /**
      * Returns `true` if the vacuum robot can safely occupy [position], or `false` otherwise.
      */
-    private fun isSafeSpace(position: Point): Boolean {
-        val (i, j) = position.toMatrixCoordinates()
-        return i in grid.indices && j in grid[i].indices && grid[i][j] == Space.SCAFFOLD
-    }
+    private fun isSafeSpace(position: Point): Boolean = grid.getCellOrNull(position)?.isSafe == true
 
     override fun toString(): String {
         return grid.joinToString(separator = "\n") { row ->

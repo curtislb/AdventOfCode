@@ -34,7 +34,7 @@ fun main() {
 
     // Print the portion of the grid that the robot has painted.
     robot.constructPaintedGrid().forEach { row ->
-        row.forEach { print(it.symbol) }
+        row.forEach { color -> print(color.symbol) }
         println()
     }
 }

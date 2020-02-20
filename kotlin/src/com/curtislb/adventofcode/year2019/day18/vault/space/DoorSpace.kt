@@ -3,7 +3,9 @@ package com.curtislb.adventofcode.year2019.day18.vault.space
 /**
  * A space representing a key in the vault, which may be passed through once the corresponding key has been collected.
  */
-class DoorSpace(symbol: Char) : Space(symbol) {
+class DoorSpace(override val symbol: Char) : Space {
+    override val isOccupiable: Boolean = true
+
     init {
         if (!symbol.isUpperCase()) {
             throw IllegalArgumentException("Door symbol '$symbol' should be an uppercase letter.")
