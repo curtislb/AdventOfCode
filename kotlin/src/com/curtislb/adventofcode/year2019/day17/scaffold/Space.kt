@@ -1,9 +1,9 @@
-package com.curtislb.adventofcode.year2019.day17.ascii
+package com.curtislb.adventofcode.year2019.day17.scaffold
 
 import java.math.BigInteger
 
 /**
- * A type of space that may appear on the scaffold grid, as reported by the [ASCII].
+ * A type of space that may appear on the scaffold grid.
  *
  * @param symbol The character that is used to represent this space.
  * @param isSafe Whether the vacuum robot can safely occupy this space.

@@ -100,8 +100,8 @@ After visiting every part of the scaffold at least once, how much dust does the 
 package com.curtislb.adventofcode.year2019.day17.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2019.day17.ascii.ASCII
-import com.curtislb.adventofcode.year2019.day17.ascii.Routine
+import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
+import com.curtislb.adventofcode.year2019.day17.scaffold.Routine
 
 /**
  * The path to the input file for this puzzle.
@@ -120,8 +120,8 @@ private const val MAX_CHAR_COUNT = 20
 
 // Answer: 1681189
 fun main() {
-    val ascii = ASCII(INPUT_PATH.toFile())
-    val instructions = ascii.grid.planRoute()
+    val robot = Robot(INPUT_PATH.toFile())
+    val instructions = robot.grid.planRoute()
     val routine = Routine.compressInstructions(
         instructions,
         FUNCTION_COUNT,
@@ -129,7 +129,7 @@ fun main() {
     )?.padFunctions(FUNCTION_COUNT)
 
     if (routine != null) {
-        ascii.moveRobot(routine)
+        robot.moveRobot(routine)
     } else {
         println("Unable to convert instructions to routine.")
     }

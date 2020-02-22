@@ -1,4 +1,4 @@
-package com.curtislb.adventofcode.year2019.day17.ascii.instruction
+package com.curtislb.adventofcode.year2019.day17.scaffold.instruction
 
 /**
  * A single instruction that may be given to the vacuum robot.

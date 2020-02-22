@@ -1,17 +1,17 @@
-package com.curtislb.adventofcode.year2019.day17.ascii
+package com.curtislb.adventofcode.year2019.day17.scaffold
 
 import com.curtislb.adventofcode.common.collection.removeLast
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.getCellOrNull
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Instruction
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Move
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.TurnLeft
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.TurnRight
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.TurnLeft
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.TurnRight
 
 /**
- * A grid representing the ship's scaffold and the vacuum robot's position on it, as reported by the [ASCII].
+ * A grid representing the ship's scaffold and the vacuum robot's position on it.
  */
 class ScaffoldGrid {
     /**

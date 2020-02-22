@@ -65,7 +65,7 @@ Run your ASCII program. What is the sum of the alignment parameters for the scaf
 package com.curtislb.adventofcode.year2019.day17.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2019.day17.ascii.ASCII
+import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
 import kotlin.math.abs
 
 /**
@@ -75,7 +75,7 @@ private val INPUT_PATH = pathToInput(year = 2019, day = 17)
 
 // Answer: 7720
 fun main() {
-    val ascii = ASCII(INPUT_PATH.toFile())
-    val intersections = ascii.grid.findIntersections()
+    val robot = Robot(INPUT_PATH.toFile())
+    val intersections = robot.grid.findIntersections()
     println(intersections.sumBy { abs(it.x * it.y) })
 }

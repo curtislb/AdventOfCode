@@ -1,4 +1,4 @@
-package com.curtislb.adventofcode.year2019.day17.ascii.instruction
+package com.curtislb.adventofcode.year2019.day17.scaffold.instruction
 
 /**
  * An instruction indicating that the vacuum robot should turn 90 degrees clockwise.

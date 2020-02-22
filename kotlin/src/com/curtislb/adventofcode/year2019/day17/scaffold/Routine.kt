@@ -1,11 +1,11 @@
-package com.curtislb.adventofcode.year2019.day17.ascii
+package com.curtislb.adventofcode.year2019.day17.scaffold
 
 import com.curtislb.adventofcode.common.collection.removeLast
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Instruction
-import com.curtislb.adventofcode.year2019.day17.ascii.instruction.Move
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
+import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
 
 /**
- * A movement routine that can be given as input to the vacuum robot via the [ASCII].
+ * A movement routine that can be given as input to the vacuum robot.
  *
  * @param callOrder A list of indices, representing the [functions] to be called in order.
  * @param functions A list of ordered groups of movement instructions that can be called by this routine.
