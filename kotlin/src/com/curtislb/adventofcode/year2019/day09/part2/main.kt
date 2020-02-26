@@ -1,5 +1,6 @@
 /*
 --- Part Two ---
+
 You now have a complete Intcode computer.
 
 Finally, you can lock on to the Ceres distress signal! You just need to boost your sensors using the BOOST program.

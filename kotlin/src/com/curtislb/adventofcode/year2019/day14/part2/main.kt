@@ -1,5 +1,6 @@
 /*
 --- Part Two ---
+
 After collecting ORE for a while, you check your cargo hold: 1 trillion (1000000000000) units of ORE.
 
 With that much ore, given the examples above:
