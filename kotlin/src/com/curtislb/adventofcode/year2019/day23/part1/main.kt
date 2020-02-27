@@ -35,13 +35,30 @@ Boot up all 50 computers and attach them to your network. What is the Y value of
 package com.curtislb.adventofcode.year2019.day23.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.year2019.day23.network.Network
+import com.curtislb.adventofcode.year2019.day23.network.packet.BasePacketListener
+import com.curtislb.adventofcode.year2019.day23.network.packet.Packet
 
 /**
  * The path to the input file for this puzzle.
  */
 private val INPUT_PATH = pathToInput(year = 2019, day = 23)
 
-// Answer: ???
+/**
+ * The number of computers in the network.
+ */
+private const val COMPUTER_COUNT = 50
+
+// Answer: 18513
 fun main() {
-    // TODO: Solution goes here
+    // Listen for the first Y value received by the NAT.
+    val natPacketListener = object : BasePacketListener() {
+        override fun onPacketReceived(packet: Packet): Boolean {
+            println(packet.y)
+            return true // Stop the network.
+        }
+    }
+
+    val network = Network(INPUT_PATH.toFile(), COMPUTER_COUNT, natPacketListener)
+    network.run()
 }

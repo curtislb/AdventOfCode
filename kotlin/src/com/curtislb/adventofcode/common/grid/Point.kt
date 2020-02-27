@@ -65,7 +65,7 @@ data class Point(val x: Int, val y: Int) {
         /**
          * A list containing the relative coordinates of horizontally and vertically adjacent points.
          */
-        val NEIGHBOR_DELTAS = listOf(Point(-1, 0), Point(0, -1), Point(1, 0), Point(0, 1))
+        val NEIGHBOR_DELTAS: List<Point> = listOf(Point(-1, 0), Point(0, -1), Point(1, 0), Point(0, 1))
 
         /**
          * Returns the point corresponding to the given ([rowIndex], [colIndex]) matrix coordinates.

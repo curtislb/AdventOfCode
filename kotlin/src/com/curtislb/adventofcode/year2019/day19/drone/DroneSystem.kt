@@ -25,13 +25,12 @@ class DroneSystem(file: File) {
     /**
      * Deploys a drone to position ([rowIndex], [colIndex]) in the grid, invoking the function [onOutput] to handle
      * either of the following outputs from its associated program:
-     * - 0 - The drone is **not** being pulled, indicating that the tractor beam does **not** affect this position.
-     * - 1 - The drone **is** being pulled, indicating that the tractor beam **does** affect this position.
+     * - 0 - The drone is *not* being pulled, indicating that the tractor beam does *not* affect this position.
+     * - 1 - The drone *is* being pulled, indicating that the tractor beam *does* affect this position.
      */
     fun deployDrone(rowIndex: BigInteger, colIndex: BigInteger, onOutput: (output: BigInteger) -> Unit) {
-        val drone = Intcode(programString)
+        val drone = Intcode(programString, onOutput)
         drone.sendInput(colIndex, rowIndex)
-        drone.onOutput = onOutput
         drone.run()
     }
 

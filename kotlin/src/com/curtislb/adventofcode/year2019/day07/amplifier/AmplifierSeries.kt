@@ -19,7 +19,7 @@ class AmplifierSeries(file: File, count: Int) {
 
     init {
         val programString = file.readText().trim()
-        amplifiers =  Array(count) { Intcode(programString) }
+        amplifiers = Array(count) { Intcode(programString) }
         for (i in 0 until amplifiers.lastIndex) {
             amplifiers[i].onOutput = { amplifiers[i + 1].sendInput(it) }
         }

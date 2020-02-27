@@ -20,13 +20,13 @@ class Game(file: File) {
     /**
      * The [Intcode] program that controls the game.
      */
-    private val intcode: Intcode = Intcode(file)
+    private val intcode: Intcode
 
     init {
         var outputCounter = 0
         var tileX = 0
         var tileNegativeY = 0
-        intcode.onOutput = { output ->
+        intcode = Intcode(file) { output ->
             when (outputCounter) {
                 0 -> tileX = output.toInt()
                 1 -> tileNegativeY = output.toInt()
@@ -44,6 +44,7 @@ class Game(file: File) {
     fun reset() {
         intcode.reset()
         intcode[0] = BigInteger.TWO
+        intcode.run()
     }
 
     /**
@@ -51,8 +52,8 @@ class Game(file: File) {
      */
     fun play(strategy: Strategy): BigInteger {
         while (!intcode.isDone) {
-            intcode.run()
             intcode.sendInput(strategy.nextMove(board))
+            intcode.run()
         }
         return board.score
     }

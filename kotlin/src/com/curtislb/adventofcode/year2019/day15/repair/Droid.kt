@@ -15,11 +15,6 @@ import java.math.BigInteger
  */
 class Droid(file: File) {
     /**
-     * The [Intcode] program that controls the repair droid.
-     */
-    private val intcode: Intcode = Intcode(file)
-
-    /**
      * The current orientation of the repair droid in the grid.
      */
     var orientation: Orientation = Orientation(Point.ORIGIN, Direction.UP)
@@ -32,6 +27,11 @@ class Droid(file: File) {
         private set
 
     /**
+     * The [Intcode] program that controls the repair droid.
+     */
+    private val intcode: Intcode
+
+    /**
      * A map from each position that the repair droid has identified to the space at that position.
      */
     private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Pair(Point.ORIGIN, Space.OPEN))
@@ -42,7 +42,7 @@ class Droid(file: File) {
     private var lastSpace: Space = Space.OPEN
 
     init {
-        intcode.onOutput = { output ->
+        intcode = Intcode(file) { output ->
             lastSpace = Space.from(output)
             knownSpaces[orientation.moveForward().position] = lastSpace
         }

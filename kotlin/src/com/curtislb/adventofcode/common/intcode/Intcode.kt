@@ -11,10 +11,11 @@ import java.math.BigInteger
  * An Intcode program, consisting of arbitrary-length integer values that may be modified during execution.
  *
  * @param programString A string representation of the program, consisting of comma-separated integer values.
+ * @param onOutput A function to be run whenever a new output value is produced by this program.
  *
  * @throws IllegalArgumentException If `programString` is empty.
  */
-class Intcode(programString: String) {
+class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit = { println(it) }) {
     /**
      * The initial integer values for this program.
      */
@@ -34,11 +35,6 @@ class Intcode(programString: String) {
      * A queued sequence of input values that have been given to the program.
      */
     private val input: ValueSequencer<BigInteger> = ValueSequencer()
-
-    /**
-     * The function to be run whenever a new output value is produced by this program.
-     */
-    var onOutput: (output: BigInteger) -> Unit = { println(it) }
 
     /**
      * The index from which the positions of relative parameter values are determined.
@@ -63,10 +59,12 @@ class Intcode(programString: String) {
      * An Intcode program, consisting of arbitrary-length integer values that may be modified during execution.
      *
      * @param file A file containing comma-separated integer values representing the program.
+     * @param onOutput A function to be run whenever a new output value is produced by this program.
      *
      * @throws IllegalArgumentException If [file] is empty.
      */
-    constructor(file: File) : this(file.readText().trim())
+    constructor(file: File, onOutput: (output: BigInteger) -> Unit = { println(it) })
+        : this(file.readText().trim(), onOutput)
 
     /**
      * Whether this program has finished and no more operations can be run.
@@ -140,9 +138,8 @@ class Intcode(programString: String) {
      * - The cursor is moved to an invalid (negative) position, at which point the program will finish.
      * - The program requests input, but no next input is available, at which point the program will pause.
      *
-     * In either case, this method will return, and the program's last cursor position will be stored. Note that once
-     * the program has finished (as opposed to paused), any future calls to [run] will immediately return, until [reset]
-     * is invoked.
+     * In either case, this method will return, and the program's last cursor position will be stored. Once the program
+     * has finished (as opposed to paused), any future calls to [run] will immediately return, until [reset] is invoked.
      */
     fun run() {
         var cursor = cursorStart
