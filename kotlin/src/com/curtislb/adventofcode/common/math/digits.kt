@@ -15,9 +15,7 @@ fun Int.digit(position: Int, base: Int = 10): Int = (this / base.pow(position)) 
  *
  * @throws IllegalArgumentException If this character has no corresponding base-10 digit.
  */
-fun Char.toDigit(): Int {
-    return when (this) {
-        in '0'..'9' -> this - '0'
-        else -> throw IllegalArgumentException("'$this' can't be converted to a digit.")
-    }
+fun Char.toDigit(): Int = when (this) {
+    in '0'..'9' -> this - '0'
+    else -> throw IllegalArgumentException("'$this' can't be converted to a digit.")
 }

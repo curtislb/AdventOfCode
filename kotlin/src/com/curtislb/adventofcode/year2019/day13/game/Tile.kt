@@ -39,15 +39,13 @@ enum class Tile(val symbol: Char) {
          *
          * @throws IllegalArgumentException If [value] has no corresponding tile.
          */
-        fun from(value: Int): Tile {
-            return when(value) {
-                0 -> EMPTY
-                1 -> WALL
-                2 -> BLOCK
-                3 -> PADDLE
-                4 -> BALL
-                else -> throw IllegalArgumentException("Unknown tile value: $value")
-            }
+        fun from(value: Int): Tile = when(value) {
+            0 -> EMPTY
+            1 -> WALL
+            2 -> BLOCK
+            3 -> PADDLE
+            4 -> BALL
+            else -> throw IllegalArgumentException("Unknown tile value: $value")
         }
 
         /**

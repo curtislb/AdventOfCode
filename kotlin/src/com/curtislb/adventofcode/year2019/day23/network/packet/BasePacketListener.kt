@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day23.network.packet
 
 /**
- * A no-op implementation of the [PacketListener] interface that may be extended.
+ * An extendable no-op implementation of the [PacketListener] interface.
  */
 open class BasePacketListener : PacketListener {
     override fun onPacketSent(packet: Packet): Boolean = false

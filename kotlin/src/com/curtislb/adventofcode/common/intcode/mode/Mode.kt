@@ -24,13 +24,11 @@ interface Mode {
          *
          * @throws IllegalArgumentException If [value] has no corresponding mode.
          */
-        fun from(value: Int): Mode {
-            return when (value) {
-                0 -> PositionMode
-                1 -> ImmediateMode
-                2 -> RelativeMode
-                else -> throw IllegalArgumentException("Unknown parameter mode: $value")
-            }
+        fun from(value: Int): Mode = when (value) {
+            0 -> PositionMode
+            1 -> ImmediateMode
+            2 -> RelativeMode
+            else -> throw IllegalArgumentException("Unknown parameter mode: $value")
         }
 
         /**

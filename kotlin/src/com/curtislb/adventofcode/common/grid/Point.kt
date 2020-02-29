@@ -18,13 +18,11 @@ data class Point(val x: Int, val y: Int) {
     /**
      * Returns the point given by moving [distance] grid units in [direction] from this one.
      */
-    fun move(direction: Direction, distance: Int = 1): Point {
-        return when (direction) {
-            Direction.UP -> Point(x, y + distance)
-            Direction.RIGHT -> Point(x + distance, y)
-            Direction.DOWN -> Point(x, y - distance)
-            Direction.LEFT -> Point(x - distance, y)
-        }
+    fun move(direction: Direction, distance: Int = 1): Point = when (direction) {
+        Direction.UP -> Point(x, y + distance)
+        Direction.RIGHT -> Point(x + distance, y)
+        Direction.DOWN -> Point(x, y - distance)
+        Direction.LEFT -> Point(x - distance, y)
     }
 
     /**

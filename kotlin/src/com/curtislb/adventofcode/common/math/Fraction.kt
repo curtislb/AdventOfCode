@@ -80,23 +80,19 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
     /**
      * Returns the least integer value that is greater than or equal to the value of this fraction.
      */
-    fun ceil(): Long {
-        return when {
-            numerator == 0L -> 0L
-            numerator > 0L -> denominator.nextMultipleAtLeast(numerator) / denominator
-            else -> -denominator.prevMultipleAtMost(abs(numerator)) / denominator
-        }
+    fun ceil(): Long = when {
+        numerator == 0L -> 0L
+        numerator > 0L -> denominator.nextMultipleAtLeast(numerator) / denominator
+        else -> -denominator.prevMultipleAtMost(abs(numerator)) / denominator
     }
 
     /**
      * Returns the greatest integer value that is less than or equal to the value of this fraction.
      */
-    fun floor(): Long {
-        return when {
-            numerator == 0L -> 0L
-            numerator > 0L -> denominator.prevMultipleAtMost(numerator) / denominator
-            else -> -denominator.nextMultipleAtLeast(abs(numerator)) / denominator
-        }
+    fun floor(): Long = when {
+        numerator == 0L -> 0L
+        numerator > 0L -> denominator.prevMultipleAtMost(numerator) / denominator
+        else -> -denominator.nextMultipleAtLeast(abs(numerator)) / denominator
     }
 
     override fun equals(other: Any?): Boolean {

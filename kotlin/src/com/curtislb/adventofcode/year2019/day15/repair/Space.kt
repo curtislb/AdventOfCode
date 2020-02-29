@@ -40,15 +40,13 @@ enum class Space(val symbol: Char, val isOccupiable: Boolean?) {
          *
          * @throws IllegalArgumentException If [value] has no corresponding space.
          */
-        fun from(value: Int): Space {
-            return when(value) {
-                -2 -> DROID
-                -1 -> UNKNOWN
-                0 -> WALL
-                1 -> OPEN
-                2 -> OXYGEN
-                else -> throw IllegalArgumentException("Unknown space value: $value")
-            }
+        fun from(value: Int): Space = when(value) {
+            -2 -> DROID
+            -1 -> UNKNOWN
+            0 -> WALL
+            1 -> OPEN
+            2 -> OXYGEN
+            else -> throw IllegalArgumentException("Unknown space value: $value")
         }
 
         /**

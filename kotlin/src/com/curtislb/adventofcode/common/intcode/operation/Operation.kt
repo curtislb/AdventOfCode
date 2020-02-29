@@ -26,20 +26,18 @@ interface Operation {
          *
          * @throws IllegalArgumentException If [opcode] has no corresponding operation.
          */
-        fun from(opcode: Int): Operation {
-            return when (opcode) {
-                1 -> AddOperation
-                2 -> MultiplyOperation
-                3 -> InputOperation
-                4 -> OutputOperation
-                5 -> JumpIfTrueOperation
-                6 -> JumpIfFalseOperation
-                7 -> LessThanOperation
-                8 -> EqualsOperation
-                9 -> MoveRelativeBaseOperation
-                99 -> StopOperation
-                else -> throw IllegalArgumentException("Unknown operation: $opcode")
-            }
+        fun from(opcode: Int): Operation = when (opcode) {
+            1 -> AddOperation
+            2 -> MultiplyOperation
+            3 -> InputOperation
+            4 -> OutputOperation
+            5 -> JumpIfTrueOperation
+            6 -> JumpIfFalseOperation
+            7 -> LessThanOperation
+            8 -> EqualsOperation
+            9 -> MoveRelativeBaseOperation
+            99 -> StopOperation
+            else -> throw IllegalArgumentException("Unknown operation: $opcode")
         }
 
         /**

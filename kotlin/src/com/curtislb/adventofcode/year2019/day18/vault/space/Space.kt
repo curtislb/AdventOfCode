@@ -20,15 +20,13 @@ interface Space {
          *
          * @throws IllegalArgumentException If [symbol] has no corresponding space.
          */
-        fun from(symbol: Char): Space {
-            return when {
-                symbol == OpenSpace.symbol -> OpenSpace
-                symbol == WallSpace.symbol -> WallSpace
-                symbol == EntranceSpace.symbol -> EntranceSpace
-                symbol.isLowerCase() -> KeySpace(symbol)
-                symbol.isUpperCase() -> DoorSpace(symbol)
-                else -> throw IllegalArgumentException("Invalid space character: $symbol")
-            }
+        fun from(symbol: Char): Space = when {
+            symbol == OpenSpace.symbol -> OpenSpace
+            symbol == WallSpace.symbol -> WallSpace
+            symbol == EntranceSpace.symbol -> EntranceSpace
+            symbol.isLowerCase() -> KeySpace(symbol)
+            symbol.isUpperCase() -> DoorSpace(symbol)
+            else -> throw IllegalArgumentException("Invalid space character: $symbol")
         }
     }
 }

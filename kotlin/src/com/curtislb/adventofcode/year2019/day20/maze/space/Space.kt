@@ -20,13 +20,11 @@ interface Space {
          *
          * @throws IllegalArgumentException If [symbol] has no corresponding space.
          */
-        fun from(symbol: Char): Space {
-            return when (symbol) {
-                EmptySpace.symbol -> EmptySpace
-                OpenSpace.symbol -> OpenSpace
-                WallSpace.symbol -> WallSpace
-                else -> throw IllegalArgumentException("Unknown space char: $symbol")
-            }
+        fun from(symbol: Char): Space = when (symbol) {
+            EmptySpace.symbol -> EmptySpace
+            OpenSpace.symbol -> OpenSpace
+            WallSpace.symbol -> WallSpace
+            else -> throw IllegalArgumentException("Unknown space char: $symbol")
         }
     }
 }

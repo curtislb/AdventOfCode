@@ -81,12 +81,10 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     /**
      * Returns the current value stored at [position] in the program.
      */
-    operator fun get(position: Int): BigInteger {
-        return when {
-            position in currentValues.indices -> currentValues[position]
-            position > currentValues.lastIndex -> extendedValues.getOrDefault(position, DEFAULT_VALUE)
-            else -> throw IndexOutOfBoundsException("Can't access negative position: $position")
-        }
+    operator fun get(position: Int): BigInteger = when {
+        position in currentValues.indices -> currentValues[position]
+        position > currentValues.lastIndex -> extendedValues.getOrDefault(position, DEFAULT_VALUE)
+        else -> throw IndexOutOfBoundsException("Can't access negative position: $position")
     }
 
     /**

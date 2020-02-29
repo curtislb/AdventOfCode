@@ -78,13 +78,16 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
      * invoked.
      */
     fun run() {
+        // Return if the network has already finished running.
         if (isDone) {
             return
         }
 
+        // Initialize output handling for each computer.
         val onOutput = createOutputHandler()
         computers.forEach { it.onOutput = onOutput }
 
+        // Run all computers in order until finished.
         var address = 0
         while (!isDone) {
             runComputer(address)
@@ -96,7 +99,7 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
     }
 
     /**
-     * Returns a function to handle the output of each computer in the network.
+     * Returns an output handler function to be used by each computer in the network.
      */
     private fun createOutputHandler(): (BigInteger) -> Unit {
         var outputState = 0
@@ -122,6 +125,9 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
 
     /**
      * Runs the [Intcode] program for the computer at the given [address] in the network.
+     *
+     * If there are queued packets for the computer to receive, sends the x and y value of each packet in order as input
+     * before running the program. Otherwise, sends an input value of -1 to the program and increments its idle counter.
      *
      * @see [Intcode.run]
      */
@@ -158,7 +164,7 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
         /**
          * An input value indicating that there are no queued packets for a computer to process.
          */
-        private val NO_PACKET_INPUT: BigInteger = -BigInteger.ONE
+        private val NO_PACKET_INPUT: BigInteger = BigInteger("-1")
 
         /**
          * The number of times in a row a computer can poll for and not receive packets before it is considered idle.
