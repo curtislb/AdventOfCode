@@ -13,14 +13,12 @@ import java.math.BigInteger
  * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
  *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
  *  outside the normal ASCII range.
+ * @param processOutput An optional function to be run for each output value produced by the program.
  */
-class ASCII(private val intcode: Intcode, private val showAsciiOutput: Boolean = false) {
-    /**
-     * An optional function to be run for each output value produced by the program.
-     *
-     * @see [Intcode.onOutput]
-     */
-    var processOutput: ((output: BigInteger) -> Unit)? = null
+class ASCII(
+    private val intcode: Intcode,
+    private val showAsciiOutput: Boolean = false,
+    var processOutput: ((output: BigInteger) -> Unit)? = null) {
 
     init {
         intcode.onOutput = { output ->
@@ -37,8 +35,13 @@ class ASCII(private val intcode: Intcode, private val showAsciiOutput: Boolean =
      * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
      *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
      *  outside the normal ASCII range.
+     * @param processOutput An optional function to be run for each output value produced by the program.
      */
-    constructor(file: File, showAsciiOutput: Boolean = false) : this(Intcode(file), showAsciiOutput)
+    constructor(
+        file: File,
+        showAsciiOutput: Boolean = false,
+        processOutput: ((output: BigInteger) -> Unit)? = null
+    ) : this(Intcode(file), showAsciiOutput, processOutput)
 
     /**
      * Whether the program has finished.

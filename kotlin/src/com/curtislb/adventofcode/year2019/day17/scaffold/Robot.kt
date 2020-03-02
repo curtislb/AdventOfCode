@@ -14,7 +14,7 @@ class Robot(file: File) {
     /**
      * An ASCII interface to the program that controls the robot.
      */
-    private val ascii: ASCII = ASCII(file)
+    private val ascii: ASCII = ASCII(file) { processOutput(it) }
 
     /**
      * The initial layout of the scaffold grid, including the location of the vacuum robot.
@@ -28,7 +28,6 @@ class Robot(file: File) {
     private var isPrevOutputNewline = false
 
     init {
-        ascii.processOutput = this::processOutput
         ascii[0] = BigInteger.TWO
         ascii.run()
     }
