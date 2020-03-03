@@ -28,15 +28,18 @@ package com.curtislb.adventofcode.year2019.day01.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day01.fuel.calculateTotalFuel
-
-/**
- * The path to the input file for this puzzle.
- */
-private val INPUT_PATH = pathToInput(year = 2019, day = 1)
+import java.nio.file.Path
 
 // Answer: 5073456
-fun main() {
+fun main() { println(solve()) }
+
+/**
+ * Returns the solution to part 2 of the puzzle for day 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ */
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 1)): Int {
     var totalFuel = 0
-    INPUT_PATH.toFile().forEachLine { totalFuel += calculateTotalFuel(it.trim().toInt()) }
-    println(totalFuel)
+    inputPath.toFile().forEachLine { totalFuel += calculateTotalFuel(it.trim().toInt()) }
+    return totalFuel
 }

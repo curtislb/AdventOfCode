@@ -77,27 +77,26 @@ package com.curtislb.adventofcode.year2019.day02.part1
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
-
-/**
- * The path to the input file for this puzzle.
- */
-private val INPUT_PATH = pathToInput(year = 2019, day = 2)
-
-/**
- * The value to be set at position 1 in the program.
- */
-private val NOUN_VALUE = BigInteger("12")
-
-/**
- * The value to be set at position 2 in the program.
- */
-private val VERB_VALUE = BigInteger.TWO
+import java.nio.file.Path
 
 // Answer: 4138687
-fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile())
-    intcode[1] = NOUN_VALUE
-    intcode[2] = VERB_VALUE
+fun main() { println(solve()) }
+
+/**
+ * Returns the solution to part 1 of the puzzle for day 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param nounValue The value to be set at position 1 in the program.
+ * @param verbValue The value to be set at position 2 in the program.
+ */
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 2),
+    nounValue: BigInteger = BigInteger("12"),
+    verbValue: BigInteger = BigInteger.TWO
+): BigInteger {
+    val intcode = Intcode(inputPath.toFile())
+    intcode[1] = nounValue
+    intcode[2] = verbValue
     intcode.run()
-    println(intcode[0])
+    return intcode[0]
 }

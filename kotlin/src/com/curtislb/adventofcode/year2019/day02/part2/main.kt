@@ -42,41 +42,43 @@ import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import java.math.BigInteger
-
-/**
- * The path to the input file for this puzzle.
- */
-private val INPUT_PATH = pathToInput(year = 2019, day = 2)
-
-/**
- * All valid values for the noun (position 1) and verb (position 2) of the program.
- */
-private val NOUN_VERB_VALUES = BigIntegerRange(0..99)
-
-/**
- * The number by which the target noun value should be multiplied.
- */
-private val NOUN_FACTOR = BigInteger("100")
-
-/**
- * The target output value to be produced by the program.
- */
-private val TARGET_OUTPUT = BigInteger("19690720")
+import java.nio.file.Path
 
 // Answer: 6635
 fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile())
-    for (noun in NOUN_VERB_VALUES) {
-        for (verb in NOUN_VERB_VALUES) {
+    val solution = solve()
+    if (solution != null) {
+        println(solution)
+    } else {
+        println("No solution found.")
+    }
+}
+
+/**
+ * Returns the solution to part 2 of the puzzle for day 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param nounVerbValues All valid values for the noun (position 1) and verb (position 2) of the program.
+ * @param nounFactor The number by which the target noun value should be multiplied.
+ * @param targetOutput The target output value to be produced by the program.
+ */
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 2),
+    nounVerbValues: BigIntegerRange = BigIntegerRange(0..99),
+    nounFactor: BigInteger = BigInteger("100"),
+    targetOutput: BigInteger = BigInteger("19690720")
+): BigInteger? {
+    val intcode = Intcode(inputPath.toFile())
+    for (noun in nounVerbValues) {
+        for (verb in nounVerbValues) {
             intcode[1] = noun
             intcode[2] = verb
             intcode.run()
-            if (intcode[0] == TARGET_OUTPUT) {
-                println(noun * NOUN_FACTOR + verb)
-                return
+            if (intcode[0] == targetOutput) {
+                return noun * nounFactor + verb
             }
             intcode.reset()
         }
     }
-    println("No solution found.")
+    return null
 }
