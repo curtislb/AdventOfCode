@@ -80,37 +80,34 @@ package com.curtislb.adventofcode.year2019.day10.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 10, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param targetNumber The ordinal number of the target asteroid to be vaporized.
+ * @param targetXFactor The number by which the x-coordinate of the target asteroid should be multiplied.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 10)
-
-/**
- * The ordinal number of the target asteroid to be vaporized.
- */
-private const val TARGET_NUMBER = 200
-
-/**
- * The number by which the x-coordinate of the target asteroid should be multiplied.
- */
-private const val TARGET_X_FACTOR = 100
-
-// Answer: 1110
-fun main() {
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 10),
+    targetNumber: Int = 200,
+    targetXFactor: Int = 100
+): Int? {
     // Find the best station location.
-    val asteroidField = AsteroidField(INPUT_PATH.toFile())
+    val asteroidField = AsteroidField(inputPath.toFile())
     val (station, _) = asteroidField.findBestStation()
     if (station == null) {
-        println("No station location found.")
-        return
+        return null
     }
 
     // Start vaporizing asteroids until target is reached.
-    val targetAsteroid = asteroidField.vaporizeAsteroids(station, TARGET_NUMBER)
-    if (targetAsteroid != null) {
-        println(targetAsteroid.x * TARGET_X_FACTOR - targetAsteroid.y)
-    } else {
-        println("Finished without vaporizing $TARGET_NUMBER asteroids.")
-    }
+    val targetAsteroid = asteroidField.vaporizeAsteroids(station, targetNumber)
+    return if (targetAsteroid != null) targetAsteroid.x * targetXFactor - targetAsteroid.y else null
+}
+
+// Answer: 1110
+fun main() = when (val solution = solve()) {
+    null -> println("Target asteroid not found.")
+    else -> println(solution)
 }

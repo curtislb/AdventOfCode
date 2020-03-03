@@ -54,24 +54,24 @@ package com.curtislb.adventofcode.year2019.day07.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.year2019.day07.amplifier.AmplifierSeries
+import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 7, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param amplifierCount The number of amplifiers to wire in series.
+ * @param phaseSettings All possible phase settings for the amplifiers.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 7)
-
-/**
- * The number of amplifiers to wire in series.
- */
-private const val AMPLIFIER_COUNT = 5
-
-/**
- * All possible phase settings for the amplifiers.
- */
-private val PHASE_SETTINGS = BigIntegerRange(5..9).toList()
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 7),
+    amplifierCount: Int = 5,
+    phaseSettings: Collection<BigInteger> = BigIntegerRange(5..9).toList()
+): BigInteger {
+    val series = AmplifierSeries(inputPath.toFile(), amplifierCount)
+    return series.findMaxSignalWithFeedback(phaseSettings)
+}
 
 // Answer: 19741286
-fun main() {
-    val series = AmplifierSeries(INPUT_PATH.toFile(), AMPLIFIER_COUNT)
-    println(series.findMaxSignalWithFeedback(PHASE_SETTINGS))
-}
+fun main() { println(solve()) }

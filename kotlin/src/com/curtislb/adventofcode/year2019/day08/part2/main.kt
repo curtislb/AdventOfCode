@@ -44,41 +44,39 @@ package com.curtislb.adventofcode.year2019.day08.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day08.image.Pixel
 import com.curtislb.adventofcode.year2019.day08.image.processLayers
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 8, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param imageWidth The width of each layer of the image, in number of pixels.
+ * @param imageHeight The height of each layer of the image, in number of pixels.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 8)
-
-/**
- * The width of each layer of the image, in number of pixels.
- */
-private const val IMAGE_WIDTH = 25
-
-/**
- * The height of each layer of the image, in number of pixels.
- */
-private const val IMAGE_HEIGHT = 6
-
-// Answer: ZUKCJ
-fun main() {
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 8),
+    imageWidth: Int = 25,
+    imageHeight: Int = 6
+): String {
     // Calculate pixel values for the composed image.
-    val image = Array(IMAGE_HEIGHT) { Array(IMAGE_WIDTH) { Pixel.ALPHA } }
+    val image = Array(imageHeight) { Array(imageWidth) { Pixel.ALPHA } }
     processLayers(
-        file = INPUT_PATH.toFile(),
-        imageArea = IMAGE_WIDTH * IMAGE_HEIGHT,
+        inputPath.toFile(),
+        imageArea = imageWidth * imageHeight,
         onDigit = { indexInLayer, digit ->
-            val row = indexInLayer / IMAGE_WIDTH
-            val col = indexInLayer % IMAGE_WIDTH
+            val row = indexInLayer / imageWidth
+            val col = indexInLayer % imageWidth
             if (image[row][col] == Pixel.ALPHA) {
                 image[row][col] = Pixel.from(digit)
             }
         }
     )
 
-    // Print the pixels of the resulting image.
-    image.forEach { row ->
-        row.forEach { pixel -> print(pixel.symbol) }
-        println()
+    // Convert the resulting image to a string.
+    return image.joinToString(separator = "\n") { row ->
+        row.joinToString(separator = "") { pixel -> pixel.symbol.toString() }
     }
 }
+
+// Answer: ZUKCJ
+fun main() { println(solve()) }

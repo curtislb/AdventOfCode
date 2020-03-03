@@ -24,14 +24,18 @@ package com.curtislb.adventofcode.year2019.day13.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day13.game.Game
 import com.curtislb.adventofcode.year2019.day13.game.strategy.GreedyStrategy
+import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 13, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 13)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 13)): BigInteger {
+    val game = Game(inputPath.toFile())
+    return game.play(GreedyStrategy)
+}
 
 // Answer: 14538
-fun main() {
-    val game = Game(INPUT_PATH.toFile())
-    println(game.play(GreedyStrategy))
-}
+fun main() { println(solve()) }

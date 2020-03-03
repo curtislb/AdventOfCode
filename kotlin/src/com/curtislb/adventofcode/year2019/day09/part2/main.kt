@@ -17,20 +17,24 @@ package com.curtislb.adventofcode.year2019.day09.part2
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 9, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param programMode An input code that determines the mode in which the program will run.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 9)
-
-/**
- * A code that causes the program to run in sensor boost mode when provided as input.
- */
-private val SENSOR_BOOST_MODE = BigInteger.TWO
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 9),
+    programMode: BigInteger = BigInteger.TWO
+): BigInteger? {
+    var boostKeycode: BigInteger? = null
+    val intcode = Intcode(inputPath.toFile()) { boostKeycode = it }
+    intcode.sendInput(programMode)
+    intcode.run()
+    return boostKeycode
+}
 
 // Answer: 33343
-fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile())
-    intcode.sendInput(SENSOR_BOOST_MODE)
-    intcode.run()
-}
+fun main() { println(solve()) }

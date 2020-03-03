@@ -53,15 +53,18 @@ package com.curtislb.adventofcode.year2019.day12.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.leastCommonMultiple
 import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 12, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 12)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 12)): Long {
+    val system = NBodySystem(inputPath.toFile())
+    val periodicity = system.findAxialPeriodicity()
+    return leastCommonMultiple(periodicity.x.toLong(), periodicity.y.toLong(), periodicity.z.toLong())
+}
 
 // Answer: 281691380235984
-fun main() {
-    val system = NBodySystem(INPUT_PATH.toFile())
-    val periodicity = system.findAxialPeriodicity()
-    println(leastCommonMultiple(periodicity.x.toLong(), periodicity.y.toLong(), periodicity.z.toLong()))
-}
+fun main() { println(solve()) }

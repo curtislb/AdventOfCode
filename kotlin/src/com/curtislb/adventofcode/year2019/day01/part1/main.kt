@@ -35,11 +35,8 @@ import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day01.fuel.calculateFuel
 import java.nio.file.Path
 
-// Answer: 3384232
-fun main() { println(solve()) }
-
 /**
- * Returns the solution to part 1 of the puzzle for day 1.
+ * Returns the solution to the puzzle for day 1, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
@@ -48,3 +45,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 1)): Int {
     inputPath.toFile().forEachLine { totalFuel += calculateFuel(it.trim().toInt()) }
     return totalFuel
 }
+
+// Answer: 3384232
+fun main() { println(solve()) }

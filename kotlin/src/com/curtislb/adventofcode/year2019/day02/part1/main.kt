@@ -79,11 +79,8 @@ import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
 import java.nio.file.Path
 
-// Answer: 4138687
-fun main() { println(solve()) }
-
 /**
- * Returns the solution to part 1 of the puzzle for day 2.
+ * Returns the solution to the puzzle for day 2, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param nounValue The value to be set at position 1 in the program.
@@ -100,3 +97,6 @@ fun solve(
     intcode.run()
     return intcode[0]
 }
+
+// Answer: 4138687
+fun main() { println(solve()) }

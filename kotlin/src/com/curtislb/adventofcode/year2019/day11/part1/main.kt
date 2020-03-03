@@ -88,15 +88,18 @@ package com.curtislb.adventofcode.year2019.day11.part1
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day11.painting.Robot
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 11, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 11)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): Int {
+    val robot = Robot()
+    robot.executeProgram(Intcode(inputPath.toFile()))
+    return robot.paintedArea
+}
 
 // Answer: 1747
-fun main() {
-    val robot = Robot()
-    robot.executeProgram(Intcode(INPUT_PATH.toFile()))
-    println(robot.paintedArea)
-}
+fun main() { println(solve()) }

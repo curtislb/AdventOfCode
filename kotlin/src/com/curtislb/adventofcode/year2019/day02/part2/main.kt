@@ -44,18 +44,8 @@ import com.curtislb.adventofcode.common.range.BigIntegerRange
 import java.math.BigInteger
 import java.nio.file.Path
 
-// Answer: 6635
-fun main() {
-    val solution = solve()
-    if (solution != null) {
-        println(solution)
-    } else {
-        println("No solution found.")
-    }
-}
-
 /**
- * Returns the solution to part 2 of the puzzle for day 2.
+ * Returns the solution to the puzzle for day 2, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param nounVerbValues All valid values for the noun (position 1) and verb (position 2) of the program.
@@ -81,4 +71,10 @@ fun solve(
         }
     }
     return null
+}
+
+// Answer: 6635
+fun main() = when (val solution = solve()) {
+    null -> println("No solution found.")
+    else -> println(solution)
 }

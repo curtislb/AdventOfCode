@@ -122,19 +122,21 @@ package com.curtislb.adventofcode.year2019.day10.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 10, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 10)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 10)): Int? {
+    val asteroidField = AsteroidField(inputPath.toFile())
+    val (bestStation, asteroidCount) = asteroidField.findBestStation()
+    return if (bestStation != null) asteroidCount else null
+}
 
 // Answer: 263
-fun main() {
-    val asteroidField = AsteroidField(INPUT_PATH.toFile())
-    val (bestStation, asteroidCount) = asteroidField.findBestStation()
-    if (bestStation != null) {
-        println(asteroidCount)
-    } else {
-        println("No station location found.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No station location found.")
+    else -> println(solution)
 }

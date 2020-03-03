@@ -110,29 +110,27 @@ package com.curtislb.adventofcode.year2019.day14.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day14.chemistry.MaterialAmount
 import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 14, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param rawMaterial The name of a raw material that can be used in arbitrary quantities for reactions.
+ * @param desiredProduct The name and amount of the material that we ultimately want to produce.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 14)
-
-/**
- * The name of a raw material that can be used in arbitrary quantities for reactions.
- */
-private const val RAW_MATERIAL = "ORE"
-
-/**
- * The name and amount of the material that we ultimately want to produce.
- */
-private val DESIRED_PRODUCT = MaterialAmount("FUEL", 1L)
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 14),
+    rawMaterial: String = "ORE",
+    desiredProduct: MaterialAmount = MaterialAmount("FUEL", 1L)
+): Long? {
+    val factory = Nanofactory(inputPath.toFile())
+    val materials = factory.getRequiredMaterials(setOf(rawMaterial), mapOf(desiredProduct.toPair()))
+    return if (materials != null) materials[rawMaterial] else null
+}
 
 // Answer: 843220
-fun main() {
-    val factory = Nanofactory(INPUT_PATH.toFile())
-    val materials = factory.getRequiredMaterials(setOf(RAW_MATERIAL), mapOf(DESIRED_PRODUCT.toPair()))
-    if (materials != null) {
-        println(materials[RAW_MATERIAL])
-    } else {
-        println("Failed to produce $DESIRED_PRODUCT.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("Unable to produce the desired material.")
+    else -> println(solution)
 }

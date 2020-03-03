@@ -30,19 +30,21 @@ package com.curtislb.adventofcode.year2019.day13.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day13.game.Game
 import com.curtislb.adventofcode.year2019.day13.game.Tile
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 13, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param tileType The type of tile to count occurrences of on the game board.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 13)
-
-/**
- * The type of tile to count occurrences of on the game board.
- */
-private val TILE_TYPE = Tile.BLOCK
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 13),
+    tileType: Tile = Tile.BLOCK
+): Int {
+    val game = Game(inputPath.toFile())
+    return game.board.findAll(tileType).size
+}
 
 // Answer: 286
-fun main() {
-    val game = Game(INPUT_PATH.toFile())
-    println(game.board.findAll(TILE_TYPE).size)
-}
+fun main() { println(solve()) }

@@ -30,25 +30,27 @@ import com.curtislb.adventofcode.year2019.day04.password.HasRepeatedDigitGenerat
 import com.curtislb.adventofcode.year2019.day04.password.InRangeGenerator
 import com.curtislb.adventofcode.year2019.day04.password.NonDecreasingGenerator
 import com.curtislb.adventofcode.year2019.day04.password.SatisfiesAllGenerator
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 4, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param passwordLength The number of digits in a valid password.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 4)
-
-/**
- * The number of digits in a valid password.
- */
-private const val PASSWORD_LENGTH = 6
-
-// Answer: 460
-fun main() {
-    val passwordRange = INPUT_PATH.toFile().readIntRange()
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 4),
+    passwordLength: Int = 6
+): Int {
+    val passwordRange = inputPath.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(
-        ExactLengthGenerator(PASSWORD_LENGTH),
+        ExactLengthGenerator(passwordLength),
         InRangeGenerator(passwordRange.first, passwordRange.last),
         NonDecreasingGenerator(),
         HasRepeatedDigitGenerator()
     )
-    println(generator.countPasswords())
+    return generator.countPasswords()
 }
+
+// Answer: 460
+fun main() { println(solve()) }

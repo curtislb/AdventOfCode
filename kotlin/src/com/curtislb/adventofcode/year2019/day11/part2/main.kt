@@ -19,22 +19,24 @@ import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day11.painting.Color
 import com.curtislb.adventofcode.year2019.day11.painting.Robot
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 11, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 11)
-
-// Answer: ZCGRHKLB
-fun main() {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): String {
     // Run the robot from a white starting panel.
     val robot = Robot()
     robot.paint(Color.WHITE)
-    robot.executeProgram(Intcode(INPUT_PATH.toFile()))
+    robot.executeProgram(Intcode(inputPath.toFile()))
 
-    // Print the portion of the grid that the robot has painted.
-    robot.constructPaintedGrid().forEach { row ->
-        row.forEach { color -> print(color.symbol) }
-        println()
+    // Convert the painted portion of the grid to a string.
+    return robot.constructPaintedGrid().joinToString(separator = "\n") { row ->
+        row.joinToString(separator = "") { color -> color.symbol.toString() }
     }
 }
+
+// Answer: ZCGRHKLB
+fun main() { println(solve()) }

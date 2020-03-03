@@ -25,8 +25,8 @@ For example, given a relative base of 50, a relative mode parameter of -7 refers
 
 The relative base is modified with the relative base offset instruction:
 
-  - Opcode 9 adjusts the relative base by the value of its only parameter. The relative base increases (or decreases, if
-    the value is negative) by the value of the parameter.
+  - Opcode 9 adjusts the relative base by the value of its only parameter. The relative base increases (or decreases,
+    if the value is negative) by the value of the parameter.
 
 For example, if the relative base is 2000, then after the instruction 109,19, the relative base would be 2019. If the
 next instruction were 204,-34, then the value at address 1985 would be output.
@@ -58,20 +58,24 @@ package com.curtislb.adventofcode.year2019.day09.part1
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 9, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param programMode An input code that determines the mode in which the program will run.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 9)
-
-/**
- * A code that causes the program to run in test mode when provided as input.
- */
-private val TEST_MODE = BigInteger.ONE
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 9),
+    programMode: BigInteger = BigInteger.ONE
+): BigInteger? {
+    var boostKeycode: BigInteger? = null
+    val intcode = Intcode(inputPath.toFile()) { boostKeycode = it }
+    intcode.sendInput(programMode)
+    intcode.run()
+    return boostKeycode
+}
 
 // Answer: 3780860499
-fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile())
-    intcode.sendInput(TEST_MODE)
-    intcode.run()
-}
+fun main() { println(solve()) }

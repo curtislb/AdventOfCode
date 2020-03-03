@@ -58,29 +58,26 @@ package com.curtislb.adventofcode.year2019.day06.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day06.orbits.Universe
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 6, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param start The name of the node representing our starting location.
+ * @param target The name of the node representing the location of our target.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 6)
-
-/**
- * The name of the node representing our starting location.
- */
-private const val START = "YOU"
-
-/**
- * The name of the node representing the location of our target.
- */
-private const val TARGET = "SAN"
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 6),
+    start: String = "YOU",
+    target: String = "SAN"
+): Int? {
+    val universe = Universe(inputPath.toFile())
+    return universe.findOrbitalTransferDistance(start, target)
+}
 
 // Answer: 499
-fun main() {
-    val universe = Universe(INPUT_PATH.toFile())
-    val distance = universe.findOrbitalTransferDistance(START, TARGET)
-    if (distance != null) {
-        println(distance)
-    } else {
-        println("No path found.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No orbital transfer path found.")
+    else -> println(solution)
 }

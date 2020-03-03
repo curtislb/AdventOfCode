@@ -98,28 +98,28 @@ import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
 import com.curtislb.adventofcode.year2019.day15.repair.Space
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 15, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 15)
-
-// Answer: 270
-fun main() {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
     // Have the droid fully explore the grid.
-    val droid = Droid(INPUT_PATH.toFile())
+    val droid = Droid(inputPath.toFile())
     droid.explore()
 
     // Use BFS to determine the distance to the oxygen system.
-    val distance = bfsDistance(
+    return bfsDistance(
         start = Point.ORIGIN,
         isGoal = { droid.spaceAt(it) == Space.OXYGEN },
         getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }
     )
+}
 
-    if (distance == null) {
-        println("Unable to find oxygen system.")
-    } else {
-        println(distance)
-    }
+// Answer: 270
+fun main() = when(val solution = solve()) {
+    null -> println("Unable to find the oxygen system.")
+    else -> println(solution)
 }

@@ -18,44 +18,39 @@ import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.search.bisectIndex
 import com.curtislb.adventofcode.year2019.day14.chemistry.MaterialAmount
 import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 14, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param rawMaterial The name of a raw material that can be used in arbitrary quantities for reactions.
+ * @param rawMaterialAvailable The amount of raw material that is available to use for reactions.
+ * @param desiredMaterial The name of the material that we ultimately want to produce.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 14)
-
-/**
- * The name of a raw material that is on-hand and can be used for reactions.
- */
-private const val RAW_MATERIAL = "ORE"
-
-/**
- * The amount of raw material that is available to use for reactions.
- */
-private const val RAW_MATERIAL_AVAILABLE = 1_000_000_000_000L
-
-/**
- * The name of the material that we ultimately want to produce.
- */
-private const val DESIRED_PRODUCT = "FUEL"
-
-// Answer: 2169535
-fun main() {
-    val factory = Nanofactory(INPUT_PATH.toFile())
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 14),
+    rawMaterial: String = "ORE",
+    rawMaterialAvailable: Long = 1_000_000_000_000L,
+    desiredMaterial: String = "FUEL"
+): Long? {
+    val factory = Nanofactory(inputPath.toFile())
 
     // Binary search for the first product amount requiring more raw material than available.
-    val rawMaterials = setOf(RAW_MATERIAL)
+    val rawMaterials = setOf(rawMaterial)
     val productAmountLimit = bisectIndex { amount ->
-        val products = mapOf(MaterialAmount(DESIRED_PRODUCT, amount).toPair())
+        val products = mapOf(MaterialAmount(desiredMaterial, amount).toPair())
         val requiredMaterials = factory.getRequiredMaterials(rawMaterials, products)
-        val rawMaterialNeeded = requiredMaterials?.get(RAW_MATERIAL)
-            ?: throw IllegalStateException("Failed to produce $DESIRED_PRODUCT during bisect.")
-        rawMaterialNeeded > RAW_MATERIAL_AVAILABLE
+        val rawMaterialNeeded = requiredMaterials?.get(rawMaterial)
+            ?: throw IllegalStateException("Failed to produce $desiredMaterial during bisect.")
+        rawMaterialNeeded > rawMaterialAvailable
     }
 
-    if (productAmountLimit != null) {
-        println(productAmountLimit - 1L)
-    } else {
-        println("Unable to find maximum amount of $DESIRED_PRODUCT.")
-    }
+    return if (productAmountLimit != null) productAmountLimit - 1L else null
+}
+
+// Answer: 2169535
+fun main() = when (val solution = solve()) {
+    null -> println("Unable to produce the desired material.")
+    else -> println(solution)
 }

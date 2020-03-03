@@ -58,24 +58,20 @@ package com.curtislb.adventofcode.year2019.day15.part2
 import com.curtislb.adventofcode.common.graph.bfsApply
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 15, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 15)
-
-// Answer: 364
-fun main() {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
     // Have the droid fully explore the grid.
-    val droid = Droid(INPUT_PATH.toFile())
+    val droid = Droid(inputPath.toFile())
     droid.explore()
 
     // Get the position of the oxygen system.
-    val oxygenStartPosition = droid.goalPosition
-    if (oxygenStartPosition == null) {
-        println("Unable to find oxygen system.")
-        return
-    }
+    val oxygenStartPosition = droid.goalPosition ?: return null
 
     // Use BFS to find the furthest open space from the oxygen system.
     var maxDistance = 0L
@@ -83,5 +79,11 @@ fun main() {
         maxDistance = maxDistance.coerceAtLeast(distance)
         false // Not done searching.
     }
-    println(maxDistance)
+    return maxDistance
+}
+
+// Answer: 364
+fun main() = when(val solution = solve()) {
+    null -> println("Unable to find the oxygen system.")
+    else -> println(solution)
 }

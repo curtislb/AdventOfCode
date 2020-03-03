@@ -204,20 +204,22 @@ package com.curtislb.adventofcode.year2019.day12.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 12, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param stepCount The number of time steps for which to run the simulation.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 12)
-
-/**
- * The number of time steps for which to run the simulation.
- */
-private const val NUM_STEPS = 1000
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 12),
+    stepCount: Int = 1000
+): Int {
+    val system = NBodySystem(inputPath.toFile())
+    system.simulate(stepCount)
+    return system.totalEnergy
+}
 
 // Answer: 7636
-fun main() {
-    val system = NBodySystem(INPUT_PATH.toFile())
-    system.simulate(NUM_STEPS)
-    println(system.totalEnergy)
-}
+fun main() { println(solve()) }

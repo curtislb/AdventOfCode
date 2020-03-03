@@ -57,19 +57,21 @@ package com.curtislb.adventofcode.year2019.day03.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day03.wire.Wire
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 3, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 3)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 3)): Int? {
+    val (wireA, wireB) = inputPath.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
+    val (intersection, distance) = wireA.findNearestIntersectionWith(wireB)
+    return if (intersection != null) distance else null
+}
 
 // Answer: 709
-fun main() {
-    val (wireA, wireB) = INPUT_PATH.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
-    val (intersection, distance) = wireA.findNearestIntersectionWith(wireB)
-    if (intersection != null) {
-        println(distance)
-    } else {
-        println("No intersection found.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No intersection found.")
+    else -> println(solution)
 }

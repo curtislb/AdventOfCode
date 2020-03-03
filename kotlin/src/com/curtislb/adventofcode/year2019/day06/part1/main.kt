@@ -68,19 +68,21 @@ package com.curtislb.adventofcode.year2019.day06.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day06.orbits.Universe
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 6, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param center The name of the node representing the universal center of mass.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 6)
-
-/**
- * The name of the node representing the universal center of mass.
- */
-private const val CENTER = "COM"
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 6),
+    center: String = "COM"
+): Int {
+    val universe = Universe(inputPath.toFile())
+    return universe.countOrbits(center)
+}
 
 // Answer: 253104
-fun main() {
-    val universe = Universe(INPUT_PATH.toFile())
-    println(universe.countOrbits(CENTER))
-}
+fun main() { println(solve()) }

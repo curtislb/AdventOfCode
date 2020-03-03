@@ -39,33 +39,29 @@ package com.curtislb.adventofcode.year2019.day08.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day08.image.processLayers
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 8, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param imageWidth The width of each layer of the image, in number of pixels.
+ * @param imageHeight The height of each layer of the image, in number of pixels.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 8)
-
-/**
- * The width of each layer of the image, in number of pixels.
- */
-private const val IMAGE_WIDTH = 25
-
-/**
- * The height of each layer of the image, in number of pixels.
- */
-private const val IMAGE_HEIGHT = 6
-
-// Answer: 1820
-fun main() {
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 8),
+    imageWidth: Int = 25,
+    imageHeight: Int = 6
+): Int {
     var result = 0
     var minZeros = Int.MAX_VALUE
     var digitCounts = IntArray(10)
     processLayers(
-        file = INPUT_PATH.toFile(),
-        imageArea = IMAGE_WIDTH * IMAGE_HEIGHT,
+        inputPath.toFile(),
+        imageArea = imageWidth * imageHeight,
         onDigit = { _, digit -> digitCounts[digit]++ },
         onLayerFinished = {
-            // If layer has fewer zeros than the best so far, save (# of 1s) * (# of 2s).
+            // Update the result if this layer has the fewest zeros so far.
             if (digitCounts[0] < minZeros) {
                 result = digitCounts[1] * digitCounts[2]
                 minZeros = digitCounts[0]
@@ -73,5 +69,8 @@ fun main() {
             digitCounts = IntArray(10)
         }
     )
-    println(result)
+    return result
 }
+
+// Answer: 1820
+fun main() { println(solve()) }

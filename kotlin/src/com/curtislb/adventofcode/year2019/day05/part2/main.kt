@@ -63,20 +63,27 @@ package com.curtislb.adventofcode.year2019.day05.part2
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 5, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param systemId The system ID to be provided as input to the program.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 5)
-
-/**
- * The system ID to be provided as input to the program.
- */
-private val SYSTEM_ID = BigInteger("5")
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 5),
+    systemId: BigInteger = BigInteger("5")
+): BigInteger? {
+    var diagnosticCode: BigInteger? = null
+    val intcode = Intcode(inputPath.toFile()) { diagnosticCode = it }
+    intcode.sendInput(systemId)
+    intcode.run()
+    return diagnosticCode
+}
 
 // Answer: 7408802
-fun main() {
-    val intcode = Intcode(INPUT_PATH.toFile())
-    intcode.sendInput(SYSTEM_ID)
-    intcode.run()
+fun main() = when(val solution = solve()) {
+    null -> println("No diagnostic code produced.")
+    else -> println(solution)
 }
