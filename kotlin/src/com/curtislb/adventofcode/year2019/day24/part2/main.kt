@@ -178,20 +178,19 @@ package com.curtislb.adventofcode.year2019.day24.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day24.bugs.RecursiveBugGrid
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 24, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param durationMinutes The number of minutes to wait before counting the number of bugs.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 24)
-
-/**
- * The number of minutes to wait before counting the number of bugs.
- */
-private const val DURATION_MINUTES = 200
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 24), durationMinutes: Int = 200): Int {
+    val grid = RecursiveBugGrid(inputPath.toFile())
+    grid.update(durationMinutes)
+    return grid.countBugs()
+}
 
 // Answer: 2120
-fun main() {
-    val grid = RecursiveBugGrid(INPUT_PATH.toFile())
-    grid.update(DURATION_MINUTES)
-    println(grid.countBugs())
-}
+fun main() { println(solve()) }

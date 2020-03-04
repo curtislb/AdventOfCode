@@ -24,39 +24,33 @@ import com.curtislb.adventofcode.common.io.mapLines
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day22.shuffle.Shuffle
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 22, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param deckSize The number of cards in the deck to be shuffled.
+ * @param shuffleCount The number of times the full shuffle procedure should be applied.
+ * @param targetPosition The final position in the deck that we're interested in.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 22)
-
-/**
- * The number of cards in the deck to be shuffled.
- */
-private val DECK_SIZE = BigInteger("119315717514047")
-
-/**
- * The number of times the full shuffle procedure should be applied.
- */
-private val SHUFFLE_COUNT = BigInteger("101741582076661")
-
-/**
- * The final position in the deck that we're interested in.
- */
-private val TARGET_POSITION = BigInteger("2020")
-
-// Answer: 1644352419829
-fun main() {
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 22),
+    deckSize: BigInteger = BigInteger("119315717514047"),
+    shuffleCount: BigInteger = BigInteger("101741582076661"),
+    targetPosition: BigInteger = BigInteger("2020")
+): BigInteger {
     // Solve a system of equations involving the two previous card positions.
-    val shuffleSteps = INPUT_PATH.toFile().mapLines { Shuffle.from(it) }
-    val x = TARGET_POSITION
-    val y = Shuffle.reverse(shuffleSteps, x, DECK_SIZE)
-    val z = Shuffle.reverse(shuffleSteps, y, DECK_SIZE)
-    val a = ((y - z) * (x - y).modInverse(DECK_SIZE)) % DECK_SIZE
-    val b = (y - a * x) % DECK_SIZE
+    val shuffleSteps = inputPath.toFile().mapLines { Shuffle.from(it) }
+    val y = Shuffle.reverse(shuffleSteps, targetPosition, deckSize)
+    val z = Shuffle.reverse(shuffleSteps, y, deckSize)
+    val a = ((y - z) * (targetPosition - y).modInverse(deckSize)) % deckSize
+    val b = (y - a * targetPosition) % deckSize
 
     // Apply the geometric series formula to determine the result.
-    val c = a.modPow(SHUFFLE_COUNT, DECK_SIZE)
-    val result = (c * x + (c - BigInteger.ONE) * (a - BigInteger.ONE).modInverse(DECK_SIZE) * b) % DECK_SIZE
-    println(result)
+    val c = a.modPow(shuffleCount, deckSize)
+    return (c * targetPosition + (c - BigInteger.ONE) * (a - BigInteger.ONE).modInverse(deckSize) * b) % deckSize
 }
+
+// Answer: 1644352419829
+fun main() { println(solve()) }

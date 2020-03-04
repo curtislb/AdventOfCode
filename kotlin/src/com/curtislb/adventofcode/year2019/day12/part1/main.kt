@@ -212,10 +212,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param stepCount The number of time steps for which to run the simulation.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 12),
-    stepCount: Int = 1000
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 12), stepCount: Int = 1000): Int {
     val system = NBodySystem(inputPath.toFile())
     system.simulate(stepCount)
     return system.totalEnergy

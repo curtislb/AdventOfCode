@@ -33,21 +33,18 @@ import com.curtislb.adventofcode.year2019.day21.spring.Register.J
 import com.curtislb.adventofcode.year2019.day21.spring.Register.T
 import com.curtislb.adventofcode.year2019.day21.spring.SpringDroid
 import com.curtislb.adventofcode.year2019.day21.spring.SpringScript
+import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 21, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param maxInstructions The maximum number of springscript instructions that the springdroid can remember.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 21)
-
-/**
- * The maximum number of springscript instructions that the springdroid can remember.
- */
-private const val MAX_INSTRUCTIONS = 15
-
-// Answer: 1142830249
-fun main() {
-    val droid = SpringDroid(INPUT_PATH.toFile(), MAX_INSTRUCTIONS)
-    droid.runProgram(
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 21), maxInstructions: Int = 15): BigInteger? {
+    val droid = SpringDroid(inputPath.toFile(), maxInstructions)
+    return droid.runProgram(
         SpringScript.builder(enableExtendedMode = true)
             .not(A, T)
             .or(T, J)
@@ -63,4 +60,10 @@ fun main() {
             .and(T, J)
             .build()
     )
+}
+
+// Answer: 1142830249
+fun main() = when (val solution = solve()) {
+    null -> println("No output produced by the springdroid.")
+    else -> println(solution)
 }

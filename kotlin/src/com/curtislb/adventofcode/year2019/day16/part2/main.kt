@@ -30,37 +30,30 @@ package com.curtislb.adventofcode.year2019.day16.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day16.fft.FastFFT
 import com.curtislb.adventofcode.year2019.day16.fft.readSignal
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 16, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param phaseCount The number of phases of FFT to run on the input signal.
+ * @param signalRepeatCount The number of times the base signal is repeated to produce the full input signal.
+ * @param offsetDigits The number of digits at the beginning of the original signal that represent the message offset.
+ * @param messageLength The number of digits at the given offset in the final signal that represent the message.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 16)
-
-/**
- * The number of phases of FFT to run on the input signal.
- */
-private const val PHASE_COUNT = 100
-
-/**
- * The number of times the base signal is repeated to produce the full input signal.
- */
-private const val SIGNAL_REPEAT_COUNT = 10_000
-
-/**
- * The number of digits at the beginning of the original signal that represent the message offset.
- */
-private const val OFFSET_DIGITS = 7
-
-/**
- * The number of digits at the given offset in the final signal that represent the message.
- */
-private const val MESSAGE_LENGTH = 8
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 16),
+    phaseCount: Int = 100,
+    signalRepeatCount: Int = 10_000,
+    offsetDigits: Int = 7,
+    messageLength: Int = 8
+): String {
+    val baseSignal = inputPath.toFile().readSignal()
+    val offset = baseSignal.subList(0, offsetDigits).joinToString(separator = "").toInt()
+    val fft = FastFFT(baseSignal, signalRepeatCount, offset)
+    fft.run(phaseCount)
+    return fft.readFromOffset(messageLength).joinToString(separator = "")
+}
 
 // Answer: 85600369
-fun main() {
-    val baseSignal = INPUT_PATH.toFile().readSignal()
-    val offset = baseSignal.subList(0, OFFSET_DIGITS).joinToString(separator = "").toInt()
-    val fft = FastFFT(baseSignal, SIGNAL_REPEAT_COUNT, offset)
-    fft.run(PHASE_COUNT)
-    println(fft.readFromOffset(MESSAGE_LENGTH).joinToString(separator = ""))
-}
+fun main() { println(solve()) }

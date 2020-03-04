@@ -76,10 +76,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param center The name of the node representing the universal center of mass.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 6),
-    center: String = "COM"
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), center: String = "COM"): Int {
     val universe = Universe(inputPath.toFile())
     return universe.countOrbits(center)
 }

@@ -38,10 +38,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param passwordLength The number of digits in a valid password.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 4),
-    passwordLength: Int = 6
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 4), passwordLength: Int = 6): Int {
     val passwordRange = inputPath.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(
         ExactLengthGenerator(passwordLength),

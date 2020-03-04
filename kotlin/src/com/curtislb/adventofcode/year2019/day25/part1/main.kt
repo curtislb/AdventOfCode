@@ -41,15 +41,16 @@ import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day25.rescue.Droid
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Move
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Take
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 25, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 25)
-
-// Answer: 1073874948
-fun main() {
-    val droid = Droid(INPUT_PATH.toFile())
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 25)): String? {
+    // Send a list of predetermined commands to the droid.
+    val droid = Droid(inputPath.toFile())
     droid.start()
     val commands = listOf(
         Move(Direction.LEFT),
@@ -74,4 +75,14 @@ fun main() {
         Move(Direction.UP)
     )
     commands.forEach { droid.sendCommand(it) }
+
+    // Extract the password from the last line of program output.
+    val line = droid.lastLine
+    return if (line != null) Regex("""(\d+)""").find(line)?.groupValues?.get(1) else null
+}
+
+// Answer: 1073874948
+fun main() = when (val solution = solve()) {
+    null -> println("No password found.")
+    else -> println(solution)
 }

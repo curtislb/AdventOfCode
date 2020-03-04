@@ -90,10 +90,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param systemId The system ID to be provided as input to the program.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 5),
-    systemId: BigInteger = BigInteger.ONE
-): BigInteger? {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 5), systemId: BigInteger = BigInteger.ONE): BigInteger? {
     var diagnosticCode: BigInteger? = null
     val intcode = Intcode(inputPath.toFile()) { diagnosticCode = it }
     intcode.sendInput(systemId)

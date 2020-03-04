@@ -42,19 +42,21 @@ package com.curtislb.adventofcode.year2019.day19.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 19, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param gridRange The range of x and y-coordinate values on the grid for the drones to scan.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 19)
-
-/**
- * The range of x and y-coordinate values on the grid for the drones to scan.
- */
-private val GRID_RANGE = BigIntegerRange(0 until 50)
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 19),
+    gridRange: BigIntegerRange = BigIntegerRange(0 until 50)
+): Int {
+    val droneSystem = DroneSystem(inputPath.toFile())
+    return droneSystem.scanArea(gridRange, gridRange)
+}
 
 // Answer: 138
-fun main() {
-    val droneSystem = DroneSystem(INPUT_PATH.toFile())
-    println(droneSystem.scanArea(GRID_RANGE, GRID_RANGE))
-}
+fun main() { println(solve()) }

@@ -14,7 +14,7 @@ class Robot(file: File) {
     /**
      * An ASCII interface to the program that controls the robot.
      */
-    private val ascii: ASCII = ASCII(file) { processOutput(it) }
+    private val ascii: ASCII = ASCII(file) { output, _ -> processOutput(output) }
 
     /**
      * The initial layout of the scaffold grid, including the location of the vacuum robot.
@@ -33,12 +33,20 @@ class Robot(file: File) {
     }
 
     /**
-     * Moves the vacuum robot according to [routine], printing intermediate states of the grid if [showFeed] is `true`.
+     * Returns the dust collected by the vacuum robot after moving according to the given [routine], or `null` if the
+     * robot falls into space. If [showFeed] is `true`, the robot will also print the state of the grid as it moves.
      */
-    fun moveRobot(routine: Routine, showFeed: Boolean = false) {
+    fun moveRobot(routine: Routine, showFeed: Boolean = false): BigInteger? {
+        var dustCollected: BigInteger? = null
+        ascii.processOutput = { output, isAscii ->
+            if (!isAscii) {
+                dustCollected = output
+            }
+        }
         ascii.sendInput(routine.toString())
         ascii.sendInput(if (showFeed) "y" else "n")
         ascii.run()
+        return dustCollected
     }
 
     /**
@@ -48,7 +56,7 @@ class Robot(file: File) {
         grid = ScaffoldGrid()
         isPrevOutputNewline = false
         ascii.reset()
-        ascii.processOutput = this::processOutput
+        ascii.processOutput = { output, _ -> processOutput(output) }
         ascii[0] = BigInteger.TWO
         ascii.run()
     }

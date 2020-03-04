@@ -102,35 +102,29 @@ package com.curtislb.adventofcode.year2019.day17.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
 import com.curtislb.adventofcode.year2019.day17.scaffold.Routine
+import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 17, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param functionCount The maximum number of movement functions that can be given to the vacuum robot.
+ * @param maxCharCount The maximum number of ASCII characters per line that can be given to the vacuum robot.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 17)
-
-/**
- * The maximum number of movement functions that can be provided to the vacuum robot.
- */
-private const val FUNCTION_COUNT = 3
-
-/**
- * The maximum number of characters in the ASCII representation of any input sent to the vacuum robot.
- */
-private const val MAX_CHAR_COUNT = 20
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 17),
+    functionCount: Int = 3,
+    maxCharCount: Int = 20
+): BigInteger? {
+    val robot = Robot(inputPath.toFile())
+    val instructions = robot.grid.planRoute()
+    val routine = Routine.compressInstructions(instructions, functionCount, maxCharCount)?.padFunctions(functionCount)
+    return if (routine != null) robot.moveRobot(routine) else null
+}
 
 // Answer: 1681189
-fun main() {
-    val robot = Robot(INPUT_PATH.toFile())
-    val instructions = robot.grid.planRoute()
-    val routine = Routine.compressInstructions(
-        instructions,
-        FUNCTION_COUNT,
-        MAX_CHAR_COUNT
-    )?.padFunctions(FUNCTION_COUNT)
-
-    if (routine != null) {
-        robot.moveRobot(routine)
-    } else {
-        println("Unable to convert instructions to routine.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No output produced by the vacuum robot.")
+    else -> println(solution)
 }

@@ -31,11 +31,7 @@ import java.nio.file.Path
  * @param passwordLength The number of digits in a valid password.
  * @param repeatCount The exact number of times a digit must be repeated in a valid password.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 4),
-    passwordLength: Int = 6,
-    repeatCount: Int = 2
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 4), passwordLength: Int = 6, repeatCount: Int = 2): Int {
     val passwordRange = inputPath.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(
         ExactLengthGenerator(passwordLength),

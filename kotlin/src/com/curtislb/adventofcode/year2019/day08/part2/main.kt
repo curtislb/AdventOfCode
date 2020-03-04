@@ -53,11 +53,7 @@ import java.nio.file.Path
  * @param imageWidth The width of each layer of the image, in number of pixels.
  * @param imageHeight The height of each layer of the image, in number of pixels.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 8),
-    imageWidth: Int = 25,
-    imageHeight: Int = 6
-): String {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 8), imageWidth: Int = 25, imageHeight: Int = 6): String {
     // Calculate pixel values for the composed image.
     val image = Array(imageHeight) { Array(imageWidth) { Pixel.ALPHA } }
     processLayers(

@@ -93,29 +93,26 @@ package com.curtislb.adventofcode.year2019.day20.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day20.maze.Maze
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 20, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param entranceLabel The label of the space representing the entrance of the maze.
+ * @param exitLabel The label of the space representing the exit of the maze.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 20)
-
-/**
- * The label of the space representing the entrance of the maze.
- */
-private const val ENTRANCE_LABEL = "AA"
-
-/**
- * The label of the space representing the exit of the maze.
- */
-private const val EXIT_LABEL = "ZZ"
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 20),
+    entranceLabel: String = "AA",
+    exitLabel: String = "ZZ"
+): Long? {
+    val maze = Maze(inputPath.toFile())
+    return maze.findShortestDistance(entranceLabel, exitLabel)
+}
 
 // Answer: 644
-fun main() {
-    val maze = Maze(INPUT_PATH.toFile())
-    val distance = maze.findShortestDistance(ENTRANCE_LABEL, EXIT_LABEL)
-    if (distance != null) {
-        println(distance)
-    } else {
-        println("No path found from $ENTRANCE_LABEL to $EXIT_LABEL.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No path found.")
+    else -> println(solution)
 }

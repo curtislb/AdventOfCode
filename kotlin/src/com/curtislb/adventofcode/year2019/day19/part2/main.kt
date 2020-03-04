@@ -59,38 +59,40 @@ import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.search.bisectIndex
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 19, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param shipSize The width and height of the square ship to fit within the beam.
+ * @param positionXFactor The number by which the x-coordinate of the final position should be multiplied.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 19)
-
-/**
- * The width and height of the square ship to fit within the beam.
- */
-private val SHIP_SIZE = BigInteger("100")
-
-/**
- * The number by which the x-coordinate of the final position should be multiplied.
- */
-private val POSITION_X_FACTOR = BigInteger("10000")
-
-// Answer: 13530764
-fun main() {
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 19),
+    shipSize: BigInteger = BigInteger("100"),
+    positionXFactor: BigInteger = BigInteger("10000")
+): BigInteger? {
     // Find the first row that allows the ship to fit in the beam.
-    val droneSystem = DroneSystem(INPUT_PATH.toFile())
-    val shipRowDelta = SHIP_SIZE - BigInteger.ONE
+    val droneSystem = DroneSystem(inputPath.toFile())
+    val shipRowDelta = shipSize - BigInteger.ONE
     val targetIndex = bisectIndex { index ->
         val overlap = droneSystem.findBeamOverlap(index.toBigInteger(), shipRowDelta)
-        overlap.size >= SHIP_SIZE
+        overlap.size >= shipSize
     }
 
-    if (targetIndex != null) {
+    return if (targetIndex != null) {
         // Find the leftmost valid position for the ship in the row.
         val topRowIndex = targetIndex.toBigInteger()
         val overlap = droneSystem.findBeamOverlap(topRowIndex, shipRowDelta)
-        println(overlap.start * POSITION_X_FACTOR + topRowIndex)
+        overlap.start * positionXFactor + topRowIndex
     } else {
-        println("Failed to find large enough area.")
+        null
     }
+}
+
+// Answer: 13530764
+fun main() = when (val solution = solve()) {
+    null -> println("Unable to find a large enough area.")
+    else -> println(solution)
 }

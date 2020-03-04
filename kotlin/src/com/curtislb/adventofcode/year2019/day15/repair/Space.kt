@@ -40,7 +40,7 @@ enum class Space(val symbol: Char, val isOccupiable: Boolean?) {
          *
          * @throws IllegalArgumentException If [value] has no corresponding space.
          */
-        fun from(value: Int): Space = when(value) {
+        fun from(value: Int): Space = when (value) {
             -2 -> DROID
             -1 -> UNKNOWN
             0 -> WALL

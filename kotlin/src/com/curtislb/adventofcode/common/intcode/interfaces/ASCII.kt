@@ -18,12 +18,15 @@ import java.math.BigInteger
 class ASCII(
     private val intcode: Intcode,
     private val showAsciiOutput: Boolean = false,
-    var processOutput: ((output: BigInteger) -> Unit)? = null) {
+    var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null) {
 
     init {
         intcode.onOutput = { output ->
-            showOutput(output)
-            processOutput?.invoke(output)
+            val isAscii = output in ASCII_CODE_RANGE
+            if (showAsciiOutput && isAscii) {
+                print(output.toInt().toChar())
+            }
+            processOutput?.invoke(output, isAscii)
         }
     }
 
@@ -40,7 +43,7 @@ class ASCII(
     constructor(
         file: File,
         showAsciiOutput: Boolean = false,
-        processOutput: ((output: BigInteger) -> Unit)? = null
+        processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
     ) : this(Intcode(file), showAsciiOutput, processOutput)
 
     /**
@@ -90,17 +93,6 @@ class ASCII(
         intcode.sendInput(input.map { it.toInt().toBigInteger() }.asSequence())
         if (sendNewline) {
             intcode.sendInput(NEWLINE_CODE)
-        }
-    }
-
-    /**
-     * Prints [output] followed by a newline if it is outside the normal ASCII range. Otherwise, if [showAsciiOutput] is
-     * `true`, prints the ASCII character corresponding to [output].
-     */
-    private fun showOutput(output: BigInteger) {
-        when {
-            output !in ASCII_CODE_RANGE -> println(output)
-            showAsciiOutput -> print(output.toInt().toChar())
         }
     }
 

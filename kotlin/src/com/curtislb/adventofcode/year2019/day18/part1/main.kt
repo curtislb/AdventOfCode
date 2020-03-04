@@ -116,19 +116,20 @@ package com.curtislb.adventofcode.year2019.day18.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day18.vault.Vault
 import com.curtislb.adventofcode.year2019.day18.vault.search.KeySearch
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 18, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 18, part = 1)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 18, part = 1)): Long? {
+    val vault = Vault(inputPath.toFile())
+    return KeySearch(vault).searchDistance
+}
 
 // Answer: 3048
-fun main() {
-    val vault = Vault(INPUT_PATH.toFile())
-    val distance = KeySearch(vault).searchDistance
-    if (distance != null) {
-        println(distance)
-    } else {
-        println("No path found.")
-    }
+fun main() = when (val solution = solve()) {
+    null -> println("No path found.")
+    else -> println(solution)
 }

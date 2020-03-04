@@ -38,10 +38,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param tileType The type of tile to count occurrences of on the game board.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 13),
-    tileType: Tile = Tile.BLOCK
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 13), tileType: Tile = Tile.BLOCK): Int {
     val game = Game(inputPath.toFile())
     return game.board.findAll(tileType).size
 }

@@ -39,7 +39,7 @@ enum class Tile(val symbol: Char) {
          *
          * @throws IllegalArgumentException If [value] has no corresponding tile.
          */
-        fun from(value: Int): Tile = when(value) {
+        fun from(value: Int): Tile = when (value) {
             0 -> EMPTY
             1 -> WALL
             2 -> BLOCK

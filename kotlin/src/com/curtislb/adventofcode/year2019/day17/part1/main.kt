@@ -66,16 +66,19 @@ package com.curtislb.adventofcode.year2019.day17.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
+import java.nio.file.Path
 import kotlin.math.abs
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 17, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 17)
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int {
+    val robot = Robot(inputPath.toFile())
+    val intersections = robot.grid.findIntersections()
+    return intersections.sumBy { abs(it.x * it.y) }
+}
 
 // Answer: 7720
-fun main() {
-    val robot = Robot(INPUT_PATH.toFile())
-    val intersections = robot.grid.findIntersections()
-    println(intersections.sumBy { abs(it.x * it.y) })
-}
+fun main() { println(solve()) }

@@ -26,19 +26,15 @@ import com.curtislb.adventofcode.year2019.day23.network.Network
 import com.curtislb.adventofcode.year2019.day23.network.packet.BasePacketListener
 import com.curtislb.adventofcode.year2019.day23.network.packet.Packet
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 23, part 2.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param computerCount The number of computers in the network.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 23)
-
-/**
- * The number of computers in the network.
- */
-private const val COMPUTER_COUNT = 50
-
-// Answer: 13286
-fun main() {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 23), computerCount: Int = 50): BigInteger? {
     // Listen for the first repeated Y value sent by the NAT.
     val natPacketYValues = mutableSetOf<BigInteger>()
     var repeatedYValue: BigInteger? = null
@@ -54,7 +50,13 @@ fun main() {
         }
     }
 
-    val network = Network(INPUT_PATH.toFile(), COMPUTER_COUNT, natPacketListener)
+    val network = Network(inputPath.toFile(), computerCount, natPacketListener)
     network.run()
-    println(repeatedYValue)
+    return repeatedYValue
+}
+
+// Answer: 13286
+fun main() = when (val solution = solve()) {
+    null -> println("No repeated Y value sent by the NAT.")
+    else -> println(solution)
 }

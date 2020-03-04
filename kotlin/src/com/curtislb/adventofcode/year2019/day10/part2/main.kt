@@ -108,6 +108,6 @@ fun solve(
 
 // Answer: 1110
 fun main() = when (val solution = solve()) {
-    null -> println("Target asteroid not found.")
+    null -> println("Unable to vaporize the target asteroid.")
     else -> println(solution)
 }

@@ -167,25 +167,24 @@ import com.curtislb.adventofcode.year2019.day22.shuffle.DealIntoNewStack
 import com.curtislb.adventofcode.year2019.day22.shuffle.DealWithIncrement
 import com.curtislb.adventofcode.year2019.day22.shuffle.Shuffle
 import java.math.BigInteger
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 22, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param deckSize The number of cards in the deck to be shuffled.
+ * @param targetCard The value of the card whose position we're interested in.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 22)
-
-/**
- * The number of cards in the deck to be shuffled.
- */
-private val DECK_SIZE = BigInteger("10007")
-
-/**
- * The value of the card whose position we're interested in.
- */
-private val TARGET_CARD = BigInteger("2019")
+fun solve(
+    inputPath: Path = pathToInput(year = 2019, day = 22),
+    deckSize: BigInteger = BigInteger("10007"),
+    targetCard: BigInteger = BigInteger("2019")
+): BigInteger {
+    var position = targetCard
+    inputPath.toFile().forEachLine { position = Shuffle.from(it).apply(position, deckSize) }
+    return position
+}
 
 // Answer: 8191
-fun main() {
-    var position = TARGET_CARD
-    INPUT_PATH.toFile().forEachLine { position = Shuffle.from(it).apply(position, DECK_SIZE) }
-    println(position)
-}
+fun main() { println(solve()) }

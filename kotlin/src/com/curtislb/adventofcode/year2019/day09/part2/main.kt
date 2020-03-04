@@ -25,10 +25,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param programMode An input code that determines the mode in which the program will run.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 9),
-    programMode: BigInteger = BigInteger.TWO
-): BigInteger? {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 9), programMode: BigInteger = BigInteger.TWO): BigInteger? {
     var boostKeycode: BigInteger? = null
     val intcode = Intcode(inputPath.toFile()) { boostKeycode = it }
     intcode.sendInput(programMode)

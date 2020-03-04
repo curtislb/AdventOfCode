@@ -75,19 +75,22 @@ package com.curtislb.adventofcode.year2019.day24.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day24.bugs.BugGrid
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 24, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 24)
-
-// Answer: 13500447
-fun main() {
-    var grid = BugGrid.from(INPUT_PATH.toFile())
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 24)): Int {
+    var grid = BugGrid.from(inputPath.toFile())
     val seen = mutableSetOf<BugGrid>()
     while (grid !in seen) {
         seen.add(grid)
         grid = grid.next()
     }
-    println(grid.biodiversity)
+    return grid.biodiversity
 }
+
+// Answer: 13500447
+fun main() { println(solve()) }

@@ -48,11 +48,7 @@ import java.nio.file.Path
  * @param imageWidth The width of each layer of the image, in number of pixels.
  * @param imageHeight The height of each layer of the image, in number of pixels.
  */
-fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 8),
-    imageWidth: Int = 25,
-    imageHeight: Int = 6
-): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 8), imageWidth: Int = 25, imageHeight: Int = 6): Int {
     var result = 0
     var minZeros = Int.MAX_VALUE
     var digitCounts = IntArray(10)

@@ -92,26 +92,21 @@ package com.curtislb.adventofcode.year2019.day16.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day16.fft.FFT
 import com.curtislb.adventofcode.year2019.day16.fft.readSignal
+import java.nio.file.Path
 
 /**
- * The path to the input file for this puzzle.
+ * Returns the solution to the puzzle for day 16, part 1.
+ *
+ * @param inputPath The path to the input file for this puzzle.
+ * @param phaseCount The number of phases of FFT to run on the input signal.
+ * @param digitCount The number of digits to read from the beginning of the final signal.
  */
-private val INPUT_PATH = pathToInput(year = 2019, day = 16)
-
-/**
- * The number of phases of FFT to run on the input signal.
- */
-private const val PHASE_COUNT = 100
-
-/**
- * The number of digits to read from the beginning of the final signal.
- */
-private const val DIGIT_COUNT = 8
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 16), phaseCount: Int = 100, digitCount: Int = 8): String {
+    val inputSignal = inputPath.toFile().readSignal()
+    val fft = FFT(inputSignal)
+    fft.run(phaseCount)
+    return fft.signal.subList(0, digitCount).joinToString(separator = "")
+}
 
 // Answer: 96136976
-fun main() {
-    val inputSignal = INPUT_PATH.toFile().readSignal()
-    val fft = FFT(inputSignal)
-    fft.run(PHASE_COUNT)
-    println(fft.signal.subList(0, DIGIT_COUNT).joinToString(separator = ""))
-}
+fun main() { println(solve()) }
