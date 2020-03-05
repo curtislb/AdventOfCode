@@ -42,9 +42,9 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     internal var relativeBase: Int = 0
 
     /**
-     * The position where the cursor should begin the next time the program is run.
+     * The position where the instruction pointer should begin the next time the program is run.
      */
-    private var cursorStart: Int = 0
+    private var pointerStart: Int = 0
 
     init {
         val tokens = programString.split(',')
@@ -69,8 +69,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     /**
      * Whether this program has finished and no more operations can be run.
      */
-    val isDone: Boolean
-        get() = cursorStart !in currentValues.indices
+    val isDone: Boolean get() = pointerStart !in currentValues.indices
 
     /**
      * Whether this program has paused and may be resumed by calling [run].
@@ -107,12 +106,16 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     /**
      * Queues all values in [inputValues] to be sent as input to the program.
      */
-    fun sendInput(vararg inputValues: BigInteger) { sendInput(inputValues.asSequence()) }
+    fun sendInput(vararg inputValues: BigInteger) {
+        sendInput(inputValues.asSequence())
+    }
 
     /**
      * Queues all values in the (possibly infinite) [inputSequence] to be sent as input to the program.
      */
-    fun sendInput(inputSequence: Sequence<BigInteger>) { input.queue(inputSequence) }
+    fun sendInput(inputSequence: Sequence<BigInteger>) {
+        input.queue(inputSequence)
+    }
 
     /**
      * Reads the next queued input value for the program, or returns `null` and pauses the program if no next input is
@@ -129,32 +132,32 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     /**
      * Runs the program by processing operations one at a time until a stopping condition is reached.
      *
-     * The program begins processing operations at its last cursor position (0 for a new program). Each operation
+     * The program begins processing operations at its last pointer position (0 for a new program). Each operation
      * contains a two-digit opcode (see [Operation]) and may contain additional digits representing the mode(s) in which
      * parameters for that operation should be interpreted (see [Mode]). After processing an operation, the program will
-     * move its cursor to a new position and repeat the process. This will continue until one of the following occurs:
-     * - The cursor is moved to an invalid (negative) position, at which point the program will finish.
+     * move its pointer to a new position and repeat the process. This will continue until one of the following occurs:
+     * - The pointer is moved to an invalid (negative) position, at which point the program will finish.
      * - The program requests input, but no next input is available, at which point the program will pause.
      *
-     * In either case, this method will return, and the program's last cursor position will be stored. Once the program
+     * In either case, this method will return, and the program's last pointer position will be stored. Once the program
      * has finished (as opposed to paused), any future calls to [run] will immediately return, until [reset] is invoked.
      */
     fun run() {
-        var cursor = cursorStart
+        var pointer = pointerStart
         isPaused = false
-        while (cursor >= 0 && !isPaused) {
-            val (operation, modes) = parseOperation(cursor)
-            val parameters = getParameters(cursor, operation.parameterCount)
-            cursor = operation.process(this, cursor, parameters, modes)
+        while (pointer >= 0 && !isPaused) {
+            val (operation, modes) = parseOperation(pointer)
+            val parameters = getParameters(pointer, operation.parameterCount)
+            pointer = operation.process(this, pointer, parameters, modes)
         }
-        cursorStart = cursor
+        pointerStart = pointer
     }
 
     /**
-     * Returns the operation and associated parameter modes at a given [cursor] location in the program.
+     * Returns the operation and associated parameter modes at a given [pointer] location in the program.
      */
-    private fun parseOperation(cursor: Int): Pair<Operation, Array<Mode>> {
-        var (modesInt, opcodeInt) = this[cursor].divideAndRemainder(OPCODE_MOD)
+    private fun parseOperation(pointer: Int): Pair<Operation, Array<Mode>> {
+        var (modesInt, opcodeInt) = this[pointer].divideAndRemainder(OPCODE_MOD)
         val operation = Operation.from(opcodeInt)
 
         val modes = Array<Mode>(operation.parameterCount) { PositionMode }
@@ -171,10 +174,10 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
     }
 
     /**
-     * Returns the first [parameterCount] parameters for an operation at a given [cursor] location in the program.
+     * Returns the first [parameterCount] parameters for an operation at a given [pointer] location in the program.
      */
-    private fun getParameters(cursor: Int, parameterCount: Int): Array<BigInteger> {
-        return Array(parameterCount) { this[cursor + it + 1] }
+    private fun getParameters(pointer: Int, parameterCount: Int): Array<BigInteger> {
+        return Array(parameterCount) { this[pointer + it + 1] }
     }
 
     /**
@@ -182,17 +185,17 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * - Any values modified during execution.
      * - Any input values provided to the program.
      * - The relative base position of the program.
-     * - The last cursor position of the program.
+     * - The last pointer position of the program.
      * - Whether the program has been paused.
      *
-     * In particular, the function [onOutput] is **not** reset by this method.
+     * In particular, the function [onOutput] is *not* reset by this method.
      */
     fun reset() {
         currentValues = initialValues.toTypedArray()
         extendedValues = mutableMapOf()
         input.clear()
         relativeBase = 0
-        cursorStart = 0
+        pointerStart = 0
         isPaused = false
     }
 

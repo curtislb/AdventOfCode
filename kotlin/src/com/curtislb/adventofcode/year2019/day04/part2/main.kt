@@ -18,7 +18,7 @@ package com.curtislb.adventofcode.year2019.day04.part2
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.io.readIntRange
 import com.curtislb.adventofcode.year2019.day04.password.ExactLengthGenerator
-import com.curtislb.adventofcode.year2019.day04.password.ExactRepCountDigitGenerator
+import com.curtislb.adventofcode.year2019.day04.password.ExactRepeatCountDigitGenerator
 import com.curtislb.adventofcode.year2019.day04.password.InRangeGenerator
 import com.curtislb.adventofcode.year2019.day04.password.NonDecreasingGenerator
 import com.curtislb.adventofcode.year2019.day04.password.SatisfiesAllGenerator
@@ -37,10 +37,12 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 4), passwordLength: I
         ExactLengthGenerator(passwordLength),
         InRangeGenerator(passwordRange.first, passwordRange.last),
         NonDecreasingGenerator(),
-        ExactRepCountDigitGenerator(repeatCount)
+        ExactRepeatCountDigitGenerator(repeatCount)
     )
     return generator.countPasswords()
 }
 
 // Answer: 290
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

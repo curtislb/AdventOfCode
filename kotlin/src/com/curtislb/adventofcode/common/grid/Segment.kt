@@ -11,14 +11,12 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
     /**
      * The end point of this segment.
      */
-    val end: Point
-        get() = start.move(direction, length)
+    val end: Point get() = start.move(direction, length)
 
     /**
      * Whether this segment is horizontal, as opposed to vertical.
      */
-    val isHorizontal: Boolean
-        get() = direction == Direction.RIGHT || direction == Direction.LEFT
+    val isHorizontal: Boolean get() = direction == Direction.RIGHT || direction == Direction.LEFT
 
     /**
      * Returns `true` if this segment is perpendicular to [other], or `false` otherwise.

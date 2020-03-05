@@ -93,4 +93,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 24)): Int {
 }
 
 // Answer: 13500447
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

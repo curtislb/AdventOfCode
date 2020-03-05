@@ -89,4 +89,6 @@ fun solve(
 }
 
 // Answer: 272368
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

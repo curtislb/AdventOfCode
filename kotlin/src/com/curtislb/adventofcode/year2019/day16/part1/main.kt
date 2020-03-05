@@ -109,4 +109,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 16), phaseCount: Int 
 }
 
 // Answer: 96136976
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

@@ -51,8 +51,7 @@ class Droid(file: File) {
     /**
      * Whether the repair droid's current position is the location of the oxygen system.
      */
-    val isAtGoal: Boolean
-        get() = orientation.position == goalPosition
+    val isAtGoal: Boolean get() = orientation.position == goalPosition
 
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored.

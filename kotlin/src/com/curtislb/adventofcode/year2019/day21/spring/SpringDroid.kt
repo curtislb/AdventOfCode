@@ -21,7 +21,9 @@ class SpringDroid(file: File, private val maxInstructions: Int? = null) {
     /**
      * Restores the springdroid to its starting state, immediately after initialization.
      */
-    fun reset() { ascii.reset() }
+    fun reset() {
+        ascii.reset()
+    }
 
     /**
      * Returns the hull damage reported the springdroid after following the given [springscript] program, or `null` if

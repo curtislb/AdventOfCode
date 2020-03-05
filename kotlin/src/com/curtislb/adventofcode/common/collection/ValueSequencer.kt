@@ -22,7 +22,9 @@ class ValueSequencer<T> {
     /**
      * Resets the state of this sequencer by removing all queued values.
      */
-    fun clear() { sequences = ArrayDeque() }
+    fun clear() {
+        sequences = ArrayDeque()
+    }
 
     /**
      * Returns `true` if this sequencer has at least one queued value, or `false` otherwise.

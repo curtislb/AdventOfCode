@@ -12,8 +12,7 @@ data class Point(val x: Int, val y: Int) {
     /**
      * All points on the grid that are horizontally or vertically adjacent to this one.
      */
-    val neighbors: List<Point>
-        get() = NEIGHBOR_DELTAS.map { Point(x + it.x, y + it.y) }
+    val neighbors: List<Point> get() = NEIGHBOR_DELTAS.map { Point(x + it.x, y + it.y) }
 
     /**
      * Returns the point given by moving [distance] grid units in [direction] from this one.
@@ -48,7 +47,7 @@ data class Point(val x: Int, val y: Int) {
     }
 
     /**
-     * Returns the [Pair] of `(row, column)` matrix coordinates corresponding to this point.
+     * Returns the pair of `(row, column)` matrix coordinates corresponding to this point.
      */
     fun toMatrixCoordinates(): Pair<Int, Int> = Pair(-y, x)
 

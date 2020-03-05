@@ -34,4 +34,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 9), programMode: BigI
 }
 
 // Answer: 33343
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

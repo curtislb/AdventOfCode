@@ -75,4 +75,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 9), programMode: BigI
 }
 
 // Answer: 3780860499
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

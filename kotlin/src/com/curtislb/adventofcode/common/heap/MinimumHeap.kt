@@ -21,8 +21,7 @@ class MinimumHeap<T> {
     /**
      * The number of elements currently in the heap.
      */
-    val size: Int
-        get() = priorityKeys.size
+    val size: Int get() = priorityKeys.size
 
     /**
      * Returns `true` if the heap is currently empty, or `false` otherwise.

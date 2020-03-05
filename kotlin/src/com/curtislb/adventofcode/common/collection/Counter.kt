@@ -14,8 +14,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     /**
      * All `(key, count)` entries in this counter for which `count != 0`.
      */
-    val entriesWithNonzeroCount: Set<Map.Entry<T, Long>>
-        get() = counts.entries
+    val entriesWithNonzeroCount: Set<Map.Entry<T, Long>> get() = counts.entries
 
     /**
      * All `(key, count)` entries in this counter for which `count > 0`.
@@ -26,8 +25,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     /**
      * All keys stored in this counter with a nonzero count.
      */
-    val keysWithNonzeroCount: Set<T>
-        get() = counts.keys
+    val keysWithNonzeroCount: Set<T> get() = counts.keys
 
     /**
      * All keys stored in this counter with a count greater than 0.
@@ -59,7 +57,9 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     /**
      * Updates the [count] stored for [key] in this counter. If [count] is 0, [key] is removed from the counter.
      */
-    operator fun set(key: T, count: Int) { counts[key] = count.toLong() }
+    operator fun set(key: T, count: Int) {
+        counts[key] = count.toLong()
+    }
 
     /**
      * Returns a map containing all `(key, count)` entries in this counter for which `count` is nonzero.

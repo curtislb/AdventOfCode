@@ -22,17 +22,23 @@ class ScaffoldGrid {
     /**
      * Adds a new empty row to the bottom of the grid.
      */
-    fun addRow() { grid.add(mutableListOf()) }
+    fun addRow() {
+        grid.add(mutableListOf())
+    }
 
     /**
      * Appends a [space] to the bottom row of the grid.
      */
-    fun addSpace(space: Space) { grid.last().add(space) }
+    fun addSpace(space: Space) {
+        grid.last().add(space)
+    }
 
     /**
      * Removes one row from the bottom of the grid.
      */
-    fun removeRow() { grid.removeLast() }
+    fun removeRow() {
+        grid.removeLast()
+    }
 
     /**
      * Returns the row at [index] in this grid.
@@ -81,7 +87,8 @@ class ScaffoldGrid {
                     Space.ROBOT_RIGHT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.RIGHT)
                     Space.ROBOT_DOWN -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.DOWN)
                     Space.ROBOT_LEFT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.LEFT)
-                    else -> {}
+                    else -> {
+                    }
                 }
             }
         }

@@ -38,4 +38,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 13)): BigInteger {
 }
 
 // Answer: 14538
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}
