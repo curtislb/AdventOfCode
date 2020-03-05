@@ -18,7 +18,8 @@ import java.math.BigInteger
 class ASCII(
     private val intcode: Intcode,
     private val showAsciiOutput: Boolean = false,
-    var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null) {
+    var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
+) {
 
     init {
         intcode.onOutput = { output ->
@@ -51,37 +52,41 @@ class ASCII(
      *
      * @see [Intcode.isDone]
      */
-    val isDone: Boolean
-        get() = intcode.isDone
+    val isDone: Boolean get() = intcode.isDone
 
     /**
      * Whether the program has paused.
      *
      * @see [Intcode.isPaused]
      */
-    val isPaused: Boolean
-        get() = intcode.isPaused
+    val isPaused: Boolean get() = intcode.isPaused
 
     /**
      * Updates the [value] stored at [position] in the program.
      *
      * @see [Intcode.set]
      */
-    operator fun set(position: Int, value: BigInteger) { intcode[position] = value }
+    operator fun set(position: Int, value: BigInteger) {
+        intcode[position] = value
+    }
 
     /**
      * Restores the program to its starting state.
      *
      * @see [Intcode.reset]
      */
-    fun reset() { intcode.reset() }
+    fun reset() {
+        intcode.reset()
+    }
 
     /**
      * Runs the program by processing operations one at a time until a stopping condition is reached.
      *
      * @see [Intcode.run]
      */
-    fun run() { intcode.run() }
+    fun run() {
+        intcode.run()
+    }
 
     /**
      * Converts [input] to an ASCII sequence and sends it as input to the program, followed by a newline if

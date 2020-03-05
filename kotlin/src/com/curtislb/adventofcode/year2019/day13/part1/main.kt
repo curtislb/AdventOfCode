@@ -44,4 +44,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 13), tileType: Tile =
 }
 
 // Answer: 286
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

@@ -10,7 +10,6 @@ class InRangeGenerator(
     private val maxValue: Int,
     private val _prefix: Int = 0
 ) : PasswordGenerator() {
-
     override val isValid: Boolean = _prefix in minValue..maxValue
 
     override val nextDigits: Set<Int> = if (_prefix >= maxValue) emptySet() else allDigits

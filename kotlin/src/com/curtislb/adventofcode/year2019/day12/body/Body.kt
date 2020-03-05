@@ -17,28 +17,29 @@ class Body(val position: MutableVector = MutableVector(), val velocity: MutableV
     /**
      * The current total energy (potential and kinetic) of this body.
      */
-    val totalEnergy: Int
-        get() = position.sumBy { abs(it) } * velocity.sumBy { abs(it) }
+    val totalEnergy: Int get() = position.sumBy { abs(it) } * velocity.sumBy { abs(it) }
 
     /**
      * Updates the velocity of this body due to gravity from [other].
      */
     fun applyGravity(other: Body) {
         if (other.position.x != position.x) {
-           velocity.x += if (other.position.x > position.x) 1 else -1
+            velocity.x += if (other.position.x > position.x) 1 else -1
         }
         if (other.position.y != position.y) {
-           velocity.y += if (other.position.y > position.y) 1 else -1
+            velocity.y += if (other.position.y > position.y) 1 else -1
         }
         if (other.position.z != position.z) {
-           velocity.z += if (other.position.z > position.z) 1 else -1
+            velocity.z += if (other.position.z > position.z) 1 else -1
         }
     }
 
     /**
      * Updates the [position] of this body based on its current velocity.
      */
-    fun applyVelocity() { position.add(velocity) }
+    fun applyVelocity() {
+        position.add(velocity)
+    }
 
     /**
      * Returns a deep copy of this body, with the same current position and velocity.

@@ -39,8 +39,8 @@ class Wire(wireString: String) {
      * Any intersections that occur at the point [origin] are ignored. Parallel wire segments are not considered to
      * intersect, even if they overlap at one or more points.
      *
-     * @return A [Pair] of the nearest intersection [Point] and its Manhattan distance from [origin]. If this wire and
-     *  [other] do not intersect, the [Pair] (`null`, [Int.MAX_VALUE]) is returned instead.
+     * @return A pair containing the nearest intersection point and its Manhattan distance from [origin]. If this wire
+     *  and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
      */
     fun findNearestIntersectionWith(other: Wire, origin: Point = Point.ORIGIN): Pair<Point?, Int> {
         var nearestIntersection: Point? = null
@@ -62,12 +62,12 @@ class Wire(wireString: String) {
     /**
      * Finds the intersection between this wire and [other] that is the shortest distance along both wires.
      *
-     * The total distance to an intersection [Point] is the sum of the distances to that point (in grid units) along
-     * each of the two wires. Parallel wire segments are not considered to intersect, even if they overlap at one or
-     * more points.
+     * The total distance to an intersection point is the sum of the distances to that point (in grid units) along each
+     * of the two wires. If both wires originate from the same point, this intersection is ignored. Parallel wire
+     * segments are not considered to intersect, even if they overlap at one or more points.
      *
-     * @return A [Pair] of the shortest-path intersection [Point] and its total distance along both wires. If this wire
-     *  and [other] do not intersect, the [Pair] (`null`, [Int.MAX_VALUE]) is returned instead.
+     * @return A pair containing the shortest-path intersection point and its total distance along both wires. If this
+     *  wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
      */
     fun findShortestPathIntersectionWith(other: Wire): Pair<Point?, Int> {
         var shortestPathIntersection: Point? = null
@@ -78,14 +78,13 @@ class Wire(wireString: String) {
             other.segments.forEach { otherSegment ->
                 val intersection = thisSegment.intersectionWith(otherSegment)
                 if (intersection != null) {
-                    // The total path length is the length of all previous segments of both wires plus the distance
-                    // along each current segment to the intersection point.
+                    // Calculate the total path length to this intersection point.
                     val totalPathLength = (thisPathLength + otherPathLength
                         + thisSegment.start.manhattanDistance(intersection)
                         + otherSegment.start.manhattanDistance(intersection))
 
-                    // Check if we've found a new shortest path intersection.
-                    if (totalPathLength < shortestPathLength) {
+                    // Check if we've found a new shortest (nonzero length) path intersection.
+                    if (totalPathLength in 1 until shortestPathLength) {
                         shortestPathIntersection = intersection
                         shortestPathLength = totalPathLength
                     }

@@ -36,7 +36,7 @@ class Universe() {
 
     /**
      * Returns the planet with [name] in the universe, creating and adding it if needed.
-.    */
+    .    */
     private fun getOrAddPlanet(name: String): Planet {
         val planet: Planet
         if (name in planets) {

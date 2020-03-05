@@ -33,8 +33,7 @@ class AsteroidField(file: File) {
     /**
      * The number of asteroids currently in the grid.
      */
-    val size: Int
-        get() = asteroids.size
+    val size: Int get() = asteroids.size
 
     /**
      * Finds the best location for a monitoring station, given the positions of all asteroids in the grid.
@@ -42,8 +41,8 @@ class AsteroidField(file: File) {
      * A station must be located at the same position as an asteroid. Among these, the best location is the one from
      * which the maximum number of other asteroids are visible.
      *
-     * @return A [Pair] containing the best [Point] for a station to be located and the number of other asteroids
-     *  visible from that location, or the [Pair] `(null, 0)` if there are no possible locations.
+     * @return A pair containing the best [Point] for a station to be located and the number of other asteroids
+     *  visible from that location, or the pair `(null, 0)` if there are no possible locations.
      */
     fun findBestStation(): Pair<Point?, Int> {
         if (asteroids.size == 1) {

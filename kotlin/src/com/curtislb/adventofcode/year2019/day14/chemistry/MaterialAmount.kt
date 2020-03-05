@@ -5,7 +5,7 @@ package com.curtislb.adventofcode.year2019.day14.chemistry
  */
 data class MaterialAmount(val material: String, val amount: Long) {
     /**
-     * Returns a [Pair] containing the name and amount of this material.
+     * Returns a pair containing the name and amount of this material.
      */
     fun toPair(): Pair<String, Long> = Pair(material, amount)
 

@@ -5,8 +5,7 @@ import java.math.BigInteger
 /**
  * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
  */
-class BigIntegerRange(override val start: BigInteger, override val endInclusive: BigInteger)
-    : ClosedRange<BigInteger>, Iterable<BigInteger> {
+class BigIntegerRange(override val start: BigInteger, override val endInclusive: BigInteger) : ClosedRange<BigInteger>, Iterable<BigInteger> {
 
     /**
      * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
@@ -25,8 +24,7 @@ class BigIntegerRange(override val start: BigInteger, override val endInclusive:
     /**
      * The number of integer values that are within this range.
      */
-    val size: BigInteger
-        get() = endInclusive - start + BigInteger.ONE
+    val size: BigInteger get() = endInclusive - start + BigInteger.ONE
 
     override fun iterator(): Iterator<BigInteger> = object : Iterator<BigInteger> {
         private var current: BigInteger = start

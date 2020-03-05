@@ -9,7 +9,6 @@ class HasRepeatedDigitGenerator(
     private val _currentDigit: Int? = null,
     private val _foundRepeatedDigit: Boolean = false
 ) : PasswordGenerator() {
-
     override val isValid: Boolean = _foundRepeatedDigit
 
     override val nextDigits: Set<Int> = allDigits

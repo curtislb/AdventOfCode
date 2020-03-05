@@ -74,4 +74,6 @@ fun solve(
 }
 
 // Answer: 19741286
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}

@@ -43,18 +43,21 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
     /**
      * Whether the droid is waiting to receive a command via [sendCommand].
      */
-    val isAwaitingCommand: Boolean
-        get() = ascii.isPaused
+    val isAwaitingCommand: Boolean get() = ascii.isPaused
 
     /**
      * Starts running the program so the droid can begin receiving instructions.
      */
-    fun start() { ascii.run() }
+    fun start() {
+        ascii.run()
+    }
 
     /**
      * Restores the droid to its starting state, immediately after initialization.
      */
-    fun reset() { ascii.reset() }
+    fun reset() {
+        ascii.reset()
+    }
 
     /**
      * Sends a single command to the droid and waits for it to respond.

@@ -25,14 +25,12 @@ class Robot {
     /**
      * Whether the panel that the robot is currently on has been painted white.
      */
-    private val isOnWhitePanel: Boolean
-        get() = paintedPanels[orientation.position] == Color.WHITE
+    private val isOnWhitePanel: Boolean get() = paintedPanels[orientation.position] == Color.WHITE
 
     /**
      * The number of panels in the grid that the robot has painted.
      */
-    val paintedArea: Int
-        get() = paintedPanels.size
+    val paintedArea: Int get() = paintedPanels.size
 
     /**
      * Returns a matrix representing the portion of the grid that the robot has painted.
@@ -44,22 +42,30 @@ class Robot {
     /**
      * Moves the robot forward one space from its current position, in the direction it's currently facing.
      */
-    fun moveForward() { orientation = orientation.moveForward() }
+    fun moveForward() {
+        orientation = orientation.moveForward()
+    }
 
     /**
      * Turns the robot 90 degrees to the left from the direction it's currently facing.
      */
-    fun turnLeft() { orientation = orientation.turnLeft() }
+    fun turnLeft() {
+        orientation = orientation.turnLeft()
+    }
 
     /**
      * Turns the robot 90 degrees to the right from the direction it's currently facing.
      */
-    fun turnRight() { orientation = orientation.turnRight() }
+    fun turnRight() {
+        orientation = orientation.turnRight()
+    }
 
     /**
      * Paints the panel currently underneath the robot with [color] paint.
      */
-    fun paint(color: Color) { paintedPanels[orientation.position] = color }
+    fun paint(color: Color) {
+        paintedPanels[orientation.position] = color
+    }
 
     /**
      * Causes the robot to follow the instructions given by an [intcode] program.

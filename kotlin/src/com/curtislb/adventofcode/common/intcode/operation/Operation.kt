@@ -6,7 +6,7 @@ import java.math.BigInteger
 
 /**
  * An operation recognized by an [Intcode] program, which may modify the program's state, return a new position for the
- * program cursor, and have side effects such as printing to standard output
+ * program's instruction pointer, and have side effects such as printing to standard output
  */
 interface Operation {
     /**
@@ -16,9 +16,9 @@ interface Operation {
 
     /**
      * Processes this operation for the [intcode] program, with the given [parameters] and parameter [modes], and
-     * returns the position to which [cursor] should be updated following the operation.
+     * returns the position to which [pointer] should be updated following the operation.
      */
-    fun process(intcode: Intcode, cursor: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int
+    fun process(intcode: Intcode, pointer: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int
 
     companion object {
         /**

@@ -82,4 +82,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), center: String = 
 }
 
 // Answer: 253104
-fun main() { println(solve()) }
+fun main() {
+    println(solve())
+}
