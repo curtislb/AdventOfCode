@@ -42,7 +42,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 4), passwordLength: I
     return generator.countPasswords()
 }
 
-// Answer: 290
 fun main() {
     println(solve())
 }

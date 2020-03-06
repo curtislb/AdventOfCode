@@ -54,7 +54,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 3)): Int? {
     return if (intersection != null) pathLength else null
 }
 
-// Answer: 13836
 fun main() = when (val solution = solve()) {
     null -> println("No intersection found.")
     else -> println(solution)

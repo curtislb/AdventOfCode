@@ -55,7 +55,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 23), computerCount: I
     return repeatedYValue
 }
 
-// Answer: 13286
 fun main() = when (val solution = solve()) {
     null -> println("No repeated Y value sent by the NAT.")
     else -> println(solution)

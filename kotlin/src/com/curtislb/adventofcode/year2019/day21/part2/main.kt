@@ -62,7 +62,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 21), maxInstructions:
     )
 }
 
-// Answer: 1142830249
 fun main() = when (val solution = solve()) {
     null -> println("No output produced by the springdroid.")
     else -> println(solution)

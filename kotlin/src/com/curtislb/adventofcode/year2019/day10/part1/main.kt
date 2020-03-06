@@ -135,7 +135,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 10)): Int? {
     return if (bestStation != null) asteroidCount else null
 }
 
-// Answer: 263
 fun main() = when (val solution = solve()) {
     null -> println("No station location found.")
     else -> println(solution)

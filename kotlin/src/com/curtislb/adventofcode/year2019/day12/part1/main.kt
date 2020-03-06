@@ -218,7 +218,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 12), stepCount: Int =
     return system.totalEnergy
 }
 
-// Answer: 7636
 fun main() {
     println(solve())
 }

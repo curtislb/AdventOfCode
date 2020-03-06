@@ -79,7 +79,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 5), systemId: BigInte
     return diagnosticCode
 }
 
-// Answer: 7408802
 fun main() = when (val solution = solve()) {
     null -> println("No diagnostic code produced.")
     else -> println(solution)

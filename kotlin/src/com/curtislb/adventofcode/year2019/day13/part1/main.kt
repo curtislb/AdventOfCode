@@ -43,7 +43,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 13), tileType: Tile =
     return game.board.findAll(tileType).size
 }
 
-// Answer: 286
 fun main() {
     println(solve())
 }

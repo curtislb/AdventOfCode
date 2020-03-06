@@ -88,7 +88,6 @@ fun solve(
     return series.findMaxSignal(phaseSettings)
 }
 
-// Answer: 272368
 fun main() {
     println(solve())
 }

@@ -72,7 +72,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), start: String = "
     return universe.findOrbitalTransferDistance(start, target)
 }
 
-// Answer: 499
 fun main() = when (val solution = solve()) {
     null -> println("No orbital transfer path found.")
     else -> println(solution)

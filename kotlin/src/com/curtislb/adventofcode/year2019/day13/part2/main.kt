@@ -37,7 +37,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 13)): BigInteger {
     return game.play(GreedyStrategy)
 }
 
-// Answer: 14538
 fun main() {
     println(solve())
 }

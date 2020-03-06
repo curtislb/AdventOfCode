@@ -73,7 +73,6 @@ fun solve(
     return null
 }
 
-// Answer: 6635
 fun main() = when (val solution = solve()) {
     null -> println("No solution found.")
     else -> println(solution)

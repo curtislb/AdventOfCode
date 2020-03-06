@@ -129,7 +129,6 @@ fun solve(
     return if (materials != null) materials[rawMaterial] else null
 }
 
-// Answer: 843220
 fun main() = when (val solution = solve()) {
     null -> println("Unable to produce the desired material.")
     else -> println(solution)

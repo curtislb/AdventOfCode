@@ -123,7 +123,6 @@ fun solve(
     return if (routine != null) robot.moveRobot(routine) else null
 }
 
-// Answer: 1681189
 fun main() = when (val solution = solve()) {
     null -> println("No output produced by the vacuum robot.")
     else -> println(solution)

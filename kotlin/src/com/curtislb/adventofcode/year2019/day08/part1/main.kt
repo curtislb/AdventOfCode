@@ -68,7 +68,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 8), imageWidth: Int =
     return result
 }
 
-// Answer: 1820
 fun main() {
     println(solve())
 }

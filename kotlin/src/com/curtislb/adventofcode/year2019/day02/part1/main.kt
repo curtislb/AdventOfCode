@@ -98,7 +98,6 @@ fun solve(
     return intcode[0]
 }
 
-// Answer: 4138687
 fun main() {
     println(solve())
 }

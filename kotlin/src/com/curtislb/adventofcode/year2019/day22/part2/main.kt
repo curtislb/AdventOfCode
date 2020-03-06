@@ -52,7 +52,6 @@ fun solve(
     return (c * targetPosition + (c - BigInteger.ONE) * (a - BigInteger.ONE).modInverse(deckSize) * b) % deckSize
 }
 
-// Answer: 1644352419829
 fun main() {
     println(solve())
 }

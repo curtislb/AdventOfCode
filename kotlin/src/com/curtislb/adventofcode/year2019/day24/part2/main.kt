@@ -192,7 +192,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 24), durationMinutes:
     return grid.countBugs()
 }
 
-// Answer: 2120
 fun main() {
     println(solve())
 }

@@ -128,7 +128,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 18, part = 1)): Long?
     return KeySearch(vault).searchDistance
 }
 
-// Answer: 3048
 fun main() = when (val solution = solve()) {
     null -> println("No path found.")
     else -> println(solution)

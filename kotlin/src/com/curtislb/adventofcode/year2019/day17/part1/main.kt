@@ -80,7 +80,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int {
     return intersections.sumBy { abs(it.x * it.y) }
 }
 
-// Answer: 7720
 fun main() {
     println(solve())
 }

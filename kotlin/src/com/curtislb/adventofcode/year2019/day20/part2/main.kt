@@ -157,7 +157,6 @@ fun solve(
     return maze.findShortestDistance(entranceLabel, exitLabel, isRecursive = true)
 }
 
-// Answer: 7798
 fun main() = when (val solution = solve()) {
     null -> println("No path found.")
     else -> println(solution)

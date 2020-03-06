@@ -33,7 +33,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 9), programMode: BigI
     return boostKeycode
 }
 
-// Answer: 33343
 fun main() {
     println(solve())
 }

@@ -186,7 +186,6 @@ fun solve(
     return position
 }
 
-// Answer: 8191
 fun main() {
     println(solve())
 }

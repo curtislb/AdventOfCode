@@ -4,7 +4,7 @@ package com.curtislb.adventofcode.common.collection
  * Returns all ordered permutations of this collection of items.
  */
 fun <T> Collection<T>.permutations(): Sequence<List<T>> {
-    return permutationsInternal(mutableListOf(), mutableSetOf())
+    return if (isEmpty()) emptySequence() else permutationsInternal(mutableListOf(), mutableSetOf())
 }
 
 /**
@@ -15,7 +15,7 @@ private fun <T> Collection<T>.permutationsInternal(
     used: MutableSet<T>
 ): Sequence<List<T>> = sequence {
     if (prefix.size == size) {
-        yield(prefix)
+        yield(prefix.toList())
     } else {
         forEach { item ->
             if (item !in used) {

@@ -66,7 +66,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 12)): Long {
     return leastCommonMultiple(periodicity.x.toLong(), periodicity.y.toLong(), periodicity.z.toLong())
 }
 
-// Answer: 281691380235984
 fun main() {
     println(solve())
 }

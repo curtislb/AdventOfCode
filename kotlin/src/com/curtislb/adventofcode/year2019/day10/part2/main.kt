@@ -106,7 +106,6 @@ fun solve(
     return if (targetAsteroid != null) targetAsteroid.x * targetXFactor - targetAsteroid.y else null
 }
 
-// Answer: 1110
 fun main() = when (val solution = solve()) {
     null -> println("Unable to vaporize the target asteroid.")
     else -> println(solution)

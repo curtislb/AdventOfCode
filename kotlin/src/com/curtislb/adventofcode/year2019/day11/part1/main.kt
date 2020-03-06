@@ -101,7 +101,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): Int {
     return robot.paintedArea
 }
 
-// Answer: 1747
 fun main() {
     println(solve())
 }

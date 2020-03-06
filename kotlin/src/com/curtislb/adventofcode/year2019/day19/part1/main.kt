@@ -58,7 +58,6 @@ fun solve(
     return droneSystem.scanArea(gridRange, gridRange)
 }
 
-// Answer: 138
 fun main() {
     println(solve())
 }

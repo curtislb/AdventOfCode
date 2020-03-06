@@ -55,7 +55,6 @@ fun solve(
     return fft.readFromOffset(messageLength).joinToString(separator = "")
 }
 
-// Answer: 85600369
 fun main() {
     println(solve())
 }

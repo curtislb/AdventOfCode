@@ -81,7 +81,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 25)): String? {
     return if (line != null) Regex("""(\d+)""").find(line)?.groupValues?.get(1) else null
 }
 
-// Answer: 1073874948
 fun main() = when (val solution = solve()) {
     null -> println("No password found.")
     else -> println(solution)

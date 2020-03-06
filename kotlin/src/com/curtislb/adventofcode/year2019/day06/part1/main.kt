@@ -81,7 +81,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), center: String = 
     return universe.countOrbits(center)
 }
 
-// Answer: 253104
 fun main() {
     println(solve())
 }

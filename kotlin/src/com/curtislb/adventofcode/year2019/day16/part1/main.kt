@@ -108,7 +108,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 16), phaseCount: Int 
     return fft.signal.subList(0, digitCount).joinToString(separator = "")
 }
 
-// Answer: 96136976
 fun main() {
     println(solve())
 }

@@ -38,7 +38,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): String {
     }
 }
 
-// Answer: ZCGRHKLB
 fun main() {
     println(solve())
 }

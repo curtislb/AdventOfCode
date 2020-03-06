@@ -49,7 +49,6 @@ fun solve(
     return if (productAmountLimit != null) productAmountLimit - 1L else null
 }
 
-// Answer: 2169535
 fun main() = when (val solution = solve()) {
     null -> println("Unable to produce the desired material.")
     else -> println(solution)

@@ -118,7 +118,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
     )
 }
 
-// Answer: 270
 fun main() = when (val solution = solve()) {
     null -> println("Unable to find the oxygen system.")
     else -> println(solution)

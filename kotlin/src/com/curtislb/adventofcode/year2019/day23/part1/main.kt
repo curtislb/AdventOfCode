@@ -62,7 +62,6 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 23), computerCount: I
     return firstNatPacketY
 }
 
-// Answer: 18513
 fun main() = when (val solution = solve()) {
     null -> println("No packet received by the NAT.")
     else -> println(solution)

@@ -91,7 +91,6 @@ fun solve(
     }
 }
 
-// Answer: 13530764
 fun main() = when (val solution = solve()) {
     null -> println("Unable to find a large enough area.")
     else -> println(solution)
