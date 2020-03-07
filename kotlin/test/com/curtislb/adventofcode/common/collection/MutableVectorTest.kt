@@ -3,6 +3,9 @@ package com.curtislb.adventofcode.common.collection
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [MutableVector].
+ */
 class MutableVectorTest {
     @Test fun testConstructFromString() {
         assertEquals(MutableVector(3, -15, 44), MutableVector("<x=3,y=-15,z=44>"))

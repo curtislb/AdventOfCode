@@ -3,6 +3,9 @@ package com.curtislb.adventofcode.common.collection
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [deepCopy].
+ */
 class DeepCopyTest {
     @Test fun testWithNoItems() {
         assertEquals(emptyList(), emptyList<Any>().deepCopy { it })

@@ -5,6 +5,9 @@ import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [permutations].
+ */
 class PermutationsTest {
     @Test fun testWithNoItems() {
         assertEquals(emptySet(), emptyList<Any>().permutations().toSet())

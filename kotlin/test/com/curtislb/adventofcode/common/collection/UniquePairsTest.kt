@@ -6,6 +6,9 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [uniquePairs].
+ */
 class UniquePairsTest {
     @Test fun testWithTwoItems() {
         val actual = listOf("foo", "bar").uniquePairs().toList()
@@ -33,7 +36,10 @@ class UniquePairsTest {
     }
 
     private companion object {
-        fun <T> assertHasPair(item1: T, item2: T, actual: Collection<T>) {
+        /**
+         * Checks that the expected pair of [item1] and [item2] (in either order) is in an [actual] collection.
+         */
+        fun <T> assertHasPair(item1: T, item2: T, actual: Collection<Pair<T, T>>) {
             assertThat(actual, anyOf(hasItem(Pair(item1, item2)), hasItem(Pair(item2, item1))))
         }
     }

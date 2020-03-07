@@ -3,6 +3,9 @@ package com.curtislb.adventofcode.common.collection
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [mapToMap].
+ */
 class MapToMapTest {
     @Test fun testWithEmptyList() {
         assertEquals(emptyMap(), emptyList<Any>().mapToMap { Pair(it, it) })

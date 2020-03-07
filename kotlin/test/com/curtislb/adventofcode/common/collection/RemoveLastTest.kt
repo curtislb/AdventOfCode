@@ -4,6 +4,9 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+/**
+ * Tests [removeLast].
+ */
 class RemoveLastTest {
     @Test fun testWithOneItem() {
         val list = mutableListOf("foo")

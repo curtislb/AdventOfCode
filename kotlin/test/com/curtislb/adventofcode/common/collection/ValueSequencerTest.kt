@@ -6,6 +6,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
+/**
+ * Tests [ValueSequencer].
+ */
 class ValueSequencerTest {
     @Test fun testWhenEmpty() {
         val sequencer = ValueSequencer<Any>()
@@ -56,6 +59,9 @@ class ValueSequencerTest {
     }
 
     private companion object {
+        /**
+         * Checks that calling [ValueSequencer.next] on [sequencer] throws a [NoSuchElementException].
+         */
         fun assertNextThrows(sequencer: ValueSequencer<*>) {
             try {
                 sequencer.next()

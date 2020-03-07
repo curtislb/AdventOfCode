@@ -5,6 +5,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+/**
+ * Tests [Counter].
+ */
 class CounterTest {
     @Test fun testWhenEmpty() {
         val counter = Counter<String>()
