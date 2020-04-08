@@ -36,7 +36,7 @@ class DijkstraTest {
     }
 
     /**
-     * TODO
+     * Returns all finite, weighted edges from [node] as a finite sequence.
      */
     private fun getEdges(node: Int): Sequence<DirectedEdge<Int>> = when (node) {
         1 -> sequenceOf(DirectedEdge(2, 9L), DirectedEdge(6, 14L), DirectedEdge(7, 15L))
