@@ -46,7 +46,7 @@ class Maze(file: File) {
      */
     fun findShortestDistance(entranceLabel: String, exitLabel: String, isRecursive: Boolean = false): Long? {
         return bfsDistance(
-            start = Location(labeledSpaces[entranceLabel]?.first() ?: return null),
+            source = Location(labeledSpaces[entranceLabel]?.first() ?: return null),
             isGoal = { location ->
                 if (location.depth != 0) {
                     return@bfsDistance false

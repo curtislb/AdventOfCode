@@ -112,7 +112,7 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
 
     // Use BFS to determine the distance to the oxygen system.
     return bfsDistance(
-        start = Point.ORIGIN,
+        source = Point.ORIGIN,
         isGoal = { droid.spaceAt(it) == Space.OXYGEN },
         getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }
     )

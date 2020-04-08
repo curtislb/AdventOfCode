@@ -21,7 +21,7 @@ class KeySearch(private val vault: Vault) {
         val searchEdges = findSearchEdges()
         val allKeys = KeyCollection.from(vault.keyLocations.keys)
         dijkstraShortestDistance(
-            start = SearchState(vault.entranceLocations, KeyCollection()),
+            source = SearchState(vault.entranceLocations, KeyCollection()),
             isGoal = { (_, heldKeys) -> heldKeys == allKeys },
             getEdges = { (positions, heldKeys) ->
                 sequence {
@@ -54,16 +54,20 @@ class KeySearch(private val vault: Vault) {
         val startPositions = vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) } as Set<Point>
         return startPositions.mapToMap { startPosition ->
             // Use DFS to find all paths to keys from startPosition.
-            val pathsFromStart = dfsPaths(startPosition, keyPositions) { point ->
-                sequence {
-                    for (neighbor in point.neighbors) {
-                        val space = vault[neighbor]
-                        if (space != null && space.isOccupiable) {
-                            yield(neighbor)
+            val pathsFromStart = dfsPaths(
+                startPosition,
+                isGoal = { it in keyPositions },
+                getNeighbors = { point ->
+                    sequence {
+                        for (neighbor in point.neighbors) {
+                            val space = vault[neighbor]
+                            if (space != null && space.isOccupiable) {
+                                yield(neighbor)
+                            }
                         }
                     }
                 }
-            }
+            )
 
             // Create a SearchEdge for each path and store it in the map.
             val edgesFromStart = pathsFromStart.mapToMap { (endPosition, paths) ->

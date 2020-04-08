@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
+import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
@@ -18,16 +19,15 @@ class PermutationsTest {
     }
 
     @Test fun testWithTwoItems() {
-        val expected = arrayOf(listOf("foo", "bar"), listOf("bar", "foo"))
+        val expected = listOf(listOf("foo", "bar"), listOf("bar", "foo"))
         for (list in expected) {
             val actual = list.permutations().toList()
-            assertEquals(expected.size, actual.size)
-            assertThat(actual, containsInAnyOrder(*expected))
+            assertContainsExactly(expected, actual)
         }
     }
 
     @Test fun testWithThreeItems() {
-        val expected = arrayOf(
+        val expected = listOf(
             listOf(1, 2, 3),
             listOf(1, 3, 2),
             listOf(2, 1, 3),
@@ -37,8 +37,7 @@ class PermutationsTest {
         )
         for (list in expected) {
             val actual = list.permutations().toList()
-            assertEquals(expected.size, actual.size)
-            assertThat(actual, containsInAnyOrder(*expected))
+            assertContainsExactly(expected, actual)
         }
     }
 }

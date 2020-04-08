@@ -3,19 +3,19 @@ package com.curtislb.adventofcode.common.graph
 import com.curtislb.adventofcode.common.heap.MinimumHeap
 
 /**
- * Applies Dijkstra's shortest path algorithm and returns the shortest weighted distance from [start] to any node for
- * which [isGoal] returns `true`, with the edges from each node given by [getEdges].
+ * Applies Dijkstra's shortest path algorithm from [source] and returns the shortest weighted distance to any node for
+ * which [isGoal] is `true`, with the edges from each node given by [getEdges].
  *
- * If there is no node reachable from [start] for which [isGoal] is `true`, this function instead returns `null`.
+ * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead returns `null`.
  */
 fun <T> dijkstraShortestDistance(
-    start: T,
+    source: T,
     isGoal: (node: T) -> Boolean,
     getEdges: (node: T) -> Sequence<DirectedEdge<T>>
 ): Long? {
     val visited = mutableSetOf<T>()
     val nodeHeap = MinimumHeap<T>()
-    nodeHeap.add(start, 0L)
+    nodeHeap.add(source, 0L)
     while (!nodeHeap.isEmpty()) {
         // Pop node with the shortest distance, and return if we've found the goal.
         val (node, distance) = nodeHeap.popMinimum()

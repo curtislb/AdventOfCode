@@ -3,12 +3,22 @@ package com.curtislb.adventofcode.common.graph
 import com.curtislb.adventofcode.common.collection.removeLast
 
 /**
- * Conducts a depth-first graph search and returns a map from each node in [goals] that is reachable from [start] to a
- * list of all paths from [start] to that node, with the neighbors of each node given by [getNeighbors].
+ * Conducts a depth-first graph search from [source] and returns a map from each reachable node for which [isGoal] is
+ * `true` to a list of all paths to that node, with the neighbors of each node given by [getNeighbors].
  */
-fun <T> dfsPaths(start: T, goals: Set<T>, getNeighbors: (node: T) -> Sequence<T>): Map<T, List<List<T>>> {
+fun <T> dfsPaths(
+    source: T,
+    isGoal: (node: T) -> Boolean,
+    getNeighbors: (node: T) -> Sequence<T>
+): Map<T, List<List<T>>> {
     val paths = mutableMapOf<T, MutableList<List<T>>>()
-    dfsPathsInternal(start, goals, getNeighbors, paths)
+
+    // If source is a goal node, add the zero-length path to it.
+    if (isGoal(source)) {
+        paths[source] = mutableListOf(emptyList())
+    }
+
+    dfsPathsInternal(source, isGoal, getNeighbors, paths)
     return paths
 }
 
@@ -17,7 +27,7 @@ fun <T> dfsPaths(start: T, goals: Set<T>, getNeighbors: (node: T) -> Sequence<T>
  */
 private fun <T> dfsPathsInternal(
     node: T,
-    goals: Set<T>,
+    isGoal: (node: T) -> Boolean,
     getNeighbors: (node: T) -> Sequence<T>,
     paths: MutableMap<T, MutableList<List<T>>>,
     visited: MutableSet<T> = mutableSetOf(),
@@ -32,12 +42,12 @@ private fun <T> dfsPathsInternal(
 
         // If neighbor is a goal node, record the current path to it.
         pathPrefix.add(neighbor)
-        if (neighbor in goals) {
+        if (isGoal(neighbor)) {
             paths.getOrPut(neighbor) { mutableListOf() }.add(pathPrefix.toList())
         }
 
         // Continue searching recursively from neighbor.
-        dfsPathsInternal(neighbor, goals, getNeighbors, paths, visited, pathPrefix)
+        dfsPathsInternal(neighbor, isGoal, getNeighbors, paths, visited, pathPrefix)
         pathPrefix.removeLast()
     }
     visited.remove(node)
