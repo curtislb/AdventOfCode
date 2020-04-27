@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
  */
 class PermutationsTest {
     @Test fun testWithNoItems() {
-        assertEquals(emptySet(), emptyList<Any>().permutations().toSet())
+        assertEquals(emptySet(), emptyList<Nothing>().permutations().toSet())
     }
 
     @Test fun testWithOneItem() {

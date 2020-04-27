@@ -1,6 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
 import com.curtislb.adventofcode.common.math.pow
+import java.lang.IllegalArgumentException
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -16,6 +17,8 @@ data class Point(val x: Int, val y: Int) {
 
     /**
      * Returns the point given by moving [distance] grid units in [direction] from this one.
+     *
+     * If [distance] is negative, this is equivalent to moving `-distance` units opposite from [direction].
      */
     fun move(direction: Direction, distance: Int = 1): Point = when (direction) {
         Direction.UP -> Point(x, y + distance)
@@ -27,7 +30,7 @@ data class Point(val x: Int, val y: Int) {
     /**
      * Returns the Manhattan distance between this point and [other].
      *
-     * The Manhattan distance is the shortest possible path (in grid units) between this point and [other], while moving
+     * This is the length (in grid units) of the shortest possible path between this point and [other], while moving
      * only up, down, left, or right.
      */
     fun manhattanDistance(other: Point) = abs(x - other.x) + abs(y - other.y)
@@ -39,9 +42,14 @@ data class Point(val x: Int, val y: Int) {
 
     /**
      * Returns the angle (in radians) of the line segment formed by this point and [other], measured clockwise from the
-     * positive y-axis with this point as the origin.
+     * positive y-axis, with this point as the origin.
+     *
+     * @throws IllegalArgumentException If this and [other] are the same point.
      */
     fun angleClockwiseFromPositiveY(other: Point): Double {
+        if (this == other) {
+            throw IllegalArgumentException("This point and other must be distinct.")
+        }
         val theta = atan2((other.x - x).toDouble(), (other.y - y).toDouble())
         return if (theta >= 0) theta else 2.0 * PI + theta
     }

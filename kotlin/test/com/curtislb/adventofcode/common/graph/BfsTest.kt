@@ -5,6 +5,9 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
+/**
+ * Tests [bfsApply] and [bfsDistance].
+ */
 class BfsTest {
     @Test fun testApplyToSourceOnly() {
         for (source in 0..7) {

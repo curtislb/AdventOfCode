@@ -5,23 +5,32 @@ package com.curtislb.adventofcode.common.grid
  */
 fun <T> constructGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): List<List<T>> {
     // Determine the visible bounds of the grid.
-    var minX = 0
-    var minY = 0
-    var maxX = 0
-    var maxY = 0
+    var minX: Int? = null
+    var minY: Int? = null
+    var maxX: Int? = null
+    var maxY: Int? = null
     points.forEach { point ->
-        minX = minX.coerceAtMost(point.x)
-        minY = minY.coerceAtMost(point.y)
-        maxX = maxX.coerceAtLeast(point.x)
-        maxY = maxY.coerceAtLeast(point.y)
+        minX = minX?.coerceAtMost(point.x) ?: point.x
+        minY = minY?.coerceAtMost(point.y) ?: point.y
+        maxX = maxX?.coerceAtLeast(point.x) ?: point.x
+        maxY = maxY?.coerceAtLeast(point.y) ?: point.y
+    }
+
+    // Return an empty list if given no points.
+    val gridMinX = minX
+    val gridMinY = minY
+    val gridMaxX = maxX
+    val gridMaxY = maxY
+    if (gridMinX == null || gridMinY == null || gridMaxX == null || gridMaxY == null) {
+        return emptyList()
     }
 
     // Populate all grid cells in the visible bounds.
     val grid = mutableListOf<List<T>>()
-    for (i in 0..(maxY - minY)) {
+    for (i in 0..(gridMaxY - gridMinY)) {
         val row = mutableListOf<T>()
-        for (j in 0..(maxX - minX)) {
-            row.add(valueAt(Point(minX + j, maxY - i)))
+        for (j in 0..(gridMaxX - gridMinX)) {
+            row.add(valueAt(Point(gridMinX + j, gridMaxY - i)))
         }
         grid.add(row)
     }

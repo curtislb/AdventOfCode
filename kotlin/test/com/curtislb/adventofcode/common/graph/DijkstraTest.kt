@@ -4,6 +4,9 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
+/**
+ * Tests [dijkstraShortestDistance].
+ */
 class DijkstraTest {
     @Test fun testShortestDistanceToSource() {
         for (source in 1..8) {

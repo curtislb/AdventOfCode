@@ -48,7 +48,7 @@ class Wire(wireString: String) {
         segments.forEach { segment ->
             other.segments.forEach { otherSegment ->
                 // Check for a new nearest intersection point (ignoring the origin).
-                val intersection = segment.intersectionWith(otherSegment)
+                val intersection = segment.intersection(otherSegment)
                 val distance = if (intersection != null) origin.manhattanDistance(intersection) else Int.MAX_VALUE
                 if (distance in 1 until nearestDistance) {
                     nearestIntersection = intersection
@@ -76,7 +76,7 @@ class Wire(wireString: String) {
         segments.forEach { thisSegment ->
             var otherPathLength = 0
             other.segments.forEach { otherSegment ->
-                val intersection = thisSegment.intersectionWith(otherSegment)
+                val intersection = thisSegment.intersection(otherSegment)
                 if (intersection != null) {
                     // Calculate the total path length to this intersection point.
                     val totalPathLength = (thisPathLength + otherPathLength

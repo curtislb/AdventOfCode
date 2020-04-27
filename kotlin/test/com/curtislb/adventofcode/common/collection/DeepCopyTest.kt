@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
  */
 class DeepCopyTest {
     @Test fun testWithNoItems() {
-        assertEquals(emptyList(), emptyList<Any>().deepCopy { it })
+        assertEquals(emptyList(), emptyList<Nothing>().deepCopy { it })
     }
 
     @Test fun testWithImmutableItems() {

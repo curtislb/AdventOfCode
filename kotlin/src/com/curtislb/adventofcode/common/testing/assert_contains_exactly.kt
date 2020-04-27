@@ -5,7 +5,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import kotlin.test.assertEquals
 
 /**
- * TODO
+ * Checks that [actual] contains exactly the same items as [expected], in any order.
  */
 fun <T> assertContainsExactly(expected: Collection<T>, actual: Collection<T>) {
     assertEquals(expected.size, actual.size)

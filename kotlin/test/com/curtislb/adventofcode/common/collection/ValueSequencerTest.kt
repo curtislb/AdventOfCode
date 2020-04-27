@@ -58,11 +58,11 @@ class ValueSequencerTest {
         assertNextThrows(sequencer)
     }
 
-    private companion object {
+    companion object {
         /**
          * Checks that calling [ValueSequencer.next] on [sequencer] throws a [NoSuchElementException].
          */
-        fun assertNextThrows(sequencer: ValueSequencer<*>) {
+        private fun assertNextThrows(sequencer: ValueSequencer<*>) {
             try {
                 sequencer.next()
                 fail("Expected NoSuchElementException.")

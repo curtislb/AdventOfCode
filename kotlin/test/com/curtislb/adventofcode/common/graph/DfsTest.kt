@@ -4,6 +4,9 @@ import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import org.junit.Test
 import kotlin.test.assertEquals
 
+/**
+ * Tests [dfsPaths].
+ */
 class DfsTest {
     @Test fun testPathsWithNoGoals() {
         for (source in 0..3) {

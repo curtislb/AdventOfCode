@@ -35,11 +35,11 @@ class UniquePairsTest {
         assertHasPair(3, 4, actual)
     }
 
-    private companion object {
+    companion object {
         /**
          * Checks that the expected pair of [item1] and [item2] (in either order) is in an [actual] collection.
          */
-        fun <T> assertHasPair(item1: T, item2: T, actual: Collection<Pair<T, T>>) {
+        private fun <T> assertHasPair(item1: T, item2: T, actual: Collection<Pair<T, T>>) {
             assertThat(actual, anyOf(hasItem(Pair(item1, item2)), hasItem(Pair(item2, item1))))
         }
     }
