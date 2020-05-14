@@ -3,18 +3,30 @@ package com.curtislb.adventofcode.year2019.day04.password
 import com.curtislb.adventofcode.common.math.allDigits
 
 /**
- * Generates passwords whose numeric value is within the range [minValue]..[maxValue].
+ * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
+ *
+ * @param minValue The minimum (inclusive) integer value for a valid password.
+ * @param maxValue The maximum (inclusive) integer value for a valid password.
+ * @param prefix The integer value of the current password prefix.
  */
-class InRangeGenerator(
+class InRangeGenerator private constructor(
     private val minValue: Int,
     private val maxValue: Int,
-    private val _prefix: Int = 0
+    private val prefix: Int
 ) : PasswordGenerator() {
-    override val isValid: Boolean = _prefix in minValue..maxValue
+    /**
+     * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
+     *
+     * @param minValue The minimum (inclusive) integer value for a valid password.
+     * @param maxValue The maximum (inclusive) integer value for a valid password.
+     */
+    constructor(minValue: Int, maxValue: Int) : this(minValue, maxValue, prefix = 0)
 
-    override val nextDigits: Set<Int> = if (_prefix >= maxValue) emptySet() else allDigits
+    override val isValid: Boolean = prefix in minValue..maxValue
+
+    override val nextDigits: Set<Int> = if (prefix >= maxValue) emptySet() else allDigits
 
     override fun addDigit(digit: Int): PasswordGenerator {
-        return InRangeGenerator(minValue, maxValue, _prefix * 10 + digit)
+        return InRangeGenerator(minValue, maxValue, prefix * 10 + digit)
     }
 }

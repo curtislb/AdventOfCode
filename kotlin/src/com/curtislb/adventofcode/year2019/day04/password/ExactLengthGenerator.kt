@@ -2,13 +2,27 @@ package com.curtislb.adventofcode.year2019.day04.password
 
 import com.curtislb.adventofcode.common.math.allDigits
 
+
 /**
- * Generates passwords with a number of digits equal to [length].
+ * A generator that produces numeric passwords with a given number of digits.
+ *
+ * @param length The number of digits (including leading zeros) that a valid password must contain.
+ * @param currentLength The number of digits (including leading zeros) of the current password prefix.
  */
-class ExactLengthGenerator(private val length: Int, private val _currentLength: Int = 0) : PasswordGenerator() {
-    override val isValid: Boolean = _currentLength == length
+class ExactLengthGenerator private constructor(
+    private val length: Int,
+    private val currentLength: Int
+) : PasswordGenerator() {
+    /**
+     * A generator that produces numeric passwords with a given number of digits.
+     *
+     * @param length The number of digits (including leading zeros) that a valid password must contain.
+     */
+    constructor(length: Int) : this(length, currentLength = 0)
 
-    override val nextDigits: Set<Int> = if (_currentLength >= length) emptySet() else allDigits
+    override val isValid: Boolean = currentLength == length
 
-    override fun addDigit(digit: Int): PasswordGenerator = ExactLengthGenerator(length, _currentLength + 1)
+    override val nextDigits: Set<Int> = if (currentLength >= length) emptySet() else allDigits
+
+    override fun addDigit(digit: Int): PasswordGenerator = ExactLengthGenerator(length, currentLength + 1)
 }

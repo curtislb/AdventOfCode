@@ -3,17 +3,26 @@ package com.curtislb.adventofcode.year2019.day04.password
 import com.curtislb.adventofcode.common.math.allDigits
 
 /**
- * Generates passwords containing at least one digit that appears two or more times in sequence.
+ * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
+ *
+ * @param currentDigit The last digit of the current password prefix, or null if the current prefix is empty.
+ * @param foundRepeatedDigit `true` if the current password prefix has been found to contain a digit that appears two or
+ *  more times in sequence, or `false` otherwise.
  */
-class HasRepeatedDigitGenerator(
-    private val _currentDigit: Int? = null,
-    private val _foundRepeatedDigit: Boolean = false
+class HasRepeatedDigitGenerator private constructor(
+    private val currentDigit: Int?,
+    private val foundRepeatedDigit: Boolean
 ) : PasswordGenerator() {
-    override val isValid: Boolean = _foundRepeatedDigit
+    /**
+     * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
+     */
+    constructor() : this(currentDigit = null, foundRepeatedDigit = false)
+
+    override val isValid: Boolean = foundRepeatedDigit
 
     override val nextDigits: Set<Int> = allDigits
 
     override fun addDigit(digit: Int): PasswordGenerator {
-        return HasRepeatedDigitGenerator(digit, _foundRepeatedDigit || digit == _currentDigit)
+        return HasRepeatedDigitGenerator(digit, foundRepeatedDigit || digit == currentDigit)
     }
 }

@@ -3,11 +3,11 @@ package com.curtislb.adventofcode.year2019.day04.password
 import com.curtislb.adventofcode.common.math.allDigits
 
 /**
- * Generates passwords that simultaneously satisfy all criteria given by [generators].
+ * A generator that produces numeric passwords that can be produced by *all* of the given [generators].
  */
 class SatisfiesAllGenerator(private val generators: List<PasswordGenerator>) : PasswordGenerator() {
     /**
-     * Generates passwords that simultaneously satisfy all criteria given by [generators].
+     * A generator that produces numeric passwords that can be produced by *all* of the given [generators].
      */
     constructor(vararg generators: PasswordGenerator) : this(generators.toList())
 
