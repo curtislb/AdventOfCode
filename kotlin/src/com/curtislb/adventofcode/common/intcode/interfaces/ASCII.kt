@@ -15,7 +15,7 @@ import java.math.BigInteger
  *  outside the normal ASCII range.
  * @param processOutput An optional function to be run for each output value produced by the program.
  */
-class ASCII(
+class ASCII private constructor(
     private val intcode: Intcode,
     private val showAsciiOutput: Boolean = false,
     var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
@@ -46,6 +46,22 @@ class ASCII(
         showAsciiOutput: Boolean = false,
         processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
     ) : this(Intcode(file), showAsciiOutput, processOutput)
+
+    /**
+     * An interface for an [Intcode] program that accepts ASCII code values as input and may produce output
+     * corresponding to printable ASCII characters.
+     *
+     * @param programString A string representation of the program, consisting of comma-separated integer values.
+     * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
+     *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
+     *  outside the normal ASCII range.
+     * @param processOutput An optional function to be run for each output value produced by the program.
+     */
+    constructor(
+        programString: String,
+        showAsciiOutput: Boolean = false,
+        processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
+    ) : this(Intcode(programString), showAsciiOutput, processOutput)
 
     /**
      * Whether the program has finished.

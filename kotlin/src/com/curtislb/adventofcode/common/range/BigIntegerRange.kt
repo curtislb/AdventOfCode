@@ -5,8 +5,10 @@ import java.math.BigInteger
 /**
  * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
  */
-class BigIntegerRange(override val start: BigInteger, override val endInclusive: BigInteger) : ClosedRange<BigInteger>, Iterable<BigInteger> {
-
+class BigIntegerRange(
+    override val start: BigInteger,
+    override val endInclusive: BigInteger
+) : ClosedRange<BigInteger>, Iterable<BigInteger> {
     /**
      * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
      *

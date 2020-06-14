@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.heap
 
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -10,8 +11,13 @@ import kotlin.test.assertTrue
  * Tests [MinimumHeap].
  */
 class MinimumHeapTest {
+    private lateinit var heap: MinimumHeap<String>
+
+    @Before fun setUp() {
+        heap = MinimumHeap()
+    }
+
     @Test fun testWhenEmpty() {
-        val heap = MinimumHeap<String>()
         assertEquals(0, heap.size)
         assertTrue(heap.isEmpty())
         assertNull(heap["foo"])
@@ -19,33 +25,28 @@ class MinimumHeapTest {
 
     @Test(expected = NoSuchElementException::class)
     fun testPopMinimumWhenEmpty() {
-        val heap = MinimumHeap<String>()
         heap.popMinimum()
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testDecreaseKeyWithUnknownValue() {
-        val heap = MinimumHeap<String>()
         heap.add("foo", 2L)
         heap.decreaseKey("bar", 1L)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testDecreaseKeyToSameKey() {
-        val heap = MinimumHeap<String>()
         heap.add("foo", 2L)
         heap.decreaseKey("foo", 2L)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun testDecreaseKeyToGreaterKey() {
-        val heap = MinimumHeap<String>()
         heap.add("foo", 2L)
         heap.decreaseKey("foo", 3L)
     }
 
     @Test fun testAddDecreaseAndPop() {
-        val heap = MinimumHeap<String>()
         heap.add("lorem", 5L)
         assertEquals(1, heap.size)
         assertFalse(heap.isEmpty())

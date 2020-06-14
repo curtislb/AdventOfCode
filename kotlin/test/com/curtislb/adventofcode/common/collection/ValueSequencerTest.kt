@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -10,8 +11,13 @@ import kotlin.test.fail
  * Tests [ValueSequencer].
  */
 class ValueSequencerTest {
+    private lateinit var sequencer: ValueSequencer<Int>
+
+    @Before fun setUp() {
+        sequencer = ValueSequencer()
+    }
+
     @Test fun testWhenEmpty() {
-        val sequencer = ValueSequencer<Any>()
         assertFalse(sequencer.hasNext())
         assertNextThrows(sequencer)
         sequencer.clear()
@@ -19,7 +25,6 @@ class ValueSequencerTest {
     }
 
     @Test fun testQueueing() {
-        val sequencer = ValueSequencer<Int>()
         sequencer.queue(sequenceOf(11))
         assertTrue(sequencer.hasNext())
         sequencer.queue(sequenceOf(52, -73))
@@ -42,8 +47,6 @@ class ValueSequencerTest {
     }
 
     @Test fun testClear() {
-        val sequencer = ValueSequencer<Int>()
-
         sequencer.queue(sequenceOf(-30, 71))
         assertTrue(sequencer.hasNext())
         sequencer.clear()

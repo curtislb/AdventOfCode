@@ -87,8 +87,7 @@ class ScaffoldGrid {
                     Space.ROBOT_RIGHT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.RIGHT)
                     Space.ROBOT_DOWN -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.DOWN)
                     Space.ROBOT_LEFT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.LEFT)
-                    else -> {
-                    }
+                    else -> {}
                 }
             }
         }
