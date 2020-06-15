@@ -16,20 +16,22 @@ import kotlin.test.assertTrue
 class ASCIITest {
     private lateinit var asciiOutputs: MutableList<BigInteger>
     private lateinit var nonAsciiOutputs: MutableList<BigInteger>
-    private lateinit var standardOutChars: MutableList<Int>
+    private lateinit var printedChars: MutableList<Int>
+    private lateinit var standardOutput: PrintStream
 
     @Before fun setUp() {
         asciiOutputs = mutableListOf()
         nonAsciiOutputs = mutableListOf()
-        standardOutChars = mutableListOf()
+        printedChars = mutableListOf()
+        standardOutput = System.out
         System.setOut(PrintStream(object : OutputStream() {
             override fun write(char: Int) {
-                standardOutChars.add(char)
+                printedChars.add(char)
             }
         }))
     }
 
-    @After fun tearDown() = System.setOut(System.out)
+    @After fun tearDown() = System.setOut(standardOutput)
 
     @Test fun testRunWhileShowingAsciiOutput() {
         val ascii = ASCII("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true) { output, isAscii ->
@@ -41,14 +43,14 @@ class ASCIITest {
         }
         assertTrue(asciiOutputs.isEmpty())
         assertTrue(nonAsciiOutputs.isEmpty())
-        assertTrue(standardOutChars.isEmpty())
+        assertTrue(printedChars.isEmpty())
         assertFalse(ascii.isPaused)
         assertFalse(ascii.isDone)
 
         ascii.run()
         assertEquals(listOf(BigInteger("72"), BigInteger("105")), asciiOutputs.toList())
         assertEquals(listOf(BigInteger("-19"), BigInteger("128")), nonAsciiOutputs.toList())
-        assertEquals(listOf(72, 105), standardOutChars)
+        assertEquals(listOf(72, 105), printedChars)
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
     }
@@ -63,14 +65,14 @@ class ASCIITest {
         }
         assertTrue(asciiOutputs.isEmpty())
         assertTrue(nonAsciiOutputs.isEmpty())
-        assertTrue(standardOutChars.isEmpty())
+        assertTrue(printedChars.isEmpty())
         assertFalse(ascii.isPaused)
         assertFalse(ascii.isDone)
 
         ascii.run()
         assertEquals(listOf(BigInteger("72"), BigInteger("105")), asciiOutputs.toList())
         assertEquals(listOf(BigInteger("-19"), BigInteger("128")), nonAsciiOutputs.toList())
-        assertTrue(standardOutChars.isEmpty())
+        assertTrue(printedChars.isEmpty())
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
     }
