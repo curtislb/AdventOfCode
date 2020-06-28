@@ -45,7 +45,7 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
      *
      * @throws IllegalArgumentException If [denominator] is 0.
      */
-    constructor(numerator: Int, denominator: Int) : this(numerator.toLong(), denominator.toLong())
+    constructor(numerator: Int, denominator: Int = 1) : this(numerator.toLong(), denominator.toLong())
 
     /**
      * Returns the fraction that is the negative complement of this one.

@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.allDigits
+import com.curtislb.adventofcode.common.math.decimalDigits
 
 /**
  * A generator that produces numeric passwords that can be produced by *all* of the given [generators].
@@ -14,7 +14,7 @@ class SatisfiesAllGenerator(private val generators: List<PasswordGenerator>) : P
     override val isValid: Boolean by lazy { generators.all { it.isValid } }
 
     override val nextDigits: Set<Int> by lazy {
-        generators.fold(allDigits) { digitSet, generator -> digitSet.intersect(generator.nextDigits) }
+        generators.fold(decimalDigits) { digitSet, generator -> digitSet.intersect(generator.nextDigits) }
     }
 
     override fun addDigit(digit: Int): PasswordGenerator {

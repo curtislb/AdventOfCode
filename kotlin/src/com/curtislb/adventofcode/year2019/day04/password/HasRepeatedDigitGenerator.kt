@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.allDigits
+import com.curtislb.adventofcode.common.math.decimalDigits
 
 /**
  * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
@@ -20,7 +20,7 @@ class HasRepeatedDigitGenerator private constructor(
 
     override val isValid: Boolean = foundRepeatedDigit
 
-    override val nextDigits: Set<Int> = allDigits
+    override val nextDigits: Set<Int> = decimalDigits
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return HasRepeatedDigitGenerator(digit, foundRepeatedDigit || digit == currentDigit)

@@ -1,8 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
 import kotlin.test.assertEquals
 
