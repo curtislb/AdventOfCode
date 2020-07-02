@@ -4,7 +4,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 /**
- * Tests digit utilities from [com.curtislb.adventofcode.common.math].
+ * Tests digit utilities in [com.curtislb.adventofcode.common.math].
  */
 class DigitsTest {
     @Test fun testDigit() {
