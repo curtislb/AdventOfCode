@@ -17,7 +17,7 @@ import java.math.BigInteger
  */
 class ASCII private constructor(
     private val intcode: Intcode,
-    private val showAsciiOutput: Boolean = false,
+    private val showAsciiOutput: Boolean,
     var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
 ) {
 

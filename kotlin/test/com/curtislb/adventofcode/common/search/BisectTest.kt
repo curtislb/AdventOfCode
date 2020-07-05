@@ -10,6 +10,9 @@ import kotlin.test.assertNull
 class BisectTest {
     @Test fun testBisectIndex() {
         assertEquals(1L, bisectIndex { it > 0 })
+        assertEquals(1L, bisectIndex(knownTrue = 1L) { it > 0L })
+        assertEquals(1L, bisectIndex(knownTrue = 2L) { it > 0L })
+        assertEquals(1L, bisectIndex(knownTrue = 100L) { it > 0L })
         assertEquals(1L, bisectIndex(knownFalse = 0L, knownTrue = 1L) { it > 0L })
         assertEquals(1L, bisectIndex(knownFalse = 0L, knownTrue = 2L) { it > 0L })
         assertEquals(1L, bisectIndex(knownFalse = 0L, knownTrue = 100L) { it > 0L })

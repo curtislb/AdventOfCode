@@ -77,8 +77,8 @@ class PointTest {
         assertAlmostEquals(5.6577002669404, Point(18, -19).angleClockwiseFromPositiveY(Point(5, -1)))
     }
 
-    @Test fun testConvertToMatrixCoordinates() {
-        assertEquals(Pair(0, 0), Point(0, 0).toMatrixCoordinates())
+    @Test fun testToMatrixCoordinates() {
+        assertEquals(Pair(0, 0), Point.ORIGIN.toMatrixCoordinates())
         assertEquals(Pair(7, 9), Point(9, -7).toMatrixCoordinates())
         assertEquals(Pair(12, 20), Point(20, -12).toMatrixCoordinates())
         assertEquals(Pair(15, 0), Point(0, -15).toMatrixCoordinates())
@@ -89,6 +89,14 @@ class PointTest {
         assertEquals(Pair(-9, 5), Point(5, 9).toMatrixCoordinates())
         assertEquals(Pair(-5, -19), Point(-19, 5).toMatrixCoordinates())
         assertEquals(Pair(-7, -3), Point(-3, 7).toMatrixCoordinates())
+    }
+
+    @Test fun testToString() {
+        assertEquals("(0, 0)", Point.ORIGIN.toString())
+        assertEquals("(4, 20)", Point(4, 20).toString())
+        assertEquals("(14, -12)", Point(14, -12).toString())
+        assertEquals("(-17, 20)", Point(-17, 20).toString())
+        assertEquals("(-18, -15)", Point(-18, -15).toString())
     }
 
     @Test fun testConstructFromMatrixCoordinates() {

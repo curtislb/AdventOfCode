@@ -23,29 +23,6 @@ class MinimumHeapTest {
         assertNull(heap["foo"])
     }
 
-    @Test(expected = NoSuchElementException::class)
-    fun testPopMinimumWhenEmpty() {
-        heap.popMinimum()
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun testDecreaseKeyWithUnknownValue() {
-        heap.add("foo", 2L)
-        heap.decreaseKey("bar", 1L)
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun testDecreaseKeyToSameKey() {
-        heap.add("foo", 2L)
-        heap.decreaseKey("foo", 2L)
-    }
-
-    @Test(expected = IllegalArgumentException::class)
-    fun testDecreaseKeyToGreaterKey() {
-        heap.add("foo", 2L)
-        heap.decreaseKey("foo", 3L)
-    }
-
     @Test fun testAddDecreaseAndPop() {
         heap.add("lorem", 5L)
         assertEquals(1, heap.size)
@@ -85,5 +62,34 @@ class MinimumHeapTest {
         assertNull(heap["lorem"])
         assertNull(heap["ipsum"])
         assertNull(heap["dolor"])
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testAddExistingValue() {
+        heap.add("foo", 2L)
+        heap.add("foo", 3L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testDecreaseKeyWithUnknownValue() {
+        heap.add("foo", 2L)
+        heap.decreaseKey("bar", 1L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testDecreaseKeyToSameKey() {
+        heap.add("foo", 2L)
+        heap.decreaseKey("foo", 2L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testDecreaseKeyToGreaterKey() {
+        heap.add("foo", 2L)
+        heap.decreaseKey("foo", 3L)
+    }
+
+    @Test(expected = NoSuchElementException::class)
+    fun testPopMinimumWhenEmpty() {
+        heap.popMinimum()
     }
 }

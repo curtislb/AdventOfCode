@@ -8,7 +8,14 @@ import kotlin.test.assertEquals
  */
 class MutableVectorTest {
     @Test fun testConstructFromString() {
-        assertEquals(MutableVector(3, -15, 44), MutableVector("<x=3,y=-15,z=44>"))
+        assertEquals(MutableVector(), MutableVector("<x=0, y=0, z=0>"))
+        assertEquals(MutableVector(1, 2, 3), MutableVector("<x=1, y=2, z=3>"))
+        assertEquals(MutableVector(3, -15, 44), MutableVector("<x=3, y=-15, z=44>"))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testConstructFromStringWithUnknownField() {
+        MutableVector("<x=1, w=2, z=3>")
     }
 
     @Test fun testAddition() {
@@ -27,5 +34,11 @@ class MutableVectorTest {
         assertEquals(-7, vector.sumBy { -it })
         assertEquals(8, vector.sumBy { (it - 1) * 2 })
         assertEquals(117, vector.sumBy { it * it })
+    }
+
+    @Test fun testToString() {
+        assertEquals("<x=0, y=0, z=0>", MutableVector().toString())
+        assertEquals("<x=1, y=2, z=3>", MutableVector(1, 2, 3).toString())
+        assertEquals("<x=-3, y=5, z=-2>", MutableVector(-3, 5, -2).toString())
     }
 }

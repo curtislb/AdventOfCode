@@ -13,7 +13,7 @@ data class Point(val x: Int, val y: Int) {
     /**
      * All points on the grid that are horizontally or vertically adjacent to this one.
      */
-    val neighbors: List<Point> get() = NEIGHBOR_DELTAS.map { Point(x + it.x, y + it.y) }
+    val neighbors: List<Point> by lazy { listOf(Point(x - 1, y), Point(x, y - 1), Point(x + 1, y), Point(x, y + 1)) }
 
     /**
      * Returns the point given by moving [distance] grid units in [direction] from this one.
@@ -66,11 +66,6 @@ data class Point(val x: Int, val y: Int) {
          * A point representing the 2D origin (0, 0).
          */
         val ORIGIN: Point = Point(0, 0)
-
-        /**
-         * A list containing the relative coordinates of horizontally and vertically adjacent points.
-         */
-        val NEIGHBOR_DELTAS: List<Point> = listOf(Point(-1, 0), Point(0, -1), Point(1, 0), Point(0, 1))
 
         /**
          * Returns the point corresponding to the given ([rowIndex], [colIndex]) matrix coordinates.
