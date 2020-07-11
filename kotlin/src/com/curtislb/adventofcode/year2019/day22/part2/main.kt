@@ -27,7 +27,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 22, part 2.
+ * Returns the solution to the puzzle for 2019, day 22, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param deckSize The number of cards in the deck to be shuffled.

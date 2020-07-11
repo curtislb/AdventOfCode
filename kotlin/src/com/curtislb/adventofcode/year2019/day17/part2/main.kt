@@ -106,7 +106,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 17, part 2.
+ * Returns the solution to the puzzle for 2019, day 17, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param functionCount The maximum number of movement functions that can be given to the vacuum robot.

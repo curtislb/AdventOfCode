@@ -71,7 +71,7 @@ import com.curtislb.adventofcode.year2019.day06.orbits.Universe
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 6, part 1.
+ * Returns the solution to the puzzle for 2019, day 6, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param center The name of the node representing the universal center of mass.

@@ -125,7 +125,7 @@ import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 10, part 1.
+ * Returns the solution to the puzzle for 2019, day 10, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

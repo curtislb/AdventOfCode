@@ -113,7 +113,7 @@ import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 14, part 1.
+ * Returns the solution to the puzzle for 2019, day 14, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param rawMaterial The name of a raw material that can be used in arbitrary quantities for reactions.

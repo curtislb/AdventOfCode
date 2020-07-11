@@ -157,7 +157,7 @@ import com.curtislb.adventofcode.year2019.day18.vault.search.KeySearch
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 18, part 2.
+ * Returns the solution to the puzzle for 2019, day 18, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

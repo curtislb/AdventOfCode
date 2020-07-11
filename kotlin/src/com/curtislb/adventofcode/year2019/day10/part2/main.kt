@@ -83,7 +83,7 @@ import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 10, part 2.
+ * Returns the solution to the puzzle for 2019, day 10, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param targetNumber The ordinal number of the target asteroid to be vaporized.

@@ -47,7 +47,7 @@ import com.curtislb.adventofcode.year2019.day08.image.processLayers
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 8, part 2.
+ * Returns the solution to the puzzle for 2019, day 8, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param imageWidth The width of each layer of the image, in number of pixels.

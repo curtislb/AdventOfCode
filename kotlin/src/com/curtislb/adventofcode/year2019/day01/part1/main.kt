@@ -36,7 +36,7 @@ import com.curtislb.adventofcode.year2019.day01.fuel.calculateFuel
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 1, part 1.
+ * Returns the solution to the puzzle for 2019, day 1, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

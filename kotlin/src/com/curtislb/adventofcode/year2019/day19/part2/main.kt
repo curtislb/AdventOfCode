@@ -62,7 +62,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 19, part 2.
+ * Returns the solution to the puzzle for 2019, day 19, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param shipSize The width and height of the square ship to fit within the beam.

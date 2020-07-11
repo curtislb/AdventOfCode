@@ -96,7 +96,7 @@ import com.curtislb.adventofcode.year2019.day20.maze.Maze
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 20, part 1.
+ * Returns the solution to the puzzle for 2019, day 20, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param entranceLabel The label of the space representing the entrance of the maze.

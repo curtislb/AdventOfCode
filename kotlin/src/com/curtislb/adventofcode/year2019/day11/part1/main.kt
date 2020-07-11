@@ -91,7 +91,7 @@ import com.curtislb.adventofcode.year2019.day11.painting.Robot
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 11, part 1.
+ * Returns the solution to the puzzle for 2019, day 11, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

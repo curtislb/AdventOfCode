@@ -25,7 +25,7 @@ import com.curtislb.adventofcode.year2019.day04.password.SatisfiesAllGenerator
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 4, part 2.
+ * Returns the solution to the puzzle for 2019, day 4, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param passwordLength The number of digits in a valid password.

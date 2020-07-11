@@ -33,7 +33,7 @@ import com.curtislb.adventofcode.year2019.day13.game.Tile
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 13, part 1.
+ * Returns the solution to the puzzle for 2019, day 13, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param tileType The type of tile to count occurrences of on the game board.

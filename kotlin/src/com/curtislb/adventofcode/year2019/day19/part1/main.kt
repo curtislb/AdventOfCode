@@ -45,7 +45,7 @@ import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 19, part 1.
+ * Returns the solution to the puzzle for 2019, day 19, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param gridRange The range of x and y-coordinate values on the grid for the drones to scan.

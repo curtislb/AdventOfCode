@@ -70,7 +70,7 @@ import java.nio.file.Path
 import kotlin.math.abs
 
 /**
- * Returns the solution to the puzzle for day 17, part 1.
+ * Returns the solution to the puzzle for 2019, day 17, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

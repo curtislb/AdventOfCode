@@ -66,7 +66,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 5, part 2.
+ * Returns the solution to the puzzle for 2019, day 5, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param systemId The system ID to be provided as input to the program.

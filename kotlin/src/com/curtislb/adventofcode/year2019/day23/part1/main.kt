@@ -42,7 +42,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 23, part 1.
+ * Returns the solution to the puzzle for 2019, day 23, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param computerCount The number of computers in the network.

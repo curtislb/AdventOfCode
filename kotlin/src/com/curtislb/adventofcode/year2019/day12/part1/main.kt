@@ -207,7 +207,7 @@ import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 12, part 1.
+ * Returns the solution to the puzzle for 2019, day 12, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param stepCount The number of time steps for which to run the simulation.

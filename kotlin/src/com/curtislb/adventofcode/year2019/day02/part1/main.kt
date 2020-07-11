@@ -80,7 +80,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 2, part 1.
+ * Returns the solution to the puzzle for 2019, day 2, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param nounValue The value to be set at position 1 in the program.

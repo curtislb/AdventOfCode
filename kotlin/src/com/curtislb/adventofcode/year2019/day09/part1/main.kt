@@ -61,7 +61,7 @@ import java.math.BigInteger
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 9, part 1.
+ * Returns the solution to the puzzle for 2019, day 9, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param programMode An input code that determines the mode in which the program will run.

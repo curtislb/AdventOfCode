@@ -44,7 +44,7 @@ import com.curtislb.adventofcode.year2019.day25.rescue.command.Take
 import java.nio.file.Path
 
 /**
- * Returns the solution to the puzzle for day 25, part 1.
+ * Returns the solution to the puzzle for 2019, day 25, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
