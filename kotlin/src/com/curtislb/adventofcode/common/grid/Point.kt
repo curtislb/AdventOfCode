@@ -13,12 +13,12 @@ data class Point(val x: Int, val y: Int) {
     /**
      * All points on the grid that are horizontally or vertically adjacent to this one.
      */
-    val neighbors: List<Point> by lazy { listOf(Point(x - 1, y), Point(x, y - 1), Point(x + 1, y), Point(x, y + 1)) }
+    val neighbors: List<Point> get() = listOf(Point(x - 1, y), Point(x, y - 1), Point(x + 1, y), Point(x, y + 1))
 
     /**
-     * Returns the point given by moving [distance] grid units in [direction] from this one.
+     * Returns the point reached by moving [distance] grid units in a given [direction] from this one.
      *
-     * If [distance] is negative, this is equivalent to moving `-distance` units opposite from [direction].
+     * If [distance] is negative, this is equivalent to moving `abs(distance)` units opposite the given [direction].
      */
     fun move(direction: Direction, distance: Int = 1): Point = when (direction) {
         Direction.UP -> Point(x, y + distance)
@@ -30,8 +30,8 @@ data class Point(val x: Int, val y: Int) {
     /**
      * Returns the Manhattan distance between this point and [other].
      *
-     * This is the length (in grid units) of the shortest possible path between this point and [other], while moving
-     * only up, down, left, or right.
+     * The Manhattan distance is the length (in grid units) of the shortest possible path between this point and
+     * [other], while moving only up, down, left, or right.
      */
     fun manhattanDistance(other: Point) = abs(x - other.x) + abs(y - other.y)
 
@@ -63,7 +63,7 @@ data class Point(val x: Int, val y: Int) {
 
     companion object {
         /**
-         * A point representing the 2D origin (0, 0).
+         * A point representing the 2D origin `(0, 0)`.
          */
         val ORIGIN: Point = Point(0, 0)
 

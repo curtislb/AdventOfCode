@@ -6,7 +6,7 @@ import com.curtislb.adventofcode.common.math.decimalDigits
  * A generator that produces numeric passwords in which at least one digit appears an exact number of times in sequence.
  *
  * @param repeatCount The exact number of times that a digit must be repeated in a valid password.
- * @param currentDigit The last digit of the current password prefix, or null if the current prefix is empty.
+ * @param currentDigit The last digit of the current password prefix, or `null` if the current prefix is empty.
  * @param currentCount The number of times [currentDigit] is repeated at the end of the current password prefix.
  * @param foundRepeatCountDigit `true` if the current password prefix has been found to contain a digit that appears
  *  exactly [repeatCount] times in sequence, or `false` otherwise.

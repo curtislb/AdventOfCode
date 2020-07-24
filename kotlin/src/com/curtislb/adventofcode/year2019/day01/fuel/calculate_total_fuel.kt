@@ -10,7 +10,7 @@ fun calculateTotalFuel(mass: Int): Int {
     var fuel = 0
     var remainingMass = mass
     while (remainingMass > 0) {
-        remainingMass = calculateFuel(remainingMass).coerceAtLeast(0)
+        remainingMass = calculateFuel(remainingMass)
         fuel += remainingMass
     }
     return fuel

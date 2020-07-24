@@ -29,23 +29,23 @@ abstract class PasswordGenerator {
     fun countPasswords(): Int = (if (isValid) 1 else 0) + nextDigits.sumBy { addDigit(it).countPasswords() }
 
     /**
-     * Returns a (possibly infinite) sequence of all valid passwords with the current prefix.
+     * Returns a (possibly infinite) sequence of all suffixes that form valid passwords with the current prefix.
+     *
+     * For a generator whose current prefix is empty, this is equivalent to generating all valid passwords.
      */
-    fun generatePasswords(): Sequence<String> = generatePasswordsInternal()
+    fun generatePasswordSuffixes(): Sequence<String> = generatePasswordSuffixesInternal(mutableListOf())
 
     /**
-     * Recursive helper method for [generatePasswords].
+     * Recursive helper method for [generatePasswordSuffixes].
      */
-    private fun generatePasswordsInternal(digitStrings: MutableList<String> = mutableListOf()): Sequence<String> {
-        return sequence {
-            if (isValid) {
-                yield(digitStrings.joinToString(separator = ""))
-            }
-            nextDigits.forEach { digit ->
-                digitStrings.add(digit.toString())
-                yieldAll(addDigit(digit).generatePasswordsInternal(digitStrings))
-                digitStrings.removeLast()
-            }
+    private fun generatePasswordSuffixesInternal(digitStrings: MutableList<String>): Sequence<String> = sequence {
+        if (isValid) {
+            yield(digitStrings.joinToString(separator = ""))
+        }
+        nextDigits.forEach { digit ->
+            digitStrings.add(digit.toString())
+            yieldAll(addDigit(digit).generatePasswordSuffixesInternal(digitStrings))
+            digitStrings.removeLast()
         }
     }
 }

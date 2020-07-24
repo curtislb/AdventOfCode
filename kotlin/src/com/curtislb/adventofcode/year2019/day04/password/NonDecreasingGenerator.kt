@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.year2019.day04.password
 /**
  * A generator that produces numeric passwords whose digits are monotonically increasing from left to right.
  *
- * @param currentDigit The last digit of the current password prefix, or null if the current prefix is empty.
+ * @param currentDigit The last digit of the current password prefix, or `null` if the current prefix is empty.
  */
 class NonDecreasingGenerator private constructor(currentDigit: Int) : PasswordGenerator() {
     /**

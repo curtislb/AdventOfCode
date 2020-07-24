@@ -23,7 +23,7 @@ class MapLinesTest {
     @Test fun testWithEmptyFile() {
         file.mapLines { it.toUpperCase() }
         val mappedLines = file.mapLines { it.toUpperCase() }
-        assertTrue(mappedLines.isEmpty())
+        assertEquals(emptyList(), mappedLines)
     }
 
     @Test fun testWithSingleLineFile() {
