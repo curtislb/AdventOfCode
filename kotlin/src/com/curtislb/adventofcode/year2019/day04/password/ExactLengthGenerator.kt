@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.decimalDigits
+import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
 
 
 /**
@@ -22,7 +22,7 @@ class ExactLengthGenerator private constructor(
 
     override val isValid: Boolean = currentLength == length
 
-    override val nextDigits: Set<Int> = if (currentLength >= length) emptySet() else decimalDigits
+    override val nextDigits: Set<Int> = if (currentLength >= length) emptySet() else DECIMAL_DIGITS
 
     override fun addDigit(digit: Int): PasswordGenerator = ExactLengthGenerator(length, currentLength + 1)
 }

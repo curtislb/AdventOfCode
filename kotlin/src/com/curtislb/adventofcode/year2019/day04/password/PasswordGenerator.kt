@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.collection.removeLast
-
 /**
  * A generator for producing numeric passwords that satisfy given requirements.
  */
@@ -33,19 +31,20 @@ abstract class PasswordGenerator {
      *
      * For a generator whose current prefix is empty, this is equivalent to generating all valid passwords.
      */
-    fun generatePasswordSuffixes(): Sequence<String> = generatePasswordSuffixesInternal(mutableListOf())
+    fun generatePasswordSuffixes(): Sequence<String> = sequence {
+        val queue = ArrayDeque<Pair<PasswordGenerator, String>>()
+        queue.addLast(Pair(this@PasswordGenerator, ""))
+        while (!queue.isEmpty()) {
+            // Check if the current generator matches a valid password.
+            val (generator, suffix) = queue.removeFirst()
+            if (generator.isValid) {
+                yield(suffix)
+            }
 
-    /**
-     * Recursive helper method for [generatePasswordSuffixes].
-     */
-    private fun generatePasswordSuffixesInternal(digitStrings: MutableList<String>): Sequence<String> = sequence {
-        if (isValid) {
-            yield(digitStrings.joinToString(separator = ""))
-        }
-        nextDigits.forEach { digit ->
-            digitStrings.add(digit.toString())
-            yieldAll(addDigit(digit).generatePasswordSuffixesInternal(digitStrings))
-            digitStrings.removeLast()
+            // Enqueue generators with next digits appended.
+            generator.nextDigits.forEach { digit ->
+                queue.addLast(Pair(generator.addDigit(digit), suffix + digit))
+            }
         }
     }
 }
