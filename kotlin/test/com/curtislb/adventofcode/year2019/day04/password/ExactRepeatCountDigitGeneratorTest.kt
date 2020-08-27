@@ -75,7 +75,7 @@ class ExactRepeatCountDigitGeneratorTest {
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generatorWithPrefix555667.nextDigits)
 
         val generatorWithPrefix5556677 = generatorWithPrefix555667.addDigit(7)
-        assertTrue(generatorWithPrefix555667.isValid)
-        assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generatorWithPrefix555667.nextDigits)
+        assertTrue(generatorWithPrefix5556677.isValid)
+        assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generatorWithPrefix5556677.nextDigits)
     }
 }

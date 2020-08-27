@@ -1,6 +1,7 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
 import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
+import com.curtislb.adventofcode.common.math.countDigits
 import com.curtislb.adventofcode.common.math.pow
 
 /**
@@ -30,24 +31,13 @@ class InRangeGenerator private constructor(
 
     override val isValid: Boolean = prefix in minValue..maxValue
 
-    override val nextDigits: Set<Int> = when {
-        minValue > maxValue || prefix > maxValue -> emptySet()
-        else -> DECIMAL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
+    override val nextDigits: Set<Int> = if (minValue > maxValue) {
+        emptySet()
+    } else {
+        DECIMAL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
     }
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return InRangeGenerator(minValue, maxValue, prefix * 10 + digit)
-    }
-
-    companion object {
-        private fun truncateForPrefix(value: Int, prefix: Int): Int {
-            if (prefix == 0) {
-                return value
-            }
-
-            val valueLength = value.toString().length
-            val prefixLength = prefix.toString().length
-            return value % (10.pow(valueLength - prefixLength))
-        }
     }
 }

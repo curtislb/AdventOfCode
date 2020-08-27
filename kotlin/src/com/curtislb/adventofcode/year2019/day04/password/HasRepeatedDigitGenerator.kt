@@ -6,23 +6,23 @@ import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
  * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
  *
  * @param currentDigit The last digit of the current password prefix, or `null` if the current prefix is empty.
- * @param foundRepeatedDigit `true` if the current password prefix has been found to contain a digit that appears two or
- *  more times in sequence, or `false` otherwise.
+ * @param hasRepeatedDigit `true` if the current password prefix contains a digit that appears two or more times in
+ *  sequence, or `false` otherwise.
  */
 class HasRepeatedDigitGenerator private constructor(
     private val currentDigit: Int?,
-    private val foundRepeatedDigit: Boolean
+    private val hasRepeatedDigit: Boolean
 ) : PasswordGenerator() {
     /**
      * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
      */
-    constructor() : this(currentDigit = null, foundRepeatedDigit = false)
+    constructor() : this(currentDigit = null, hasRepeatedDigit = false)
 
-    override val isValid: Boolean = foundRepeatedDigit
+    override val isValid: Boolean = hasRepeatedDigit
 
     override val nextDigits: Set<Int> = DECIMAL_DIGITS
 
     override fun addDigit(digit: Int): PasswordGenerator {
-        return HasRepeatedDigitGenerator(digit, foundRepeatedDigit || digit == currentDigit)
+        return HasRepeatedDigitGenerator(digit, hasRepeatedDigit || digit == currentDigit)
     }
 }
