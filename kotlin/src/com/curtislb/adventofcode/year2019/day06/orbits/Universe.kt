@@ -36,7 +36,7 @@ class Universe() {
 
     /**
      * Returns the planet with [name] in the universe, creating and adding it if needed.
-    .    */
+     */
     private fun getOrAddPlanet(name: String): Planet {
         val planet: Planet
         if (name in planets) {
@@ -65,9 +65,14 @@ class Universe() {
 
     /**
      * Returns the minimum number of orbital transfers required for [start] to enter the same orbit as [target], or
-     * `null` if there is no path from [start] to [target] in the orbital graph.
+     * `null` if this is not possible for the current orbital graph.
      */
     fun findOrbitalTransferDistance(start: String, target: String): Int? {
+        // Both planets must be in the orbital graph.
+        if (start !in planets || target !in planets) {
+            return null
+        }
+
         // If start and target are the same, no transfers are required.
         if (start == target) {
             return 0

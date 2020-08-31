@@ -11,12 +11,19 @@ import kotlin.math.log2
 fun Long.countDigits(base: Int = 10): Int {
     assert(this >= 0L)
     assert(base >= 2)
-    return when {
-        this == 0L -> 1
-        base == 2 -> floor(log2(toDouble())).toInt() + 1
-        base == 10 -> floor(log10(toDouble())).toInt() + 1
-        else -> floor(log(toDouble(), base.toDouble())).toInt() + 1
+
+    // The number zero is written as "0" in all bases.
+    if (this == 0L) {
+        return 1
     }
+
+    // Use specialized log functions for common bases.
+    val baseLog = when (base) {
+        2 -> log2(toDouble())
+        10 -> log10(toDouble())
+        else -> log(toDouble(), base.toDouble())
+    }
+    return floor(baseLog).toInt() + 1
 }
 
 /**

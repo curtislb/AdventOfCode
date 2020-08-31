@@ -7,6 +7,11 @@ import kotlin.test.assertEquals
  * Tests [bigEndianDigit] and [littleEndianDigit].
  */
 class EndianDigitTest {
+    @Test(expected = IllegalArgumentException::class)
+    fun testBigEndianDigitWithInvalidPosition() {
+        2.bigEndianDigit(1)
+    }
+
     @Test fun testBigEndianDigit() {
         assertEquals(0, 0.bigEndianDigit(0))
         assertEquals(0, 0.bigEndianDigit(0, base = 2))
