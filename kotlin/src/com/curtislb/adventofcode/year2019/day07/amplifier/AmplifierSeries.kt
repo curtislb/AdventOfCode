@@ -18,6 +18,10 @@ class AmplifierSeries(file: File, count: Int) {
     private val amplifiers: Array<Intcode>
 
     init {
+        if (count <= 0) {
+            throw IllegalArgumentException("Amplifier count must be at least 1.")
+        }
+
         val programString = file.readText().trim()
         amplifiers = Array(count) { Intcode(programString) }
         for (i in 0 until amplifiers.lastIndex) {
@@ -40,17 +44,20 @@ class AmplifierSeries(file: File, count: Int) {
         var maxSignal = BigInteger.ZERO
         amplifiers.last().onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
 
-        // Try all permutations of phase settings.
-        phaseSettings.permutations().forEach { settings ->
-            amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
-            amplifiers[0].sendInput(BigInteger.ZERO)
-            amplifiers.forEach { amplifier ->
-                amplifier.run()
-                amplifier.reset()
+        try {
+            // Try all permutations of phase settings.
+            phaseSettings.permutations().forEach { settings ->
+                amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
+                amplifiers[0].sendInput(BigInteger.ZERO)
+                amplifiers.forEach { amplifier ->
+                    amplifier.run()
+                    amplifier.resetState()
+                }
             }
+        } finally {
+            resetAmplifiers()
         }
 
-        resetAmplifiers()
         return maxSignal
     }
 
@@ -75,26 +82,29 @@ class AmplifierSeries(file: File, count: Int) {
             }
         }
 
-        // Try all permutations of phase settings.
-        phaseSettings.permutations().forEach { settings ->
-            // Send phase settings and initial input.
-            amplifiers.forEachIndexed { index, amplifier ->
-                amplifier.reset()
-                amplifier.sendInput(settings[index])
-            }
-            amplifiers[0].sendInput(BigInteger.ZERO)
+        try {
+            // Try all permutations of phase settings.
+            phaseSettings.permutations().forEach { settings ->
+                // Send phase settings and initial input.
+                amplifiers.forEachIndexed { index, amplifier ->
+                    amplifier.resetState()
+                    amplifier.sendInput(settings[index])
+                }
+                amplifiers[0].sendInput(BigInteger.ZERO)
 
-            // Continue running amplifier programs until all have halted.
-            while (!amplifiers.all { it.isDone }) {
-                amplifiers.forEach { amplifier ->
-                    if (!amplifier.isDone) {
-                        amplifier.run()
+                // Continue running amplifier programs until all have halted.
+                while (!amplifiers.all { it.isDone }) {
+                    amplifiers.forEach { amplifier ->
+                        if (!amplifier.isDone) {
+                            amplifier.run()
+                        }
                     }
                 }
             }
+        } finally {
+            resetAmplifiers()
         }
 
-        resetAmplifiers()
         return maxSignal
     }
 
@@ -102,7 +112,7 @@ class AmplifierSeries(file: File, count: Int) {
      * Restores all amplifiers in this series to their original states, immediately following initialization.
      */
     private fun resetAmplifiers() {
-        amplifiers.forEach { it.reset() }
-        amplifiers.last().onOutput = { println(it) }
+        amplifiers.forEach { it.resetState() }
+        amplifiers.last().resetOutput()
     }
 }

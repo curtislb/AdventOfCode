@@ -108,10 +108,14 @@ class Robot {
             didPaint = !didPaint
         }
 
-        // Send initial input and run the program until it halts.
-        intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
-        while (!intcode.isDone) {
-            intcode.run()
+        try {
+            // Send initial input and run the program until it halts.
+            intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
+            while (!intcode.isDone) {
+                intcode.run()
+            }
+        } finally {
+            intcode.resetOutput()
         }
     }
 }

@@ -89,10 +89,10 @@ class ASCII private constructor(
     /**
      * Restores the program to its starting state.
      *
-     * @see [Intcode.reset]
+     * @see [Intcode.resetState]
      */
-    fun reset() {
-        intcode.reset()
+    fun resetState() {
+        intcode.resetState()
     }
 
     /**

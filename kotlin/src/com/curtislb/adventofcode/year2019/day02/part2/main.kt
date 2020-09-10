@@ -67,7 +67,7 @@ fun solve(
             if (intcode[0] == targetOutput) {
                 return noun * nounFactor + verb
             }
-            intcode.reset()
+            intcode.resetState()
         }
     }
     return null

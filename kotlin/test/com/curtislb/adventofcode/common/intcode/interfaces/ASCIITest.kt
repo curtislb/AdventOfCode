@@ -84,7 +84,7 @@ class ASCIITest {
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
 
-        ascii.reset()
+        ascii.resetState()
         assertFalse(ascii.isPaused)
         assertFalse(ascii.isDone)
 
@@ -123,7 +123,7 @@ class ASCIITest {
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
 
-        ascii.reset()
+        ascii.resetState()
         assertFalse(ascii.isPaused)
         assertFalse(ascii.isDone)
 
@@ -156,7 +156,7 @@ class ASCIITest {
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
 
-        ascii.reset()
+        ascii.resetState()
         assertFalse(ascii.isPaused)
         assertFalse(ascii.isDone)
 

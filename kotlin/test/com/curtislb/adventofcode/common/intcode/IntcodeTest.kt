@@ -52,7 +52,7 @@ class IntcodeTest {
         assertEquals(BigInteger("11"), intcode[6])
 
         intcode.run()
-        assertEquals("-2\n11\n", printedChars.joinToString(separator = ""))
+        assertEquals("-2%n11%n".format(), printedChars.joinToString(separator = ""))
     }
 
     @Test fun testConstructFromFileWithCustomOutputFunction() {
@@ -86,7 +86,7 @@ class IntcodeTest {
         assertEquals(BigInteger("99"), intcode[0])
         assertEquals(BigInteger.ZERO, intcode[1])
 
-        intcode.reset()
+        intcode.resetState()
         assertFalse(intcode.isDone)
         assertFalse(intcode.isPaused)
         assertEquals(BigInteger("99"), intcode[0])
@@ -165,30 +165,43 @@ class IntcodeTest {
 
     @Test fun testHandlesOutput() {
         val intcode = Intcode("4,5,4,6,99,18,-19")
-        assertTrue(printedChars.joinToString(separator = "").isEmpty())
+        assertTrue(printedChars.isEmpty())
 
         intcode.run()
-        assertEquals("18\n-19\n", printedChars.joinToString(separator = ""))
+        assertEquals("18%n-19%n".format(), printedChars.joinToString(separator = ""))
 
-        intcode.reset()
-        assertEquals("18\n-19\n", printedChars.joinToString(separator = ""))
+        intcode.resetState()
+        assertEquals("18%n-19%n".format(), printedChars.joinToString(separator = ""))
 
         intcode.run()
-        assertEquals("18\n-19\n18\n-19\n", printedChars.joinToString(separator = ""))
+        assertEquals("18%n-19%n18%n-19%n".format(), printedChars.joinToString(separator = ""))
     }
 
     @Test fun testHandlesOutputWithCustomFunction() {
         val outputs = mutableListOf<BigInteger>()
         val intcode = Intcode("4,5,4,6,99,-74,16") { outputs.add(it) }
         assertTrue(outputs.isEmpty())
+        assertTrue(printedChars.isEmpty())
 
         intcode.run()
         assertEquals(listOf(BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertTrue(printedChars.isEmpty())
 
-        intcode.reset()
+        intcode.resetState()
         assertEquals(listOf(BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertTrue(printedChars.isEmpty())
 
         intcode.run()
         assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertTrue(printedChars.isEmpty())
+
+        intcode.resetOutput()
+        assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertTrue(printedChars.isEmpty())
+
+        intcode.resetState()
+        intcode.run()
+        assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertEquals("-74%n16%n".format(), printedChars.joinToString(separator = ""))
     }
 }

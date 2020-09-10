@@ -42,7 +42,7 @@ class Game(file: File) {
      * Restores the game to its starting state, immediately after initialization.
      */
     fun reset() {
-        intcode.reset()
+        intcode.resetState()
         intcode[0] = BigInteger.TWO
         intcode.run()
     }

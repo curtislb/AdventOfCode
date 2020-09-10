@@ -15,7 +15,7 @@ import java.math.BigInteger
  *
  * @throws IllegalArgumentException If `programString` is empty.
  */
-class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit = { println(it) }) {
+class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit = DEFAULT_OUTPUT) {
     /**
      * The initial integer values for this program.
      */
@@ -140,7 +140,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * - The program requests input, but no next input is available, at which point the program will pause.
      *
      * In either case, this method will return, and the program's last pointer position will be stored. Once the program
-     * has finished (as opposed to paused), any future calls to [run] will immediately return, until [reset] is invoked.
+     * has finished (as opposed to paused), any future calls to [run] will immediately return, until [resetState] is invoked.
      */
     fun run() {
         var pointer = pointerStart
@@ -190,7 +190,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      *
      * In particular, the function [onOutput] is *not* reset by this method.
      */
-    fun reset() {
+    fun resetState() {
         currentValues = initialValues.toTypedArray()
         extendedValues = mutableMapOf()
         input.clear()
@@ -199,7 +199,19 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
         isPaused = false
     }
 
+    /**
+     * Resets the [onOutput] function to its default value.
+     */
+    fun resetOutput() {
+        onOutput = DEFAULT_OUTPUT
+    }
+
     companion object {
+        /**
+         * The default function to be run when a program produces a value as output.
+         */
+        private val DEFAULT_OUTPUT: (BigInteger) -> Unit = { println(it) }
+
         /**
          * The default value to be assumed for any position in the program that isn't explicitly set.
          */

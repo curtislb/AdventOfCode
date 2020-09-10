@@ -44,7 +44,7 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
         val programString = file.readText().trim()
         computers = Array(computerCount) { Intcode(programString) }
         computers.forEachIndexed { address, computer -> computer.sendInput(address.toBigInteger()) }
-        queuedPackets = Array(computerCount) { mutableListOf<Packet>() }
+        queuedPackets = Array(computerCount) { mutableListOf() }
     }
 
     /**
@@ -53,7 +53,7 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
     fun reset() {
         // Reset each computer and provide its address.
         computers.forEachIndexed { address, computer ->
-            computer.reset()
+            computer.resetState()
             computer.sendInput(address.toBigInteger())
         }
 
@@ -78,7 +78,7 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
      * invoked.
      */
     fun run() {
-        // Return if the network has already finished running.
+        // Check if the network has already finished running.
         if (isDone) {
             return
         }
@@ -87,14 +87,19 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
         val onOutput = createOutputHandler()
         computers.forEach { it.onOutput = onOutput }
 
-        // Run all computers in order until finished.
-        var address = 0
-        while (!isDone) {
-            runComputer(address)
-            if (address == computers.lastIndex) {
-                handleIdleState()
+        try {
+            // Run all computers in order until finished.
+            var address = 0
+            while (!isDone) {
+                runComputer(address)
+                if (address == computers.lastIndex) {
+                    handleIdleState()
+                }
+                address = (address + 1) % computers.size
             }
-            address = (address + 1) % computers.size
+        } finally {
+            // Clean up references to output handler.
+            computers.forEach { it.resetOutput() }
         }
     }
 

@@ -4,7 +4,6 @@ import com.curtislb.adventofcode.common.intcode.interfaces.ASCII
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Command
 import java.io.File
 import java.lang.StringBuilder
-import java.math.BigInteger
 
 /**
  * A search and rescue droid that can navigate Santa's ship, picking up items along the way. It accepts commands and
@@ -56,7 +55,7 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
      * Restores the droid to its starting state, immediately after initialization.
      */
     fun reset() {
-        ascii.reset()
+        ascii.resetState()
     }
 
     /**

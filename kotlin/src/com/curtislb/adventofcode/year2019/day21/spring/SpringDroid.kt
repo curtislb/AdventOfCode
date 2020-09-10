@@ -22,7 +22,7 @@ class SpringDroid(file: File, private val maxInstructions: Int? = null) {
      * Restores the springdroid to its starting state, immediately after initialization.
      */
     fun reset() {
-        ascii.reset()
+        ascii.resetState()
     }
 
     /**

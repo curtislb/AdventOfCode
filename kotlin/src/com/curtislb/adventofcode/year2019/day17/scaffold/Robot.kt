@@ -55,7 +55,7 @@ class Robot(file: File) {
     fun reset() {
         grid = ScaffoldGrid()
         isPrevOutputNewline = false
-        ascii.reset()
+        ascii.resetState()
         ascii.processOutput = { output, _ -> processOutput(output) }
         ascii[0] = BigInteger.TWO
         ascii.run()
