@@ -43,7 +43,7 @@ class Robot(file: File) {
                 dustCollected = output
             }
         }
-        ascii.sendInput(routine.toString())
+        ascii.sendInput(routine.toAsciiInput())
         ascii.sendInput(if (showFeed) "y" else "n")
         ascii.run()
         return dustCollected

@@ -8,7 +8,10 @@ import kotlin.test.assertTrue
  * Checks that [actual] is non-null and within [precision] of [expected].
  */
 fun assertAlmostEquals(expected: Double, actual: Double?, precision: Double = 0.000001) {
-    val message = "Expected: $expected (+/- $precision)\nActual: $actual"
+    val message = """
+        Expected: $expected (+/- $precision)
+        Actual: $actual
+    """.trimIndent()
     assertNotNull(actual, message)
     assertTrue(abs(expected - actual) < precision, message)
 }

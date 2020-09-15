@@ -34,7 +34,11 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
         return Routine(callOrder, paddedFunctions)
     }
 
-    override fun toString(): String {
+    /**
+     * Returns a string representation of this routine that can be provided as input to an ASCII-compatible Intcode
+     * program.
+     */
+    fun toAsciiInput(): String {
         val callOrderString = callOrder.joinToString(separator = ",") { ('A'.toInt() + it).toChar().toString() }
         val functionStrings = functions.map { function -> function.joinToString(separator = ",") }
         return "$callOrderString\n${functionStrings.joinToString(separator = "\n")}"
