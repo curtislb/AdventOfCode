@@ -154,13 +154,20 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
      * If the network is idle, sends the last packet received by the NAT to the computer at address 0.
      */
     private fun handleIdleState() {
-        if (idleCounts.all { it >= IDLE_THRESHOLD } && natPacket != null) {
-            queuedPackets[0].add(natPacket!!)
-            isDone = natPacketListener.onPacketSent(natPacket!!)
+        if (idleCounts.all { it >= IDLE_THRESHOLD }) {
+            natPacket?.let { packet ->
+                queuedPackets[0].add(packet)
+                isDone = natPacketListener.onPacketSent(packet)
+            }
         }
     }
 
     companion object {
+        /**
+         * The number of times in a row a computer can poll for and not receive packets before it is considered idle.
+         */
+        private const val IDLE_THRESHOLD: Int = 2
+
         /**
          * The network address corresponding to the NAT.
          */
@@ -170,10 +177,5 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
          * An input value indicating that there are no queued packets for a computer to process.
          */
         private val NO_PACKET_INPUT: BigInteger = BigInteger("-1")
-
-        /**
-         * The number of times in a row a computer can poll for and not receive packets before it is considered idle.
-         */
-        private const val IDLE_THRESHOLD: Int = 2
     }
 }

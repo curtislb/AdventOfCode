@@ -14,8 +14,8 @@ object MoveRelativeBaseOperation : Operation {
     override val parameterCount: Int = 1
 
     override fun process(intcode: Intcode, pointer: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int {
-        assert(parameters.size == parameterCount) { "Expected $parameterCount parameters, but got ${parameters.size}" }
-        assert(modes.size == parameterCount) { "Expected $parameterCount modes, but got ${modes.size}" }
+        require(parameters.size == parameterCount) { "Wanted $parameterCount parameters, but got ${parameters.size}." }
+        require(modes.size == parameterCount) { "Wanted $parameterCount modes, but got ${modes.size}." }
 
         val value = modes[0].getValue(intcode, parameters[0])
         intcode.relativeBase += value.toInt()

@@ -23,14 +23,14 @@ class CounterTest {
     }
 
     @Test fun testWithInitialCounts() {
-        val counts = mapOf(Pair("lorem", 2L), Pair("ipsum", 0L), Pair("dolor", -3L), Pair("sit", 2147483648L))
+        val counts = mapOf("lorem" to 2L, "ipsum" to 0L, "dolor" to -3L, "sit" to 2147483648L)
         val counter = Counter(counts)
-        assertEquals(mapOf(Pair("lorem", 2L), Pair("dolor", -3L), Pair("sit", 2147483648L)), counter.toMap())
+        assertEquals(mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L), counter.toMap())
         assertEquals(
-            mapOf(Pair("lorem", 2L), Pair("dolor", -3L), Pair("sit", 2147483648L)).entries,
+            mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L).entries,
             counter.entriesWithNonzeroCount
         )
-        assertEquals(mapOf(Pair("lorem", 2L), Pair("sit", 2147483648L)).entries, counter.entriesWithPositiveCount)
+        assertEquals(mapOf("lorem" to 2L, "sit" to 2147483648L).entries, counter.entriesWithPositiveCount)
         assertEquals(setOf("lorem", "dolor", "sit"), counter.keysWithNonzeroCount)
         assertEquals(setOf("lorem", "sit"), counter.keysWithPositiveCount)
         assertTrue("lorem" in counter)
@@ -50,9 +50,9 @@ class CounterTest {
 
         counter["badger"] += 12L
         counter["mushroom"] += 2L
-        assertEquals(mapOf(Pair("badger", 12L), Pair("mushroom", 2L)), counter.toMap())
-        assertEquals(mapOf(Pair("badger", 12L), Pair("mushroom", 2L)).entries, counter.entriesWithNonzeroCount)
-        assertEquals(mapOf(Pair("badger", 12L), Pair("mushroom", 2L)).entries, counter.entriesWithPositiveCount)
+        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L), counter.toMap())
+        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L).entries, counter.entriesWithNonzeroCount)
+        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L).entries, counter.entriesWithPositiveCount)
         assertTrue("badger" in counter)
         assertTrue("mushroom" in counter)
         assertFalse("snake" in counter)
@@ -63,9 +63,9 @@ class CounterTest {
         counter["badger"] += 11L
         counter["mushroom"] -= 2L
         counter["snake"] -= 5L
-        assertEquals(mapOf(Pair("badger", 23L), Pair("snake", -5L)), counter.toMap())
-        assertEquals(mapOf(Pair("badger", 23L), Pair("snake", -5L)).entries, counter.entriesWithNonzeroCount)
-        assertEquals(mapOf(Pair("badger", 23L)).entries, counter.entriesWithPositiveCount)
+        assertEquals(mapOf("badger" to 23L, "snake" to -5L), counter.toMap())
+        assertEquals(mapOf("badger" to 23L, "snake" to -5L).entries, counter.entriesWithNonzeroCount)
+        assertEquals(mapOf("badger" to 23L).entries, counter.entriesWithPositiveCount)
         assertTrue("badger" in counter)
         assertFalse("mushroom" in counter)
         assertTrue("snake" in counter)
@@ -76,24 +76,21 @@ class CounterTest {
 
     @Test fun testClearNegativeCounts() {
         val counter = Counter(mapOf(
-            Pair("alpha", 560209110L),
-            Pair("bravo", -693733719L),
-            Pair("charlie", -466329041L),
-            Pair("delta", 927075951L),
-            Pair("echo", -13083113L),
-            Pair("foxtrot", 272479767L)
+            "alpha" to 560209110L,
+            "bravo" to -693733719L,
+            "charlie" to -466329041L,
+            "delta" to 927075951L,
+            "echo" to -13083113L,
+            "foxtrot" to 272479767L
         ))
         counter.clearNegativeCounts()
+        assertEquals(mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L), counter.toMap())
         assertEquals(
-            mapOf(Pair("alpha", 560209110L), Pair("delta", 927075951L), Pair("foxtrot", 272479767L)),
-            counter.toMap()
-        )
-        assertEquals(
-            mapOf(Pair("alpha", 560209110L), Pair("delta", 927075951L), Pair("foxtrot", 272479767L)).entries,
+            mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L).entries,
             counter.entriesWithNonzeroCount
         )
         assertEquals(
-            mapOf(Pair("alpha", 560209110L), Pair("delta", 927075951L), Pair("foxtrot", 272479767L)).entries,
+            mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L).entries,
             counter.entriesWithPositiveCount
         )
         assertTrue("alpha" in counter)

@@ -17,6 +17,8 @@ interface Operation {
     /**
      * Processes this operation for the [intcode] program, with the given [parameters] and parameter [modes], and
      * returns the position to which [pointer] should be updated following the operation.
+     *
+     * @throws IllegalArgumentException If called with an incorrect number of [parameters] or [modes].
      */
     fun process(intcode: Intcode, pointer: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int
 

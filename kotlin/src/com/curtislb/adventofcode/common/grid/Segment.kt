@@ -21,9 +21,7 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
     val isHorizontal: Boolean get() = direction == Direction.RIGHT || direction == Direction.LEFT
 
     init {
-        if (length < 0) {
-            throw IllegalArgumentException("Segment length must be non-negative: $length")
-        }
+        require(length >= 0) { "Length must be non-negative: $length" }
     }
 
     /**

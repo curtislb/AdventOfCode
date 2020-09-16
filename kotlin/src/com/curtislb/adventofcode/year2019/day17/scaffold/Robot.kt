@@ -1,12 +1,12 @@
 package com.curtislb.adventofcode.year2019.day17.scaffold
 
-import com.curtislb.adventofcode.common.intcode.interfaces.ASCII
+import com.curtislb.adventofcode.common.intcode.interfaces.Ascii
 import java.io.File
 import java.math.BigInteger
 
 /**
  * A vacuum robot that navigates and cleans debris from the ship's scaffold. It accepts movement instructions and
- * reports information through an [ASCII]-compatible Intcode program.
+ * reports information through an [Ascii]-compatible Intcode program.
  *
  * @param file A file containing the program that controls the robot.
  */
@@ -14,7 +14,7 @@ class Robot(file: File) {
     /**
      * An ASCII interface to the program that controls the robot.
      */
-    private val ascii: ASCII = ASCII(file) { output, _ -> processOutput(output) }
+    private val ascii: Ascii = Ascii(file) { output, _ -> processOutput(output) }
 
     /**
      * The initial layout of the scaffold grid, including the location of the vacuum robot.
@@ -64,12 +64,12 @@ class Robot(file: File) {
     /**
      * Handles [output] from the interface, using it to construct the grid and display relevant output to the user.
      *
-     * Because this method may change [ASCII.processOutput] during execution, it should be set again each time the
+     * Because this method may change [Ascii.processOutput] during execution, it should be set again each time the
      * [ascii] interface is reset.
      */
     private fun processOutput(output: BigInteger) {
         when (output) {
-            ASCII.NEWLINE_CODE -> {
+            Ascii.NEWLINE_CODE -> {
                 if (isPrevOutputNewline) {
                     grid.removeRow()
                     ascii.processOutput = null
@@ -78,6 +78,7 @@ class Robot(file: File) {
                     isPrevOutputNewline = true
                 }
             }
+
             else -> {
                 grid.addSpace(Space.from(output))
                 isPrevOutputNewline = false

@@ -10,7 +10,7 @@ import java.io.File
  */
 class RecursiveBugGrid(file: File) {
     /**
-     * The layout of level zero in the recursive grid.
+     * The layout of level 0 in the recursive grid.
      */
     private var baseGrid: BugGrid = BugGrid.from(file)
 

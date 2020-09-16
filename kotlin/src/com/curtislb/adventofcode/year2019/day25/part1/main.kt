@@ -50,8 +50,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 25)): String? {
     // Send a list of predetermined commands to the droid.
-    val droid = Droid(inputPath.toFile())
-    droid.start()
+    val droid = Droid(inputPath.toFile()).apply { start() }
     val commands = listOf(
         Move(Direction.LEFT),
         Take("ornament"),

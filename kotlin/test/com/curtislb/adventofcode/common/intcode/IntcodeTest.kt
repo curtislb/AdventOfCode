@@ -39,8 +39,7 @@ class IntcodeTest {
     }
 
     @Test fun testConstructFromFile() {
-        val file = temporaryFolder.newFile()
-        file.writeText("4,5,4,6,99,-2,11")
+        val file = temporaryFolder.newFile().apply { writeText("4,5,4,6,99,-2,11") }
 
         val intcode = Intcode(file)
         assertEquals(BigInteger("4"), intcode[0])
@@ -56,8 +55,7 @@ class IntcodeTest {
     }
 
     @Test fun testConstructFromFileWithCustomOutputFunction() {
-        val file = temporaryFolder.newFile()
-        file.writeText("4,5,4,6,99,3,13")
+        val file = temporaryFolder.newFile().apply { writeText("4,5,4,6,99,3,13") }
 
         val outputs = mutableListOf<BigInteger>()
         val intcode = Intcode(file) { outputs.add(it) }

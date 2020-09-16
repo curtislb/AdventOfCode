@@ -34,7 +34,7 @@ class Droid(file: File) {
     /**
      * A map from each position that the repair droid has identified to the space at that position.
      */
-    private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Pair(Point.ORIGIN, Space.OPEN))
+    private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Point.ORIGIN to Space.OPEN)
 
     /**
      * The most recent space identified by the repair droid.

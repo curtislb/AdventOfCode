@@ -8,6 +8,8 @@ import java.io.File
  * A factory that can perform a variety of chemical reactions in order to transform materials.
  *
  * @param file A containing each [Reaction] that can be performed by this factory, one per line.
+ *
+ * @throws IllegalArgumentException If any material can be produced by more than one reaction.
  */
 class Nanofactory(file: File) {
     /**
@@ -20,9 +22,7 @@ class Nanofactory(file: File) {
         file.forEachLine { line ->
             val reaction = Reaction.from(line)
             val material = reaction.product.material
-            if (material in reactionsBuilder) {
-                throw IllegalArgumentException("Found more than one reaction to produce $material.")
-            }
+            require(material !in reactionsBuilder) { "Material is produced by two or more reactions: $material" }
             reactionsBuilder[material] = reaction
         }
         reactions = reactionsBuilder

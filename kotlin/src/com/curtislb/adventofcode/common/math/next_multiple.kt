@@ -1,29 +1,37 @@
 package com.curtislb.adventofcode.common.math
 
 /**
- * Returns the least integer value greater than [n] that is a multiple of this one.
+ * Returns the least positive integer greater than [n] that is a multiple of this one.
+ *
+ * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
 fun Long.nextMultipleAbove(n: Long): Long {
-    assert(this > 0L)
-    assert(n >= 0L)
+    require(this > 0L) { "Number must be positive: $this" }
+    require(n >= 0L) { "Argument must be non-negative: $n" }
     return n + (this - (n % this))
 }
 
 /**
- * Returns the least integer value greater than [n] that is a multiple of this one.
+ * Returns the least positive integer greater than [n] that is a multiple of this one.
+ *
+ * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
 fun Int.nextMultipleAbove(n: Int): Int = toLong().nextMultipleAbove(n.toLong()).toInt()
 
 /**
- * Returns the least integer value greater than or equal to [n] that is a multiple of this one.
+ * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this one.
+ *
+ * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
 fun Long.nextMultipleAtLeast(n: Long): Long {
-    assert(this > 0L)
-    assert(n >= 0L)
+    require(this > 0L) { "Number must be positive: $this" }
+    require(n >= 0L) { "Number n must be non-negative: $n" }
     return if (n % this == 0L) n else nextMultipleAbove(n)
 }
 
 /**
- * Returns the least integer value greater than or equal to [n] that is a multiple of this one.
+ * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this one.
+ *
+ * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
 fun Int.nextMultipleAtLeast(n: Int): Int = toLong().nextMultipleAtLeast(n.toLong()).toInt()

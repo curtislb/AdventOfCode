@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
 import com.curtislb.adventofcode.common.math.pow
-import java.lang.IllegalArgumentException
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -44,12 +43,10 @@ data class Point(val x: Int, val y: Int) {
      * Returns the angle (in radians) of the line segment formed by this point and [other], measured clockwise from the
      * positive y-axis, with this point as the origin.
      *
-     * @throws IllegalArgumentException If this and [other] are the same point.
+     * @throws IllegalArgumentException If this point and [other] are the same point.
      */
     fun angleClockwiseFromPositiveY(other: Point): Double {
-        if (this == other) {
-            throw IllegalArgumentException("This point and other must be distinct.")
-        }
+        require(this != other) { "This point and other must be distinct." }
         val theta = atan2((other.x - x).toDouble(), (other.y - y).toDouble())
         return if (theta >= 0) theta else 2.0 * PI + theta
     }

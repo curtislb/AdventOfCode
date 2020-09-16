@@ -6,7 +6,7 @@ package com.curtislb.adventofcode.common.search
  *
  * If [knownTrue] is set to `null`, the search will instead be conducted forward from [knownFalse] without bound.
  */
-fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((index: Long) -> Boolean)): Long? {
+inline fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((index: Long) -> Boolean)): Long? {
     // If only a false index is known, search for a true index.
     var falseIndex = knownFalse
     var trueIndex = if (knownTrue != null) {

@@ -48,9 +48,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
 
     init {
         val tokens = programString.split(',')
-        if (tokens.isEmpty() || (tokens.size == 1 && tokens[0].isEmpty())) {
-            throw IllegalArgumentException("Program must not be empty.")
-        }
+        require(tokens.isNotEmpty() && (tokens.size > 1 || tokens[0].isNotEmpty())) { "Program must not be empty." }
         initialValues = tokens.map { it.toBigInteger() }
         currentValues = initialValues.toTypedArray()
     }

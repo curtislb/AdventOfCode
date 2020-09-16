@@ -13,9 +13,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Tests [ASCII].
+ * Tests [Ascii].
  */
-class ASCIITest {
+class AsciiTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
     private lateinit var asciiOutputs: MutableList<BigInteger>
@@ -38,25 +38,21 @@ class ASCIITest {
     @After fun tearDown() = System.setOut(standardOutput)
 
     @Test fun testConstructFromFile() {
-        val file = temporaryFolder.newFile()
-        file.writeText("4,3,99,92")
-
-        val ascii = ASCII(file, showAsciiOutput = true)
+        val file = temporaryFolder.newFile().apply { writeText("4,3,99,92") }
+        val ascii = Ascii(file, showAsciiOutput = true)
         ascii.run()
         assertEquals(listOf(92), printedCodes.toList())
     }
 
     @Test fun testConstructFromFileWithoutShowingAsciiOutput() {
-        val file = temporaryFolder.newFile()
-        file.writeText("4,3,99,92")
-
-        val ascii = ASCII(file)
+        val file = temporaryFolder.newFile().apply { writeText("4,3,99,92") }
+        val ascii = Ascii(file)
         ascii.run()
         assertTrue(printedCodes.isEmpty())
     }
 
     @Test fun testSetValue() {
-        val ascii = ASCII("4,5,4,63,99,21", showAsciiOutput = true)
+        val ascii = Ascii("4,5,4,63,99,21", showAsciiOutput = true)
         ascii[5] = BigInteger("19")
         ascii[63] = BigInteger("112")
         ascii.run()
@@ -64,7 +60,7 @@ class ASCIITest {
     }
 
     @Test fun testRunWithoutShowingAsciiOutput() {
-        val ascii = ASCII("4,9,4,10,4,11,4,12,99,-19,72,128,105") { output, isAscii ->
+        val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105") { output, isAscii ->
             if (isAscii) {
                 asciiOutputs.add(output)
             } else {
@@ -103,7 +99,7 @@ class ASCIITest {
     }
 
     @Test fun testRunWhileShowingAsciiOutput() {
-        val ascii = ASCII("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true) { output, isAscii ->
+        val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true) { output, isAscii ->
             if (isAscii) {
                 asciiOutputs.add(output)
             } else {
@@ -142,7 +138,7 @@ class ASCIITest {
     }
 
     @Test fun testRunWithoutCustomOutputFunction() {
-        val ascii = ASCII("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true)
+        val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true)
         assertTrue(asciiOutputs.isEmpty())
         assertTrue(nonAsciiOutputs.isEmpty())
         assertTrue(printedCodes.isEmpty())
@@ -169,7 +165,7 @@ class ASCIITest {
     }
 
     @Test fun testRunWithoutAnyOutput() {
-        val ascii = ASCII("4,9,4,10,4,11,4,12,99,-19,72,128,105")
+        val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105")
         assertTrue(asciiOutputs.isEmpty())
         assertTrue(nonAsciiOutputs.isEmpty())
         assertTrue(printedCodes.isEmpty())
@@ -185,7 +181,7 @@ class ASCIITest {
     }
 
     @Test fun testSendInput() {
-        val ascii = ASCII("3,13,3,14,3,15,4,13,4,14,4,15,99") { output, isAscii ->
+        val ascii = Ascii("3,13,3,14,3,15,4,13,4,14,4,15,99") { output, isAscii ->
             if (isAscii) {
                 asciiOutputs.add(output)
             } else {
@@ -202,6 +198,6 @@ class ASCIITest {
     }
 
     @Test fun testNewlineCode() {
-        assertEquals('\n'.toInt().toBigInteger(), ASCII.NEWLINE_CODE)
+        assertEquals('\n'.toInt().toBigInteger(), Ascii.NEWLINE_CODE)
     }
 }

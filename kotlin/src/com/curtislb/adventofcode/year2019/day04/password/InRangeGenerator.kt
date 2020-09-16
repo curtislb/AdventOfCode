@@ -1,8 +1,6 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
 import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
-import com.curtislb.adventofcode.common.math.countDigits
-import com.curtislb.adventofcode.common.math.pow
 
 /**
  * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
@@ -10,6 +8,8 @@ import com.curtislb.adventofcode.common.math.pow
  * @param minValue The minimum (inclusive) non-negative integer value for a valid password.
  * @param maxValue The maximum (inclusive) non-negative integer value for a valid password.
  * @param prefix The integer value of the current password prefix.
+ *
+ * @throws IllegalArgumentException If [minValue] or [maxValue] is negative.
  */
 class InRangeGenerator private constructor(
     private val minValue: Int,
@@ -17,8 +17,8 @@ class InRangeGenerator private constructor(
     private val prefix: Int
 ) : PasswordGenerator() {
     init {
-        assert(minValue >= 0)
-        assert(maxValue >= 0)
+        require(minValue >= 0) { "Minimum value must be non-negative: $minValue" }
+        require(maxValue >= 0) { "Maximum value must be non-negative: $maxValue" }
     }
 
     /**
@@ -26,6 +26,8 @@ class InRangeGenerator private constructor(
      *
      * @param minValue The minimum (inclusive) non-negative integer value for a valid password.
      * @param maxValue The maximum (inclusive) non-negative integer value for a valid password.
+     *
+     * @throws IllegalArgumentException If [minValue] or [maxValue] is negative.
      */
     constructor(minValue: Int, maxValue: Int) : this(minValue, maxValue, prefix = 0)
 

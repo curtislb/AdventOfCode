@@ -51,7 +51,7 @@ class KeySearch(private val vault: Vault) {
      */
     private fun findSearchEdges(): Map<Point, Map<Point, List<SearchEdge>>> {
         val keyPositions = vault.keyLocations.values.toSet()
-        val startPositions = vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) } as Set<Point>
+        val startPositions: Set<Point> = vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) }
         return startPositions.mapToMap { startPosition ->
             // Use DFS to find all paths to keys from startPosition.
             val pathsFromStart = dfsPaths(
@@ -71,10 +71,9 @@ class KeySearch(private val vault: Vault) {
 
             // Create a SearchEdge for each path and store it in the map.
             val edgesFromStart = pathsFromStart.mapToMap { (endPosition, paths) ->
-                val edges = paths.map { path -> SearchEdge.from(path.map { point -> vault[point]!! }) }
-                Pair(endPosition, edges)
+                endPosition to paths.map { path -> SearchEdge.from(path.map { point -> vault[point]!! }) }
             }
-            Pair(startPosition, edgesFromStart)
+            startPosition to edgesFromStart
         }
     }
 }

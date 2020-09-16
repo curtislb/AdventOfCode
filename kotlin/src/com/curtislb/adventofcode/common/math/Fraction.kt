@@ -20,22 +20,19 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
     val denominator: Long
 
     init {
-        when {
-            denominator == 0L -> throw IllegalArgumentException("Fraction can't have a denominator of 0.")
-            numerator == 0L -> {
-                // All fractions with a numerator of 0 are equivalent.
-                this.numerator = 0L
-                this.denominator = 1L
-            }
-            else -> {
-                // Apply sign to numerator and reduce to lowest terms.
-                val isNegative = (numerator < 0L) != (denominator < 0L)
-                val absNumer = abs(numerator)
-                val absDenom = abs(denominator)
-                val gcd = greatestCommonDivisor(absNumer, absDenom)
-                this.numerator = (if (isNegative) -absNumer else absNumer) / gcd
-                this.denominator = absDenom / gcd
-            }
+        require(denominator != 0L) { "Fraction can't have a denominator of 0." }
+        if (numerator == 0L) {
+            // All fractions with a numerator of 0 are equivalent.
+            this.numerator = 0L
+            this.denominator = 1L
+        } else {
+            // Apply sign to numerator and reduce to lowest terms.
+            val isNegative = (numerator < 0L) != (denominator < 0L)
+            val absNumer = abs(numerator)
+            val absDenom = abs(denominator)
+            val gcd = greatestCommonDivisor(absNumer, absDenom)
+            this.numerator = (if (isNegative) -absNumer else absNumer) / gcd
+            this.denominator = absDenom / gcd
         }
     }
 

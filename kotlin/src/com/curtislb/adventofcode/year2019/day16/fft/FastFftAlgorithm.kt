@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.year2019.day16.fft
 import kotlin.math.abs
 
 /**
- * An optimized implementation of the [FFT] algorithm for when only a portion of the latter half of a signal is needed.
+ * An optimized implementation of [FftAlgorithm] for when only a portion of the latter half of a signal is needed.
  *
  * @param baseSignal A list of digits representing part of the signal to be transformed.
  * @param repeatCount The number of times [baseSignal] is repeated to form the full input signal.
@@ -11,7 +11,7 @@ import kotlin.math.abs
  *
  * @throws IllegalArgumentException If [offset] is less than half the length (rounded down) of the repeated signal.
  */
-class FastFFT(
+class FastFftAlgorithm(
     private val baseSignal: List<Int>,
     private val repeatCount: Int = 1,
     private val offset: Int = getMinimumOffset(baseSignal, repeatCount)
@@ -23,8 +23,8 @@ class FastFFT(
 
     init {
         val minOffset = getMinimumOffset(baseSignal, repeatCount)
-        if (offset < minOffset) {
-            throw IllegalArgumentException("Offset must be >= $minOffset for ${baseSignal.size} x $repeatCount signal")
+        if (offset >= minOffset) {
+            "Offset ($offset) must be at least $minOffset for a ${baseSignal.size} x $repeatCount signal."
         }
         offsetSignal = getRepeatedSignalFromOffset()
     }

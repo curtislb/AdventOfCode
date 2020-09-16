@@ -7,7 +7,7 @@ import kotlin.math.abs
  *
  * @param inputSignal A list of digits representing the signal to be transformed.
  */
-class FFT(private val inputSignal: List<Int>) {
+class FftAlgorithm(private val inputSignal: List<Int>) {
     /**
      * A list of digits representing the transformed signal.
      */
@@ -34,8 +34,7 @@ class FFT(private val inputSignal: List<Int>) {
      * Returns the signal value at [index] given by applying the FFT transformation to [signal].
      */
     private fun getTransformedSignalValue(index: Int): Int {
-        val patternIterator = generatePattern(index).iterator()
-        patternIterator.next()
+        val patternIterator = generatePattern(index).iterator().apply { next() }
         val transformedValueSum = signal.fold(0L) { total, value -> total + patternIterator.next() * value }
         return (abs(transformedValueSum) % 10L).toInt()
     }

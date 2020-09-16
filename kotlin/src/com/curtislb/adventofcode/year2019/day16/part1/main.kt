@@ -90,7 +90,7 @@ After 100 phases of FFT, what are the first eight digits in the final output lis
 package com.curtislb.adventofcode.year2019.day16.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2019.day16.fft.FFT
+import com.curtislb.adventofcode.year2019.day16.fft.FftAlgorithm
 import com.curtislb.adventofcode.year2019.day16.fft.readSignal
 import java.nio.file.Path
 
@@ -103,8 +103,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 16), phaseCount: Int = 100, digitCount: Int = 8): String {
     val inputSignal = inputPath.toFile().readSignal()
-    val fft = FFT(inputSignal)
-    fft.run(phaseCount)
+    val fft = FftAlgorithm(inputSignal).apply { run(phaseCount) }
     return fft.signal.subList(0, digitCount).joinToString(separator = "")
 }
 

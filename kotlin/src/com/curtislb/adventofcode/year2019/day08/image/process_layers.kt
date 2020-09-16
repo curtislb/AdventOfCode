@@ -10,7 +10,7 @@ import java.io.File
  * @param onDigit An optional callback to be run each time a digit is encountered.
  * @param onLayerFinished An optional callback to be run each time all digits in a layer have been read.
  */
-fun processLayers(
+inline fun processLayers(
     file: File,
     imageArea: Int,
     onDigit: (indexInLayer: Int, digit: Int) -> Unit = { _, _ -> },

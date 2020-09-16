@@ -14,9 +14,9 @@ class MinimumHeap<T> {
     /**
      * A priority queue used internally to store and produce values.
      */
-    private val priorityQueue: PriorityQueue<HeapEntry<T>> = PriorityQueue(Comparator { entry, other ->
+    private val priorityQueue: PriorityQueue<HeapEntry<T>> = PriorityQueue { entry, other ->
         entry.key.compareTo(other.key)
-    })
+    }
 
     /**
      * The number of elements currently in the heap.
@@ -39,9 +39,7 @@ class MinimumHeap<T> {
      * @throws IllegalArgumentException If [value] is already in the heap.
      */
     fun add(value: T, key: Long) {
-        if (value in priorityKeys) {
-            throw IllegalArgumentException("Failed to add. Value is already in heap: $value")
-        }
+        require(value !in priorityKeys) { "Value is already in the heap: $value" }
         priorityKeys[value] = key
         priorityQueue.add(HeapEntry(value, key))
     }
@@ -49,14 +47,12 @@ class MinimumHeap<T> {
     /**
      * Decreases the key associated with [value] in the heap to [newKey].
      *
-     * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is less than or equal to
-     *  [newKey].
+     * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is at most [newKey].
      */
     fun decreaseKey(value: T, newKey: Long) {
         val oldKey = priorityKeys[value]
-        if (oldKey == null || oldKey <= newKey) {
-            throw IllegalArgumentException("Failed to decrease key. Value is not in heap, or in heap with lower key.")
-        }
+        require(oldKey != null) { "Value is not in the heap: $value" }
+        require(oldKey > newKey) { "Value ($value) is in the heap with an equal or lower key: $oldKey <= $newKey" }
         priorityKeys[value] = newKey
         priorityQueue.add(HeapEntry(value, newKey))
     }

@@ -8,24 +8,19 @@ import kotlin.test.assertEquals
  */
 class MapToMapTest {
     @Test fun testWithEmptyList() {
-        assertEquals(emptyMap(), emptyList<Any>().mapToMap { Pair(it, it) })
+        assertEquals(emptyMap(), emptyList<Any>().mapToMap { it to it })
     }
 
     @Test fun testWithEmptyMap() {
-        assertEquals(emptyMap(), emptyMap<Any, Any>().mapToMap { (key, value) -> Pair(key, value) })
+        assertEquals(emptyMap(), emptyMap<Any, Any>().mapToMap { (key, value) -> key to value })
     }
 
     @Test fun testWithNonEmptyList() {
-        assertEquals(
-            mapOf(Pair("1", 1L), Pair("2", 2L), Pair("3", 3L)),
-            listOf(1, 2, 3).mapToMap { Pair(it.toString(), it.toLong()) }
-        )
+        assertEquals(mapOf("1" to 1L, "2" to 2L, "3" to 3L), listOf(1, 2, 3).mapToMap { it.toString() to it.toLong() })
     }
 
     @Test fun testWithNonEmptyMap() {
-        val actual = mapOf(Pair("x", 2), Pair("y", 3), Pair("z", 5)).mapToMap { (key, value) ->
-            Pair(-value, key.toUpperCase())
-        }
-        assertEquals(mapOf(Pair(-2, "X"), Pair(-3, "Y"), Pair(-5, "Z")), actual)
+        val actual = mapOf("x" to 2, "y" to 3, "z" to 5).mapToMap { (key, value) -> -value to key.toUpperCase() }
+        assertEquals(mapOf(-2 to "X", -3 to "Y", -5 to "Z"), actual)
     }
 }

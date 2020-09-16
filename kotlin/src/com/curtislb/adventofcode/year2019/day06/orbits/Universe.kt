@@ -38,14 +38,11 @@ class Universe() {
      * Returns the planet with [name] in the universe, creating and adding it if needed.
      */
     private fun getOrAddPlanet(name: String): Planet {
-        val planet: Planet
-        if (name in planets) {
-            planet = planets[name]!!
-        } else {
-            planet = Planet(name)
+        return planets.getOrElse(name) {
+            val planet = Planet(name)
             planets[name] = planet
+            planet
         }
-        return planet
     }
 
     /**
@@ -89,18 +86,14 @@ class Universe() {
             // Step to planet A's parent, checking if it has been seen in planet B's ancestral chain.
             planetA = planetA?.parent
             if (planetA != null) {
-                if (planetA.name in visited) {
-                    return stepCount + visited[planetA.name]!! - 2
-                }
+                visited[planetA.name]?.let { return stepCount + it - 2 }
                 visited[planetA.name] = stepCount
             }
 
             // Step to planet B's parent, checking if it has been seen in planet A's ancestral chain.
             planetB = planetB?.parent
             if (planetB != null) {
-                if (planetB.name in visited) {
-                    return stepCount + visited[planetB.name]!! - 2
-                }
+                visited[planetB.name]?.let { return stepCount + it - 2 }
                 visited[planetB.name] = stepCount
             }
         }

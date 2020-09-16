@@ -213,8 +213,7 @@ import java.nio.file.Path
  * @param stepCount The number of time steps for which to run the simulation.
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 12), stepCount: Int = 1000): Int {
-    val system = NBodySystem(inputPath.toFile())
-    system.simulate(stepCount)
+    val system = NBodySystem(inputPath.toFile()).apply { simulate(stepCount) }
     return system.totalEnergy
 }
 

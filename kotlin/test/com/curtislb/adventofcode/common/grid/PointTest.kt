@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.common.grid
 import com.curtislb.adventofcode.common.testing.assertAlmostEquals
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import org.junit.Test
-import java.lang.IllegalArgumentException
 import kotlin.math.PI
 import kotlin.test.assertEquals
 

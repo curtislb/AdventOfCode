@@ -6,7 +6,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * Tests [mapLines].

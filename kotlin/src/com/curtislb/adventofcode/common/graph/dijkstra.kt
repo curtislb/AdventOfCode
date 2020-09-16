@@ -8,14 +8,13 @@ import com.curtislb.adventofcode.common.heap.MinimumHeap
  *
  * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead returns `null`.
  */
-fun <T> dijkstraShortestDistance(
+inline fun <T> dijkstraShortestDistance(
     source: T,
     isGoal: (node: T) -> Boolean,
     getEdges: (node: T) -> Sequence<DirectedEdge<T>>
 ): Long? {
     val visited = mutableSetOf<T>()
-    val nodeHeap = MinimumHeap<T>()
-    nodeHeap.add(source, 0L)
+    val nodeHeap = MinimumHeap<T>().apply { add(source, 0L) }
     while (!nodeHeap.isEmpty()) {
         // Pop node with the shortest distance, and return if we've found the goal.
         val (node, distance) = nodeHeap.popMinimum()

@@ -5,7 +5,7 @@ import com.curtislb.adventofcode.common.math.toDigit
 import java.io.File
 
 /**
- * Returns the contents of this file as an input signal for the [FFT] algorithm.
+ * Returns the contents of this file as an input signal for the [FftAlgorithm] algorithm.
  */
 fun File.readSignal(): List<Int> {
     val signal = mutableListOf<Int>()

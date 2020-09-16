@@ -4,9 +4,13 @@ import kotlin.math.sqrt
 
 /**
  * Returns a map from each factor in this number's prime factorization to its corresponding power.
+ *
+ * Because the number 1 has no prime factors, an empty map is returned in this case.
+ *
+ * @throws IllegalArgumentException If this number is negative or 0.
  */
 fun Long.primeFactorization(): Map<Long, Int> {
-    assert(this > 0L)
+    require(this > 0L) { "Number must be positive: $this" }
 
     // Search for prime factors below sqrt(n).
     var n = this

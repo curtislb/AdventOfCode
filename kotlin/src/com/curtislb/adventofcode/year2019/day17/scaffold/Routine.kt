@@ -9,14 +9,12 @@ import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
  *
  * @param callOrder A list of indices, representing the [functions] to be called in order.
  * @param functions A list of ordered groups of movement instructions that can be called by this routine.
+ *
+ * @throws IllegalArgumentException If any index in [callOrder] does not correspond to a function in [functions].
  */
 class Routine(private val callOrder: List<Int>, private val functions: List<List<Instruction>>) {
     init {
-        callOrder.forEach { functionIndex ->
-            if (functionIndex !in functions.indices) {
-                throw IllegalArgumentException("No matching function for index: $functionIndex")
-            }
-        }
+        callOrder.forEach { require(it in functions.indices) { "No matching function for index: $it" } }
     }
 
     /**

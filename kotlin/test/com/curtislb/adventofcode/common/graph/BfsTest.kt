@@ -12,7 +12,7 @@ class BfsTest {
     @Test fun testApplyToSourceOnly() {
         for (source in 0..7) {
             val appliedList = mutableListOf<Pair<Int, Long>>()
-            bfsApply(source, this::getNeighbors) { node, distance ->
+            bfsApply(source, ::getNeighbors) { node, distance ->
                 appliedList.add(Pair(node, distance))
                 true // Stop searching.
             }
@@ -22,7 +22,7 @@ class BfsTest {
 
     @Test fun testApplyToSourceAndNeighbors() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(2, this::getNeighbors) { node, distance ->
+        bfsApply(2, ::getNeighbors) { node, distance ->
             if (distance <= 1L) {
                 appliedList.add(Pair(node, distance))
                 false // Don't stop searching.
@@ -37,7 +37,7 @@ class BfsTest {
 
     @Test fun testApplyToAllInSubgraph() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(2, this::getNeighbors) { node, distance ->
+        bfsApply(2, ::getNeighbors) { node, distance ->
             appliedList.add(Pair(node, distance))
             false // Don't stop searching.
         }
@@ -48,7 +48,7 @@ class BfsTest {
 
     @Test fun testApplyToAllNodes() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(0, this::getNeighbors) { node, distance ->
+        bfsApply(0, ::getNeighbors) { node, distance ->
             appliedList.add(Pair(node, distance))
             false // Don't stop searching.
         }
@@ -71,7 +71,7 @@ class BfsTest {
             val distance = bfsDistance(
                 source,
                 isGoal = { it == source },
-                getNeighbors = this::getNeighbors
+                getNeighbors = ::getNeighbors
             )
             assertEquals(0L, distance)
         }
@@ -82,7 +82,7 @@ class BfsTest {
             val distance = bfsDistance(
                 source,
                 isGoal = { it == 8 },
-                getNeighbors = this::getNeighbors
+                getNeighbors = ::getNeighbors
             )
             assertNull(distance)
         }
@@ -92,7 +92,7 @@ class BfsTest {
         val distance = bfsDistance(
             source = 2,
             isGoal = { it == 1 },
-            getNeighbors = this::getNeighbors
+            getNeighbors = ::getNeighbors
         )
         assertNull(distance)
     }
@@ -101,7 +101,7 @@ class BfsTest {
         val distance = bfsDistance(
             source = 0,
             isGoal = { it == 6 },
-            getNeighbors = this::getNeighbors
+            getNeighbors = ::getNeighbors
         )
         assertEquals(3L, distance)
     }

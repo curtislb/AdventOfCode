@@ -2,14 +2,14 @@ package com.curtislb.adventofcode.year2019.day18.vault.space
 
 /**
  * A space representing a key in the vault, which opens any corresponding door when collected.
+ *
+ * @throws IllegalArgumentException If [symbol] is not a lowercase letter.
  */
 class KeySpace(override val symbol: Char) : Space {
     override val isOccupiable: Boolean = true
 
     init {
-        if (!symbol.isLowerCase()) {
-            throw IllegalArgumentException("Key symbol '$symbol' should be a lowercase letter.")
-        }
+        require(symbol.isLowerCase()) { "Symbol must be a lowercase letter: $symbol" }
     }
 
     /**

@@ -1,22 +1,24 @@
 package com.curtislb.adventofcode.common.math
 
 /**
- * Returns the largest whole number that evenly divides both [m] and [n].
+ * Returns the largest positive integer that evenly divides both [m] and [n].
+ *
+ * @throws IllegalArgumentException If either [m] or [n] is negative or 0.
  */
 fun greatestCommonDivisor(m: Long, n: Long): Long {
-    assert(m > 0L)
-    assert(n > 0L)
+    require(m > 0L) { "First argument must be positive: $m" }
+    require(n > 0L) { "Second argument must be positive: $n" }
     var a = m
     var b = n
     while (b != 0L) {
-        val temp = b
-        b = a % b
-        a = temp
+        a = b.also { b = a % b }
     }
     return a
 }
 
 /**
- * Returns the largest whole number that evenly divides both [m] and [n].
+ * Returns the largest positive integer that evenly divides both [m] and [n].
+ *
+ * @throws IllegalArgumentException If either [m] or [n] is negative or 0.
  */
 fun greatestCommonDivisor(m: Int, n: Int): Int = greatestCommonDivisor(m.toLong(), n.toLong()).toInt()

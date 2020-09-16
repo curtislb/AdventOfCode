@@ -10,32 +10,32 @@ import kotlin.test.assertNull
 class DijkstraTest {
     @Test fun testShortestDistanceToSource() {
         for (source in 1..8) {
-            val distance = dijkstraShortestDistance(source, isGoal = { it == source }, getEdges = this::getEdges)
+            val distance = dijkstraShortestDistance(source, isGoal = { it == source }, getEdges = ::getEdges)
             assertEquals(0L, distance)
         }
     }
 
     @Test fun testShortestDistanceToNonexistentNode() {
         for (source in 1..8) {
-            val distance = dijkstraShortestDistance(source, isGoal = { it == 9 }, getEdges = this::getEdges)
+            val distance = dijkstraShortestDistance(source, isGoal = { it == 9 }, getEdges = ::getEdges)
             assertNull(distance)
         }
     }
 
     @Test fun testShortestDistanceToUnreachableNode() {
-        val distance = dijkstraShortestDistance(source = 5, isGoal = { it == 7 }, getEdges = this::getEdges)
+        val distance = dijkstraShortestDistance(source = 5, isGoal = { it == 7 }, getEdges = ::getEdges)
         assertNull(distance)
     }
 
     @Test fun testShortestDistanceToReachableNodes() {
         val source = 1
-        assertEquals(9L, dijkstraShortestDistance(source, isGoal = { it == 2 }, getEdges = this::getEdges))
-        assertEquals(32L, dijkstraShortestDistance(source, isGoal = { it == 3 }, getEdges = this::getEdges))
-        assertEquals(45L, dijkstraShortestDistance(source, isGoal = { it == 4 }, getEdges = this::getEdges))
-        assertEquals(34L, dijkstraShortestDistance(source, isGoal = { it == 5 }, getEdges = this::getEdges))
-        assertEquals(14L, dijkstraShortestDistance(source, isGoal = { it == 6 }, getEdges = this::getEdges))
-        assertEquals(15L, dijkstraShortestDistance(source, isGoal = { it == 7 }, getEdges = this::getEdges))
-        assertEquals(50L, dijkstraShortestDistance(source, isGoal = { it == 8 }, getEdges = this::getEdges))
+        assertEquals(9L, dijkstraShortestDistance(source, isGoal = { it == 2 }, getEdges = ::getEdges))
+        assertEquals(32L, dijkstraShortestDistance(source, isGoal = { it == 3 }, getEdges = ::getEdges))
+        assertEquals(45L, dijkstraShortestDistance(source, isGoal = { it == 4 }, getEdges = ::getEdges))
+        assertEquals(34L, dijkstraShortestDistance(source, isGoal = { it == 5 }, getEdges = ::getEdges))
+        assertEquals(14L, dijkstraShortestDistance(source, isGoal = { it == 6 }, getEdges = ::getEdges))
+        assertEquals(15L, dijkstraShortestDistance(source, isGoal = { it == 7 }, getEdges = ::getEdges))
+        assertEquals(50L, dijkstraShortestDistance(source, isGoal = { it == 8 }, getEdges = ::getEdges))
     }
 
     /**

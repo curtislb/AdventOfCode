@@ -107,8 +107,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
     // Have the droid fully explore the grid.
-    val droid = Droid(inputPath.toFile())
-    droid.explore()
+    val droid = Droid(inputPath.toFile()).apply { explore() }
 
     // Use BFS to determine the distance to the oxygen system.
     return bfsDistance(

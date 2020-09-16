@@ -96,8 +96,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): Int {
-    val robot = Robot()
-    robot.executeProgram(Intcode(inputPath.toFile()))
+    val robot = Robot().apply { executeProgram(Intcode(inputPath.toFile())) }
     return robot.paintedArea
 }
 

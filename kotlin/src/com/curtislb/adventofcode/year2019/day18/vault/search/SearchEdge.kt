@@ -19,6 +19,7 @@ data class SearchEdge(val distance: Int, val doorsAndKeys: List<Space>) {
         for (i in 0 until doorsAndKeys.lastIndex) {
             when (val space = doorsAndKeys[i]) {
                 is KeySpace -> additionalKeys.withKey(space.symbol)
+
                 is DoorSpace -> {
                     val key = space.keySymbol
                     if (key !in heldKeys && key !in additionalKeys) {

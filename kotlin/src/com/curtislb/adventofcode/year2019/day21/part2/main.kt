@@ -45,7 +45,7 @@ import java.nio.file.Path
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 21), maxInstructions: Int = 15): BigInteger? {
     val droid = SpringDroid(inputPath.toFile(), maxInstructions)
     return droid.runProgram(
-        SpringScript.builder(enableExtendedMode = true)
+        SpringScript.builder(extendedMode = true)
             .not(A, T)
             .or(T, J)
             .not(B, T)

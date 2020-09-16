@@ -28,7 +28,7 @@ in the final output list?
 package com.curtislb.adventofcode.year2019.day16.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2019.day16.fft.FastFFT
+import com.curtislb.adventofcode.year2019.day16.fft.FastFftAlgorithm
 import com.curtislb.adventofcode.year2019.day16.fft.readSignal
 import java.nio.file.Path
 
@@ -50,9 +50,8 @@ fun solve(
 ): String {
     val baseSignal = inputPath.toFile().readSignal()
     val offset = baseSignal.subList(0, offsetDigits).joinToString(separator = "").toInt()
-    val fft = FastFFT(baseSignal, signalRepeatCount, offset)
-    fft.run(phaseCount)
-    return fft.readFromOffset(messageLength).joinToString(separator = "")
+    val fastFft = FastFftAlgorithm(baseSignal, signalRepeatCount, offset).apply { run(phaseCount) }
+    return fastFft.readFromOffset(messageLength).joinToString(separator = "")
 }
 
 fun main() {

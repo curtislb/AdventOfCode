@@ -90,6 +90,7 @@ class Maze(file: File) {
         val isOuterPortal = isOuterPoint(location.point)
         return when {
             space !is LabeledSpace || (isOuterPortal && location.depth == 0) -> emptyList()
+
             else -> {
                 val newPoints = labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
                 val newDepth = if (isOuterPortal) location.depth - 1 else location.depth + 1
@@ -110,6 +111,7 @@ class Maze(file: File) {
                 val newPoints = labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
                 newPoints.map { Location(it) }
             }
+
             else -> emptyList()
         }
     }

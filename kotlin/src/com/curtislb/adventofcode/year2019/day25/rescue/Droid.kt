@@ -1,13 +1,12 @@
 package com.curtislb.adventofcode.year2019.day25.rescue
 
-import com.curtislb.adventofcode.common.intcode.interfaces.ASCII
+import com.curtislb.adventofcode.common.intcode.interfaces.Ascii
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Command
 import java.io.File
-import java.lang.StringBuilder
 
 /**
  * A search and rescue droid that can navigate Santa's ship, picking up items along the way. It accepts commands and
- * reports information through an [ASCII]-compatible Intcode program.
+ * reports information through an [Ascii]-compatible Intcode program.
  *
  * @param file A file containing the program that controls the droid.
  * @param isInteractive Whether the program should show all ASCII output and echo any provided commands.
@@ -16,13 +15,14 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
     /**
      * An ASCII interface to the program that controls the droid.
      */
-    private val ascii: ASCII = ASCII(file, showAsciiOutput = isInteractive) { output, isAscii ->
+    private val ascii: Ascii = Ascii(file, showAsciiOutput = isInteractive) { output, isAscii ->
         if (isAscii) {
             when (output) {
-                ASCII.NEWLINE_CODE -> {
+                Ascii.NEWLINE_CODE -> {
                     lastLine = lineBuffer.toString()
                     lineBuffer.clear()
                 }
+
                 else -> lineBuffer.append(output.toInt().toChar())
             }
         }

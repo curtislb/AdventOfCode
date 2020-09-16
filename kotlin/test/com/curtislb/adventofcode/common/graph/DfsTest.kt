@@ -10,31 +10,27 @@ import kotlin.test.assertEquals
 class DfsTest {
     @Test fun testPathsWithNoGoals() {
         for (source in 0..3) {
-            assertEquals(emptyMap(), dfsPaths(source, isGoal = { false }, getNeighbors = this::getNeighbors))
+            assertEquals(emptyMap(), dfsPaths(source, isGoal = { false }, getNeighbors = ::getNeighbors))
         }
     }
 
     @Test fun testPathsWithSourceAsGoal() {
         for (source in 0..3) {
-            val paths = dfsPaths(source, isGoal = { it == source }, getNeighbors = this::getNeighbors)
-            assertEquals(mapOf(Pair(source, listOf(emptyList()))), paths)
+            val paths = dfsPaths(source, isGoal = { it == source }, getNeighbors = ::getNeighbors)
+            assertEquals(mapOf(source to listOf(emptyList())), paths)
         }
     }
 
     @Test fun testPathsInSubgraph() {
-        val paths = dfsPaths(1, isGoal = { true }, getNeighbors = this::getNeighbors)
-        assertEquals(mapOf(Pair(1, listOf(emptyList())), Pair(3, listOf(listOf(3)))), paths)
+        val paths = dfsPaths(1, isGoal = { true }, getNeighbors = ::getNeighbors)
+        assertEquals(mapOf(1 to listOf(emptyList()), 3 to listOf(listOf(3))), paths)
     }
 
     @Test fun testPathsInFullGraph() {
-        val paths = dfsPaths(2, isGoal = { it == 3 }, getNeighbors = this::getNeighbors)
+        val paths = dfsPaths(2, isGoal = { it == 3 }, getNeighbors = ::getNeighbors)
         assertEquals(1, paths.size)
 
-        val expectedPaths = listOf(
-            listOf(0, 3),
-            listOf(0, 1, 3),
-            listOf(1, 3)
-        )
+        val expectedPaths = listOf(listOf(0, 3), listOf(0, 1, 3), listOf(1, 3))
         val (actualGoal, actualPaths) = paths.entries.first()
         assertEquals(3, actualGoal)
         assertContainsExactly(expectedPaths, actualPaths)

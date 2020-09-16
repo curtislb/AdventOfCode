@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.common.grid
 /**
  * Returns the minimal 2D grid that contains all [points], where the value at each position is given by [valueAt].
  */
-fun <T> constructGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): List<List<T>> {
+inline fun <T> constructGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): List<List<T>> {
     // Determine the visible bounds of the grid.
     var minX: Int? = null
     var minY: Int? = null

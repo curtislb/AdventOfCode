@@ -15,12 +15,11 @@ import java.math.BigInteger
  *  outside the normal ASCII range.
  * @param processOutput An optional function to be run for each output value produced by the program.
  */
-class ASCII private constructor(
+class Ascii private constructor(
     private val intcode: Intcode,
     private val showAsciiOutput: Boolean,
     var processOutput: ((output: BigInteger, isAscii: Boolean) -> Unit)? = null
 ) {
-
     init {
         intcode.onOutput = { output ->
             val isAscii = output in ASCII_CODE_RANGE

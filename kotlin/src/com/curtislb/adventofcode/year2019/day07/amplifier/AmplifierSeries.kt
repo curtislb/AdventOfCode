@@ -10,6 +10,8 @@ import java.math.BigInteger
  *
  * @param file A file containing the [Intcode] program to be run by each of the amplifiers.
  * @param count The number of amplifiers to be wired in series.
+ *
+ * @throws IllegalArgumentException If [count] is less than 1.
  */
 class AmplifierSeries(file: File, count: Int) {
     /**
@@ -18,9 +20,7 @@ class AmplifierSeries(file: File, count: Int) {
     private val amplifiers: Array<Intcode>
 
     init {
-        if (count <= 0) {
-            throw IllegalArgumentException("Amplifier count must be at least 1.")
-        }
+        require(count > 0) { "Count must be at least 1: $count" }
 
         val programString = file.readText().trim()
         amplifiers = Array(count) { Intcode(programString) }
@@ -32,12 +32,12 @@ class AmplifierSeries(file: File, count: Int) {
     /**
      * Returns the maximum signal that can be produced by this amplifier series when [phaseSettings] are provided to the
      * amplifiers in any order.
+     *
+     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number of amplifiers.
      */
     fun findMaxSignal(phaseSettings: Collection<BigInteger>): BigInteger {
-        if (phaseSettings.size != amplifiers.size) {
-            throw IllegalArgumentException(
-                "Number of phase settings (${phaseSettings.size}) must match amplifier count (${amplifiers.size})."
-            )
+        require(phaseSettings.size == amplifiers.size) {
+            "The number of phase settings (${phaseSettings.size}) must match the amplifier count (${amplifiers.size})."
         }
 
         // Keep track of maximum output from the last amplifier.
@@ -64,12 +64,12 @@ class AmplifierSeries(file: File, count: Int) {
     /**
      * Returns the maximum signal that can be produced by this amplifier series when it is wired to create a feedback
      * loop and [phaseSettings] are provided to the amplifiers in any order.
+     *
+     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number of amplifiers.
      */
     fun findMaxSignalWithFeedback(phaseSettings: Collection<BigInteger>): BigInteger {
-        if (phaseSettings.size != amplifiers.size) {
-            throw IllegalArgumentException(
-                "Number of phase settings (${phaseSettings.size}) must match amplifier count (${amplifiers.size})."
-            )
+        require(phaseSettings.size == amplifiers.size) {
+            "The number of phase settings (${phaseSettings.size}) must match the amplifier count (${amplifiers.size})."
         }
 
         // Feed output from the last amplifier into the first, keeping track of the maximum final output.

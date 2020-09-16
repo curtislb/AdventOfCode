@@ -32,8 +32,7 @@ abstract class PasswordGenerator {
      * For a generator whose current prefix is empty, this is equivalent to generating all valid passwords.
      */
     fun generatePasswordSuffixes(): Sequence<String> = sequence {
-        val queue = ArrayDeque<Pair<PasswordGenerator, String>>()
-        queue.addLast(Pair(this@PasswordGenerator, ""))
+        val queue = ArrayDeque<Pair<PasswordGenerator, String>>().apply { addLast(Pair(this@PasswordGenerator, "")) }
         while (!queue.isEmpty()) {
             // Check if the current generator matches a valid password.
             val (generator, suffix) = queue.removeFirst()

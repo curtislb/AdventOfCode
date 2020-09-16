@@ -187,8 +187,7 @@ import java.nio.file.Path
  * @param durationMinutes The number of minutes to wait before counting the number of bugs.
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 24), durationMinutes: Int = 200): Int {
-    val grid = RecursiveBugGrid(inputPath.toFile())
-    grid.update(durationMinutes)
+    val grid = RecursiveBugGrid(inputPath.toFile()).apply { update(durationMinutes) }
     return grid.countBugs()
 }
 

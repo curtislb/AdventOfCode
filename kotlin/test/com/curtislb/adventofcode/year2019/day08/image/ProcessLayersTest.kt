@@ -26,8 +26,7 @@ class ProcessLayersTest {
     }
 
     @Test fun testProcessLayersForOneLayerOnePixelImage() {
-        val file = temporaryFolder.newFile()
-        file.writeText("1")
+        val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
         processLayers(
@@ -41,8 +40,7 @@ class ProcessLayersTest {
     }
 
     @Test fun testProcessLayersWithOnDigitCallbackOnly() {
-        val file = temporaryFolder.newFile()
-        file.writeText("1")
+        val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
         processLayers(
@@ -55,8 +53,7 @@ class ProcessLayersTest {
     }
 
     @Test fun testProcessLayersWithOnLayerFinishedCallbackOnly() {
-        val file = temporaryFolder.newFile()
-        file.writeText("1")
+        val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
         processLayers(file, imageArea = 1, onLayerFinished = { calls.add("onLayerFinished") })
@@ -65,8 +62,7 @@ class ProcessLayersTest {
     }
 
     @Test fun testProcessLayersForOneLayerImage() {
-        val file = temporaryFolder.newFile()
-        file.writeText("010222110201")
+        val file = temporaryFolder.newFile().apply { writeText("010222110201") }
 
         val calls = mutableListOf<String>()
         processLayers(
@@ -98,8 +94,7 @@ class ProcessLayersTest {
     }
 
     @Test fun testProcessLayersForTwoLayerOnePixelImage() {
-        val file = temporaryFolder.newFile()
-        file.writeText("21")
+        val file = temporaryFolder.newFile().apply { writeText("21") }
 
         val calls = mutableListOf<String>()
         processLayers(

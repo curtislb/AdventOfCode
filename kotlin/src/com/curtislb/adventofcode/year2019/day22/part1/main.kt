@@ -162,9 +162,6 @@ After shuffling your factory order deck of 10007 cards, what is the position of 
 package com.curtislb.adventofcode.year2019.day22.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2019.day22.shuffle.Cut
-import com.curtislb.adventofcode.year2019.day22.shuffle.DealIntoNewStack
-import com.curtislb.adventofcode.year2019.day22.shuffle.DealWithIncrement
 import com.curtislb.adventofcode.year2019.day22.shuffle.Shuffle
 import java.math.BigInteger
 import java.nio.file.Path

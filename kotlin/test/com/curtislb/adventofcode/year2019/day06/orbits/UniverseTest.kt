@@ -113,12 +113,13 @@ class UniverseTest {
     }
 
     @Test fun testConstructFromFileWithFourPlanets() {
-        val file = temporaryFolder.newFile()
-        file.writeText("""
-            A)B
-            B)C
-            A)D
-        """.trimIndent())
+        val file = temporaryFolder.newFile().apply {
+            writeText("""
+                A)B
+                B)C
+                A)D
+            """.trimIndent())
+        }
 
         val universe = Universe(file)
         assertEquals(4, universe.countOrbits("A"))

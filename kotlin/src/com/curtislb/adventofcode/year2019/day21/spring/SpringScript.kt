@@ -10,10 +10,10 @@ class SpringScript private constructor(val instructions: List<String>) {
 
     companion object {
         /**
-         * Returns a builder for a springscript program. If [enableExtendedMode] is `true`, the resulting program will
-         * run in extended sensor mode.
+         * Returns a builder for a springscript program. If [extendedMode] is `true`, the resulting program will run in
+         * extended sensor mode.
          */
-        fun builder(enableExtendedMode: Boolean = false): Builder = Builder(enableExtendedMode)
+        fun builder(extendedMode: Boolean = false): Builder = Builder(extendedMode)
 
         /**
          * A builder for a springscript program.
@@ -75,16 +75,13 @@ class SpringScript private constructor(val instructions: List<String>) {
             }
 
             /**
-             * Checks that all [registers] are accessible in the given springscript program mode.
-             *
-             * @throws IllegalArgumentException If one or more [registers] are not accessible in the springscript
-             *  program mode specified by the [isExtendedMode] flag.
+             * Throws an [IllegalArgumentException] if not all [registers] are accessible in the current sensor mode.
              */
             private fun checkSensorRange(vararg registers: Register) {
                 if (!isExtendedMode) {
-                    for (reg in registers) {
-                        if (reg.isExtended) {
-                            throw IllegalArgumentException("Register $reg is only available in extended sensor mode.")
+                    for (register in registers) {
+                        require(!register.isExtended) {
+                            "Register is only available in extended sensor mode: $register"
                         }
                     }
                 }
@@ -92,14 +89,10 @@ class SpringScript private constructor(val instructions: List<String>) {
 
             companion object {
                 /**
-                 * Checks that the given [register] can be written to by a springscript program.
-                 *
-                 * @throws IllegalArgumentException If [register] is read-only.
+                 * Throws an [IllegalArgumentException] if a springscript program can't write to the given [register].
                  */
                 private fun checkIsWritable(register: Register) {
-                    if (!register.isWritable) {
-                        throw IllegalArgumentException("Can't write to read-only register $register.")
-                    }
+                    require(register.isWritable) { "Can't write to read-only register: $register" }
                 }
             }
         }
