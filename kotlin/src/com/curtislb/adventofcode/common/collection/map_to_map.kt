@@ -5,9 +5,7 @@ package com.curtislb.adventofcode.common.collection
  * collection.
  */
 inline fun <E, K, V> Collection<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> {
-    val mapBuilder = mutableMapOf<K, V>()
-    forEach { mapBuilder += transform(it) }
-    return mapBuilder
+    return mutableMapOf<K, V>().apply { this@mapToMap.forEach { this += transform(it) } }
 }
 
 /**

@@ -16,15 +16,17 @@ fun Long.primeFactorization(): Map<Long, Int> {
     var n = this
     var factor = 2L
     val factorization = mutableMapOf<Long, Int>()
-    while (factor < sqrt(n.toDouble()).toLong() + 1L) {
+    while (factor <= sqrt(n.toDouble()).toLong()) {
         // Find power by repeatedly dividing n by factor.
-        var count = 0
+        var power = 0
         while (n % factor == 0L) {
             n /= factor
-            count++
+            power++
         }
-        if (count > 0) {
-            factorization[factor] = count
+
+        // Record power for current factor and continue.
+        if (power > 0) {
+            factorization[factor] = power
         }
         factor++
     }

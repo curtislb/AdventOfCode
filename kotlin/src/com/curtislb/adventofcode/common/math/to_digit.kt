@@ -9,5 +9,5 @@ fun Char.toDigit(): Int = when (this) {
     in '0'..'9' -> this - '0'
     in 'A'..'Z' -> this - 'A' + 10
     in 'a'..'z' -> this - 'a' + 10
-    else -> throw IllegalArgumentException("'$this' can't be converted to a digit.")
+    else -> throw IllegalArgumentException("Invalid digit character: $this")
 }
