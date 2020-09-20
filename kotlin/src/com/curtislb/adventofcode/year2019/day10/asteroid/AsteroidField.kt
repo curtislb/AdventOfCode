@@ -14,20 +14,20 @@ class AsteroidField(file: File) {
     /**
      * A list of all grid locations that contain asteroids.
      */
-    private val asteroids: MutableList<Point>
+    private var asteroids: MutableList<Point>
 
     init {
-        val asteroidsBuilder = mutableListOf<Point>()
-        var rowIndex = 0
-        file.forEachLine { line ->
-            line.forEachIndexed { colIndex, char ->
-                if (char == '#') {
-                    asteroidsBuilder.add(Point.fromMatrixCoordinates(rowIndex, colIndex))
+        asteroids = mutableListOf<Point>().apply {
+            var rowIndex = 0
+            file.forEachLine { line ->
+                line.forEachIndexed { colIndex, char ->
+                    if (char == '#') {
+                        add(Point.fromMatrixCoordinates(rowIndex, colIndex))
+                    }
                 }
+                rowIndex++
             }
-            rowIndex++
         }
-        asteroids = asteroidsBuilder
     }
 
     /**
@@ -59,16 +59,27 @@ class AsteroidField(file: File) {
     /**
      * Vaporizes as many asteroids as possible up to [count] from a given [station], removing them from the grid.
      *
-     * Asteroids are vaporized from [station] by a laser that begins pointing up and proceeds clockwise, removing at
-     * most one asteroid (the one closest to [station]) per angle, per rotation. This continues until either [count]
-     * asteroids have been vaporized or no more can be vaporized from [station].
+     * Asteroids are vaporized from [station] (which must be at a point with an asteroid) by a laser that begins
+     * pointing up and proceeds clockwise, removing at most one asteroid (the one closest to [station]) per angle, per
+     * rotation. This continues until either [count] asteroids have been vaporized or no more can be vaporized from
+     * [station].
      *
      * @return The position of the last vaporized asteroid if exactly [count] are vaporized, or `null` otherwise.
+     *
+     * @throws IllegalArgumentException If [station] is not located on an asteroid, or if [count] is negative.
      */
     fun vaporizeAsteroids(station: Point, count: Int): Point? {
-        // Check if the number of asteroids that can be vaporized is less than count.
+        require(station in asteroids) { "Station must be located on an asteroid: $station" }
+        require(count >= 0) { "Count must be non-negative: $count" }
+
+        // No need to vaporize any asteroids if count is 0.
+        if (count == 0) {
+            return null
+        }
+
+        // If count is high enough, remove all asteroids other than station.
         if (count >= asteroids.size) {
-            asteroids.removeAll { it != station }
+            asteroids = mutableListOf(station)
             return null
         }
 
@@ -82,13 +93,7 @@ class AsteroidField(file: File) {
         }
 
         // Sort visible asteroids in the order they would be vaporized.
-        val sortedAsteroids = visibleAsteroids.sortedBy { asteroid ->
-            if (asteroid == station) {
-                Double.POSITIVE_INFINITY
-            } else {
-                station.angleClockwiseFromPositiveY(asteroid)
-            }
-        }
+        val sortedAsteroids = visibleAsteroids.sortedBy { station.angleClockwiseFromPositiveY(it) }
 
         // Remove all asteroids up to target and return it.
         val targetIndex = count - vaporizedCount - 1
@@ -116,7 +121,7 @@ class AsteroidField(file: File) {
      * Returns the positions of all asteroids visible from [source].
      *
      * An asteroid is visible if and only if there is a direct line of sight from [source] to its position that is not
-     * obstructed by other asteroids. Asteroids located at [source] are not considered to be visible.
+     * obstructed by other asteroids. An asteroid located at [source] is not considered to be visible.
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
         val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>()
