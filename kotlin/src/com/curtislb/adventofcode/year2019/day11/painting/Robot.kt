@@ -82,6 +82,8 @@ class Robot {
      * @throws IllegalArgumentException If [intcode] produces an invalid output value.
      */
     fun executeProgram(intcode: Intcode) {
+        val prevOnOutput = intcode.onOutput
+
         var didPaint = false
         intcode.onOutput = { output ->
             if (didPaint) {
@@ -111,11 +113,10 @@ class Robot {
         try {
             // Send initial input and run the program until it halts.
             intcode.sendInput(if (isOnWhitePanel) BigInteger.ONE else BigInteger.ZERO)
-            while (!intcode.isDone) {
-                intcode.run()
-            }
+            intcode.run()
         } finally {
-            intcode.resetOutput()
+            // Ensure the program's original output function is restored.
+            intcode.onOutput = prevOnOutput
         }
     }
 }
