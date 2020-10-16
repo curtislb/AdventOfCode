@@ -63,7 +63,7 @@ import java.nio.file.Path
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 12)): Long {
     val system = NBodySystem(inputPath.toFile())
     val periodicity = system.findAxialPeriodicity()
-    return leastCommonMultiple(periodicity.x.toLong(), periodicity.y.toLong(), periodicity.z.toLong())
+    return leastCommonMultiple(periodicity[0].toLong(), periodicity[1].toLong(), periodicity[2].toLong())
 }
 
 fun main() {

@@ -64,14 +64,12 @@ class NBodySystem(file: File) {
      */
     fun findAxialPeriodicity(): MutableVector {
         // Store the initial body configurations for each axis.
-        val initialXValues: List<Int> = bodies.flatMap { listOf(it.position.x, it.velocity.x) }
-        val initialYValues: List<Int> = bodies.flatMap { listOf(it.position.y, it.velocity.y) }
-        val initialZValues: List<Int> = bodies.flatMap { listOf(it.position.z, it.velocity.z) }
+        val initialValues: List<List<Int>> = (0 until Body.DIMENSION_COUNT).map { index ->
+            bodies.flatMap { listOf(it.position[index], it.velocity[index]) }
+        }
 
         // Run simulation until the periods of all axes are found.
-        var periodX: Int? = null
-        var periodY: Int? = null
-        var periodZ: Int? = null
+        val periods = Array<Int?>(Body.DIMENSION_COUNT) { null }
         var steps = 0
         do {
             // Update the positions and velocities of all bodies.
@@ -79,27 +77,17 @@ class NBodySystem(file: File) {
             steps++
 
             // Check if any axes have returned to their initial configurations.
-            if (periodX == null) {
-                val values = bodies.flatMap { listOf(it.position.x, it.velocity.x) }
-                if (values == initialXValues) {
-                    periodX = steps
+            for (i in periods.indices) {
+                if (periods[i] == null) {
+                    val values = bodies.flatMap { listOf(it.position[i], it.velocity[i]) }
+                    if (values == initialValues[i]) {
+                        periods[i] = steps
+                    }
                 }
             }
-            if (periodY == null) {
-                val values = bodies.flatMap { listOf(it.position.y, it.velocity.y) }
-                if (values == initialYValues) {
-                    periodY = steps
-                }
-            }
-            if (periodZ == null) {
-                val values = bodies.flatMap { listOf(it.position.z, it.velocity.z) }
-                if (values == initialZValues) {
-                    periodZ = steps
-                }
-            }
-        } while (periodX == null || periodY == null || periodZ == null)
+        } while (periods.any { it == null })
 
-        return MutableVector(periodX, periodY, periodZ)
+        return MutableVector(*IntArray(periods.size) { index -> periods[index]!! })
     }
 
     override fun toString(): String = bodies.joinToString(separator = "\n")

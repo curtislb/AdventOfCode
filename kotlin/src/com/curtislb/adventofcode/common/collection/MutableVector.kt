@@ -1,47 +1,106 @@
 package com.curtislb.adventofcode.common.collection
 
 /**
- * A mutable 3D vector, consisting of [x], [y], and [z]-coordinate values.
+ * A mutable vector with a fixed number of integer [components].
+ *
+ * @param components The current component values of this vector.
  */
-data class MutableVector(var x: Int = 0, var y: Int = 0, var z: Int = 0) {
+class MutableVector(private vararg val components: Int) {
     /**
-     * A mutable 3D vector, consisting of [x], [y], and [z]-coordinate values.
-     *
-     * @param vectorString A string representation of the vector, in the form `<x=$x, y=$y, z=$z>`.
-     *
-     * @throws IllegalArgumentException If [vectorString] has the wrong format.
+     * The number of components in this vector.
      */
-    constructor(vectorString: String) : this() {
-        val fieldStrings = vectorString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
-        fieldStrings.forEach { fieldString ->
-            val (field, value) = fieldString.trim().split('=')
-            when (field) {
-                "x" -> x = value.toInt()
-                "y" -> y = value.toInt()
-                "z" -> z = value.toInt()
-                else -> throw IllegalArgumentException("Unknown field: $field")
-            }
-        }
+    val size: Int = components.size
+
+    /**
+     * Returns the component at the given [index] in this vector.
+     */
+    operator fun get(index: Int): Int = components[index]
+
+    /**
+     * Updates the component at [index] to the given [value].
+     */
+    operator fun set(index: Int, value: Int) {
+        components[index] = value
     }
 
     /**
      * Returns a new vector by summing the corresponding components of this vector and [other].
+     *
+     * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
-    operator fun plus(other: MutableVector): MutableVector = MutableVector(x + other.x, y + other.y, z + other.z)
+    operator fun plus(other: MutableVector): MutableVector {
+        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        val componentSums = IntArray(size) { this[it] + other[it] }
+        return MutableVector(*componentSums)
+    }
 
     /**
      * Adds each component of [other] to the corresponding component of this vector.
+     *
+     * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
     fun add(other: MutableVector) {
-        x += other.x
-        y += other.y
-        z += other.z
+        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        for (i in 0 until size) {
+            this[i] += other[i]
+        }
     }
+
+    /**
+     * Returns a distinct copy of this vector, with the same component values.
+     */
+    fun copy(): MutableVector = MutableVector(*components)
 
     /**
      * Returns the sum of [transform] applied to each component of this vector.
      */
-    inline fun sumBy(transform: (component: Int) -> Int): Int = transform(x) + transform(y) + transform(z)
+    inline fun sumBy(transform: (component: Int) -> Int): Int {
+        var sum = 0
+        for (i in 0 until size) {
+            sum += transform(this[i])
+        }
+        return sum
+    }
 
-    override fun toString(): String = "<x=$x, y=$y, z=$z>"
+    /**
+     * Updates all components of this vector to match [newComponents].
+     *
+     * @throws IllegalArgumentException If this vector and [newComponents] are not the same size.
+     */
+    fun update(vararg newComponents: Int) {
+        require(size == newComponents.size) {
+            "The sizes of this vector ($size) and the new components (${newComponents.size}) must match."
+        }
+        for (i in 0 until size) {
+            this[i] = newComponents[i]
+        }
+    }
+
+    /**
+     * Updates the specified `(index, value)` component pairs of this vector to those given by [componentValues].
+     *
+     * @throws IllegalArgumentException If any key of [componentValues] is not a valid component index for this vector.
+     */
+    fun update(componentValues: Map<Int, Int>) {
+        componentValues.forEach { (index, value) ->
+            require(index in 0 until size) { "Each index must be in the range 0..${size - 1}: $index" }
+            this[index] = value
+        }
+    }
+
+    override fun equals(other: Any?): Boolean = other is MutableVector && components.contentEquals(other.components)
+
+    override fun hashCode(): Int = components.contentHashCode()
+
+    override fun toString(): String = "<${components.joinToString()}>"
+
+    companion object {
+        /**
+         * Returns a vector of the given [size] with all components set to 0.
+         */
+        fun ofZeros(size: Int): MutableVector {
+            require(size >= 0) { "Size must be non-negative: $size" }
+            return MutableVector(*IntArray(size))
+        }
+    }
 }
