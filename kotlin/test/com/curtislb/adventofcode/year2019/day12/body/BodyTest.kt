@@ -2,12 +2,24 @@ package com.curtislb.adventofcode.year2019.day12.body
 
 import com.curtislb.adventofcode.common.collection.MutableVector
 import org.junit.Test
+import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 /**
  * Tests [Body].
  */
 class BodyTest {
+    @Test(expected = IllegalArgumentException::class)
+    fun testConstructWithWrongPositionVectorSize() {
+        Body(MutableVector(0, 1))
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun testConstructWithWrongVelocityVectorSize() {
+        Body(velocity = MutableVector(-2, 3, 4, -5))
+    }
+
     @Test fun testConstructFromBodyString() {
         val body = Body("<x=3, y=-1, z=-7>")
         assertEquals(MutableVector(3, -1, -7), body.position)
@@ -85,6 +97,38 @@ class BodyTest {
         assertEquals(MutableVector(-1, 11, -13), body.velocity)
         assertEquals(MutableVector(16, 14, -2), bodyCopy.position)
         assertEquals(MutableVector(1, -9, 0), bodyCopy.velocity)
+    }
+
+    @Test fun testEquals() {
+        assertEquals(Body(), Body())
+        assertEquals(Body(MutableVector(29, -81, 39)), Body(MutableVector(29, -81, 39)))
+        assertEquals(Body(velocity = MutableVector(49, 79, 87)), Body(velocity = MutableVector(49, 79, 87)))
+        assertEquals(
+            Body(position = MutableVector(-8, 92, 99), velocity = MutableVector(-37, 40, -22)),
+            Body(position = MutableVector(-8, 92, 99), velocity = MutableVector(-37, 40, -22))
+        )
+
+        assertNotEquals(Body(), Body(MutableVector(0, 1, -1)))
+        assertNotEquals(Body(MutableVector(1, 2, 3)), Body(MutableVector(3, 2, 1)))
+        assertNotEquals(
+            Body(position = MutableVector(-87, 84, -70), velocity = MutableVector(-59, -22, 70)),
+            Body(position = MutableVector(-59, -22, 70), velocity = MutableVector(-87, 84, -70))
+        )
+    }
+
+    @Test fun testHashCode() {
+        val bodies = listOf(
+            Body(),
+            Body(MutableVector(73, -96, 34)),
+            Body(MutableVector(-75, -5, 7)),
+            Body(velocity = MutableVector(-70, -95, -82)),
+            Body(velocity = MutableVector(-17, -63, -80)),
+            Body(position = MutableVector(65, -76, 32), velocity = MutableVector(-41, -62, 35)),
+            Body(position = MutableVector(-66, -10, -93), velocity = MutableVector(-52, 24, 88))
+        )
+        val hashMap = HashMap<Body, Int>()
+        bodies.forEachIndexed { index, body -> hashMap[body] = index }
+        bodies.forEachIndexed { index, body -> assertEquals(index, hashMap[body]) }
     }
 
     @Test fun testToString() {
