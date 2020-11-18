@@ -30,6 +30,7 @@ package com.curtislb.adventofcode.year2019.day13.part1
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day13.game.Game
 import com.curtislb.adventofcode.year2019.day13.game.Tile
+import java.math.BigInteger
 import java.nio.file.Path
 
 /**
@@ -39,8 +40,8 @@ import java.nio.file.Path
  * @param tileType The type of tile to count occurrences of on the game board.
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 13), tileType: Tile = Tile.BLOCK): Int {
-    val game = Game(inputPath.toFile())
-    return game.board.findAll(tileType).size
+    val game = Game(inputPath.toFile()) { it[0] = BigInteger.TWO }
+    return game.findAllTiles(tileType).size
 }
 
 fun main() {

@@ -33,7 +33,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 13)): BigInteger {
-    val game = Game(inputPath.toFile())
+    val game = Game(inputPath.toFile()) { it[0] = BigInteger.TWO }
     return game.play(GreedyStrategy)
 }
 

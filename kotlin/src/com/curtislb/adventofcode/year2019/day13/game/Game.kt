@@ -10,12 +10,18 @@ import java.math.BigInteger
  * An interactive game, represented by a [Board] and powered by an [Intcode] computer.
  *
  * @param file A file containing the [Intcode] program that controls the game.
+ * @param init A function used to initialize the [Intcode] program before the game is played.
  */
-class Game(file: File) {
+class Game(file: File, private val init: (intcode: Intcode) -> Unit = {}) {
     /**
      * The board on which this game is being played.
      */
-    val board: Board = Board()
+    private val board: Board = Board()
+
+    /**
+     * The player's current score.
+     */
+    private var score: BigInteger = BigInteger.ZERO
 
     /**
      * The [Intcode] program that controls the game.
@@ -25,27 +31,24 @@ class Game(file: File) {
     init {
         var outputCounter = 0
         var tileX = 0
-        var tileNegativeY = 0
-        intcode = Intcode(file) { output ->
+        var tileY = 0
+        intcode = Intcode(file)
+        init(intcode)
+        intcode.onOutput = { output ->
             when (outputCounter) {
                 0 -> tileX = output.toInt()
-                1 -> tileNegativeY = output.toInt()
-                2 -> board[Point(tileX, -tileNegativeY)] = output
+                1 -> tileY = -output.toInt()
+                2 -> update(Point(tileX, tileY), output)
             }
             outputCounter = (outputCounter + 1) % 3
         }
-        intcode[0] = BigInteger.TWO
         intcode.run()
     }
 
     /**
-     * Restores the game to its starting state, immediately after initialization.
+     * Returns the positions of all tiles of the given [type] on the game board.
      */
-    fun reset() {
-        intcode.resetState()
-        intcode[0] = BigInteger.TWO
-        intcode.run()
-    }
+    fun findAllTiles(type: Tile): List<Point> = board.findAll(type)
 
     /**
      * Plays the game according to a given [strategy] and returns the player's final score.
@@ -55,6 +58,39 @@ class Game(file: File) {
             intcode.sendInput(strategy.nextMove(board))
             intcode.run()
         }
-        return board.score
+        return score
+    }
+
+    /**
+     * Restores the game to its starting state, immediately after initialization.
+     */
+    fun reset() {
+        intcode.resetState()
+        init(intcode)
+        intcode.run()
+    }
+
+    override fun toString(): String = "Score: $score\n$board"
+
+    /**
+     * Updates the tile at a given [position] on the board, or the player's score, to match [value].
+     *
+     * If [SCORE_POSITION] is given as an argument for [position], the player's score is updated to [value]. Any other
+     * [position] is interpreted as a point on the board, and the tile at that point is changed to the [Tile] type
+     * corresponding to [value].
+     */
+    private fun update(position: Point, value: BigInteger) {
+        if (position == SCORE_POSITION) {
+            score = value
+        } else {
+            board[position] = Tile.from(value)
+        }
+    }
+
+    companion object {
+        /**
+         * A meta-positional argument indicating that the player's score should be updated.
+         */
+        private val SCORE_POSITION = Point(-1, 0)
     }
 }

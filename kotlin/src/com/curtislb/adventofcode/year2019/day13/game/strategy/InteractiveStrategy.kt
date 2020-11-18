@@ -9,7 +9,7 @@ import java.math.BigInteger
 object InteractiveStrategy : Strategy {
     override fun nextMove(board: Board): BigInteger {
         println(board)
-        print("Input (-1, [0], 1): ")
+        print("Input (default = 0): ")
         val input = readLine()
         return if (input.isNullOrEmpty()) BigInteger.ZERO else BigInteger(input)
     }

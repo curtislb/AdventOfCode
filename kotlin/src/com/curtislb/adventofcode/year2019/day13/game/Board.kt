@@ -1,22 +1,15 @@
 package com.curtislb.adventofcode.year2019.day13.game
 
 import com.curtislb.adventofcode.common.grid.Point
-import java.math.BigInteger
 
 /**
  * The current state of the game board and associated information.
  */
 class Board {
     /**
-     * A map from each position on the grid to the tile at that location.
+     * A map from each board position to the tile at that location.
      */
     private val tiles: MutableMap<Point, Tile> = mutableMapOf()
-
-    /**
-     * The player's current score.
-     */
-    var score: BigInteger = BigInteger.ZERO
-        private set
 
     /**
      * The height of the board, in number of tiles.
@@ -33,33 +26,61 @@ class Board {
     /**
      * Returns the positions of all tiles of a given [type] on the board.
      */
-    fun findAll(type: Tile): List<Point> = tiles.filter { (_, tile) -> tile == type }.map { (point, _) -> point }
-
-    /**
-     * Returns the type of the tile at [position] on the board.
-     */
-    operator fun get(position: Point): Tile = tiles.getOrDefault(position, Tile.EMPTY)
-
-    /**
-     * Updates the type of the tile at a given [position] on the board.
-     */
-    operator fun set(position: Point, value: BigInteger) {
-        if (position.x < 0) {
-            score = value
+    fun findAll(type: Tile): List<Point> {
+        return if (type == Tile.EMPTY) {
+            // Find unset tiles on the board in addition to ones explicitly set to empty.
+            val points = mutableListOf<Point>()
+            for (x in 0 until width) {
+                for (y in 0 downTo -height + 1) {
+                    val point = Point(x, y)
+                    if (tiles.getOrDefault(point, Tile.EMPTY) == Tile.EMPTY) {
+                        points.add(point)
+                    }
+                }
+            }
+            points
         } else {
-            tiles[position] = Tile.from(value)
-            height = height.coerceAtLeast(-position.y + 1)
-            width = width.coerceAtLeast(position.x + 1)
+            tiles.filter { (_, tile) -> tile == type }.map { (point, _) -> point }
         }
     }
 
+    /**
+     * Returns the type of the [Tile] at a given [position] on the board.
+     *
+     * A valid board [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is 0 or negative.
+     *
+     * @throws IllegalArgumentException If [position] is invalid.
+     */
+    operator fun get(position: Point): Tile {
+        require(position.x >= 0) { "Position must have a non-negative x-coordinate: ${position.x}" }
+        require(position.y <= 0) { "Position must have a non-positive y-coordinate: ${position.y}" }
+        return tiles.getOrDefault(position, Tile.EMPTY)
+    }
+
+    /**
+     * Updates the tile at a given [position] on the board to match the given [type].
+     *
+     * A valid [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is 0 or negative.
+     *
+     * @throws IllegalArgumentException If [position] is invalid.
+     */
+    operator fun set(position: Point, type: Tile) {
+        require(position.x >= 0) { "Position must have a non-negative x-coordinate: ${position.x}" }
+        require(position.y <= 0) { "Position must have a non-positive y-coordinate: ${position.y}" }
+        tiles[position] = type
+        height = height.coerceAtLeast(-position.y + 1)
+        width = width.coerceAtLeast(position.x + 1)
+    }
+
     override fun toString(): String {
-        val stringBuilder = StringBuilder("Score: $score\n")
+        val stringBuilder = StringBuilder()
         for (row in 0 until height) {
             for (col in 0 until width) {
                 stringBuilder.append(tiles.getOrDefault(Point.fromMatrixCoordinates(row, col), Tile.EMPTY).symbol)
             }
-            stringBuilder.append('\n')
+            if (row < height - 1) {
+                stringBuilder.append('\n')
+            }
         }
         return stringBuilder.toString()
     }
