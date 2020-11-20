@@ -21,17 +21,16 @@ class Maze(file: File) {
      */
     private val grid: List<List<Space>>
 
-    /**
-     * A map from each label to the positions of spaces in the maze grid with that label.
-     */
-    private val labeledSpaces: Map<String, List<Point>>
-
     init {
         val charGrid = file.mapLines { it.trimEnd().toMutableList() }
         val spaceLabels = processLabels(charGrid)
         grid = createSpaceGrid(charGrid, spaceLabels)
-        labeledSpaces = findLabeledSpaces(grid)
     }
+
+    /**
+     * A map from each label to the positions of spaces in the maze grid with that label.
+     */
+    private val labeledSpaces: Map<String, List<Point>> = findLabeledSpaces(grid)
 
     /**
      * Returns the shortest distance through the maze from the space labeled [entranceLabel] to one labeled [exitLabel].
@@ -196,28 +195,28 @@ class Maze(file: File) {
                 }
             }
 
-            val compactGrid = mutableListOf<List<Space>>()
-            for (i in 2..(fullGrid.lastIndex - 2)) {
-                val fullRow = fullGrid[i]
-                val compactRow = fullRow.subList(2, fullRow.size).dropLastWhile { it == EmptySpace }
-                compactGrid.add(compactRow)
+            return mutableListOf<List<Space>>().apply {
+                for (i in 2..(fullGrid.lastIndex - 2)) {
+                    val fullRow = fullGrid[i]
+                    val compactRow = fullRow.subList(2, fullRow.size).dropLastWhile { it == EmptySpace }
+                    add(compactRow)
+                }
             }
-            return compactGrid
         }
 
         /**
          * Returns a map from each unique label in [grid] to the positions of all corresponding labeled spaces.
          */
         private fun findLabeledSpaces(grid: List<List<Space>>): Map<String, List<Point>> {
-            val labeledSpaces = mutableMapOf<String, MutableList<Point>>()
-            grid.forEachIndexed { i, row ->
-                row.forEachIndexed { j, space ->
-                    if (space is LabeledSpace) {
-                        labeledSpaces.getOrPut(space.label) { mutableListOf() }.add(Point.fromMatrixCoordinates(i, j))
+            return mutableMapOf<String, MutableList<Point>>().apply {
+                grid.forEachIndexed { i, row ->
+                    row.forEachIndexed { j, space ->
+                        if (space is LabeledSpace) {
+                            getOrPut(space.label) { mutableListOf() }.add(Point.fromMatrixCoordinates(i, j))
+                        }
                     }
                 }
             }
-            return labeledSpaces
         }
     }
 }

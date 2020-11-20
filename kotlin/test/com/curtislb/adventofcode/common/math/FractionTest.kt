@@ -101,32 +101,6 @@ class FractionTest {
         assertEquals(18476178760755L, fraction.denominator)
     }
 
-    @Test fun testUnaryMinus() {
-        var fraction = -Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(-1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(1, 2)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = -Fraction(-1, 2)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = -Fraction(4, 6)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-    }
-
     @Test fun testPlus() {
         var fraction = Fraction(0) + Fraction(0)
         assertEquals(0L, fraction.numerator)
@@ -217,6 +191,32 @@ class FractionTest {
         fraction = Fraction(7, 11) - Fraction(-25, 9)
         assertEquals(338L, fraction.numerator)
         assertEquals(99L, fraction.denominator)
+    }
+
+    @Test fun testUnaryMinus() {
+        var fraction = -Fraction(0)
+        assertEquals(0L, fraction.numerator)
+        assertEquals(1L, fraction.denominator)
+
+        fraction = -Fraction(1)
+        assertEquals(-1L, fraction.numerator)
+        assertEquals(1L, fraction.denominator)
+
+        fraction = -Fraction(-1)
+        assertEquals(1L, fraction.numerator)
+        assertEquals(1L, fraction.denominator)
+
+        fraction = -Fraction(1, 2)
+        assertEquals(-1L, fraction.numerator)
+        assertEquals(2L, fraction.denominator)
+
+        fraction = -Fraction(-1, 2)
+        assertEquals(1L, fraction.numerator)
+        assertEquals(2L, fraction.denominator)
+
+        fraction = -Fraction(4, 6)
+        assertEquals(-2L, fraction.numerator)
+        assertEquals(3L, fraction.denominator)
     }
 
     @Test fun testTimes() {

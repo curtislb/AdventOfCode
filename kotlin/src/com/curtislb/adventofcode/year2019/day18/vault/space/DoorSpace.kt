@@ -6,11 +6,11 @@ package com.curtislb.adventofcode.year2019.day18.vault.space
  * @throws IllegalArgumentException If [symbol] is not an uppercase letter.
  */
 class DoorSpace(override val symbol: Char) : Space {
-    override val isOccupiable: Boolean = true
-
     init {
         require(symbol.isUpperCase()) { "Symbol must be an uppercase letter: $symbol" }
     }
+
+    override val isOccupiable: Boolean = true
 
     /**
      * The symbol for the key that corresponds to this door.

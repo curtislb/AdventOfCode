@@ -14,20 +14,19 @@ import kotlin.math.abs
 class FastFftAlgorithm(
     private val baseSignal: List<Int>,
     private val repeatCount: Int = 1,
-    private val offset: Int = getMinimumOffset(baseSignal, repeatCount)
+    private val offset: Int = calculateMinOffset(baseSignal, repeatCount)
 ) {
-    /**
-     * A list of digits representing the portion of the transformed signal starting from [offset].
-     */
-    private var offsetSignal: MutableList<Int>
-
     init {
-        val minOffset = getMinimumOffset(baseSignal, repeatCount)
+        val minOffset = calculateMinOffset(baseSignal, repeatCount)
         if (offset >= minOffset) {
             "Offset ($offset) must be at least $minOffset for a ${baseSignal.size} x $repeatCount signal."
         }
-        offsetSignal = getRepeatedSignalFromOffset()
     }
+
+    /**
+     * A list of digits representing the portion of the transformed signal starting from [offset].
+     */
+    private var offsetSignal: MutableList<Int> = createRepeatedSignalFromOffset()
 
     /**
      * Transforms the relevant portion of the signal by applying the FFT transformation for a given number of [phases].
@@ -42,32 +41,34 @@ class FastFftAlgorithm(
     }
 
     /**
-     * Restores the relevant portion of the signal to its original state, immediately after initialization.
-     */
-    fun reset() {
-        offsetSignal = getRepeatedSignalFromOffset()
-    }
-
-    /**
      * Returns [length] digits of the transformed signal starting from [offset].
      */
     fun readFromOffset(length: Int): List<Int> = offsetSignal.subList(0, length)
 
     /**
+     * Restores the relevant portion of the signal to its original state, immediately after initialization.
+     */
+    fun reset() {
+        offsetSignal = createRepeatedSignalFromOffset()
+    }
+
+    /**
      * Returns the portion of the repeated signal starting from [offset].
      */
-    private fun getRepeatedSignalFromOffset(): MutableList<Int> {
-        val halfSignal = mutableListOf<Int>()
-        for (i in offset until baseSignal.size * repeatCount) {
-            halfSignal.add(baseSignal[i % baseSignal.size])
+    private fun createRepeatedSignalFromOffset(): MutableList<Int> {
+        return mutableListOf<Int>().apply {
+            for (i in offset until baseSignal.size * repeatCount) {
+                add(baseSignal[i % baseSignal.size])
+            }
         }
-        return halfSignal
     }
 
     companion object {
         /**
          * Returns the minimum allowable offset for a given [baseSignal] repeated [repeatCount] times.
          */
-        private fun getMinimumOffset(baseSignal: List<Int>, repeatCount: Int): Int = (baseSignal.size * repeatCount) / 2
+        private fun calculateMinOffset(baseSignal: List<Int>, repeatCount: Int): Int {
+            return (baseSignal.size * repeatCount) / 2
+        }
     }
 }

@@ -60,14 +60,14 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     }
 
     /**
-     * Returns a map containing all `(key, count)` entries in this counter for which `count` is nonzero.
-     */
-    fun toMap(): Map<T, Long> = counts.toMap()
-
-    /**
      * Removes all items with negative counts from this counter, resetting their effective counts to 0.
      */
     fun clearNegativeCounts() {
         counts.entries.filter { (_, count) -> count < 0L }.forEach { (key, _) -> counts.remove(key) }
     }
+
+    /**
+     * Returns a map containing all `(key, count)` entries in this counter for which `count` is nonzero.
+     */
+    fun toMap(): Map<T, Long> = counts.toMap()
 }

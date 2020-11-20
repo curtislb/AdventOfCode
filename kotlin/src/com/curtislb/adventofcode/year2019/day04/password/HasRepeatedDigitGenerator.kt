@@ -13,14 +13,14 @@ class HasRepeatedDigitGenerator private constructor(
     private val currentDigit: Int?,
     private val hasRepeatedDigit: Boolean
 ) : PasswordGenerator() {
+    override val isValid: Boolean = hasRepeatedDigit
+
+    override val nextDigits: Set<Int> = DECIMAL_DIGITS
+
     /**
      * A generator that produces numeric passwords in which at least one digit appears two or more times in sequence.
      */
     constructor() : this(currentDigit = null, hasRepeatedDigit = false)
-
-    override val isValid: Boolean = hasRepeatedDigit
-
-    override val nextDigits: Set<Int> = DECIMAL_DIGITS
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return HasRepeatedDigitGenerator(digit, hasRepeatedDigit || digit == currentDigit)

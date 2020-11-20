@@ -62,7 +62,7 @@ data class Point(val x: Int, val y: Int) {
         /**
          * A point representing the 2D origin `(0, 0)`.
          */
-        val ORIGIN: Point = Point(0, 0)
+        val ORIGIN = Point(0, 0)
 
         /**
          * Returns the point corresponding to the given ([rowIndex], [colIndex]) matrix coordinates.

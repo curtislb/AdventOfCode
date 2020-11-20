@@ -1,6 +1,7 @@
 package com.curtislb.adventofcode.year2019.day14.chemistry
 
 import com.curtislb.adventofcode.common.collection.Counter
+import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.math.Fraction
 import java.io.File
 
@@ -11,29 +12,27 @@ import java.io.File
  *
  * @throws IllegalArgumentException If any material can be produced by more than one reaction.
  */
-class Nanofactory(file: File) {
+class
+Nanofactory(file: File) {
     /**
      * A map from each material that this factory can produce to the reaction that produces it.
      */
-    private val reactions: Map<String, Reaction>
-
-    init {
-        val reactionsBuilder = mutableMapOf<String, Reaction>()
+    private val reactions: Map<String, Reaction> = mutableMapOf<String, Reaction>().apply {
         file.forEachLine { line ->
             val reaction = Reaction.from(line)
             val material = reaction.product.material
-            require(material !in reactionsBuilder) { "Material is produced by two or more reactions: $material" }
-            reactionsBuilder[material] = reaction
+            require(material !in this) { "Material is produced by two or more reactions: $material" }
+            this[material] = reaction
         }
-        reactions = reactionsBuilder
     }
 
     /**
      * Returns a map representing the amount of [rawMaterials] needed to create given quantities of [products], or
      * `null` if no amount of [rawMaterials] can be used to create [products].
      */
-    fun getRequiredMaterials(rawMaterials: Set<String>, products: Map<String, Long>): Map<String, Long>? {
-        val requiredMaterials = Counter(products)
+    fun findRequiredMaterials(rawMaterials: Set<String>, products: List<MaterialAmount>): List<MaterialAmount>? {
+        // Work backwards from the desired products to determine the amount of raw materials needed.
+        val requiredMaterials = Counter(products.mapToMap { it.material to it.amount })
         while (requiredMaterials.keysWithPositiveCount != rawMaterials) {
             val (requiredMaterial, requiredAmount) = requiredMaterials.entriesWithPositiveCount.find { (material, _) ->
                 material !in rawMaterials
@@ -43,8 +42,12 @@ class Nanofactory(file: File) {
             reaction.reactants.forEach { (material, amount) -> requiredMaterials[material] += coefficient * amount }
             requiredMaterials[reaction.product.material] -= coefficient * reaction.product.amount
         }
-        requiredMaterials.clearNegativeCounts()
-        return if (requiredMaterials.keysWithNonzeroCount == rawMaterials) requiredMaterials.toMap() else null
+
+        return if (requiredMaterials.keysWithPositiveCount == rawMaterials) {
+            requiredMaterials.entriesWithPositiveCount.map { (material, amount) -> MaterialAmount(material, amount) }
+        } else {
+            null
+        }
     }
 
     override fun toString(): String = reactions.values.joinToString(separator = "\n")

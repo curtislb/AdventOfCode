@@ -4,7 +4,7 @@ import java.util.Objects
 import kotlin.math.abs
 
 /**
- * A unique representation of a rational number, whose [numerator] and [denominator] have been reduced to lowest terms.
+ * A unique representation of a rational number, with [numerator] and [denominator] reduced to lowest terms.
  *
  * @throws IllegalArgumentException If [denominator] is 0.
  */
@@ -37,17 +37,11 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
     }
 
     /**
-     * A unique representation of a rational number, whose [numerator] and [denominator] have been reduced to lowest
-     * terms.
+     * A unique representation of a rational number, with [numerator] and [denominator] reduced to lowest terms.
      *
      * @throws IllegalArgumentException If [denominator] is 0.
      */
     constructor(numerator: Int, denominator: Int = 1) : this(numerator.toLong(), denominator.toLong())
-
-    /**
-     * Returns the fraction that is the negative complement of this one.
-     */
-    operator fun unaryMinus(): Fraction = Fraction(-numerator, denominator)
 
     /**
      * Returns the sum of this and [other] as a fraction.
@@ -61,6 +55,11 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
      * Returns the difference between this and [other] as a fraction.
      */
     operator fun minus(other: Fraction) = this + (-other)
+
+    /**
+     * Returns the fraction that is the negative complement of this one.
+     */
+    operator fun unaryMinus(): Fraction = Fraction(-numerator, denominator)
 
     /**
      * Returns the product of this and [other] as a fraction.

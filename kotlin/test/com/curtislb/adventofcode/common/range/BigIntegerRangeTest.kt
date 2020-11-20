@@ -9,6 +9,19 @@ import kotlin.test.assertNotEquals
  * Tests [BigIntegerRange].
  */
 class BigIntegerRangeTest {
+    @Test fun testSize() {
+        assertEquals(BigInteger.ZERO, BigIntegerRange.EMPTY.size)
+        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).size)
+        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).size)
+        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO).size)
+        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ONE, BigInteger.ONE).size)
+        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ZERO, BigInteger.ONE).size)
+        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ONE, BigInteger.TWO).size)
+        assertEquals(BigInteger("9"), BigIntegerRange(BigInteger.TWO, BigInteger.TEN).size)
+        assertEquals(BigInteger("18"), BigIntegerRange(BigInteger("-5"), BigInteger("12")).size)
+        assertEquals(BigInteger("1420198"), BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size)
+    }
+
     @Test fun testConstructFromIntRange() {
         var range = BigIntegerRange(0..0)
         assertEquals(BigInteger.ZERO, range.start)
@@ -43,19 +56,6 @@ class BigIntegerRangeTest {
         range = BigIntegerRange(1L..100L)
         assertEquals(BigInteger.ONE, range.start)
         assertEquals(BigInteger("100"), range.endInclusive)
-    }
-
-    @Test fun testSize() {
-        assertEquals(BigInteger.ZERO, BigIntegerRange.EMPTY.size)
-        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ONE, BigInteger.ONE).size)
-        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ZERO, BigInteger.ONE).size)
-        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ONE, BigInteger.TWO).size)
-        assertEquals(BigInteger("9"), BigIntegerRange(BigInteger.TWO, BigInteger.TEN).size)
-        assertEquals(BigInteger("18"), BigIntegerRange(BigInteger("-5"), BigInteger("12")).size)
-        assertEquals(BigInteger("1420198"), BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size)
     }
 
     @Test fun testIterator() {

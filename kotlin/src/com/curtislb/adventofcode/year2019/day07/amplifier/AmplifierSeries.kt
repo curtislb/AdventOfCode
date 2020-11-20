@@ -14,16 +14,16 @@ import java.math.BigInteger
  * @throws IllegalArgumentException If [count] is less than 1.
  */
 class AmplifierSeries(file: File, count: Int) {
+    init {
+        require(count > 0) { "Count must be at least 1: $count" }
+    }
+
     /**
      * An array containing the Intcode programs for all amplifiers in order.
      */
-    private val amplifiers: Array<Intcode>
+    private val amplifiers: Array<Intcode> = Array(count) { Intcode(file.readText().trim()) }
 
     init {
-        require(count > 0) { "Count must be at least 1: $count" }
-
-        val programString = file.readText().trim()
-        amplifiers = Array(count) { Intcode(programString) }
         for (i in 0 until amplifiers.lastIndex) {
             amplifiers[i].onOutput = { amplifiers[i + 1].sendInput(it) }
         }
@@ -109,7 +109,7 @@ class AmplifierSeries(file: File, count: Int) {
     }
 
     /**
-     * Restores all amplifiers in this series to their original states, immediately following initialization.
+     * Restores all amplifiers in this series to their original states, immediately after initialization.
      */
     private fun resetAmplifiers() {
         amplifiers.forEach { it.resetState() }

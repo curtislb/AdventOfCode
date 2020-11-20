@@ -50,7 +50,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 3)): Int? {
     val (wireA, wireB) = inputPath.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
-    val (intersection, pathLength) = wireA.findShortestPathIntersectionWith(wireB)
+    val (intersection, pathLength) = wireA.findShortestPathIntersection(wireB)
     return if (intersection != null) pathLength else null
 }
 

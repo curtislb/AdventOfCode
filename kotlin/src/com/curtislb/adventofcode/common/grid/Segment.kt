@@ -10,6 +10,10 @@ package com.curtislb.adventofcode.common.grid
  * @throws IllegalArgumentException If [length] is negative.
  */
 data class Segment(val start: Point, val direction: Direction, val length: Int) {
+    init {
+        require(length >= 0) { "Length must be non-negative: $length" }
+    }
+
     /**
      * The end point of this segment.
      */
@@ -19,10 +23,6 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
      * Whether this segment is horizontal, as opposed to vertical.
      */
     val isHorizontal: Boolean get() = direction == Direction.RIGHT || direction == Direction.LEFT
-
-    init {
-        require(length >= 0) { "Length must be non-negative: $length" }
-    }
 
     /**
      * Returns `true` if this segment and [other] are perpendicular, or `false` otherwise.

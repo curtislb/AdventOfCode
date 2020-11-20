@@ -15,18 +15,13 @@ class NBodySystem(file: File) {
     /**
      * The current states (positions and velocities) of all bodies in this system.
      */
-    var bodies: List<Body>
+    var bodies: List<Body> = file.mapLines { Body(it) }
         private set
 
     /**
      * The initial states (positions and velocities) of all bodies in this system.
      */
-    private val initialStates: List<Body>
-
-    init {
-        bodies = file.mapLines { Body(it) }
-        initialStates = bodies.deepCopy { it.copy() }
-    }
+    private val initialStates: List<Body> = bodies.deepCopy { it.copy() }
 
     /**
      * The current total energy (potential and kinetic) of this system.

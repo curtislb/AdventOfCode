@@ -20,18 +20,6 @@ interface Shuffle {
 
     companion object {
         /**
-         * Reverses a series of [shuffleSteps] and returns the original position of the card currently at [position],
-         * given a [deckSize].
-         */
-        fun reverse(shuffleSteps: List<Shuffle>, position: BigInteger, deckSize: BigInteger): BigInteger {
-            var prevPosition = position
-            for (i in shuffleSteps.indices.reversed()) {
-                prevPosition = shuffleSteps[i].applyReverse(prevPosition, deckSize)
-            }
-            return prevPosition
-        }
-
-        /**
          * Returns the shuffle corresponding to [shuffleString].
          *
          * @throws IllegalArgumentException If [shuffleString] has no corresponding shuffle.
@@ -50,5 +38,17 @@ interface Shuffle {
          * Returns the integer parameter of the shuffle corresponding to [shuffleString].
          */
         private fun extractParameter(shuffleString: String): BigInteger = shuffleString.split(' ').last().toBigInteger()
+
+        /**
+         * Reverses a series of [shuffleSteps] and returns the original position of the card currently at [position],
+         * given a [deckSize].
+         */
+        fun reverse(shuffleSteps: List<Shuffle>, position: BigInteger, deckSize: BigInteger): BigInteger {
+            var prevPosition = position
+            for (i in shuffleSteps.indices.reversed()) {
+                prevPosition = shuffleSteps[i].applyReverse(prevPosition, deckSize)
+            }
+            return prevPosition
+        }
     }
 }

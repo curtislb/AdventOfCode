@@ -11,6 +11,11 @@ class BigIntegerRange(
     override val endInclusive: BigInteger
 ) : ClosedRange<BigInteger>, Iterable<BigInteger> {
     /**
+     * The number of integer values that are within this range.
+     */
+    val size: BigInteger get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE
+
+    /**
      * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
      *
      * @param intRange A range of values of type [Int] from which to create this range.
@@ -23,11 +28,6 @@ class BigIntegerRange(
      * @param longRange A range of values of type [Long] from which to create this range.
      */
     constructor(longRange: LongRange) : this(longRange.first.toBigInteger(), longRange.last.toBigInteger())
-
-    /**
-     * The number of integer values that are within this range.
-     */
-    val size: BigInteger get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE
 
     override fun iterator(): Iterator<BigInteger> = object : Iterator<BigInteger> {
         private var current: BigInteger = start
@@ -50,6 +50,6 @@ class BigIntegerRange(
         /**
          * An empty range of values of type [BigInteger].
          */
-        val EMPTY: BigIntegerRange = BigIntegerRange(BigInteger.ONE, BigInteger.ZERO)
+        val EMPTY = BigIntegerRange(BigInteger.ONE, BigInteger.ZERO)
     }
 }

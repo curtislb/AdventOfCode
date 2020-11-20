@@ -12,37 +12,16 @@ class Board {
     private val tiles: MutableMap<Point, Tile> = mutableMapOf()
 
     /**
-     * The height of the board, in number of tiles.
-     */
-    var height: Int = 0
-        private set
-
-    /**
      * The width of the board, in number of tiles.
      */
     var width: Int = 0
         private set
 
     /**
-     * Returns the positions of all tiles of a given [type] on the board.
+     * The height of the board, in number of tiles.
      */
-    fun findAll(type: Tile): List<Point> {
-        return if (type == Tile.EMPTY) {
-            // Find unset tiles on the board in addition to ones explicitly set to empty.
-            val points = mutableListOf<Point>()
-            for (x in 0 until width) {
-                for (y in 0 downTo -height + 1) {
-                    val point = Point(x, y)
-                    if (tiles.getOrDefault(point, Tile.EMPTY) == Tile.EMPTY) {
-                        points.add(point)
-                    }
-                }
-            }
-            points
-        } else {
-            tiles.filter { (_, tile) -> tile == type }.map { (point, _) -> point }
-        }
-    }
+    var height: Int = 0
+        private set
 
     /**
      * Returns the type of the [Tile] at a given [position] on the board.
@@ -70,6 +49,27 @@ class Board {
         tiles[position] = type
         height = height.coerceAtLeast(-position.y + 1)
         width = width.coerceAtLeast(position.x + 1)
+    }
+
+    /**
+     * Returns the positions of all tiles of a given [type] on the board.
+     */
+    fun findAll(type: Tile): List<Point> {
+        return if (type == Tile.EMPTY) {
+            // Find unset tiles on the board in addition to ones explicitly set to empty.
+            mutableListOf<Point>().apply {
+                for (x in 0 until width) {
+                    for (y in 0 downTo -height + 1) {
+                        val point = Point(x, y)
+                        if (tiles.getOrDefault(point, Tile.EMPTY) == Tile.EMPTY) {
+                            add(point)
+                        }
+                    }
+                }
+            }
+        } else {
+            tiles.filter { (_, tile) -> tile == type }.map { (point, _) -> point }
+        }
     }
 
     override fun toString(): String {

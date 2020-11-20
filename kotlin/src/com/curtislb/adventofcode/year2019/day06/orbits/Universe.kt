@@ -54,7 +54,7 @@ class Universe() {
     }
 
     /**
-     * Recursive helper method for [countOrbits].
+     * Recursive helper function for [countOrbits].
      */
     private fun countOrbitsInternal(root: Planet?, depth: Int): Int {
         return if (root == null) 0 else depth + root.children.sumBy { countOrbitsInternal(it, depth + 1) }
@@ -79,7 +79,7 @@ class Universe() {
         var planetA = planets[start]
         var planetB = planets[target]
         var stepCount = 0
-        val visited: MutableMap<String, Int> = mutableMapOf()
+        val visited = mutableMapOf<String, Int>()
         while (planetA != null || planetB != null) {
             stepCount++
 

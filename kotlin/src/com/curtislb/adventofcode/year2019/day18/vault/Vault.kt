@@ -18,40 +18,36 @@ class Vault(file: File) {
     /**
      * A matrix representing the space at each position in the vault.
      */
-    private val grid: List<List<Space>>
-
-    init {
-        grid = file.mapLines { line -> line.trim().map { char -> Space.from(char) } }
-    }
+    private val grid: List<List<Space>> = file.mapLines { line -> line.trim().map { char -> Space.from(char) } }
 
     /**
      * All positions in this vault that contain an [EntranceSpace].
      */
     val entranceLocations: Set<Point> by lazy {
-        val entrancesBuilder = mutableSetOf<Point>()
-        for (i in grid.indices) {
-            for (j in grid[i].indices) {
-                if (grid[i][j] == EntranceSpace) {
-                    entrancesBuilder.add(Point.fromMatrixCoordinates(i, j))
+        mutableSetOf<Point>().apply {
+            for (i in grid.indices) {
+                for (j in grid[i].indices) {
+                    if (grid[i][j] == EntranceSpace) {
+                        add(Point.fromMatrixCoordinates(i, j))
+                    }
                 }
             }
         }
-        entrancesBuilder
     }
 
     /**
      * A map from each key symbol to the position where the corresponding [KeySpace] is located.
      */
     val keyLocations: Map<Char, Point> by lazy {
-        val keyLocationsBuilder = mutableMapOf<Char, Point>()
-        grid.forEachIndexed { i, row ->
-            row.forEachIndexed { j, space ->
-                if (space is KeySpace) {
-                    keyLocationsBuilder[space.symbol] = Point.fromMatrixCoordinates(i, j)
+        mutableMapOf<Char, Point>().apply {
+            grid.forEachIndexed { i, row ->
+                row.forEachIndexed { j, space ->
+                    if (space is KeySpace) {
+                        this[space.symbol] = Point.fromMatrixCoordinates(i, j)
+                    }
                 }
             }
         }
-        keyLocationsBuilder
     }
 
     /**

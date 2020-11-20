@@ -52,13 +52,6 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
     }
 
     /**
-     * Restores the droid to its starting state, immediately after initialization.
-     */
-    fun reset() {
-        ascii.resetState()
-    }
-
-    /**
      * Sends a single command to the droid and waits for it to respond.
      */
     fun sendCommand(command: Command) {
@@ -67,5 +60,12 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
         }
         ascii.sendInput(command.toString())
         ascii.run()
+    }
+
+    /**
+     * Restores the droid to its starting state, immediately after initialization.
+     */
+    fun reset() {
+        ascii.resetState()
     }
 }

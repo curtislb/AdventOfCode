@@ -2,6 +2,7 @@ package com.curtislb.adventofcode.year2019.day10.asteroid
 
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.Ray
+import com.curtislb.adventofcode.common.io.forEachLineIndexed
 import java.io.File
 
 /**
@@ -14,18 +15,12 @@ class AsteroidField(file: File) {
     /**
      * A list of all grid locations that contain asteroids.
      */
-    private var asteroids: MutableList<Point>
-
-    init {
-        asteroids = mutableListOf<Point>().apply {
-            var rowIndex = 0
-            file.forEachLine { line ->
-                line.forEachIndexed { colIndex, char ->
-                    if (char == '#') {
-                        add(Point.fromMatrixCoordinates(rowIndex, colIndex))
-                    }
+    private var asteroids: MutableList<Point> = mutableListOf<Point>().apply {
+        file.forEachLineIndexed { rowIndex, line ->
+            line.forEachIndexed { colIndex, char ->
+                if (char == '#') {
+                    add(Point.fromMatrixCoordinates(rowIndex, colIndex))
                 }
-                rowIndex++
             }
         }
     }
@@ -108,10 +103,11 @@ class AsteroidField(file: File) {
      * obstructed by other asteroids. Asteroids located at [source] are not considered to be visible.
      */
     private fun countVisibleAsteroids(source: Point): Int {
-        val asteroidRays = mutableSetOf<Ray>()
-        asteroids.forEach { asteroid ->
-            if (asteroid != source) {
-                asteroidRays.add(Ray(source, asteroid))
+        val asteroidRays = mutableSetOf<Ray>().apply {
+            asteroids.forEach { asteroid ->
+                if (asteroid != source) {
+                    add(Ray(source, asteroid))
+                }
             }
         }
         return asteroidRays.size
@@ -124,14 +120,15 @@ class AsteroidField(file: File) {
      * obstructed by other asteroids. An asteroid located at [source] is not considered to be visible.
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
-        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>()
-        asteroids.forEach { asteroid ->
-            if (asteroid != source) {
-                val ray = Ray(source, asteroid)
-                val oldSquaredDistance = closestAsteroids[ray]?.second ?: Int.MAX_VALUE
-                val newSquaredDistance = source.squaredDistance(asteroid)
-                if (newSquaredDistance < oldSquaredDistance) {
-                    closestAsteroids[ray] = Pair(asteroid, newSquaredDistance)
+        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>().apply {
+            asteroids.forEach { asteroid ->
+                if (asteroid != source) {
+                    val ray = Ray(source, asteroid)
+                    val oldSquaredDistance = this[ray]?.second ?: Int.MAX_VALUE
+                    val newSquaredDistance = source.squaredDistance(asteroid)
+                    if (newSquaredDistance < oldSquaredDistance) {
+                        this[ray] = Pair(asteroid, newSquaredDistance)
+                    }
                 }
             }
         }

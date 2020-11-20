@@ -42,7 +42,7 @@ class Wire(wireString: String) {
      * @return A pair containing the nearest intersection point and its Manhattan distance from the origin. If this wire
      *  and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
      */
-    fun findNearestIntersectionWith(other: Wire): Pair<Point?, Int> {
+    fun findNearestIntersection(other: Wire): Pair<Point?, Int> {
         var nearestIntersection: Point? = null
         var nearestDistance = Int.MAX_VALUE
         segments.forEachIndexed { i, segment ->
@@ -74,7 +74,7 @@ class Wire(wireString: String) {
      * @return A pair containing the shortest-path intersection point and its total distance along both wires. If this
      *  wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
      */
-    fun findShortestPathIntersectionWith(other: Wire): Pair<Point?, Int> {
+    fun findShortestPathIntersection(other: Wire): Pair<Point?, Int> {
         var shortestPathIntersection: Point? = null
         var shortestPathLength = Int.MAX_VALUE
         var thisPathLength = 0

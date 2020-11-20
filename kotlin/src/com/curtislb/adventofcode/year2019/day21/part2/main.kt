@@ -44,22 +44,21 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 21), maxInstructions: Int = 15): BigInteger? {
     val droid = SpringDroid(inputPath.toFile(), maxInstructions)
-    return droid.runProgram(
-        SpringScript.builder(extendedMode = true)
-            .not(A, T)
-            .or(T, J)
-            .not(B, T)
-            .or(T, J)
-            .not(C, T)
-            .or(T, J)
-            .and(D, J)
-            .not(F, T)
-            .and(F, T)
-            .or(E, T)
-            .or(H, T)
-            .and(T, J)
-            .build()
-    )
+    val script = SpringScript.create(extendedMode = true) {
+        not(A, T)
+        or(T, J)
+        not(B, T)
+        or(T, J)
+        not(C, T)
+        or(T, J)
+        and(D, J)
+        not(F, T)
+        and(F, T)
+        or(E, T)
+        or(H, T)
+        and(T, J)
+    }
+    return droid.runProgram(script)
 }
 
 fun main() = when (val solution = solve()) {

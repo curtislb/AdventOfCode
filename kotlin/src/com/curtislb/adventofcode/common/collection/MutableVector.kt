@@ -24,45 +24,6 @@ class MutableVector(private vararg val components: Int) {
     }
 
     /**
-     * Returns a new vector by summing the corresponding components of this vector and [other].
-     *
-     * @throws IllegalArgumentException If this vector and [other] are not the same size.
-     */
-    operator fun plus(other: MutableVector): MutableVector {
-        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
-        val componentSums = IntArray(size) { this[it] + other[it] }
-        return MutableVector(*componentSums)
-    }
-
-    /**
-     * Adds each component of [other] to the corresponding component of this vector.
-     *
-     * @throws IllegalArgumentException If this vector and [other] are not the same size.
-     */
-    fun add(other: MutableVector) {
-        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
-        for (i in 0 until size) {
-            this[i] += other[i]
-        }
-    }
-
-    /**
-     * Returns a distinct copy of this vector, with the same component values.
-     */
-    fun copy(): MutableVector = MutableVector(*components)
-
-    /**
-     * Returns the sum of [transform] applied to each component of this vector.
-     */
-    inline fun sumBy(transform: (component: Int) -> Int): Int {
-        var sum = 0
-        for (i in 0 until size) {
-            sum += transform(this[i])
-        }
-        return sum
-    }
-
-    /**
      * Updates all components of this vector to match [newComponents].
      *
      * @throws IllegalArgumentException If this vector and [newComponents] are not the same size.
@@ -87,6 +48,45 @@ class MutableVector(private vararg val components: Int) {
             this[index] = value
         }
     }
+
+    /**
+     * Adds each component of [other] to the corresponding component of this vector.
+     *
+     * @throws IllegalArgumentException If this vector and [other] are not the same size.
+     */
+    fun add(other: MutableVector) {
+        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        for (i in 0 until size) {
+            this[i] += other[i]
+        }
+    }
+
+    /**
+     * Returns a new vector by summing the corresponding components of this vector and [other].
+     *
+     * @throws IllegalArgumentException If this vector and [other] are not the same size.
+     */
+    operator fun plus(other: MutableVector): MutableVector {
+        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        val componentSums = IntArray(size) { this[it] + other[it] }
+        return MutableVector(*componentSums)
+    }
+
+    /**
+     * Returns the sum of [transform] applied to each component of this vector.
+     */
+    inline fun sumBy(transform: (component: Int) -> Int): Int {
+        var sum = 0
+        for (i in 0 until size) {
+            sum += transform(this[i])
+        }
+        return sum
+    }
+
+    /**
+     * Returns a distinct copy of this vector, with the same component values.
+     */
+    fun copy(): MutableVector = MutableVector(*components)
 
     override fun equals(other: Any?): Boolean = other is MutableVector && components.contentEquals(other.components)
 

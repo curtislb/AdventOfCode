@@ -42,9 +42,9 @@ class RecursiveBugGrid(file: File) {
             val minDepth = -upperLevels.size
             val maxDepth = lowerLevels.size
             for (index in minDepth..maxDepth) {
-                currLevel = getLevel(index)
-                nextLevel = if (index < maxDepth) getLevel(index + 1) else null
-                setLevel(index, currLevel.next(prevLevel, nextLevel))
+                currLevel = levelAt(index)
+                nextLevel = if (index < maxDepth) levelAt(index + 1) else null
+                updateLevel(index, currLevel.next(prevLevel, nextLevel))
                 prevLevel = currLevel
             }
 
@@ -55,16 +55,9 @@ class RecursiveBugGrid(file: File) {
     }
 
     /**
-     * Returns the total number of bugs in all levels of the recursive grid.
-     */
-    fun countBugs(): Int {
-        return baseGrid.countBugs() + upperLevels.sumBy { it.countBugs() } + lowerLevels.sumBy { it.countBugs() }
-    }
-
-    /**
      * Returns the layout of the level at a given [depth] in the recursive grid.
      */
-    private fun getLevel(depth: Int): BugGrid = when {
+    private fun levelAt(depth: Int): BugGrid = when {
         depth == 0 -> baseGrid
         depth < 0 -> upperLevels[-depth - 1]
         else -> lowerLevels[depth - 1]
@@ -73,11 +66,18 @@ class RecursiveBugGrid(file: File) {
     /**
      * Updates the layout of the level at a given [depth] in the recursive grid to match [grid].
      */
-    private fun setLevel(depth: Int, grid: BugGrid) {
+    private fun updateLevel(depth: Int, grid: BugGrid) {
         when {
             depth == 0 -> baseGrid = grid
             depth < 0 -> upperLevels[-depth - 1] = grid
             else -> lowerLevels[depth - 1] = grid
         }
+    }
+
+    /**
+     * Returns the total number of bugs in all levels of the recursive grid.
+     */
+    fun countBugs(): Int {
+        return baseGrid.countBugs() + upperLevels.sumBy { it.countBugs() } + lowerLevels.sumBy { it.countBugs() }
     }
 }

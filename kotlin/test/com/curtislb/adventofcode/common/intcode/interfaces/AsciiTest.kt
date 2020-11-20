@@ -59,6 +59,23 @@ class AsciiTest {
         assertEquals(listOf(19, 112), printedCodes.toList())
     }
 
+    @Test fun testSendInput() {
+        val ascii = Ascii("3,13,3,14,3,15,4,13,4,14,4,15,99") { output, isAscii ->
+            if (isAscii) {
+                asciiOutputs.add(output)
+            } else {
+                nonAsciiOutputs.add(output)
+            }
+        }
+        assertTrue(asciiOutputs.isEmpty())
+        assertTrue(nonAsciiOutputs.isEmpty())
+
+        ascii.sendInput("Hi")
+        ascii.run()
+        assertEquals(listOf(BigInteger("72"), BigInteger("105"), BigInteger.TEN), asciiOutputs.toList())
+        assertTrue(nonAsciiOutputs.isEmpty())
+    }
+
     @Test fun testRunWithoutShowingAsciiOutput() {
         val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105") { output, isAscii ->
             if (isAscii) {
@@ -178,23 +195,6 @@ class AsciiTest {
         assertTrue(printedCodes.isEmpty())
         assertFalse(ascii.isPaused)
         assertTrue(ascii.isDone)
-    }
-
-    @Test fun testSendInput() {
-        val ascii = Ascii("3,13,3,14,3,15,4,13,4,14,4,15,99") { output, isAscii ->
-            if (isAscii) {
-                asciiOutputs.add(output)
-            } else {
-                nonAsciiOutputs.add(output)
-            }
-        }
-        assertTrue(asciiOutputs.isEmpty())
-        assertTrue(nonAsciiOutputs.isEmpty())
-
-        ascii.sendInput("Hi")
-        ascii.run()
-        assertEquals(listOf(BigInteger("72"), BigInteger("105"), BigInteger.TEN), asciiOutputs.toList())
-        assertTrue(nonAsciiOutputs.isEmpty())
     }
 
     @Test fun testNewlineCode() {

@@ -27,9 +27,14 @@ class Droid(file: File) {
         private set
 
     /**
-     * The [Intcode] program that controls the repair droid.
+     * Whether the repair droid's current position is the location of the oxygen system.
      */
-    private val intcode: Intcode
+    val isAtGoal: Boolean get() = orientation.position == goalPosition
+
+    /**
+     * The most recent space identified by the repair droid.
+     */
+    private var lastSpace: Space = Space.OPEN
 
     /**
      * A map from each position that the repair droid has identified to the space at that position.
@@ -37,21 +42,25 @@ class Droid(file: File) {
     private val knownSpaces: MutableMap<Point, Space> = mutableMapOf(Point.ORIGIN to Space.OPEN)
 
     /**
-     * The most recent space identified by the repair droid.
+     * The [Intcode] program that controls the repair droid.
      */
-    private var lastSpace: Space = Space.OPEN
-
-    init {
-        intcode = Intcode(file) { output ->
-            lastSpace = Space.from(output)
-            knownSpaces[orientation.moveForward().position] = lastSpace
-        }
+    private val intcode: Intcode = Intcode(file) { output ->
+        lastSpace = Space.from(output)
+        knownSpaces[orientation.moveForward().position] = lastSpace
     }
 
     /**
-     * Whether the repair droid's current position is the location of the oxygen system.
+     * Returns the space at [position] on the grid if it has been identified by the repair droid, or [Space.UNKNOWN]
+     * otherwise.
      */
-    val isAtGoal: Boolean get() = orientation.position == goalPosition
+    fun spaceAt(position: Point): Space = knownSpaces.getOrDefault(position, Space.UNKNOWN)
+
+    /**
+     * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
+     */
+    fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
+        return position.neighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
+    }
 
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored.
@@ -66,19 +75,6 @@ class Droid(file: File) {
         return constructGrid(knownSpaces.keys) { point ->
             if (point == orientation.position) Space.DROID else spaceAt(point)
         }
-    }
-
-    /**
-     * Returns the space at [position] on the grid if it has been identified by the repair droid, or [Space.UNKNOWN]
-     * otherwise.
-     */
-    fun spaceAt(position: Point): Space = knownSpaces.getOrDefault(position, Space.UNKNOWN)
-
-    /**
-     * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
-     */
-    fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
-        return position.neighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
 
     /**
@@ -118,7 +114,7 @@ class Droid(file: File) {
     fun explore() = exploreInternal(visited = mutableSetOf())
 
     /**
-     * Recursive helper method for [explore].
+     * Recursive helper function for [explore].
      */
     private fun exploreInternal(visited: MutableSet<Point>) {
         visited.add(orientation.position)

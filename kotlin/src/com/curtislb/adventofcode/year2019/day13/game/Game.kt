@@ -10,9 +10,9 @@ import java.math.BigInteger
  * An interactive game, represented by a [Board] and powered by an [Intcode] computer.
  *
  * @param file A file containing the [Intcode] program that controls the game.
- * @param init A function used to initialize the [Intcode] program before the game is played.
+ * @param initialize A function used to initialize the [Intcode] program before the game is played.
  */
-class Game(file: File, private val init: (intcode: Intcode) -> Unit = {}) {
+class Game(file: File, private val initialize: (intcode: Intcode) -> Unit = {}) {
     /**
      * The board on which this game is being played.
      */
@@ -26,22 +26,31 @@ class Game(file: File, private val init: (intcode: Intcode) -> Unit = {}) {
     /**
      * The [Intcode] program that controls the game.
      */
-    private val intcode: Intcode
+    private val intcode: Intcode = Intcode(file)
 
     init {
+        initialize(intcode)
+
         var outputCounter = 0
         var tileX = 0
         var tileY = 0
-        intcode = Intcode(file)
-        init(intcode)
         intcode.onOutput = { output ->
             when (outputCounter) {
                 0 -> tileX = output.toInt()
                 1 -> tileY = -output.toInt()
-                2 -> update(Point(tileX, tileY), output)
+                2 -> {
+                    // Update the player's score or a board tile, depending on the output.
+                    val position = Point(tileX, tileY)
+                    if (position == SCORE_POSITION) {
+                        score = output
+                    } else {
+                        board[position] = Tile.from(output)
+                    }
+                }
             }
             outputCounter = (outputCounter + 1) % 3
         }
+
         intcode.run()
     }
 
@@ -66,26 +75,11 @@ class Game(file: File, private val init: (intcode: Intcode) -> Unit = {}) {
      */
     fun reset() {
         intcode.resetState()
-        init(intcode)
+        initialize(intcode)
         intcode.run()
     }
 
     override fun toString(): String = "Score: $score\n$board"
-
-    /**
-     * Updates the tile at a given [position] on the board, or the player's score, to match [value].
-     *
-     * If [SCORE_POSITION] is given as an argument for [position], the player's score is updated to [value]. Any other
-     * [position] is interpreted as a point on the board, and the tile at that point is changed to the [Tile] type
-     * corresponding to [value].
-     */
-    private fun update(position: Point, value: BigInteger) {
-        if (position == SCORE_POSITION) {
-            score = value
-        } else {
-            board[position] = Tile.from(value)
-        }
-    }
 
     companion object {
         /**

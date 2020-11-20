@@ -19,21 +19,14 @@ class FftAlgorithm(private val inputSignal: List<Int>) {
      */
     fun run(phases: Int = 1) {
         for (phase in 1..phases) {
-            signal = signal.mapIndexed { index, _ -> getTransformedSignalValue(index) }
+            signal = signal.mapIndexed { index, _ -> transformedSignalValueAt(index) }
         }
-    }
-
-    /**
-     * Restores [signal] to its original state, immediately after initialization.
-     */
-    fun reset() {
-        signal = inputSignal
     }
 
     /**
      * Returns the signal value at [index] given by applying the FFT transformation to [signal].
      */
-    private fun getTransformedSignalValue(index: Int): Int {
+    private fun transformedSignalValueAt(index: Int): Int {
         val patternIterator = generatePattern(index).iterator().apply { next() }
         val transformedValueSum = signal.fold(0L) { total, value -> total + patternIterator.next() * value }
         return (abs(transformedValueSum) % 10L).toInt()
@@ -56,5 +49,12 @@ class FftAlgorithm(private val inputSignal: List<Int>) {
             }
             patternIndex = (patternIndex + 1) % 4
         }
+    }
+
+    /**
+     * Restores [signal] to its original state, immediately after initialization.
+     */
+    fun reset() {
+        signal = inputSignal
     }
 }

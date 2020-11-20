@@ -125,8 +125,8 @@ fun solve(
     desiredProduct: MaterialAmount = MaterialAmount("FUEL", 1L)
 ): Long? {
     val factory = Nanofactory(inputPath.toFile())
-    val materials = factory.getRequiredMaterials(setOf(rawMaterial), mapOf(desiredProduct.toPair()))
-    return if (materials != null) materials[rawMaterial] else null
+    val materials = factory.findRequiredMaterials(setOf(rawMaterial), listOf(desiredProduct))
+    return materials?.find { (material, _) -> material == rawMaterial }?.amount
 }
 
 fun main() = when (val solution = solve()) {

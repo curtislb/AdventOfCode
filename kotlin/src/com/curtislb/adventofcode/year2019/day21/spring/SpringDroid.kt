@@ -19,13 +19,6 @@ class SpringDroid(file: File, private val maxInstructions: Int? = null) {
     private val ascii: Ascii = Ascii(file)
 
     /**
-     * Restores the springdroid to its starting state, immediately after initialization.
-     */
-    fun reset() {
-        ascii.resetState()
-    }
-
-    /**
      * Returns the hull damage reported the springdroid after following the given [springscript] program, or `null` if
      * the springdroid fell into a hole.
      *
@@ -48,5 +41,12 @@ class SpringDroid(file: File, private val maxInstructions: Int? = null) {
         ascii.sendInput(springscript.toString())
         ascii.run()
         return hullDamage
+    }
+
+    /**
+     * Restores the springdroid to its starting state, immediately after initialization.
+     */
+    fun reset() {
+        ascii.resetState()
     }
 }

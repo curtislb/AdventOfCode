@@ -8,12 +8,13 @@ import kotlin.test.assertEquals
  * Checks that [actual] contains exactly the same items as [expected], in any order.
  */
 fun <T> assertContainsExactly(expected: Collection<T>, actual: Collection<T>) {
-    val failureMessage = """
+    val message = """
         Expected items: $expected
         Actual items: $actual
     """.trimIndent()
-    assertEquals(expected.size, actual.size, failureMessage)
+
+    assertEquals(expected.size, actual.size, message)
     for (expectedItem in expected) {
-        assertThat(failureMessage, actual, hasItem(expectedItem))
+        assertThat(message, actual, hasItem(expectedItem))
     }
 }

@@ -21,6 +21,14 @@ class InRangeGenerator private constructor(
         require(maxValue >= 0) { "Maximum value must be non-negative: $maxValue" }
     }
 
+    override val isValid: Boolean = prefix in minValue..maxValue
+
+    override val nextDigits: Set<Int> = if (minValue > maxValue) {
+        emptySet()
+    } else {
+        DECIMAL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
+    }
+
     /**
      * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
      *
@@ -30,14 +38,6 @@ class InRangeGenerator private constructor(
      * @throws IllegalArgumentException If [minValue] or [maxValue] is negative.
      */
     constructor(minValue: Int, maxValue: Int) : this(minValue, maxValue, prefix = 0)
-
-    override val isValid: Boolean = prefix in minValue..maxValue
-
-    override val nextDigits: Set<Int> = if (minValue > maxValue) {
-        emptySet()
-    } else {
-        DECIMAL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
-    }
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return InRangeGenerator(minValue, maxValue, prefix * 10 + digit)

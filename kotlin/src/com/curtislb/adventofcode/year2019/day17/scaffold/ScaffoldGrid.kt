@@ -20,6 +20,11 @@ class ScaffoldGrid {
     private var grid: MutableList<MutableList<Space>> = mutableListOf(mutableListOf())
 
     /**
+     * Returns the row at [index] in this grid.
+     */
+    operator fun get(index: Int): List<Space> = grid[index]
+
+    /**
      * Adds a new empty row to the bottom of the grid.
      */
     fun addRow() {
@@ -41,29 +46,24 @@ class ScaffoldGrid {
     }
 
     /**
-     * Returns the row at [index] in this grid.
-     */
-    operator fun get(index: Int): List<Space> = grid[index]
-
-    /**
      * Returns all grid positions where the scaffold crosses over itself.
      */
     fun findIntersections(): List<Point> {
-        val intersections = mutableListOf<Point>()
-        grid.forEachIndexed { i, row ->
-            row.forEachIndexed { j, space ->
-                if (space == Space.SCAFFOLD) {
-                    val point = Point.fromMatrixCoordinates(i, j)
-                    val isIntersection = point.neighbors.all { neighbor ->
-                        grid.getCellOrNull(neighbor) == Space.SCAFFOLD
-                    }
-                    if (isIntersection) {
-                        intersections.add(point)
+        return mutableListOf<Point>().apply {
+            grid.forEachIndexed { i, row ->
+                row.forEachIndexed { j, space ->
+                    if (space == Space.SCAFFOLD) {
+                        val point = Point.fromMatrixCoordinates(i, j)
+                        val isIntersection = point.neighbors.all { neighbor ->
+                            grid.getCellOrNull(neighbor) == Space.SCAFFOLD
+                        }
+                        if (isIntersection) {
+                            add(point)
+                        }
                     }
                 }
             }
         }
-        return intersections
     }
 
     /**

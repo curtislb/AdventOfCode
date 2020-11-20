@@ -12,11 +12,6 @@ import java.math.BigInteger
  */
 class Robot(file: File) {
     /**
-     * An ASCII interface to the program that controls the robot.
-     */
-    private val ascii: Ascii = Ascii(file) { output, _ -> processOutput(output) }
-
-    /**
      * The initial layout of the scaffold grid, including the location of the vacuum robot.
      */
     var grid: ScaffoldGrid = ScaffoldGrid()
@@ -26,6 +21,11 @@ class Robot(file: File) {
      * Whether the last program output was a newline. Used to construct the initial grid.
      */
     private var isPrevOutputNewline = false
+
+    /**
+     * An ASCII interface to the program that controls the robot.
+     */
+    private val ascii: Ascii = Ascii(file) { output, _ -> processOutput(output) }
 
     init {
         ascii[0] = BigInteger.TWO

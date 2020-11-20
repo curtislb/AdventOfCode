@@ -4,11 +4,6 @@ package com.curtislb.adventofcode.year2019.day14.chemistry
  * A given [amount] of a [material] that may be consumed or produced in a reaction.
  */
 data class MaterialAmount(val material: String, val amount: Long) {
-    /**
-     * Returns a pair containing the name and amount of this material.
-     */
-    fun toPair(): Pair<String, Long> = Pair(material, amount)
-
     override fun toString(): String = "$amount $material"
 
     companion object {

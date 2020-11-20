@@ -43,14 +43,11 @@ inline class BugGrid(val biodiversity: Int) {
     }
 
     /**
-     * Returns the number of bugs in the grid.
-     */
-    fun countBugs(): Int = Integer.bitCount(biodiversity)
-
-    /**
      * Returns the number of bugs in the grid that occupy spaces matching [spaceMask].
+     *
+     * If no [spaceMask] is provided, returns the count of all bugs in the grid.
      */
-    private fun countBugsWithMask(spaceMask: Int): Int = Integer.bitCount(biodiversity and spaceMask)
+    fun countBugs(spaceMask: Int = 0.inv()): Int = Integer.bitCount(biodiversity and spaceMask)
 
     /**
      * Returns the number of bugs adjacent to the space at [spaceOffset] in the grid.
@@ -100,10 +97,10 @@ inline class BugGrid(val biodiversity: Int) {
         // Count any adjacent bugs from the inner grid.
         if (lowerLevel != null) {
             when (spaceOffset) {
-                SPACE_OFFSET_TOP_INTERIOR -> count += lowerLevel.countBugsWithMask(SPACE_MASK_TOP_EXTERIOR)
-                SPACE_OFFSET_BOTTOM_INTERIOR -> count += lowerLevel.countBugsWithMask(SPACE_MASK_BOTTOM_EXTERIOR)
-                SPACE_OFFSET_LEFT_INTERIOR -> count += lowerLevel.countBugsWithMask(SPACE_MASK_LEFT_EXTERIOR)
-                SPACE_OFFSET_RIGHT_INTERIOR -> count += lowerLevel.countBugsWithMask(SPACE_MASK_RIGHT_EXTERIOR)
+                SPACE_OFFSET_TOP_INTERIOR -> count += lowerLevel.countBugs(SPACE_MASK_TOP_EXTERIOR)
+                SPACE_OFFSET_BOTTOM_INTERIOR -> count += lowerLevel.countBugs(SPACE_MASK_BOTTOM_EXTERIOR)
+                SPACE_OFFSET_LEFT_INTERIOR -> count += lowerLevel.countBugs(SPACE_MASK_LEFT_EXTERIOR)
+                SPACE_OFFSET_RIGHT_INTERIOR -> count += lowerLevel.countBugs(SPACE_MASK_RIGHT_EXTERIOR)
             }
         }
 
@@ -119,17 +116,17 @@ inline class BugGrid(val biodiversity: Int) {
         /**
          * A grid containing no bugs.
          */
-        val EMPTY: BugGrid = BugGrid(0)
+        val EMPTY = BugGrid(0)
 
         /**
          * The width and height of a grid, in number of spaces.
          */
-        private const val GRID_SIZE: Int = 5
+        private const val GRID_SIZE = 5
 
         /**
          * The total number of spaces in a grid.
          */
-        private const val GRID_SPACE_COUNT: Int = GRID_SIZE * GRID_SIZE
+        private const val GRID_SPACE_COUNT = GRID_SIZE * GRID_SIZE
 
         /**
          * The offset for the center grid space.

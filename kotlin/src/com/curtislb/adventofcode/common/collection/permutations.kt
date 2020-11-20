@@ -8,7 +8,7 @@ fun <T> Collection<T>.permutations(): Sequence<List<T>> {
 }
 
 /**
- * Recursive helper method for [permutations].
+ * Recursive helper function for [permutations].
  */
 private fun <T> Collection<T>.permutationsInternal(
     prefix: MutableList<T>,

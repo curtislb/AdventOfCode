@@ -31,6 +31,20 @@ class Ascii private constructor(
     }
 
     /**
+     * Whether the program has finished.
+     *
+     * @see [Intcode.isDone]
+     */
+    val isDone: Boolean get() = intcode.isDone
+
+    /**
+     * Whether the program has paused.
+     *
+     * @see [Intcode.isPaused]
+     */
+    val isPaused: Boolean get() = intcode.isPaused
+
+    /**
      * An interface for an [Intcode] program that accepts ASCII code values as input and may produce output
      * corresponding to printable ASCII characters.
      *
@@ -63,44 +77,12 @@ class Ascii private constructor(
     ) : this(Intcode(programString), showAsciiOutput, processOutput)
 
     /**
-     * Whether the program has finished.
-     *
-     * @see [Intcode.isDone]
-     */
-    val isDone: Boolean get() = intcode.isDone
-
-    /**
-     * Whether the program has paused.
-     *
-     * @see [Intcode.isPaused]
-     */
-    val isPaused: Boolean get() = intcode.isPaused
-
-    /**
      * Updates the [value] stored at [position] in the program.
      *
      * @see [Intcode.set]
      */
     operator fun set(position: Int, value: BigInteger) {
         intcode[position] = value
-    }
-
-    /**
-     * Restores the program to its starting state.
-     *
-     * @see [Intcode.resetState]
-     */
-    fun resetState() {
-        intcode.resetState()
-    }
-
-    /**
-     * Runs the program by processing operations one at a time until a stopping condition is reached.
-     *
-     * @see [Intcode.run]
-     */
-    fun run() {
-        intcode.run()
     }
 
     /**
@@ -116,16 +98,34 @@ class Ascii private constructor(
         }
     }
 
+    /**
+     * Runs the program by processing operations one at a time until a stopping condition is reached.
+     *
+     * @see [Intcode.run]
+     */
+    fun run() {
+        intcode.run()
+    }
+
+    /**
+     * Restores the program to its starting state.
+     *
+     * @see [Intcode.resetState]
+     */
+    fun resetState() {
+        intcode.resetState()
+    }
+
     companion object {
         /**
          * A range of all valid ASCII code values.
          */
-        val ASCII_CODE_RANGE: BigIntegerRange = BigIntegerRange(0..127)
+        val ASCII_CODE_RANGE = BigIntegerRange(0..127)
 
         /**
          * The ASCII value of the newline character.
          */
-        val NEWLINE_CODE: BigInteger = BigInteger.TEN
+        val NEWLINE_CODE = BigInteger("10")
     }
 }
 

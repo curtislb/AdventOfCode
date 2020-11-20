@@ -26,13 +26,13 @@ inline fun <T> constructGrid(points: Iterable<Point>, valueAt: (point: Point) ->
     }
 
     // Populate all grid cells in the visible bounds.
-    val grid = mutableListOf<List<T>>()
-    for (i in 0..(gridMaxY - gridMinY)) {
-        val row = mutableListOf<T>()
-        for (j in 0..(gridMaxX - gridMinX)) {
-            row.add(valueAt(Point(gridMinX + j, gridMaxY - i)))
+    return mutableListOf<List<T>>().apply {
+        for (i in 0..(gridMaxY - gridMinY)) {
+            add(mutableListOf<T>().apply {
+                for (j in 0..(gridMaxX - gridMinX)) {
+                    add(valueAt(Point(gridMinX + j, gridMaxY - i)))
+                }
+            })
         }
-        grid.add(row)
     }
-    return grid
 }

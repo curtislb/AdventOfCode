@@ -21,10 +21,16 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      */
     private val initialValues: List<BigInteger>
 
+    init {
+        val tokens = programString.split(',')
+        require(tokens.isNotEmpty() && (tokens.size > 1 || tokens[0].isNotEmpty())) { "Program must not be empty." }
+        initialValues = tokens.map { it.toBigInteger() }
+    }
+
     /**
      * The current integer values for this program, which may have been modified during execution.
      */
-    private var currentValues: Array<BigInteger>
+    private var currentValues: Array<BigInteger> = initialValues.toTypedArray()
 
     /**
      * A map of integer values stored by this program at positions outside the range of [currentValues].
@@ -46,12 +52,16 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      */
     private var pointerStart: Int = 0
 
-    init {
-        val tokens = programString.split(',')
-        require(tokens.isNotEmpty() && (tokens.size > 1 || tokens[0].isNotEmpty())) { "Program must not be empty." }
-        initialValues = tokens.map { it.toBigInteger() }
-        currentValues = initialValues.toTypedArray()
-    }
+    /**
+     * Whether this program has finished and no more operations can be run.
+     */
+    val isDone: Boolean get() = pointerStart !in currentValues.indices
+
+    /**
+     * Whether this program has paused and may be resumed by calling [run].
+     */
+    var isPaused: Boolean = false
+        private set
 
     /**
      * An Intcode program, consisting of arbitrary-length integer values that may be modified during execution.
@@ -63,17 +73,6 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      */
     constructor(file: File, onOutput: (output: BigInteger) -> Unit = { println(it) })
         : this(file.readText().trim(), onOutput)
-
-    /**
-     * Whether this program has finished and no more operations can be run.
-     */
-    val isDone: Boolean get() = pointerStart !in currentValues.indices
-
-    /**
-     * Whether this program has paused and may be resumed by calling [run].
-     */
-    var isPaused: Boolean = false
-        private set
 
     /**
      * Returns the current value stored at [position] in the program.
@@ -186,7 +185,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * - The last pointer position of the program.
      * - Whether the program has been paused.
      *
-     * In particular, the function [onOutput] is *not* reset by this method.
+     * Notably, the [onOutput] function is *not* reset by this method. For that, use [resetOutput].
      */
     fun resetState() {
         currentValues = initialValues.toTypedArray()
@@ -213,11 +212,11 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
         /**
          * The default value to be assumed for any position in the program that isn't explicitly set.
          */
-        private val DEFAULT_VALUE: BigInteger = BigInteger.ZERO
+        private val DEFAULT_VALUE = BigInteger.ZERO
 
         /**
          * The divisor used to separate the opcode and parameter modes of an operation value.
          */
-        private val OPCODE_MOD: BigInteger = BigInteger("100")
+        private val OPCODE_MOD = BigInteger("100")
     }
 }

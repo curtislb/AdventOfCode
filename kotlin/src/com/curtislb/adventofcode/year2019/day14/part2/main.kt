@@ -39,9 +39,9 @@ fun solve(
     // Binary search for the first product amount requiring more raw material than available.
     val rawMaterials = setOf(rawMaterial)
     val productAmountLimit = bisectIndex { amount ->
-        val products = mapOf(MaterialAmount(desiredMaterial, amount).toPair())
-        val requiredMaterials = factory.getRequiredMaterials(rawMaterials, products)
-        val rawMaterialNeeded = requiredMaterials?.get(rawMaterial)
+        val products = listOf(MaterialAmount(desiredMaterial, amount))
+        val requiredMaterials = factory.findRequiredMaterials(rawMaterials, products)
+        val rawMaterialNeeded = requiredMaterials?.find { (material, _) -> material == rawMaterial }?.amount
             ?: throw IllegalStateException("Failed to produce $desiredMaterial during bisect.")
         rawMaterialNeeded > rawMaterialAvailable
     }

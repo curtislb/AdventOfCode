@@ -17,6 +17,10 @@ class ExactRepeatCountDigitGenerator private constructor(
     private val currentCount: Int,
     private val foundRepeatCountDigit: Boolean
 ) : PasswordGenerator() {
+    override val isValid: Boolean = foundRepeatCountDigit || currentCount == repeatCount
+
+    override val nextDigits: Set<Int> = DECIMAL_DIGITS
+
     /**
      * A generator that produces numeric passwords in which at least one digit is repeated a specific number of times in
      * sequence.
@@ -29,10 +33,6 @@ class ExactRepeatCountDigitGenerator private constructor(
         currentCount = 0,
         foundRepeatCountDigit = false
     )
-
-    override val isValid: Boolean = foundRepeatCountDigit || currentCount == repeatCount
-
-    override val nextDigits: Set<Int> = DECIMAL_DIGITS
 
     override fun addDigit(digit: Int): PasswordGenerator {
         return if (digit == currentDigit) {

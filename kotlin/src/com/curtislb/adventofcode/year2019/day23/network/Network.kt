@@ -20,10 +20,16 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
      */
     private val computers: Array<Intcode>
 
+    init {
+        val programString = file.readText().trim()
+        computers = Array(computerCount) { Intcode(programString) }
+        computers.forEachIndexed { address, computer -> computer.sendInput(address.toBigInteger()) }
+    }
+
     /**
      * An array of incoming packet queues for each computer, in address order.
      */
-    private val queuedPackets: Array<MutableList<Packet>>
+    private val queuedPackets: Array<MutableList<Packet>> = Array(computerCount) { mutableListOf() }
 
     /**
      * An array of the number of cycles for which each computer has been idle, in address order.
@@ -39,13 +45,6 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
      * Whether the network has finished running.
      */
     private var isDone = false
-
-    init {
-        val programString = file.readText().trim()
-        computers = Array(computerCount) { Intcode(programString) }
-        computers.forEachIndexed { address, computer -> computer.sendInput(address.toBigInteger()) }
-        queuedPackets = Array(computerCount) { mutableListOf() }
-    }
 
     /**
      * Restores the network to its starting state, immediately after initialization.
@@ -166,16 +165,16 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
         /**
          * The number of times in a row a computer can poll for and not receive packets before it is considered idle.
          */
-        private const val IDLE_THRESHOLD: Int = 2
+        private const val IDLE_THRESHOLD = 2
 
         /**
          * The network address corresponding to the NAT.
          */
-        private const val NAT_ADDRESS: Int = 255
+        private const val NAT_ADDRESS = 255
 
         /**
          * An input value indicating that there are no queued packets for a computer to process.
          */
-        private val NO_PACKET_INPUT: BigInteger = BigInteger("-1")
+        private val NO_PACKET_INPUT = BigInteger("-1")
     }
 }

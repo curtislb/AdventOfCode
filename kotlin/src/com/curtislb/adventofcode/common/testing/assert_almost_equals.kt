@@ -12,6 +12,7 @@ fun assertAlmostEquals(expected: Double, actual: Double?, precision: Double = 0.
         Expected: $expected (+/- $precision)
         Actual: $actual
     """.trimIndent()
+
     assertNotNull(actual, message)
     assertTrue(abs(expected - actual) < precision, message)
 }

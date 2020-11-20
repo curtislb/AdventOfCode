@@ -29,7 +29,7 @@ class MinimumHeap<T> {
     fun isEmpty(): Boolean = priorityKeys.isEmpty()
 
     /**
-     * Returns the key currently associated with [value] in the heap.
+     * Returns the key in the heap currently associated with [value].
      */
     operator fun get(value: T): Long? = priorityKeys[value]
 
@@ -45,7 +45,7 @@ class MinimumHeap<T> {
     }
 
     /**
-     * Decreases the key associated with [value] in the heap to [newKey].
+     * Decreases the key in the heap associated with [value] to [newKey].
      *
      * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is at most [newKey].
      */
@@ -58,7 +58,7 @@ class MinimumHeap<T> {
     }
 
     /**
-     * Returns and removes the entry with minimum key from the heap.
+     * Returns and removes the minimum-key entry from the heap.
      *
      * @throws NoSuchElementException If the heap is currently empty.
      */
