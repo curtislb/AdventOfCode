@@ -15,12 +15,14 @@ class OutputOperationTest {
     private lateinit var intcode: Intcode
     private lateinit var outputs: MutableList<BigInteger>
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         outputs = mutableListOf()
         intcode = Intcode("1,23,-20,0,4,2,99") { outputs.add(it) }
     }
 
-    @Test fun testProcessWithImmediateParam() {
+    @Test
+    fun testProcessWithImmediateParam() {
         assertEquals(
             6,
             OutputOperation.process(
@@ -33,7 +35,8 @@ class OutputOperationTest {
         assertEquals(listOf(BigInteger.TWO), outputs.toList())
     }
 
-    @Test fun testProcessWithPositionParam() {
+    @Test
+    fun testProcessWithPositionParam() {
         assertEquals(
             6,
             OutputOperation.process(

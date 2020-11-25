@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [calculateFuel].
  */
 class CalculateFuelTest {
-    @Test fun testCalculateFuel() {
+    @Test
+    fun testCalculateFuel() {
         assertEquals(0, calculateFuel(0))
         assertEquals(0, calculateFuel(1))
         assertEquals(0, calculateFuel(2))

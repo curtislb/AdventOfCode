@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [countDigits].
  */
 class CountDigitsTest {
-    @Test fun testWithInt() {
+    @Test
+    fun testWithInt() {
         assertEquals(1, 0.countDigits())
         assertEquals(1, 0.countDigits(base = 2))
         assertEquals(1, 1.countDigits())
@@ -46,7 +47,8 @@ class CountDigitsTest {
         assertEquals(10, 81053026850.countDigits(base = 16))
     }
 
-    @Test fun testWithLong() {
+    @Test
+    fun testWithLong() {
         assertEquals(1, 0L.countDigits())
         assertEquals(1, 0L.countDigits(base = 2))
         assertEquals(1, 1L.countDigits())

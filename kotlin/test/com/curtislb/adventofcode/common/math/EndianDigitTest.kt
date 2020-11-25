@@ -12,7 +12,8 @@ class EndianDigitTest {
         2.bigEndianDigit(1)
     }
 
-    @Test fun testBigEndianDigit() {
+    @Test
+    fun testBigEndianDigit() {
         assertEquals(0, 0.bigEndianDigit(0))
         assertEquals(0, 0.bigEndianDigit(0, base = 2))
         assertEquals(0, 0.bigEndianDigit(0, base = 16))
@@ -32,7 +33,8 @@ class EndianDigitTest {
         assertEquals(91, 859.bigEndianDigit(1, base = 256))
     }
 
-    @Test fun testLittleEndianDigit() {
+    @Test
+    fun testLittleEndianDigit() {
         assertEquals(0, 0.littleEndianDigit(0))
         assertEquals(0, 0.littleEndianDigit(1))
         assertEquals(0, 0.littleEndianDigit(0, base = 2))

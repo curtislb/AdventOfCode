@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [InRangeGenerator].
  */
 class InRangeGeneratorTest {
-    @Test fun testWithEmptyRange() {
+    @Test
+    fun testWithEmptyRange() {
         var generator: PasswordGenerator = InRangeGenerator(1, 0)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
@@ -23,7 +24,8 @@ class InRangeGeneratorTest {
         assertEquals(emptySet(), generator.nextDigits)
     }
 
-    @Test fun testWithSingleNumberRange() {
+    @Test
+    fun testWithSingleNumberRange() {
         var generator: PasswordGenerator = InRangeGenerator(0, 0)
         assertTrue(generator.isValid)
         assertEquals(setOf(0), generator.nextDigits)
@@ -37,7 +39,8 @@ class InRangeGeneratorTest {
         assertEquals(setOf(0, 1), generator.nextDigits)
     }
 
-    @Test fun testWithMultipleSmallNumberRange() {
+    @Test
+    fun testWithMultipleSmallNumberRange() {
         var generator: PasswordGenerator = InRangeGenerator(0, 1)
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1), generator.nextDigits)
@@ -67,7 +70,8 @@ class InRangeGeneratorTest {
         assertEquals(emptySet(), generator.nextDigits)
     }
 
-    @Test fun testWithMultipleBigNumberRange() {
+    @Test
+    fun testWithMultipleBigNumberRange() {
         var generator: PasswordGenerator = InRangeGenerator(0, 10)
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)

@@ -8,26 +8,30 @@ import kotlin.test.assertNull
  * Tests [dijkstraShortestDistance].
  */
 class DijkstraTest {
-    @Test fun testShortestDistanceToSource() {
+    @Test
+    fun testShortestDistanceToSource() {
         for (source in 1..8) {
             val distance = dijkstraShortestDistance(source, isGoal = { it == source }, getEdges = ::getEdges)
             assertEquals(0L, distance)
         }
     }
 
-    @Test fun testShortestDistanceToNonexistentNode() {
+    @Test
+    fun testShortestDistanceToNonexistentNode() {
         for (source in 1..8) {
             val distance = dijkstraShortestDistance(source, isGoal = { it == 9 }, getEdges = ::getEdges)
             assertNull(distance)
         }
     }
 
-    @Test fun testShortestDistanceToUnreachableNode() {
+    @Test
+    fun testShortestDistanceToUnreachableNode() {
         val distance = dijkstraShortestDistance(source = 5, isGoal = { it == 7 }, getEdges = ::getEdges)
         assertNull(distance)
     }
 
-    @Test fun testShortestDistanceToReachableNodes() {
+    @Test
+    fun testShortestDistanceToReachableNodes() {
         val source = 1
         assertEquals(9L, dijkstraShortestDistance(source, isGoal = { it == 2 }, getEdges = ::getEdges))
         assertEquals(32L, dijkstraShortestDistance(source, isGoal = { it == 3 }, getEdges = ::getEdges))

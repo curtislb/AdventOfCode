@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [HasRepeatedDigitGenerator].
  */
 class HasRepeatedDigitGeneratorTest {
-    @Test fun testWithNoRepeatedDigit() {
+    @Test
+    fun testWithNoRepeatedDigit() {
         var generator: PasswordGenerator = HasRepeatedDigitGenerator()
         assertFalse(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -39,7 +40,8 @@ class HasRepeatedDigitGeneratorTest {
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
     }
 
-    @Test fun testWithRepeatedDigit() {
+    @Test
+    fun testWithRepeatedDigit() {
         var generator: PasswordGenerator = HasRepeatedDigitGenerator().addDigit(4).addDigit(4)
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)

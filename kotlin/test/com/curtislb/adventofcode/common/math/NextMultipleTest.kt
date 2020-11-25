@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [nextMultipleAbove] and [nextMultipleAtLeast].
  */
 class NextMultipleTest {
-    @Test fun testNextMultipleAboveLong() {
+    @Test
+    fun testNextMultipleAboveLong() {
         assertEquals(1L, 1L.nextMultipleAbove(0L))
         assertEquals(2L, 1L.nextMultipleAbove(1L))
         assertEquals(3L, 1L.nextMultipleAbove(2L))
@@ -23,7 +24,8 @@ class NextMultipleTest {
         assertEquals(595254681L, 9448487L.nextMultipleAbove(589545477L))
     }
 
-    @Test fun testNextMultipleAboveInt() {
+    @Test
+    fun testNextMultipleAboveInt() {
         assertEquals(1, 1.nextMultipleAbove(0))
         assertEquals(2, 1.nextMultipleAbove(1))
         assertEquals(3, 1.nextMultipleAbove(2))
@@ -39,7 +41,8 @@ class NextMultipleTest {
         assertEquals(595254681, 9448487.nextMultipleAbove(589545477))
     }
 
-    @Test fun testNextMultipleAtLeastLong() {
+    @Test
+    fun testNextMultipleAtLeastLong() {
         assertEquals(0L, 1L.nextMultipleAtLeast(0L))
         assertEquals(1L, 1L.nextMultipleAtLeast(1L))
         assertEquals(2L, 1L.nextMultipleAtLeast(2L))
@@ -55,7 +58,8 @@ class NextMultipleTest {
         assertEquals(595254681L, 9448487L.nextMultipleAtLeast(589545477L))
     }
 
-    @Test fun testNextMultipleAtLeastInt() {
+    @Test
+    fun testNextMultipleAtLeastInt() {
         assertEquals(0, 1.nextMultipleAtLeast(0))
         assertEquals(1, 1.nextMultipleAtLeast(1))
         assertEquals(2, 1.nextMultipleAtLeast(2))

@@ -14,7 +14,8 @@ class RayTest {
         Ray(point, point)
     }
 
-    @Test fun testConstructFromDistinctPoints() {
+    @Test
+    fun testConstructFromDistinctPoints() {
         assertEquals(
             Ray(source = Point(16, -6), slope = null, directionParity = true),
             Ray(source = Point(16, -6), member = Point(16, 10))

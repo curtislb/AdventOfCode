@@ -3,14 +3,14 @@ package com.curtislb.adventofcode.year2019.day13.game
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import org.junit.Test
-import java.math.BigInteger
 import kotlin.test.assertEquals
 
 /**
  * Tests [Board].
  */
 class BoardTest {
-    @Test fun testWhenEmpty() {
+    @Test
+    fun testWhenEmpty() {
         val board = Board()
         assertEquals(0, board.height)
         assertEquals(0, board.width)
@@ -25,7 +25,8 @@ class BoardTest {
         assertEquals("", board.toString())
     }
 
-    @Test fun testUpdateTiles() {
+    @Test
+    fun testUpdateTiles() {
         val board = Board()
         board[Point(4, -3)] = Tile.PADDLE
         assertEquals(4, board.height)

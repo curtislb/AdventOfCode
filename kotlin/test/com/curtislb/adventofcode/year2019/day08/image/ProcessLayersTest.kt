@@ -11,7 +11,8 @@ import kotlin.test.assertEquals
 class ProcessLayersTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test fun testProcessLayersForEmptyFile() {
+    @Test
+    fun testProcessLayersForEmptyFile() {
         val file = temporaryFolder.newFile()
 
         val calls = mutableListOf<String>()
@@ -25,7 +26,8 @@ class ProcessLayersTest {
         assertEquals(emptyList(), calls.toList())
     }
 
-    @Test fun testProcessLayersForOneLayerOnePixelImage() {
+    @Test
+    fun testProcessLayersForOneLayerOnePixelImage() {
         val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
@@ -39,7 +41,8 @@ class ProcessLayersTest {
         assertEquals(listOf("onDigit(0, 1)", "onLayerFinished"), calls)
     }
 
-    @Test fun testProcessLayersWithOnDigitCallbackOnly() {
+    @Test
+    fun testProcessLayersWithOnDigitCallbackOnly() {
         val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
@@ -52,7 +55,8 @@ class ProcessLayersTest {
         assertEquals(listOf("onDigit(0, 1)"), calls)
     }
 
-    @Test fun testProcessLayersWithOnLayerFinishedCallbackOnly() {
+    @Test
+    fun testProcessLayersWithOnLayerFinishedCallbackOnly() {
         val file = temporaryFolder.newFile().apply { writeText("1") }
 
         val calls = mutableListOf<String>()
@@ -61,7 +65,8 @@ class ProcessLayersTest {
         assertEquals(listOf("onLayerFinished"), calls)
     }
 
-    @Test fun testProcessLayersForOneLayerImage() {
+    @Test
+    fun testProcessLayersForOneLayerImage() {
         val file = temporaryFolder.newFile().apply { writeText("010222110201") }
 
         val calls = mutableListOf<String>()
@@ -93,7 +98,8 @@ class ProcessLayersTest {
         )
     }
 
-    @Test fun testProcessLayersForTwoLayerOnePixelImage() {
+    @Test
+    fun testProcessLayersForTwoLayerOnePixelImage() {
         val file = temporaryFolder.newFile().apply { writeText("21") }
 
         val calls = mutableListOf<String>()

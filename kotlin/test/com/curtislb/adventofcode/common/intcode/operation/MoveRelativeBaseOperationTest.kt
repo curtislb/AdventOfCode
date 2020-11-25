@@ -10,7 +10,8 @@ import kotlin.test.assertEquals
  * Tests [MoveRelativeBaseOperation].
  */
 class MoveRelativeBaseOperationTest {
-    @Test fun testProcess() {
+    @Test
+    fun testProcess() {
         val intcode = Intcode("9,13,9,0,9,-19,99")
         assertEquals(0, intcode.relativeBase)
 

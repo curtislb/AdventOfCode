@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests [toIterableRange].
  */
 class ToIterableRangeTest {
-    @Test fun testToIterableRange() {
+    @Test
+    fun testToIterableRange() {
         assertEquals(
             38..62,
             object : ClosedRange<Int> {

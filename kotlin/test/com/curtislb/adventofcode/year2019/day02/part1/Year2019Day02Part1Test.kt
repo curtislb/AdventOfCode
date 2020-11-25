@@ -9,11 +9,13 @@ import kotlin.test.assertEquals
  * Tests the solution to the puzzle for 2019, day 2, part 1.
  */
 class Year2019Day02Part1Test {
-    @Test fun testSolutionWithRealInput() {
+    @Test
+    fun testSolutionWithRealInput() {
         assertEquals(BigInteger("4138687"), solve())
     }
 
-    @Test fun testSolutionWithTestInput() {
+    @Test
+    fun testSolutionWithTestInput() {
         val solution = solve(
             inputPath = pathToInput(year = 2019, day = 2, fileName = "test_input.txt"),
             nounValue = BigInteger.ONE,

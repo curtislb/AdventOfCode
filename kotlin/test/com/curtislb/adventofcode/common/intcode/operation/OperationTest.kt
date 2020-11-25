@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests [Operation].
  */
 class OperationTest {
-    @Test fun testConstructFromIntValue() {
+    @Test
+    fun testConstructFromIntValue() {
         assertEquals(AddOperation, Operation.from(1))
         assertEquals(MultiplyOperation, Operation.from(2))
         assertEquals(InputOperation, Operation.from(3))
@@ -26,7 +27,8 @@ class OperationTest {
         Operation.from(0)
     }
 
-    @Test fun testConstructFromBigIntegerValue() {
+    @Test
+    fun testConstructFromBigIntegerValue() {
         assertEquals(AddOperation, Operation.from(BigInteger.ONE))
         assertEquals(MultiplyOperation, Operation.from(BigInteger.TWO))
         assertEquals(InputOperation, Operation.from(BigInteger("3")))

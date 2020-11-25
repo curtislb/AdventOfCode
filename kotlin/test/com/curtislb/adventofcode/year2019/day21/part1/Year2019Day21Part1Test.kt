@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests the solution to the puzzle for 2019, day 21, part 1.
  */
 class Year2019Day21Part1Test {
-    @Test fun testSolutionWithRealInput() {
+    @Test
+    fun testSolutionWithRealInput() {
         assertEquals(BigInteger("19357507"), solve())
     }
 }

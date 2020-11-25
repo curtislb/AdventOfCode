@@ -13,11 +13,13 @@ import kotlin.test.assertEquals
 class InputOperationTest {
     private lateinit var intcode: Intcode
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         intcode = Intcode("4,80,3,1,99")
     }
 
-    @Test fun testProcessWithNoNextInput() {
+    @Test
+    fun testProcessWithNoNextInput() {
         assertEquals(
             2,
             InputOperation.process(
@@ -35,7 +37,8 @@ class InputOperationTest {
         assertEquals(BigInteger.ZERO, intcode[5])
     }
 
-    @Test fun testProcessWithNextInput() {
+    @Test
+    fun testProcessWithNextInput() {
         intcode.sendInput(BigInteger("-75"))
         assertEquals(
             4,

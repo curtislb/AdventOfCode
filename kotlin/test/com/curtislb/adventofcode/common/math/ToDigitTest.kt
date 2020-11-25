@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [Char.toDigit].
  */
 class ToDigitTest {
-    @Test fun testNumeralToDigit() {
+    @Test
+    fun testNumeralToDigit() {
         assertEquals(0, '0'.toDigit())
         assertEquals(1, '1'.toDigit())
         assertEquals(2, '2'.toDigit())
@@ -20,7 +21,8 @@ class ToDigitTest {
         assertEquals(9, '9'.toDigit())
     }
 
-    @Test fun testUppercaseLetterToDigit() {
+    @Test
+    fun testUppercaseLetterToDigit() {
         assertEquals(10, 'A'.toDigit())
         assertEquals(11, 'B'.toDigit())
         assertEquals(12, 'C'.toDigit())
@@ -35,7 +37,8 @@ class ToDigitTest {
         assertEquals(35, 'Z'.toDigit())
     }
 
-    @Test fun testLowercaseLetterToDigit() {
+    @Test
+    fun testLowercaseLetterToDigit() {
         assertEquals(10, 'a'.toDigit())
         assertEquals(11, 'b'.toDigit())
         assertEquals(12, 'c'.toDigit())

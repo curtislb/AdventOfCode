@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests the solution to the puzzle for 2019, day 19, part 1.
  */
 class Year2019Day19Part1Test {
-    @Test fun testSolutionWithRealInput() {
+    @Test
+    fun testSolutionWithRealInput() {
         assertEquals(138, solve())
     }
 }

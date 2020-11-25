@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [ExactRepeatCountDigitGenerator].
  */
 class ExactRepeatCountDigitGeneratorTest {
-    @Test fun testWithRepeatCountZero() {
+    @Test
+    fun testWithRepeatCountZero() {
         val generator = ExactRepeatCountDigitGenerator(0)
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -23,7 +24,8 @@ class ExactRepeatCountDigitGeneratorTest {
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generatorWithPrefix11.nextDigits)
     }
 
-    @Test fun testWithRepeatCountOne() {
+    @Test
+    fun testWithRepeatCountOne() {
         val generator = ExactRepeatCountDigitGenerator(1)
         assertFalse(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -45,7 +47,8 @@ class ExactRepeatCountDigitGeneratorTest {
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generatorWithPrefix22344.nextDigits)
     }
 
-    @Test fun testWithRepeatCountTwo() {
+    @Test
+    fun testWithRepeatCountTwo() {
         val generator = ExactRepeatCountDigitGenerator(2)
         assertFalse(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)

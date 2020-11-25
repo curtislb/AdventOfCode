@@ -9,13 +9,15 @@ import kotlin.test.assertTrue
  * Tests [NonDecreasingGenerator].
  */
 class NonDecreasingGeneratorTest {
-    @Test fun testWithEmptyGenerator() {
+    @Test
+    fun testWithEmptyGenerator() {
         val generator = NonDecreasingGenerator()
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
     }
 
-    @Test fun testWithSingleDigit() {
+    @Test
+    fun testWithSingleDigit() {
         for (digit in 0..9) {
             val generator = NonDecreasingGenerator().addDigit(digit)
             assertTrue(generator.isValid)
@@ -23,7 +25,8 @@ class NonDecreasingGeneratorTest {
         }
     }
 
-    @Test fun testWithIncreasingDigits() {
+    @Test
+    fun testWithIncreasingDigits() {
         var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(1)
         assertTrue(generator.isValid)
         assertEquals(setOf(1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -69,7 +72,8 @@ class NonDecreasingGeneratorTest {
         assertEquals(setOf(9), generator.nextDigits)
     }
 
-    @Test fun testWithRepeatedDigit() {
+    @Test
+    fun testWithRepeatedDigit() {
         var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(0)
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -107,7 +111,8 @@ class NonDecreasingGeneratorTest {
         assertEquals(setOf(9), generator.nextDigits)
     }
 
-    @Test fun testWithNonDecreasingDigits() {
+    @Test
+    fun testWithNonDecreasingDigits() {
         var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(0).addDigit(1)
         assertTrue(generator.isValid)
         assertEquals(setOf(1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -133,7 +138,8 @@ class NonDecreasingGeneratorTest {
         assertEquals(setOf(6, 7, 8, 9), generator.nextDigits)
     }
 
-    @Test fun testWithNonIncreasingDigits() {
+    @Test
+    fun testWithNonIncreasingDigits() {
         var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(1).addDigit(0).addDigit(0)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
@@ -159,7 +165,8 @@ class NonDecreasingGeneratorTest {
         assertEquals(emptySet(), generator.nextDigits)
     }
 
-    @Test fun testWithUnorderedDigits() {
+    @Test
+    fun testWithUnorderedDigits() {
         var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(2).addDigit(1)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)

@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.year2019.day12.body
 
 import com.curtislb.adventofcode.common.collection.MutableVector
-import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -13,14 +12,16 @@ import kotlin.test.assertEquals
 class NBodySystemTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test fun testConstructFromEmptyFile() {
+    @Test
+    fun testConstructFromEmptyFile() {
         val file = temporaryFolder.newFile()
         val system = NBodySystem(file)
         assertEquals(emptyList(), system.bodies)
         assertEquals(0, system.totalEnergy)
     }
 
-    @Test fun testSimulateAndReset() {
+    @Test
+    fun testSimulateAndReset() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 <x=-1, y=0, z=2>
@@ -78,13 +79,15 @@ class NBodySystemTest {
         assertEquals(0, system.totalEnergy)
     }
 
-    @Test fun testFindAxialPeriodicityWithSingleStationaryBody() {
+    @Test
+    fun testFindAxialPeriodicityWithSingleStationaryBody() {
         val file = temporaryFolder.newFile().apply { writeText("<x=-1, y=0, z=2>") }
         val system = NBodySystem(file)
         assertEquals(MutableVector(1, 1, 1), system.findAxialPeriodicity())
     }
 
-    @Test fun testFindAxialPeriodicityWithMultipleBodies() {
+    @Test
+    fun testFindAxialPeriodicityWithMultipleBodies() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 <x=-1, y=0, z=2>

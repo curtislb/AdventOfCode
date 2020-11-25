@@ -8,11 +8,13 @@ import kotlin.test.assertEquals
  * Tests the solution to the puzzle for 2019, day 12, part 1.
  */
 class Year2019Day12Part1Test {
-    @Test fun testSolutionWithRealInput() {
+    @Test
+    fun testSolutionWithRealInput() {
         assertEquals(7636, solve())
     }
 
-    @Test fun testSolutionWithTestInput() {
+    @Test
+    fun testSolutionWithTestInput() {
         val solution = solve(
             inputPath = pathToInput(year = 2019, day = 12, fileName = "test_input.txt"),
             stepCount = 100

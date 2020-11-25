@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [pow].
  */
 class PowTest {
-    @Test fun testPowOfLong() {
+    @Test
+    fun testPowOfLong() {
         assertEquals(1L, 1L.pow(0))
         assertEquals(1L, 1L.pow(1))
         assertEquals(1L, 1L.pow(2))
@@ -32,7 +33,8 @@ class PowTest {
         assertEquals(819628286980801L, 31L.pow(10))
     }
 
-    @Test fun testPowOfInt() {
+    @Test
+    fun testPowOfInt() {
         assertEquals(1, 1.pow(0))
         assertEquals(1, 1.pow(1))
         assertEquals(1, 1.pow(2))

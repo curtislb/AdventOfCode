@@ -9,7 +9,8 @@ import kotlin.test.assertNull
  * Tests [bfsApply] and [bfsDistance].
  */
 class BfsTest {
-    @Test fun testApplyToSourceOnly() {
+    @Test
+    fun testApplyToSourceOnly() {
         for (source in 0..7) {
             val appliedList = mutableListOf<Pair<Int, Long>>()
             bfsApply(source, ::getNeighbors) { node, distance ->
@@ -20,7 +21,8 @@ class BfsTest {
         }
     }
 
-    @Test fun testApplyToSourceAndNeighbors() {
+    @Test
+    fun testApplyToSourceAndNeighbors() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
         bfsApply(2, ::getNeighbors) { node, distance ->
             if (distance <= 1L) {
@@ -35,7 +37,8 @@ class BfsTest {
         assertContainsExactly(expected, appliedList)
     }
 
-    @Test fun testApplyToAllInSubgraph() {
+    @Test
+    fun testApplyToAllInSubgraph() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
         bfsApply(2, ::getNeighbors) { node, distance ->
             appliedList.add(Pair(node, distance))
@@ -46,7 +49,8 @@ class BfsTest {
         assertContainsExactly(expected, appliedList)
     }
 
-    @Test fun testApplyToAllNodes() {
+    @Test
+    fun testApplyToAllNodes() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
         bfsApply(0, ::getNeighbors) { node, distance ->
             appliedList.add(Pair(node, distance))
@@ -66,7 +70,8 @@ class BfsTest {
         assertContainsExactly(expected, appliedList)
     }
 
-    @Test fun testDistanceToSource() {
+    @Test
+    fun testDistanceToSource() {
         for (source in 0..7) {
             val distance = bfsDistance(
                 source,
@@ -77,7 +82,8 @@ class BfsTest {
         }
     }
 
-    @Test fun testDistanceToNonexistentNode() {
+    @Test
+    fun testDistanceToNonexistentNode() {
         for (source in 0..7) {
             val distance = bfsDistance(
                 source,
@@ -88,7 +94,8 @@ class BfsTest {
         }
     }
 
-    @Test fun testDistanceToUnreachableNode() {
+    @Test
+    fun testDistanceToUnreachableNode() {
         val distance = bfsDistance(
             source = 2,
             isGoal = { it == 1 },
@@ -97,7 +104,8 @@ class BfsTest {
         assertNull(distance)
     }
 
-    @Test fun testDistanceToReachableNode() {
+    @Test
+    fun testDistanceToReachableNode() {
         val distance = bfsDistance(
             source = 0,
             isGoal = { it == 6 },

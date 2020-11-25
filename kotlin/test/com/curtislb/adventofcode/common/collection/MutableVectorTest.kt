@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [MutableVector].
  */
 class MutableVectorTest {
-    @Test fun testGetSetAndSize() {
+    @Test
+    fun testGetSetAndSize() {
         var vector = MutableVector()
         assertEquals(0, vector.size)
 
@@ -49,7 +50,8 @@ class MutableVectorTest {
         assertEquals(31, vector[2])
     }
 
-    @Test fun testUpdateWithNewComponents() {
+    @Test
+    fun testUpdateWithNewComponents() {
         var vector = MutableVector()
         vector.update()
         assertEquals(MutableVector(), vector)
@@ -64,7 +66,8 @@ class MutableVectorTest {
         MutableVector(-6, 7).update(8, -9, 10)
     }
 
-    @Test fun testUpdateWithComponentValues() {
+    @Test
+    fun testUpdateWithComponentValues() {
         var vector = MutableVector()
         vector.update(mapOf())
         assertEquals(MutableVector(), vector)
@@ -79,7 +82,8 @@ class MutableVectorTest {
         MutableVector(11, 12, -13).update(mapOf(0 to -14, 3 to 15))
     }
 
-    @Test fun testAdd() {
+    @Test
+    fun testAdd() {
         var vectorA = MutableVector()
         var vectorB = MutableVector()
         vectorA.add(vectorB)
@@ -104,7 +108,8 @@ class MutableVectorTest {
         MutableVector(3, -4).add(MutableVector(5))
     }
 
-    @Test fun testPlus() {
+    @Test
+    fun testPlus() {
         var vectorA = MutableVector()
         var vectorB = MutableVector()
         assertEquals(MutableVector(), vectorA + vectorB)
@@ -129,7 +134,8 @@ class MutableVectorTest {
         MutableVector(1) + MutableVector(2, 3)
     }
 
-    @Test fun testSumBy() {
+    @Test
+    fun testSumBy() {
         var vector = MutableVector()
         assertEquals(0, vector.sumBy { it })
         assertEquals(0, vector.sumBy { -it })
@@ -149,7 +155,8 @@ class MutableVectorTest {
         assertEquals(117, vector.sumBy { it * it })
     }
 
-    @Test fun testCopy() {
+    @Test
+    fun testCopy() {
         val vector = MutableVector(82, -30, -27)
         val vectorCopy = vector.copy()
         assertEquals(MutableVector(82, -30, -27), vectorCopy)
@@ -160,7 +167,8 @@ class MutableVectorTest {
         assertEquals(MutableVector(82, -30, -27), vectorCopy)
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         assertEquals("<>", MutableVector().toString())
         assertEquals("<0>", MutableVector(0).toString())
         assertEquals("<-1>", MutableVector(-1).toString())
@@ -168,7 +176,8 @@ class MutableVectorTest {
         assertEquals("<-3, 5, -2>", MutableVector(-3, 5, -2).toString())
     }
 
-    @Test fun testConstructMutableVectorOfZeros() {
+    @Test
+    fun testConstructMutableVectorOfZeros() {
         assertEquals(MutableVector(), MutableVector.ofZeros(0))
         assertEquals(MutableVector(0), MutableVector.ofZeros(1))
         assertEquals(MutableVector(0, 0), MutableVector.ofZeros(2))

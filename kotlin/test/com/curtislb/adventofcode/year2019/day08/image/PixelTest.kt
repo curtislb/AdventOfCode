@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [Pixel].
  */
 class PixelTest {
-    @Test fun testConstructFromValidInt() {
+    @Test
+    fun testConstructFromValidInt() {
         assertEquals(Pixel.BLACK, Pixel.from(0))
         assertEquals(Pixel.WHITE, Pixel.from(1))
         assertEquals(Pixel.ALPHA, Pixel.from(2))

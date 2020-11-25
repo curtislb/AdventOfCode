@@ -11,7 +11,8 @@ import kotlin.test.assertEquals
  * Tests [AddOperation].
  */
 class AddOperationTest {
-    @Test fun testProcessWithImmediateParams() {
+    @Test
+    fun testProcessWithImmediateParams() {
         val intcode = Intcode("1,98,-35,5,99,65")
         assertEquals(
             4,
@@ -31,7 +32,8 @@ class AddOperationTest {
         assertEquals(BigInteger.ZERO, intcode[6])
     }
 
-    @Test fun testProcessWithPositionParams() {
+    @Test
+    fun testProcessWithPositionParams() {
         val intcode = Intcode("4,-60,1,0,7,5,99,42")
         assertEquals(
             6,

@@ -8,7 +8,8 @@ import kotlin.test.assertNull
  * Tests [bisectIndex].
  */
 class BisectTest {
-    @Test fun testBisectIndex() {
+    @Test
+    fun testBisectIndex() {
         assertEquals(1L, bisectIndex { it > 0 })
         assertEquals(1L, bisectIndex(knownTrue = 1L) { it > 0L })
         assertEquals(1L, bisectIndex(knownTrue = 2L) { it > 0L })

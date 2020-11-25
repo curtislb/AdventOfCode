@@ -8,13 +8,15 @@ import kotlin.test.assertTrue
  * Tests [removeLast].
  */
 class RemoveLastTest {
-    @Test fun testWithOneItem() {
+    @Test
+    fun testWithOneItem() {
         val list = mutableListOf("foo")
         list.removeLast()
         assertTrue(list.isEmpty())
     }
 
-    @Test fun testWithMultipleItems() {
+    @Test
+    fun testWithMultipleItems() {
         val list = mutableListOf("lorem", "ipsum", "dolor", "sit")
         list.removeLast()
         assertEquals(mutableListOf("lorem", "ipsum", "dolor"), list)

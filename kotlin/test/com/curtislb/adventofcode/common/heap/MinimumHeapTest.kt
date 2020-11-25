@@ -13,17 +13,20 @@ import kotlin.test.assertTrue
 class MinimumHeapTest {
     private lateinit var heap: MinimumHeap<String>
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         heap = MinimumHeap()
     }
 
-    @Test fun testWhenEmpty() {
+    @Test
+    fun testWhenEmpty() {
         assertEquals(0, heap.size)
         assertTrue(heap.isEmpty())
         assertNull(heap["foo"])
     }
 
-    @Test fun testAddDecreaseAndPop() {
+    @Test
+    fun testAddDecreaseAndPop() {
         heap.add("lorem", 5L)
         assertEquals(1, heap.size)
         assertFalse(heap.isEmpty())

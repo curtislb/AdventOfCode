@@ -13,7 +13,8 @@ class FractionTest {
         Fraction(2, 0)
     }
 
-    @Test fun testConstructFromInts() {
+    @Test
+    fun testConstructFromInts() {
         var fraction = Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -55,7 +56,8 @@ class FractionTest {
         assertEquals(3L, fraction.denominator)
     }
 
-    @Test fun testConstructFromLongs() {
+    @Test
+    fun testConstructFromLongs() {
         var fraction = Fraction(0L)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -101,7 +103,8 @@ class FractionTest {
         assertEquals(18476178760755L, fraction.denominator)
     }
 
-    @Test fun testPlus() {
+    @Test
+    fun testPlus() {
         var fraction = Fraction(0) + Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -147,7 +150,8 @@ class FractionTest {
         assertEquals(99L, fraction.denominator)
     }
 
-    @Test fun testMinus() {
+    @Test
+    fun testMinus() {
         var fraction = Fraction(0) - Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -193,7 +197,8 @@ class FractionTest {
         assertEquals(99L, fraction.denominator)
     }
 
-    @Test fun testUnaryMinus() {
+    @Test
+    fun testUnaryMinus() {
         var fraction = -Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -219,7 +224,8 @@ class FractionTest {
         assertEquals(3L, fraction.denominator)
     }
 
-    @Test fun testTimes() {
+    @Test
+    fun testTimes() {
         var fraction = Fraction(0) * Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -257,7 +263,8 @@ class FractionTest {
         assertEquals(440L, fraction.denominator)
     }
 
-    @Test fun testDiv() {
+    @Test
+    fun testDiv() {
         var fraction = Fraction(0) / Fraction(1)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -296,7 +303,8 @@ class FractionTest {
         Fraction(1, 2) / Fraction(0)
     }
 
-    @Test fun testCeil() {
+    @Test
+    fun testCeil() {
         assertEquals(0L, Fraction(0).ceil())
         assertEquals(1L, Fraction(1).ceil())
         assertEquals(2L, Fraction(2).ceil())
@@ -319,7 +327,8 @@ class FractionTest {
         assertEquals(-333L, Fraction(-1000, 3).ceil())
     }
 
-    @Test fun testFloor() {
+    @Test
+    fun testFloor() {
         assertEquals(0L, Fraction(0).floor())
         assertEquals(1L, Fraction(1).floor())
         assertEquals(2L, Fraction(2).floor())
@@ -342,7 +351,8 @@ class FractionTest {
         assertEquals(-334L, Fraction(-1000, 3).floor())
     }
 
-    @Test fun testEquals() {
+    @Test
+    fun testEquals() {
         assertEquals(Fraction(0), Fraction(0))
         assertEquals(Fraction(-1), Fraction(-1))
         assertEquals(Fraction(1, 2), Fraction(1, 2))
@@ -363,7 +373,8 @@ class FractionTest {
         assertNotEquals(Fraction(-3, 5), Fraction(-3, -5))
     }
 
-    @Test fun testHashCode() {
+    @Test
+    fun testHashCode() {
         val fractions = listOf(
             Fraction(11, 8),
             Fraction(-17, -13),
@@ -382,7 +393,8 @@ class FractionTest {
         fractions.forEachIndexed { index, fraction -> assertEquals(index, hashMap[fraction]) }
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         assertEquals("0/1", Fraction(0).toString())
         assertEquals("1/1", Fraction(1).toString())
         assertEquals("-1/1", Fraction(-1).toString())

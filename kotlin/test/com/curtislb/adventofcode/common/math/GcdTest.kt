@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [greatestCommonDivisor].
  */
 class GcdTest {
-    @Test fun testGreatestCommonDivisorWithLongs() {
+    @Test
+    fun testGreatestCommonDivisorWithLongs() {
         assertEquals(1L, greatestCommonDivisor(1L, 1L))
         assertEquals(1L, greatestCommonDivisor(1L, 2L))
         assertEquals(2L, greatestCommonDivisor(2L, 2L))
@@ -20,7 +21,8 @@ class GcdTest {
         assertEquals(3581L, greatestCommonDivisor(452713601L, 662853843L))
     }
 
-    @Test fun testGreatestCommonDivisorWithInts() {
+    @Test
+    fun testGreatestCommonDivisorWithInts() {
         assertEquals(1, greatestCommonDivisor(1, 1))
         assertEquals(1, greatestCommonDivisor(1, 2))
         assertEquals(2, greatestCommonDivisor(2, 2))

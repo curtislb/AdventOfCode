@@ -10,7 +10,8 @@ import kotlin.test.assertTrue
  * Tests [ExactLengthGenerator].
  */
 class ExactLengthGeneratorTest {
-    @Test fun testWithLengthZero() {
+    @Test
+    fun testWithLengthZero() {
         val generator = ExactLengthGenerator(0)
         assertTrue(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
@@ -19,7 +20,8 @@ class ExactLengthGeneratorTest {
         }
     }
 
-    @Test fun testWithLengthOne() {
+    @Test
+    fun testWithLengthOne() {
         val generator = ExactLengthGenerator(1)
         assertFalse(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -33,7 +35,8 @@ class ExactLengthGeneratorTest {
         }
     }
 
-    @Test fun testWithLengthTwo() {
+    @Test
+    fun testWithLengthTwo() {
         val generator = ExactLengthGenerator(2)
         assertFalse(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -52,7 +55,8 @@ class ExactLengthGeneratorTest {
         }
     }
 
-    @Test fun testCountPasswords() {
+    @Test
+    fun testCountPasswords() {
         assertEquals(1, ExactLengthGenerator(0).countPasswords())
         assertEquals(0, ExactLengthGenerator(0).addDigit(0).countPasswords())
         assertEquals(10, ExactLengthGenerator(1).countPasswords())
@@ -66,7 +70,8 @@ class ExactLengthGeneratorTest {
         assertEquals(10000, ExactLengthGenerator(6).addDigit(6).addDigit(3).countPasswords())
     }
 
-    @Test fun testGeneratePasswordSuffixes() {
+    @Test
+    fun testGeneratePasswordSuffixes() {
         assertEquals(listOf(""), ExactLengthGenerator(0).generatePasswordSuffixes().toList())
         assertEquals(emptyList(), ExactLengthGenerator(0).addDigit(0).generatePasswordSuffixes().toList())
         assertContainsExactly(

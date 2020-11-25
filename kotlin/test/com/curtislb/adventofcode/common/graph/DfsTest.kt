@@ -8,25 +8,29 @@ import kotlin.test.assertEquals
  * Tests [dfsPaths].
  */
 class DfsTest {
-    @Test fun testPathsWithNoGoals() {
+    @Test
+    fun testPathsWithNoGoals() {
         for (source in 0..3) {
             assertEquals(emptyMap(), dfsPaths(source, isGoal = { false }, getNeighbors = ::getNeighbors))
         }
     }
 
-    @Test fun testPathsWithSourceAsGoal() {
+    @Test
+    fun testPathsWithSourceAsGoal() {
         for (source in 0..3) {
             val paths = dfsPaths(source, isGoal = { it == source }, getNeighbors = ::getNeighbors)
             assertEquals(mapOf(source to listOf(emptyList())), paths)
         }
     }
 
-    @Test fun testPathsInSubgraph() {
+    @Test
+    fun testPathsInSubgraph() {
         val paths = dfsPaths(1, isGoal = { true }, getNeighbors = ::getNeighbors)
         assertEquals(mapOf(1 to listOf(emptyList()), 3 to listOf(listOf(3))), paths)
     }
 
-    @Test fun testPathsInFullGraph() {
+    @Test
+    fun testPathsInFullGraph() {
         val paths = dfsPaths(2, isGoal = { it == 3 }, getNeighbors = ::getNeighbors)
         assertEquals(1, paths.size)
 

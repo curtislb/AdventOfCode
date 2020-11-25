@@ -15,23 +15,27 @@ class MapLinesTest {
 
     private lateinit var file: File
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         file = temporaryFolder.newFile()
     }
 
-    @Test fun testWithEmptyFile() {
+    @Test
+    fun testWithEmptyFile() {
         file.mapLines { it.toUpperCase() }
         val mappedLines = file.mapLines { it.toUpperCase() }
         assertEquals(emptyList(), mappedLines)
     }
 
-    @Test fun testWithSingleLineFile() {
+    @Test
+    fun testWithSingleLineFile() {
         file.writeText("Lorem ipsum")
         val mappedLines = file.mapLines { it.toUpperCase() }
         assertEquals(listOf("LOREM IPSUM"), mappedLines)
     }
 
-    @Test fun testWithMultiLineFile() {
+    @Test
+    fun testWithMultiLineFile() {
         file.writeText("dolor \n Sit amet.\n")
         val mappedLines = file.mapLines { it.toUpperCase() }
         assertEquals(listOf("DOLOR ", " SIT AMET."), mappedLines)

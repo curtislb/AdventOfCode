@@ -11,7 +11,8 @@ import kotlin.test.assertEquals
  * Tests [CustomStrategy].
  */
 class CustomStrategyTest {
-    @Test fun testNextMove() {
+    @Test
+    fun testNextMove() {
         val strategy = CustomStrategy { board ->
             when (board[Point.ORIGIN]) {
                 Tile.EMPTY -> {

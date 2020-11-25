@@ -15,16 +15,19 @@ class ReadIntRangeTest {
 
     private lateinit var file: File
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         file = temporaryFolder.newFile()
     }
 
-    @Test fun testWithDefaultSeparator() {
+    @Test
+    fun testWithDefaultSeparator() {
         file.writeText("66-932")
         assertEquals(66..932, file.readIntRange())
     }
 
-    @Test fun testWithCustomSeparator() {
+    @Test
+    fun testWithCustomSeparator() {
         file.writeText("-733<=>821\n")
         assertEquals(-733..821, file.readIntRange(separator = "<=>"))
     }

@@ -17,23 +17,27 @@ class ForEachCharTest {
     private lateinit var file: File
     private lateinit var chars: MutableList<Char>
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         file = temporaryFolder.newFile()
         chars = mutableListOf()
     }
 
-    @Test fun testWithEmptyFile() {
+    @Test
+    fun testWithEmptyFile() {
         file.forEachChar { chars.add(it) }
         assertTrue(chars.isEmpty())
     }
 
-    @Test fun testWithSingleLineFile() {
+    @Test
+    fun testWithSingleLineFile() {
         file.writeText("Hello!")
         file.forEachChar { chars.add(it) }
         assertEquals(listOf('H', 'e', 'l', 'l', 'o', '!'), chars.toList())
     }
 
-    @Test fun testWithMultiLineFile() {
+    @Test
+    fun testWithMultiLineFile() {
         file.writeText("foo\nBar \n")
         file.forEachChar { chars.add(it) }
         assertEquals(listOf('f', 'o', 'o', '\n', 'B', 'a', 'r', ' ', '\n'), chars.toList())

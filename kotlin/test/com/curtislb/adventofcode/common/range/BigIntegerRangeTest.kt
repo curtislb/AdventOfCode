@@ -9,7 +9,8 @@ import kotlin.test.assertNotEquals
  * Tests [BigIntegerRange].
  */
 class BigIntegerRangeTest {
-    @Test fun testSize() {
+    @Test
+    fun testSize() {
         assertEquals(BigInteger.ZERO, BigIntegerRange.EMPTY.size)
         assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).size)
         assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).size)
@@ -22,7 +23,8 @@ class BigIntegerRangeTest {
         assertEquals(BigInteger("1420198"), BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size)
     }
 
-    @Test fun testConstructFromIntRange() {
+    @Test
+    fun testConstructFromIntRange() {
         var range = BigIntegerRange(0..0)
         assertEquals(BigInteger.ZERO, range.start)
         assertEquals(BigInteger.ZERO, range.endInclusive)
@@ -40,7 +42,8 @@ class BigIntegerRangeTest {
         assertEquals(BigInteger("100"), range.endInclusive)
     }
 
-    @Test fun testConstructFromLongRange() {
+    @Test
+    fun testConstructFromLongRange() {
         var range = BigIntegerRange(0L..0L)
         assertEquals(BigInteger.ZERO, range.start)
         assertEquals(BigInteger.ZERO, range.endInclusive)
@@ -58,7 +61,8 @@ class BigIntegerRangeTest {
         assertEquals(BigInteger("100"), range.endInclusive)
     }
 
-    @Test fun testIterator() {
+    @Test
+    fun testIterator() {
         val items = mutableListOf<BigInteger>()
         for (item in BigIntegerRange(BigInteger("-4"), BigInteger("3"))) {
             items.add(item)
@@ -78,7 +82,8 @@ class BigIntegerRangeTest {
         )
     }
 
-    @Test fun testEquals() {
+    @Test
+    fun testEquals() {
         assertEquals(BigIntegerRange.EMPTY, BigIntegerRange.EMPTY)
         assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ZERO), BigIntegerRange.EMPTY)
         assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ZERO), BigIntegerRange(BigInteger.TWO, BigInteger.ZERO))
@@ -114,7 +119,8 @@ class BigIntegerRangeTest {
         )
     }
 
-    @Test fun testHashCode() {
+    @Test
+    fun testHashCode() {
         val ranges = listOf(
             BigIntegerRange(BigInteger("90"), BigInteger("-4")),
             BigIntegerRange(BigInteger("-100"),  BigInteger("-27")),
@@ -132,7 +138,8 @@ class BigIntegerRangeTest {
         ranges.forEachIndexed { index, range -> assertEquals(index, hashMap[range]) }
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         assertEquals("1..0", BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).toString())
         assertEquals("2..0", BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).toString())
         assertEquals("0..0", BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO).toString())

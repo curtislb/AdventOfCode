@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [Counter].
  */
 class CounterTest {
-    @Test fun testWhenEmpty() {
+    @Test
+    fun testWhenEmpty() {
         val counter = Counter<String>()
         assertEquals(emptyMap(), counter.toMap())
         assertEquals(emptySet(), counter.entriesWithNonzeroCount)
@@ -22,7 +23,8 @@ class CounterTest {
         assertEquals(0L, counter["baz"])
     }
 
-    @Test fun testWithInitialCounts() {
+    @Test
+    fun testWithInitialCounts() {
         val counts = mapOf("lorem" to 2L, "ipsum" to 0L, "dolor" to -3L, "sit" to 2147483648L)
         val counter = Counter(counts)
         assertEquals(mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L), counter.toMap())
@@ -45,7 +47,8 @@ class CounterTest {
         assertEquals(0L, counter["amet"])
     }
 
-    @Test fun testUpdatingCounts() {
+    @Test
+    fun testUpdatingCounts() {
         val counter = Counter<String>()
 
         counter["badger"] += 12L
@@ -74,7 +77,8 @@ class CounterTest {
         assertEquals(-5L, counter["snake"])
     }
 
-    @Test fun testClearNegativeCounts() {
+    @Test
+    fun testClearNegativeCounts() {
         val counter = Counter(mapOf(
             "alpha" to 560209110L,
             "bravo" to -693733719L,

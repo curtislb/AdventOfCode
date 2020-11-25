@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [leastCommonMultiple].
  */
 class LcmTest {
-    @Test fun testLeastCommonMultipleWithTwoLongs() {
+    @Test
+    fun testLeastCommonMultipleWithTwoLongs() {
         assertEquals(1L, leastCommonMultiple(1L, 1L))
         assertEquals(2L, leastCommonMultiple(1L, 2L))
         assertEquals(2L, leastCommonMultiple(2L, 1L))
@@ -23,7 +24,8 @@ class LcmTest {
 
     }
 
-    @Test fun testLeastCommonMultipleWithTwoInts() {
+    @Test
+    fun testLeastCommonMultipleWithTwoInts() {
         assertEquals(1, leastCommonMultiple(1, 1))
         assertEquals(2, leastCommonMultiple(1, 2))
         assertEquals(2, leastCommonMultiple(2, 1))
@@ -37,7 +39,8 @@ class LcmTest {
         assertEquals(105, leastCommonMultiple(15, 35))
     }
 
-    @Test fun testLeastCommonMultipleWithSeveralLongs() {
+    @Test
+    fun testLeastCommonMultipleWithSeveralLongs() {
         assertEquals(1L, leastCommonMultiple(1L, 1L, 1L))
         assertEquals(2L, leastCommonMultiple(2L, 1L, 1L))
         assertEquals(64L, leastCommonMultiple(2L, 64L, 8L))

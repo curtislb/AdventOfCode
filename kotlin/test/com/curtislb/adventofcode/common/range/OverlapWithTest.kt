@@ -8,13 +8,15 @@ import kotlin.test.assertTrue
  * Tests [overlapWith].
  */
 class OverlapWithTest {
-    @Test fun testWithEmptyRange() {
+    @Test
+    fun testWithEmptyRange() {
         assertTrue(IntRange.EMPTY.overlapWith(IntRange.EMPTY).isEmpty())
         assertTrue((0..1).overlapWith(IntRange.EMPTY).isEmpty())
         assertTrue(IntRange.EMPTY.overlapWith(0..1).isEmpty())
     }
 
-    @Test fun testWithNonOverlappingRanges() {
+    @Test
+    fun testWithNonOverlappingRanges() {
         assertTrue((0..0).overlapWith(1..1).isEmpty())
         assertTrue((1..1).overlapWith(0..0).isEmpty())
         assertTrue((0..1).overlapWith(2..2).isEmpty())
@@ -25,7 +27,8 @@ class OverlapWithTest {
         assertTrue((9..19).overlapWith(-16..2).isEmpty())
     }
 
-    @Test fun testWithOverlappingRanges() {
+    @Test
+    fun testWithOverlappingRanges() {
         assertEquals(0..0, (0..0).overlapWith(0..0).toIterableRange())
         assertEquals(1..1, (1..1).overlapWith(1..1).toIterableRange())
         assertEquals(0..1, (0..1).overlapWith(0..1).toIterableRange())

@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [SatisfiesAllGenerator].
  */
 class SatisfiesAllGeneratorTest {
-    @Test fun testWithNoGenerators() {
+    @Test
+    fun testWithNoGenerators() {
         val generator = SatisfiesAllGenerator()
         assertTrue(generator.isValid)
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
@@ -20,7 +21,8 @@ class SatisfiesAllGeneratorTest {
         }
     }
 
-    @Test fun testWithOneGenerator() {
+    @Test
+    fun testWithOneGenerator() {
         val fakeGenerator = FakeGenerator()
         var generator: PasswordGenerator = SatisfiesAllGenerator(fakeGenerator)
         fakeGenerator.isValidAnswer = true
@@ -35,7 +37,8 @@ class SatisfiesAllGeneratorTest {
         assertEquals(setOf(0, 1, 2, 3, 4, 5, 9), generator.nextDigits)
     }
 
-    @Test fun testWithTwoGenerators() {
+    @Test
+    fun testWithTwoGenerators() {
         val fakeGeneratorA = FakeGenerator()
         val fakeGeneratorB = FakeGenerator()
         var generator: PasswordGenerator = SatisfiesAllGenerator(fakeGeneratorA, fakeGeneratorB)

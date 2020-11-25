@@ -10,13 +10,15 @@ import kotlin.test.assertEquals
  * Tests [uniquePairs].
  */
 class UniquePairsTest {
-    @Test fun testWithTwoItems() {
+    @Test
+    fun testWithTwoItems() {
         val actual = listOf("foo", "bar").uniquePairs().toList()
         assertEquals(1, actual.size)
         assertHasPair("foo", "bar", actual)
     }
 
-    @Test fun testWithThreeItems() {
+    @Test
+    fun testWithThreeItems() {
         val actual = listOf("lorem", "ipsum", "dolor").uniquePairs().toList()
         assertEquals(3, actual.size)
         assertHasPair("lorem", "ipsum", actual)
@@ -24,7 +26,8 @@ class UniquePairsTest {
         assertHasPair("lorem", "dolor", actual)
     }
 
-    @Test fun testWithFourItems() {
+    @Test
+    fun testWithFourItems() {
         val actual = listOf(1, 2, 3, 4).uniquePairs().toList()
         assertEquals(6, actual.size)
         assertHasPair(1, 2, actual)

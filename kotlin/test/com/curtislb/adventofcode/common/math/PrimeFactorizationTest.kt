@@ -7,7 +7,8 @@ import kotlin.test.assertEquals
  * Tests [primeFactorization].
  */
 class PrimeFactorizationTest {
-    @Test fun testPrimeFactorization() {
+    @Test
+    fun testPrimeFactorization() {
         assertEquals(emptyMap(), 1L.primeFactorization())
         assertEquals(mapOf(2L to 1), 2L.primeFactorization())
         assertEquals(mapOf(3L to 1), 3L.primeFactorization())

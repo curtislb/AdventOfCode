@@ -10,7 +10,8 @@ import kotlin.test.assertEquals
  * Tests [Point].
  */
 class PointTest {
-    @Test fun testNeighbors() {
+    @Test
+    fun testNeighbors() {
         assertContainsExactly(listOf(Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0)), Point(0, 0).neighbors)
         assertContainsExactly(listOf(Point(10, 1), Point(11, 0), Point(10, -1), Point(9, 0)), Point(10, 0).neighbors)
         assertContainsExactly(listOf(Point(18, 10), Point(19, 9), Point(18, 8), Point(17, 9)), Point(18, 9).neighbors)
@@ -20,14 +21,16 @@ class PointTest {
         )
     }
 
-    @Test fun testMoveZeroDistance() {
+    @Test
+    fun testMoveZeroDistance() {
         assertEquals(Point(-2, -12), Point(-2, -12).move(Direction.UP, distance = 0))
         assertEquals(Point(0, 16), Point(0, 16).move(Direction.RIGHT, distance = 0))
         assertEquals(Point(-9, 13), Point(-9, 13).move(Direction.DOWN, distance = 0))
         assertEquals(Point(-1, -2), Point(-1, -2).move(Direction.LEFT, distance = 0))
     }
 
-    @Test fun testMoveNonzeroDistance() {
+    @Test
+    fun testMoveNonzeroDistance() {
         assertEquals(Point(0, 18), Point(0, 17).move(Direction.UP))
         assertEquals(Point(18, -2), Point(17, -2).move(Direction.RIGHT))
         assertEquals(Point(-14, 7), Point(-14, 8).move(Direction.DOWN))
@@ -38,7 +41,8 @@ class PointTest {
         assertEquals(Point(6, -6), Point(11, -6).move(Direction.LEFT, 5))
     }
 
-    @Test fun testManhattanDistance() {
+    @Test
+    fun testManhattanDistance() {
         assertEquals(0, Point(1, -17).manhattanDistance(Point(1, -17)))
         assertEquals(1, Point(-20, 0).manhattanDistance(Point(-21, 0)))
         assertEquals(21, Point(18, 3).manhattanDistance(Point(14, -14)))
@@ -47,7 +51,8 @@ class PointTest {
         assertEquals(38, Point(-10, 19).manhattanDistance(Point(12, 3)))
     }
 
-    @Test fun testSquaredDistance() {
+    @Test
+    fun testSquaredDistance() {
         assertEquals(0, Point(1, -18).squaredDistance(Point(1, -18)))
         assertEquals(1, Point(-2, 18).squaredDistance(Point(-2, 17)))
         assertEquals(10, Point(-15, 12).squaredDistance(Point(-14, 15)))
@@ -61,7 +66,8 @@ class PointTest {
         Point(6, 3).angleClockwiseFromPositiveY(Point(6, 3))
     }
 
-    @Test fun testAngleClockwiseFromPositiveYWithDifferentPoint() {
+    @Test
+    fun testAngleClockwiseFromPositiveYWithDifferentPoint() {
         assertAlmostEquals(0.0, Point(13, -20).angleClockwiseFromPositiveY(Point(13, -19)))
         assertAlmostEquals(PI / 2.0, Point(0, -9).angleClockwiseFromPositiveY(Point(12, -9)))
         assertAlmostEquals(PI, Point(-6, 17).angleClockwiseFromPositiveY(Point(-6, 12)))
@@ -76,7 +82,8 @@ class PointTest {
         assertAlmostEquals(5.6577002669404, Point(18, -19).angleClockwiseFromPositiveY(Point(5, -1)))
     }
 
-    @Test fun testToMatrixCoordinates() {
+    @Test
+    fun testToMatrixCoordinates() {
         assertEquals(Pair(0, 0), Point.ORIGIN.toMatrixCoordinates())
         assertEquals(Pair(7, 9), Point(9, -7).toMatrixCoordinates())
         assertEquals(Pair(12, 20), Point(20, -12).toMatrixCoordinates())
@@ -90,7 +97,8 @@ class PointTest {
         assertEquals(Pair(-7, -3), Point(-3, 7).toMatrixCoordinates())
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         assertEquals("(0, 0)", Point.ORIGIN.toString())
         assertEquals("(4, 20)", Point(4, 20).toString())
         assertEquals("(14, -12)", Point(14, -12).toString())
@@ -98,7 +106,8 @@ class PointTest {
         assertEquals("(-18, -15)", Point(-18, -15).toString())
     }
 
-    @Test fun testConstructFromMatrixCoordinates() {
+    @Test
+    fun testConstructFromMatrixCoordinates() {
         assertEquals(Point(0, 0), Point.fromMatrixCoordinates(0, 0))
         assertEquals(Point(5, -1), Point.fromMatrixCoordinates(1, 5))
         assertEquals(Point(0, -7), Point.fromMatrixCoordinates(7, 0))

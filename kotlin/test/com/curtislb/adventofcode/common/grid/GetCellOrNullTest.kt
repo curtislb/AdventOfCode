@@ -8,11 +8,13 @@ import kotlin.test.assertNull
  * Tests [getCellOrNull].
  */
 class GetCellOrNullTest {
-    @Test fun testWithEmptyGrid() {
+    @Test
+    fun testWithEmptyGrid() {
         assertNull(emptyList<Nothing>().getCellOrNull(0, 0))
     }
 
-    @Test fun testWithInvalidIndices() {
+    @Test
+    fun testWithInvalidIndices() {
         assertNull(GRID.getCellOrNull(-2, 3))
         assertNull(GRID.getCellOrNull(-2, 5))
         assertNull(GRID.getCellOrNull(-1, 0))
@@ -25,7 +27,8 @@ class GetCellOrNullTest {
         assertNull(GRID.getCellOrNull(5, 1))
     }
 
-    @Test fun testWithValidIndices() {
+    @Test
+    fun testWithValidIndices() {
         assertEquals(-17, GRID.getCellOrNull(0, 0))
         assertEquals(-8, GRID.getCellOrNull(0, 1))
         assertEquals(2, GRID.getCellOrNull(0, 2))
@@ -36,7 +39,8 @@ class GetCellOrNullTest {
         assertEquals(-19, GRID.getCellOrNull(3, 2))
     }
 
-    @Test fun testWithInvalidPoints() {
+    @Test
+    fun testWithInvalidPoints() {
         assertNull(GRID.getCellOrNull(Point(-2, -1)))
         assertNull(GRID.getCellOrNull(Point(-2, -4)))
         assertNull(GRID.getCellOrNull(Point(-1, -2)))
@@ -52,7 +56,8 @@ class GetCellOrNullTest {
 
     }
 
-    @Test fun testWithValidPoints() {
+    @Test
+    fun testWithValidPoints() {
         assertEquals(-18, GRID.getCellOrNull(Point(0, -1)))
         assertEquals(11, GRID.getCellOrNull(Point(0, -3)))
         assertEquals(9, GRID.getCellOrNull(Point(1, -2)))

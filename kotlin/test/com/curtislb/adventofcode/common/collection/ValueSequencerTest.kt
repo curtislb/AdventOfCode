@@ -13,18 +13,21 @@ import kotlin.test.fail
 class ValueSequencerTest {
     private lateinit var sequencer: ValueSequencer<Int>
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         sequencer = ValueSequencer()
     }
 
-    @Test fun testWhenEmpty() {
+    @Test
+    fun testWhenEmpty() {
         assertFalse(sequencer.hasNext())
         assertNextThrows(sequencer)
         sequencer.clear()
         assertFalse(sequencer.hasNext())
     }
 
-    @Test fun testQueueing() {
+    @Test
+    fun testQueueing() {
         sequencer.queue(sequenceOf(11))
         assertTrue(sequencer.hasNext())
         sequencer.queue(sequenceOf(52, -73))
@@ -46,7 +49,8 @@ class ValueSequencerTest {
         assertNextThrows(sequencer)
     }
 
-    @Test fun testClear() {
+    @Test
+    fun testClear() {
         sequencer.queue(sequenceOf(-30, 71))
         assertTrue(sequencer.hasNext())
         sequencer.clear()

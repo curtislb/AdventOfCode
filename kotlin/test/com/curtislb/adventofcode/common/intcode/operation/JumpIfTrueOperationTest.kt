@@ -10,7 +10,8 @@ import kotlin.test.assertEquals
  * Tests [JumpIfTrueOperation].
  */
 class JumpIfTrueOperationTest {
-    @Test fun testProcessWithZeroParam() {
+    @Test
+    fun testProcessWithZeroParam() {
         val intcode = Intcode("5,0,4,99,3,39")
         assertEquals(
             3,
@@ -30,7 +31,8 @@ class JumpIfTrueOperationTest {
         assertEquals(BigInteger.ZERO, intcode[6])
     }
 
-    @Test fun testProcessWithPositiveParam() {
+    @Test
+    fun testProcessWithPositiveParam() {
         val intcode = Intcode("5,25,4,99,3,39")
         assertEquals(
             4,
@@ -50,7 +52,8 @@ class JumpIfTrueOperationTest {
         assertEquals(BigInteger.ZERO, intcode[6])
     }
 
-    @Test fun testProcessWithNegativeParam() {
+    @Test
+    fun testProcessWithNegativeParam() {
         val intcode = Intcode("5,-94,4,99,3,39")
         assertEquals(
             4,

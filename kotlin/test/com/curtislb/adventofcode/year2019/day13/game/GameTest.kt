@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.year2019.day13.game
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import com.curtislb.adventofcode.year2019.day13.game.strategy.CustomStrategy
-import com.curtislb.adventofcode.year2019.day13.game.strategy.Strategy
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -16,7 +15,8 @@ import kotlin.test.assertEquals
 class GameTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test fun testFindAllTilesWithEmptyBoard() {
+    @Test
+    fun testFindAllTilesWithEmptyBoard() {
         val file = temporaryFolder.newFile().apply { writeText("99") }
         val game = Game(file)
         assertEquals(emptyList(), game.findAllTiles(Tile.EMPTY))
@@ -25,7 +25,8 @@ class GameTest {
         assertEquals(emptyList(), game.findAllTiles(Tile.PADDLE))
     }
 
-    @Test fun testFindAllTilesWithNonEmptyBoard() {
+    @Test
+    fun testFindAllTilesWithNonEmptyBoard() {
         val file = temporaryFolder.newFile().apply {
             writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,99")
         }
@@ -36,7 +37,8 @@ class GameTest {
         assertEquals(emptyList(), game.findAllTiles(Tile.PADDLE))
     }
 
-    @Test fun testPlayAndReset() {
+    @Test
+    fun testPlayAndReset() {
         val file = temporaryFolder.newFile().apply {
             writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
         }
@@ -55,7 +57,8 @@ class GameTest {
         assertEquals(BigInteger("4426"), score)
     }
 
-    @Test fun testPlayAndResetWithInitialization() {
+    @Test
+    fun testPlayAndResetWithInitialization() {
         val file = temporaryFolder.newFile().apply {
             writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
         }
@@ -74,7 +77,8 @@ class GameTest {
         assertEquals(BigInteger("7436"), score)
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         val file = temporaryFolder.newFile().apply {
             writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,104,-1,104,0,104,3133,99")
         }

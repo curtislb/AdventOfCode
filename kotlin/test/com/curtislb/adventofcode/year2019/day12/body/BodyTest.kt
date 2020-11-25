@@ -20,13 +20,15 @@ class BodyTest {
         Body(velocity = MutableVector(-2, 3, 4, -5))
     }
 
-    @Test fun testConstructFromBodyString() {
+    @Test
+    fun testConstructFromBodyString() {
         val body = Body("<x=3, y=-1, z=-7>")
         assertEquals(MutableVector(3, -1, -7), body.position)
         assertEquals(MutableVector(0, 0, 0), body.velocity)
     }
 
-    @Test fun testTotalEnergy() {
+    @Test
+    fun testTotalEnergy() {
         assertEquals(0, Body().totalEnergy)
         assertEquals(0, Body(MutableVector(1, 1, 1)).totalEnergy)
         assertEquals(0, Body(velocity = MutableVector(-1, 2, -3)).totalEnergy)
@@ -39,7 +41,8 @@ class BodyTest {
         )
     }
 
-    @Test fun testApplyGravity() {
+    @Test
+    fun testApplyGravity() {
         var body = Body()
         body.applyGravity(body)
         assertEquals(MutableVector(0, 0, 0), body.position)
@@ -66,7 +69,8 @@ class BodyTest {
         assertEquals(MutableVector(-19, -7, 14), body.velocity)
     }
 
-    @Test fun testApplyVelocity() {
+    @Test
+    fun testApplyVelocity() {
         var body = Body()
         body.applyVelocity()
         assertEquals(MutableVector(0, 0, 0), body.position)
@@ -88,7 +92,8 @@ class BodyTest {
         assertEquals(MutableVector(0, 19, -9), body.velocity)
     }
 
-    @Test fun testCopy() {
+    @Test
+    fun testCopy() {
         val body = Body(position = MutableVector(16, 14, -2), velocity = MutableVector(1, -9, 0))
         val bodyCopy = body.copy()
         body.position.update(3, -15, -7)
@@ -99,7 +104,8 @@ class BodyTest {
         assertEquals(MutableVector(1, -9, 0), bodyCopy.velocity)
     }
 
-    @Test fun testEquals() {
+    @Test
+    fun testEquals() {
         assertEquals(Body(), Body())
         assertEquals(Body(MutableVector(29, -81, 39)), Body(MutableVector(29, -81, 39)))
         assertEquals(Body(velocity = MutableVector(49, 79, 87)), Body(velocity = MutableVector(49, 79, 87)))
@@ -116,7 +122,8 @@ class BodyTest {
         )
     }
 
-    @Test fun testHashCode() {
+    @Test
+    fun testHashCode() {
         val bodies = listOf(
             Body(),
             Body(MutableVector(73, -96, 34)),
@@ -131,7 +138,8 @@ class BodyTest {
         bodies.forEachIndexed { index, body -> assertEquals(index, hashMap[body]) }
     }
 
-    @Test fun testToString() {
+    @Test
+    fun testToString() {
         assertEquals(
             "pos=<x=-8, y=10, z=11>, vel=<x=3, y=-3, z=0>",
             Body(position = MutableVector(-8, 10, 11), velocity = MutableVector(3, -3, 0)).toString()

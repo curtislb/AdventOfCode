@@ -21,7 +21,8 @@ class IntcodeTest {
     private lateinit var printedChars: MutableList<Char>
     private lateinit var standardOutput: PrintStream
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         printedChars = mutableListOf()
         standardOutput = System.out
         System.setOut(PrintStream(object : OutputStream() {
@@ -31,14 +32,16 @@ class IntcodeTest {
         }))
     }
 
-    @After fun tearDown() = System.setOut(standardOutput)
+    @After
+    fun tearDown() = System.setOut(standardOutput)
 
     @Test(expected = IllegalArgumentException::class)
     fun testWithEmptyProgram() {
         Intcode("")
     }
 
-    @Test fun testConstructFromFile() {
+    @Test
+    fun testConstructFromFile() {
         val file = temporaryFolder.newFile().apply { writeText("4,5,4,6,99,-2,11") }
 
         val intcode = Intcode(file)
@@ -54,7 +57,8 @@ class IntcodeTest {
         assertEquals("-2%n11%n".format(), printedChars.joinToString(separator = ""))
     }
 
-    @Test fun testConstructFromFileWithCustomOutputFunction() {
+    @Test
+    fun testConstructFromFileWithCustomOutputFunction() {
         val file = temporaryFolder.newFile().apply { writeText("4,5,4,6,99,3,13") }
 
         val outputs = mutableListOf<BigInteger>()
@@ -71,7 +75,8 @@ class IntcodeTest {
         assertEquals(listOf(BigInteger("3"), BigInteger("13")), outputs.toList())
     }
 
-    @Test fun testWithNoOpProgram() {
+    @Test
+    fun testWithNoOpProgram() {
         val intcode = Intcode("99")
         assertFalse(intcode.isDone)
         assertFalse(intcode.isPaused)
@@ -103,7 +108,8 @@ class IntcodeTest {
         intcode[-1] = BigInteger.ONE
     }
 
-    @Test fun testSetAndResetExtendedValue() {
+    @Test
+    fun testSetAndResetExtendedValue() {
         val intcode = Intcode("99")
         intcode[1] = BigInteger.ONE
         assertEquals(BigInteger.ONE, intcode[1])
@@ -111,7 +117,8 @@ class IntcodeTest {
         assertEquals(BigInteger.ZERO, intcode[1])
     }
 
-    @Test fun testHandlesParameterMode() {
+    @Test
+    fun testHandlesParameterMode() {
         val intcode = Intcode("1001,5,-9,6,99,17,-12")
         intcode.run()
         assertEquals(BigInteger("1001"), intcode[0])
@@ -123,7 +130,8 @@ class IntcodeTest {
         assertEquals(BigInteger("8"), intcode[6])
     }
 
-    @Test fun testHandlesInput() {
+    @Test
+    fun testHandlesInput() {
         val intcode = Intcode("3,15,3,22,3,32,99")
         assertFalse(intcode.isDone)
         assertFalse(intcode.isPaused)
@@ -161,7 +169,8 @@ class IntcodeTest {
         assertEquals(BigInteger("11"), intcode[32])
     }
 
-    @Test fun testHandlesOutput() {
+    @Test
+    fun testHandlesOutput() {
         val intcode = Intcode("4,5,4,6,99,18,-19")
         assertTrue(printedChars.isEmpty())
 
@@ -175,7 +184,8 @@ class IntcodeTest {
         assertEquals("18%n-19%n18%n-19%n".format(), printedChars.joinToString(separator = ""))
     }
 
-    @Test fun testHandlesOutputWithCustomFunction() {
+    @Test
+    fun testHandlesOutputWithCustomFunction() {
         val outputs = mutableListOf<BigInteger>()
         val intcode = Intcode("4,5,4,6,99,-74,16") { outputs.add(it) }
         assertTrue(outputs.isEmpty())

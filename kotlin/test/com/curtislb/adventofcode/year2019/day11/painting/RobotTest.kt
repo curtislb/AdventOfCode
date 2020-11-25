@@ -14,11 +14,13 @@ import kotlin.test.assertEquals
 class RobotTest {
     private lateinit var robot: Robot
 
-    @Before fun setUp () {
+    @Before
+    fun setUp () {
         robot = Robot()
     }
 
-    @Test fun testMoveAndTurn() {
+    @Test
+    fun testMoveAndTurn() {
         assertEquals(Orientation(Point(0, 0), Direction.UP), robot.orientation)
 
         robot.moveForward()
@@ -67,7 +69,8 @@ class RobotTest {
         assertEquals(Orientation(Point(-1, -1), Direction.LEFT), robot.orientation)
     }
 
-    @Test fun testPaintAndConstructGrid() {
+    @Test
+    fun testPaintAndConstructGrid() {
         assertEquals(0, robot.paintedArea)
         assertEquals(emptyList(), robot.constructPaintedGrid())
 
@@ -212,7 +215,8 @@ class RobotTest {
         robot.executeProgram(intcode)
     }
 
-    @Test fun testExecuteProgram() {
+    @Test
+    fun testExecuteProgram() {
         val intcode = Intcode("3,100,4,100,108,0,100,100,4,100,101,1,101,101,1007,101,6,102,1005,102,2,99")
         robot.executeProgram(intcode)
         assertEquals(6, robot.paintedArea)

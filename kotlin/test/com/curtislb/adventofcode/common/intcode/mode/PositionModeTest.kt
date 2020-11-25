@@ -12,11 +12,13 @@ import kotlin.test.assertEquals
 class PositionModeTest {
     private lateinit var intcode: Intcode
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         intcode = Intcode("1,36,-42,3,99")
     }
 
-    @Test fun testGetValue() {
+    @Test
+    fun testGetValue() {
         assertEquals(BigInteger("-42"), PositionMode.getValue(intcode, BigInteger.TWO))
         assertEquals(BigInteger("36"), PositionMode.getValue(intcode, BigInteger.ONE))
         assertEquals(BigInteger.ONE, PositionMode.getValue(intcode, BigInteger.ZERO))
@@ -25,7 +27,8 @@ class PositionModeTest {
         assertEquals(BigInteger("99"), PositionMode.getValue(intcode, BigInteger("4")))
     }
 
-    @Test fun testSetValue() {
+    @Test
+    fun testSetValue() {
         PositionMode.setValue(intcode, BigInteger.ONE, BigInteger("32"))
         PositionMode.setValue(intcode, BigInteger.ZERO, BigInteger("2"))
         PositionMode.setValue(intcode, BigInteger("3"), BigInteger("6"))

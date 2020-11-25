@@ -11,11 +11,13 @@ import kotlin.test.assertEquals
  * Tests [GreedyStrategy].
  */
 class GreedyStrategyTest {
-    @Test fun testNextMoveWithNoBallOrPaddle() {
+    @Test
+    fun testNextMoveWithNoBallOrPaddle() {
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(Board()))
     }
 
-    @Test fun testNextMoveWithNoBall() {
+    @Test
+    fun testNextMoveWithNoBall() {
         val board = Board()
         board[Point.ORIGIN] = Tile.PADDLE
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(board))
@@ -27,7 +29,8 @@ class GreedyStrategyTest {
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(board))
     }
 
-    @Test fun testNextMoveWithNoPaddle() {
+    @Test
+    fun testNextMoveWithNoPaddle() {
         val board = Board()
         board[Point(1, -4)] = Tile.BALL
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(board))
@@ -39,7 +42,8 @@ class GreedyStrategyTest {
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(board))
     }
 
-    @Test fun testNextMoveWithBallAndPaddle() {
+    @Test
+    fun testNextMoveWithBallAndPaddle() {
         var board = Board()
         board[Point.ORIGIN] = Tile.BALL
         board[Point(1, 0)] = Tile.PADDLE
@@ -56,7 +60,8 @@ class GreedyStrategyTest {
         assertEquals(BigInteger.ZERO, GreedyStrategy.nextMove(board))
     }
 
-    @Test fun testNextMoveWithMultipleBallsAndPaddles() {
+    @Test
+    fun testNextMoveWithMultipleBallsAndPaddles() {
         var board = Board()
         board[Point(5, -5)] = Tile.BALL
         board[Point(8, 0)] = Tile.BALL

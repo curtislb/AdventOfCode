@@ -4,11 +4,13 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class ConstructGridTest {
-    @Test fun testWithNoPoints() {
+    @Test
+    fun testWithNoPoints() {
         assertEquals(emptyList(), constructGrid(emptyList()) { it })
     }
 
-    @Test fun testWithOnePoint() {
+    @Test
+    fun testWithOnePoint() {
         for (x in -2..2) {
             for (y in -2..2) {
                 val point = Point(x, y)
@@ -18,7 +20,8 @@ class ConstructGridTest {
         }
     }
 
-    @Test fun testWithMultiplePoints() {
+    @Test
+    fun testWithMultiplePoints() {
         val points = listOf(
             Point(-4, -3),
             Point(-4, 0),

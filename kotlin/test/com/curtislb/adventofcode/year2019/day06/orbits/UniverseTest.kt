@@ -12,7 +12,8 @@ import org.junit.rules.TemporaryFolder
 class UniverseTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test fun testWhenEmpty() {
+    @Test
+    fun testWhenEmpty() {
         val universe = Universe()
         assertEquals(0, universe.countOrbits("A"))
         assertEquals(0, universe.countOrbits("B"))
@@ -22,7 +23,8 @@ class UniverseTest {
         assertNull(universe.findOrbitalTransferDistance("B", "B"))
     }
 
-    @Test fun testWithOneOrbit() {
+    @Test
+    fun testWithOneOrbit() {
         val universe = Universe()
         universe.addOrbit("A", "B")
         assertEquals(1, universe.countOrbits("A"))
@@ -39,7 +41,8 @@ class UniverseTest {
         assertNull(universe.findOrbitalTransferDistance("C", "C"))
     }
 
-    @Test fun testWithTwoOrbitsAroundCenter() {
+    @Test
+    fun testWithTwoOrbitsAroundCenter() {
         val universe = Universe()
         universe.addOrbit("A", "B")
         universe.addOrbit("A", "C")
@@ -57,7 +60,8 @@ class UniverseTest {
         assertEquals(0, universe.findOrbitalTransferDistance("C", "C"))
     }
 
-    @Test fun testWithTwoOrbitChain() {
+    @Test
+    fun testWithTwoOrbitChain() {
         val universe = Universe()
         universe.addOrbit("A", "B")
         universe.addOrbit("B", "C")
@@ -75,7 +79,8 @@ class UniverseTest {
         assertEquals(0, universe.findOrbitalTransferDistance("C", "C"))
     }
 
-    @Test fun testWithFourPlanets() {
+    @Test
+    fun testWithFourPlanets() {
         val universe = Universe()
         universe.addOrbit("A", "B")
         universe.addOrbit("B", "C")
@@ -102,7 +107,8 @@ class UniverseTest {
         assertEquals(0, universe.findOrbitalTransferDistance("D", "D"))
     }
 
-    @Test fun testConstructFromEmptyFile() {
+    @Test
+    fun testConstructFromEmptyFile() {
         val universe = Universe(temporaryFolder.newFile())
         assertEquals(0, universe.countOrbits("A"))
         assertEquals(0, universe.countOrbits("B"))
@@ -112,7 +118,8 @@ class UniverseTest {
         assertNull(universe.findOrbitalTransferDistance("B", "B"))
     }
 
-    @Test fun testConstructFromFileWithFourPlanets() {
+    @Test
+    fun testConstructFromFileWithFourPlanets() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 A)B

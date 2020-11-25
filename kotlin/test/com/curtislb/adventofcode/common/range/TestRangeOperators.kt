@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests range operator extensions in  [com.curtislb.adventofcode.common.range].
  */
 class TestRangeOperators {
-    @Test fun testRangeTo() {
+    @Test
+    fun testRangeTo() {
         assertEquals(BigIntegerRange.EMPTY, BigInteger.ONE..BigInteger.ZERO)
         assertEquals(BigIntegerRange.EMPTY, BigInteger.TWO..BigInteger.ZERO)
         assertEquals(BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO), BigInteger.ZERO..BigInteger.ZERO)
@@ -20,7 +21,8 @@ class TestRangeOperators {
         assertEquals(BigIntegerRange(BigInteger("-861"), BigInteger("987")), BigInteger("-861")..BigInteger("987"))
     }
 
-    @Test fun testUntil() {
+    @Test
+    fun testUntil() {
         assertEquals(BigIntegerRange.EMPTY, BigInteger.ONE until BigInteger.ZERO)
         assertEquals(BigIntegerRange.EMPTY, BigInteger.TWO until BigInteger.ZERO)
         assertEquals(BigIntegerRange.EMPTY, BigInteger.ONE until BigInteger.ONE)

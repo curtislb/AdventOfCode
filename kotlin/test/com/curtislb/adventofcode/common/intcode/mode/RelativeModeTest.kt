@@ -12,11 +12,13 @@ import kotlin.test.assertEquals
 class RelativeModeTest {
     private lateinit var intcode: Intcode
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         intcode = Intcode("2,-59,98,29,99")
     }
 
-    @Test fun testGetValue() {
+    @Test
+    fun testGetValue() {
         assertEquals(BigInteger("98"), RelativeMode.getValue(intcode, BigInteger.TWO))
         assertEquals(BigInteger.ZERO, RelativeMode.getValue(intcode, BigInteger("5")))
         assertEquals(BigInteger("-59"), RelativeMode.getValue(intcode, BigInteger.ONE))
@@ -34,7 +36,8 @@ class RelativeModeTest {
         assertEquals(BigInteger("98"), RelativeMode.getValue(intcode, BigInteger("-1")))
     }
 
-    @Test fun testSetValue() {
+    @Test
+    fun testSetValue() {
         RelativeMode.setValue(intcode, BigInteger.ZERO, BigInteger("6"))
         RelativeMode.setValue(intcode, BigInteger("3"), BigInteger.TEN)
 

@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests [pathToInput].
  */
 class PathToInputTest {
-    @Test fun testWithoutPart() {
+    @Test
+    fun testWithoutPart() {
         assertEquals(Paths.get("input", "year1984", "day02", "input.txt"), pathToInput(year = 1984, day = 2))
         assertEquals(
             Paths.get("input", "year101", "day23", "foo.bar"),
@@ -20,7 +21,8 @@ class PathToInputTest {
         )
     }
 
-    @Test fun testWithPart() {
+    @Test
+    fun testWithPart() {
         assertEquals(
             Paths.get("input", "year2008", "day05", "part3", "input.txt"),
             pathToInput(year = 2008, day = 5, part = 3)

@@ -13,21 +13,24 @@ import kotlin.test.assertNull
 class AsteroidFieldTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
-    @Test fun testFindBestStationWhenEmpty() {
+    @Test
+    fun testFindBestStationWhenEmpty() {
         val file = temporaryFolder.newFile()
         val asteroidField = AsteroidField(file)
         assertEquals(Pair(null, 0), asteroidField.findBestStation())
         assertEquals(0, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithOneAsteroid() {
+    @Test
+    fun testFindBestStationWithOneAsteroid() {
         val file = temporaryFolder.newFile().apply { writeText("#") }
         val asteroidField = AsteroidField(file)
         assertEquals(Pair(Point(0, 0), 0), asteroidField.findBestStation())
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithOneAsteroidInEmptyField() {
+    @Test
+    fun testFindBestStationWithOneAsteroidInEmptyField() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ...
@@ -40,7 +43,8 @@ class AsteroidFieldTest {
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithHorizontalCollinearAsteroids() {
+    @Test
+    fun testFindBestStationWithHorizontalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ....
@@ -53,7 +57,8 @@ class AsteroidFieldTest {
         assertEquals(3, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithVerticalCollinearAsteroids() {
+    @Test
+    fun testFindBestStationWithVerticalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ..#
@@ -67,7 +72,8 @@ class AsteroidFieldTest {
         assertEquals(3, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithDiagonalCollinearAsteroids() {
+    @Test
+    fun testFindBestStationWithDiagonalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ...#
@@ -81,7 +87,8 @@ class AsteroidFieldTest {
         assertEquals(3, asteroidField.size)
     }
 
-    @Test fun testFindBestStationWithSeveralAsteroids() {
+    @Test
+    fun testFindBestStationWithSeveralAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 .#..#
@@ -110,21 +117,24 @@ class AsteroidFieldTest {
         asteroidField.vaporizeAsteroids(Point(0, 0), -1)
     }
 
-    @Test fun testVaporizeAsteroidsWithOneAsteroid() {
+    @Test
+    fun testVaporizeAsteroidsWithOneAsteroid() {
         val file = temporaryFolder.newFile().apply { writeText("#") }
         val asteroidField = AsteroidField(file)
         assertNull(asteroidField.vaporizeAsteroids(Point(0, 0), 1))
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testVaporizeAsteroidsWithTwoAsteroids() {
+    @Test
+    fun testVaporizeAsteroidsWithTwoAsteroids() {
         val file = temporaryFolder.newFile().apply { writeText("##") }
         val asteroidField = AsteroidField(file)
         assertEquals(Point(1, 0), asteroidField.vaporizeAsteroids(Point(0, 0), 1))
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testVaporizeAsteroidsWithHorizontalCollinearAsteroids() {
+    @Test
+    fun testVaporizeAsteroidsWithHorizontalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ....
@@ -138,7 +148,8 @@ class AsteroidFieldTest {
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testVaporizeAsteroidsWithVerticalCollinearAsteroids() {
+    @Test
+    fun testVaporizeAsteroidsWithVerticalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ..#
@@ -152,7 +163,8 @@ class AsteroidFieldTest {
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testVaporizeAsteroidsWithDiagonalCollinearAsteroids() {
+    @Test
+    fun testVaporizeAsteroidsWithDiagonalCollinearAsteroids() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 ...#
@@ -166,7 +178,8 @@ class AsteroidFieldTest {
         assertEquals(1, asteroidField.size)
     }
 
-    @Test fun testVaporizeAsteroidsWithMultipleIterations() {
+    @Test
+    fun testVaporizeAsteroidsWithMultipleIterations() {
         val file = temporaryFolder.newFile().apply {
             writeText("""
                 .#....#####...#..

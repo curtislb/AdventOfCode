@@ -15,21 +15,24 @@ class SegmentTest {
         Segment(Point(8, -12), Direction.RIGHT, length = -2)
     }
 
-    @Test fun testEndWithZeroLength() {
+    @Test
+    fun testEndWithZeroLength() {
         assertEquals(Point(7, -12), Segment(Point(7, -12), Direction.UP, length = 0).end)
         assertEquals(Point(-3, 10), Segment(Point(-3, 10), Direction.RIGHT, length = 0).end)
         assertEquals(Point(-7, -3), Segment(Point(-7, -3), Direction.DOWN, length = 0).end)
         assertEquals(Point(-10, -8), Segment(Point(-10, -8), Direction.LEFT, length = 0).end)
     }
 
-    @Test fun testEndWithNonzeroLength() {
+    @Test
+    fun testEndWithNonzeroLength() {
         assertEquals(Point(-15, 36), Segment(Point(-15, 18), Direction.UP, length = 18).end)
         assertEquals(Point(-1, -6), Segment(Point(-7, -6), Direction.RIGHT, length = 6).end)
         assertEquals(Point(16, -17), Segment(Point(16, 0), Direction.DOWN, length = 17).end)
         assertEquals(Point(5, 10), Segment(Point(13, 10), Direction.LEFT, length = 8).end)
     }
 
-    @Test fun testIsHorizontal() {
+    @Test
+    fun testIsHorizontal() {
         assertFalse(Segment(Point(-18, 18), Direction.UP, length = 0).isHorizontal)
         assertFalse(Segment(Point(10, -1), Direction.UP, length = 12).isHorizontal)
         assertFalse(Segment(Point(19, -13), Direction.UP, length = 15).isHorizontal)
@@ -44,7 +47,8 @@ class SegmentTest {
         assertTrue(Segment(Point(10, -5), Direction.LEFT, length = 13).isHorizontal)
     }
 
-    @Test fun testIsPerpendicular() {
+    @Test
+    fun testIsPerpendicular() {
         assertFalse(
             Segment(Point(7, 5), Direction.UP, length = 9).isPerpendicular(
                 Segment(Point(20, -12), Direction.UP, length = 2)
@@ -127,7 +131,8 @@ class SegmentTest {
         )
     }
 
-    @Test fun testIntersectionWithParallelSegment() {
+    @Test
+    fun testIntersectionWithParallelSegment() {
         assertNull(
             Segment(Point(15, 6), Direction.UP, length = 13).intersection(
                 Segment(Point(-9, -3), Direction.UP, length = 2)
@@ -190,7 +195,8 @@ class SegmentTest {
         )
     }
 
-    @Test fun testIntersectionWithDisjointPerpendicularSegment() {
+    @Test
+    fun testIntersectionWithDisjointPerpendicularSegment() {
         assertNull(
             Segment(Point(-12, -12), Direction.UP, length = 10).intersection(
                 Segment(Point(8, -1), Direction.RIGHT, length = 18)
@@ -233,7 +239,8 @@ class SegmentTest {
         )
     }
 
-    @Test fun testIntersectionWithPerpendicularSegmentAtEndpoint() {
+    @Test
+    fun testIntersectionWithPerpendicularSegmentAtEndpoint() {
         assertEquals(
             Point(6, -14),
             Segment(Point(6, -14), Direction.UP, length = 13).intersection(
@@ -284,7 +291,8 @@ class SegmentTest {
         )
     }
 
-    @Test fun testIntersectionWithPerpendicularSegmentAtNonEndpoint() {
+    @Test
+    fun testIntersectionWithPerpendicularSegmentAtNonEndpoint() {
         assertEquals(
             Point(10, 3),
             Segment(Point(10, -13), Direction.UP, length = 20).intersection(

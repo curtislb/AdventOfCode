@@ -8,7 +8,8 @@ import kotlin.test.assertEquals
  * Tests [Wire].
  */
 class WireTest {
-    @Test fun testFindNearestIntersectionWithNonIntersectingWire() {
+    @Test
+    fun testFindNearestIntersectionWithNonIntersectingWire() {
         var wireA = Wire("U1")
         var wireB = Wire("R1")
         assertEquals(Pair(null, Int.MAX_VALUE), wireA.findNearestIntersection(wireB))
@@ -46,7 +47,8 @@ class WireTest {
         assertEquals(Pair(null, Int.MAX_VALUE), wireB.findNearestIntersection(wireA))
     }
 
-    @Test fun testFindNearestIntersectionWithIntersectingWire() {
+    @Test
+    fun testFindNearestIntersectionWithIntersectingWire() {
         var wireA = Wire("R1,U1")
         var wireB = Wire("U1,R1")
         assertEquals(Pair(Point(1, 1), 2), wireA.findNearestIntersection(wireB))
@@ -83,7 +85,8 @@ class WireTest {
         assertEquals(Pair(Point(3, 3), 6), wireB.findNearestIntersection(wireA))
     }
 
-    @Test fun testFindShortestPathIntersectionWithNonIntersectingWire() {
+    @Test
+    fun testFindShortestPathIntersectionWithNonIntersectingWire() {
         var wireA = Wire("U1")
         var wireB = Wire("R1")
         assertEquals(Pair(null, Int.MAX_VALUE), wireA.findShortestPathIntersection(wireB))
@@ -120,7 +123,8 @@ class WireTest {
         assertEquals(Pair(null, Int.MAX_VALUE), wireB.findShortestPathIntersection(wireA))
     }
 
-    @Test fun testFindShortestPathIntersectionWithIntersectingWire() {
+    @Test
+    fun testFindShortestPathIntersectionWithIntersectingWire() {
         var wireA = Wire("R1,U1")
         var wireB = Wire("U1,R1")
         assertEquals(Pair(Point(1, 1), 4), wireA.findShortestPathIntersection(wireB))

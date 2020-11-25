@@ -9,7 +9,8 @@ import kotlin.test.assertTrue
  * Tests [RandomStrategy].
  */
 class RandomStrategyTest {
-    @Test fun testNextMove() {
+    @Test
+    fun testNextMove() {
         val board = Board()
         val validMoves = setOf(BigInteger("-1"), BigInteger.ZERO, BigInteger.ONE)
         for (i in 1..20) {

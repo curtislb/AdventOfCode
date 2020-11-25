@@ -8,15 +8,18 @@ import kotlin.test.assertEquals
  * Tests [permutations].
  */
 class PermutationsTest {
-    @Test fun testWithNoItems() {
+    @Test
+    fun testWithNoItems() {
         assertEquals(emptySet(), emptyList<Nothing>().permutations().toSet())
     }
 
-    @Test fun testWithOneItem() {
+    @Test
+    fun testWithOneItem() {
         assertEquals(setOf(listOf('#')), listOf('#').permutations().toSet())
     }
 
-    @Test fun testWithTwoItems() {
+    @Test
+    fun testWithTwoItems() {
         val expected = listOf(listOf("foo", "bar"), listOf("bar", "foo"))
         for (list in expected) {
             val actual = list.permutations().toList()
@@ -24,7 +27,8 @@ class PermutationsTest {
         }
     }
 
-    @Test fun testWithThreeItems() {
+    @Test
+    fun testWithThreeItems() {
         val expected = listOf(
             listOf(1, 2, 3),
             listOf(1, 3, 2),

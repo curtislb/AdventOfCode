@@ -11,7 +11,8 @@ import kotlin.test.assertEquals
  * Tests [EqualsOperation].
  */
 class EqualsOperationTest {
-    @Test fun testProcessWithIncreasingParams() {
+    @Test
+    fun testProcessWithIncreasingParams() {
         val intcode = Intcode("8,-47,46,5,99,65")
         assertEquals(
             4,
@@ -31,7 +32,8 @@ class EqualsOperationTest {
         assertEquals(BigInteger.ZERO, intcode[6])
     }
 
-    @Test fun testProcessWithDecreasingParams() {
+    @Test
+    fun testProcessWithDecreasingParams() {
         val intcode = Intcode("8,-47,-24,5,99,-48")
         assertEquals(
             4,
@@ -51,7 +53,8 @@ class EqualsOperationTest {
         assertEquals(BigInteger.ZERO, intcode[6])
     }
 
-    @Test fun testProcessWithEqualParams() {
+    @Test
+    fun testProcessWithEqualParams() {
         val intcode = Intcode("8,40,40,5,99,-48")
         assertEquals(
             4,

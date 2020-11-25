@@ -16,17 +16,20 @@ class InteractiveStrategyTest {
     private lateinit var standardInput: InputStream
     private lateinit var standardOutput: PrintStream
 
-    @Before fun setUp() {
+    @Before
+    fun setUp() {
         standardInput = System.`in`
         standardOutput = System.out
     }
 
-    @After fun tearDown() {
+    @After
+    fun tearDown() {
         System.setIn(standardInput)
         System.setOut(standardOutput)
     }
 
-    @Test fun testNextMove() {
+    @Test
+    fun testNextMove() {
         System.setIn("""
             0
             1
