@@ -3,9 +3,11 @@ package com.curtislb.adventofcode.year2019.day13.game
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import com.curtislb.adventofcode.year2019.day13.game.strategy.CustomStrategy
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import java.io.File
 import java.math.BigInteger
 import kotlin.test.assertEquals
 
@@ -15,9 +17,16 @@ import kotlin.test.assertEquals
 class GameTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
+    private lateinit var file: File
+
+    @Before
+    fun setUp() {
+        file = temporaryFolder.newFile()
+    }
+
     @Test
     fun testFindAllTilesWithEmptyBoard() {
-        val file = temporaryFolder.newFile().apply { writeText("99") }
+        file.writeText("99")
         val game = Game(file)
         assertEquals(emptyList(), game.findAllTiles(Tile.EMPTY))
         assertEquals(emptyList(), game.findAllTiles(Tile.WALL))
@@ -27,9 +36,7 @@ class GameTest {
 
     @Test
     fun testFindAllTilesWithNonEmptyBoard() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,99")
-        }
+        file.writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,99")
         val game = Game(file)
         assertContainsExactly(listOf(Point(1, 0), Point(0, -1), Point(1, -2)), game.findAllTiles(Tile.EMPTY))
         assertContainsExactly(listOf(Point.ORIGIN, Point(1, -1)), game.findAllTiles(Tile.WALL))
@@ -39,9 +46,7 @@ class GameTest {
 
     @Test
     fun testPlayAndReset() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
-        }
+        file.writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
         val game = Game(file)
 
         var strategy = CustomStrategy { BigInteger("8647") }
@@ -59,9 +64,7 @@ class GameTest {
 
     @Test
     fun testPlayAndResetWithInitialization() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
-        }
+        file.writeText("3,100,1,100,101,101,104,-1,104,0,4,101,99")
         val game = Game(file) { it[101] += BigInteger.TEN }
 
         var strategy = CustomStrategy { BigInteger("2359") }
@@ -79,9 +82,7 @@ class GameTest {
 
     @Test
     fun testToString() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,104,-1,104,0,104,3133,99")
-        }
+        file.writeText("104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,104,-1,104,0,104,3133,99")
         val game = Game(file)
         assertEquals("""
             Score: 3133

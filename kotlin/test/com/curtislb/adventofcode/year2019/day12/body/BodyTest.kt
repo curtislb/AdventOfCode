@@ -2,7 +2,6 @@ package com.curtislb.adventofcode.year2019.day12.body
 
 import com.curtislb.adventofcode.common.collection.MutableVector
 import org.junit.Test
-import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -21,7 +20,7 @@ class BodyTest {
     }
 
     @Test
-    fun testConstructFromBodyString() {
+    fun testConstructWithBodyString() {
         val body = Body("<x=3, y=-1, z=-7>")
         assertEquals(MutableVector(3, -1, -7), body.position)
         assertEquals(MutableVector(0, 0, 0), body.velocity)

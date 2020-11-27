@@ -29,7 +29,7 @@ class DirectionTest {
     }
 
     @Test
-    fun testConstructFromValidChar() {
+    fun testFromValidChar() {
         assertEquals(Direction.UP, Direction.from('U'))
         assertEquals(Direction.UP, Direction.from('u'))
         assertEquals(Direction.DOWN, Direction.from('D'))
@@ -41,7 +41,7 @@ class DirectionTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidChar() {
+    fun testFromInvalidChar() {
         Direction.from('F')
     }
 }

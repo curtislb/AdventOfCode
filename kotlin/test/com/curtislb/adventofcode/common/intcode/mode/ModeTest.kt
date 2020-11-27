@@ -9,26 +9,26 @@ import kotlin.test.assertEquals
  */
 class ModeTest {
     @Test
-    fun testConstructFromIntValue() {
+    fun testFromIntValue() {
         assertEquals(PositionMode, Mode.from(0))
         assertEquals(ImmediateMode, Mode.from(1))
         assertEquals(RelativeMode, Mode.from(2))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidIntValue() {
+    fun testFromInvalidIntValue() {
         Mode.from(-1)
     }
 
     @Test
-    fun testConstructFromBigIntegerValue() {
+    fun testFromBigIntegerValue() {
         assertEquals(PositionMode, Mode.from(BigInteger.ZERO))
         assertEquals(ImmediateMode, Mode.from(BigInteger.ONE))
         assertEquals(RelativeMode, Mode.from(BigInteger.TWO))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidBigIntegerValue() {
+    fun testFromInvalidBigIntegerValue() {
         Mode.from(BigInteger("-1"))
     }
 }

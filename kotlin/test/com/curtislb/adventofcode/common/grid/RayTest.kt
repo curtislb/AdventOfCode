@@ -9,13 +9,13 @@ import kotlin.test.assertEquals
  */
 class RayTest {
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromIdenticalPoints() {
+    fun testConstructWithIdenticalPoints() {
         val point = Point(20, -18)
         Ray(point, point)
     }
 
     @Test
-    fun testConstructFromDistinctPoints() {
+    fun testConstructWithDistinctPoints() {
         assertEquals(
             Ray(source = Point(16, -6), slope = null, directionParity = true),
             Ray(source = Point(16, -6), member = Point(16, 10))

@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
  */
 class OperationTest {
     @Test
-    fun testConstructFromIntValue() {
+    fun testFromIntValue() {
         assertEquals(AddOperation, Operation.from(1))
         assertEquals(MultiplyOperation, Operation.from(2))
         assertEquals(InputOperation, Operation.from(3))
@@ -23,12 +23,12 @@ class OperationTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidIntValue() {
+    fun testFromInvalidIntValue() {
         Operation.from(0)
     }
 
     @Test
-    fun testConstructFromBigIntegerValue() {
+    fun testFromBigIntegerValue() {
         assertEquals(AddOperation, Operation.from(BigInteger.ONE))
         assertEquals(MultiplyOperation, Operation.from(BigInteger.TWO))
         assertEquals(InputOperation, Operation.from(BigInteger("3")))
@@ -42,7 +42,7 @@ class OperationTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidBigIntegerValue() {
+    fun testFromInvalidBigIntegerValue() {
         Operation.from(BigInteger.ZERO)
     }
 }

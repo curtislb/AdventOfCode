@@ -8,14 +8,14 @@ import kotlin.test.assertEquals
  */
 class PixelTest {
     @Test
-    fun testConstructFromValidInt() {
+    fun testFromValidInt() {
         assertEquals(Pixel.BLACK, Pixel.from(0))
         assertEquals(Pixel.WHITE, Pixel.from(1))
         assertEquals(Pixel.ALPHA, Pixel.from(2))
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun testConstructFromInvalidInt() {
+    fun testFromInvalidInt() {
         Pixel.from(-1)
     }
 }

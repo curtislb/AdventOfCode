@@ -1,9 +1,11 @@
 package com.curtislb.adventofcode.year2019.day12.body
 
 import com.curtislb.adventofcode.common.collection.MutableVector
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import java.io.File
 import kotlin.test.assertEquals
 
 /**
@@ -12,9 +14,15 @@ import kotlin.test.assertEquals
 class NBodySystemTest {
     @get:Rule val temporaryFolder = TemporaryFolder()
 
+    private lateinit var file: File
+
+    @Before
+    fun setUp() {
+        file = temporaryFolder.newFile()
+    }
+
     @Test
-    fun testConstructFromEmptyFile() {
-        val file = temporaryFolder.newFile()
+    fun testConstructWithEmptyFile() {
         val system = NBodySystem(file)
         assertEquals(emptyList(), system.bodies)
         assertEquals(0, system.totalEnergy)
@@ -22,14 +30,12 @@ class NBodySystemTest {
 
     @Test
     fun testSimulateAndReset() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("""
-                <x=-1, y=0, z=2>
-                <x=2, y=-10, z=-7>
-                <x=4, y=-8, z=8>
-                <x=3, y=5, z=-1>
-            """.trimIndent())
-        }
+        file.writeText("""
+            <x=-1, y=0, z=2>
+            <x=2, y=-10, z=-7>
+            <x=4, y=-8, z=8>
+            <x=3, y=5, z=-1>
+        """.trimIndent())
         val system = NBodySystem(file)
         assertEquals(
             listOf(
@@ -81,21 +87,19 @@ class NBodySystemTest {
 
     @Test
     fun testFindAxialPeriodicityWithSingleStationaryBody() {
-        val file = temporaryFolder.newFile().apply { writeText("<x=-1, y=0, z=2>") }
+        file.writeText("<x=-1, y=0, z=2>")
         val system = NBodySystem(file)
         assertEquals(MutableVector(1, 1, 1), system.findAxialPeriodicity())
     }
 
     @Test
     fun testFindAxialPeriodicityWithMultipleBodies() {
-        val file = temporaryFolder.newFile().apply {
-            writeText("""
-                <x=-1, y=0, z=2>
-                <x=2, y=-10, z=-7>
-                <x=4, y=-8, z=8>
-                <x=3, y=5, z=-1>
-            """.trimIndent())
-        }
+        file.writeText("""
+            <x=-1, y=0, z=2>
+            <x=2, y=-10, z=-7>
+            <x=4, y=-8, z=8>
+            <x=3, y=5, z=-1>
+        """.trimIndent())
         val system = NBodySystem(file)
         assertEquals(MutableVector(18, 28, 44), system.findAxialPeriodicity())
     }

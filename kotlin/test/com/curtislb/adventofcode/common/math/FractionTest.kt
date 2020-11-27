@@ -14,7 +14,7 @@ class FractionTest {
     }
 
     @Test
-    fun testConstructFromInts() {
+    fun testConstructWithInts() {
         var fraction = Fraction(0)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)
@@ -57,7 +57,7 @@ class FractionTest {
     }
 
     @Test
-    fun testConstructFromLongs() {
+    fun testConstructWithLongs() {
         var fraction = Fraction(0L)
         assertEquals(0L, fraction.numerator)
         assertEquals(1L, fraction.denominator)

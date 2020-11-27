@@ -107,7 +107,7 @@ class PointTest {
     }
 
     @Test
-    fun testConstructFromMatrixCoordinates() {
+    fun testFromMatrixCoordinates() {
         assertEquals(Point(0, 0), Point.fromMatrixCoordinates(0, 0))
         assertEquals(Point(5, -1), Point.fromMatrixCoordinates(1, 5))
         assertEquals(Point(0, -7), Point.fromMatrixCoordinates(7, 0))

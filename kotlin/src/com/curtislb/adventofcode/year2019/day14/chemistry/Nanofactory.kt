@@ -12,8 +12,7 @@ import java.io.File
  *
  * @throws IllegalArgumentException If any material can be produced by more than one reaction.
  */
-class
-Nanofactory(file: File) {
+class Nanofactory(file: File) {
     /**
      * A map from each material that this factory can produce to the reaction that produces it.
      */

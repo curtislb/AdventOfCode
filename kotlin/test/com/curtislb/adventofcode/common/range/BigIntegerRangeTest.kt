@@ -24,7 +24,7 @@ class BigIntegerRangeTest {
     }
 
     @Test
-    fun testConstructFromIntRange() {
+    fun testConstructWithIntRange() {
         var range = BigIntegerRange(0..0)
         assertEquals(BigInteger.ZERO, range.start)
         assertEquals(BigInteger.ZERO, range.endInclusive)
@@ -43,7 +43,7 @@ class BigIntegerRangeTest {
     }
 
     @Test
-    fun testConstructFromLongRange() {
+    fun testConstructWithLongRange() {
         var range = BigIntegerRange(0L..0L)
         assertEquals(BigInteger.ZERO, range.start)
         assertEquals(BigInteger.ZERO, range.endInclusive)
