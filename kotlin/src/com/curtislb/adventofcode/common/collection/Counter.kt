@@ -39,9 +39,25 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
         get() = counts.entries.filter { (_, count) -> count > 0L }.map { (key, _) -> key }.toSet()
 
     /**
-     * Returns `true` if [key] is stored with a nonzero count in this counter, or `false` otherwise.
+     * A map-like object that keeps track of the integer quantity (either positive or negative) of various items.
+     *
+     * @param items A list of initial items with which to populate the counter.
+     */
+    constructor(items: Iterable<T>) : this() {
+        addAll(items)
+    }
+
+    /**
+     * Checks if [key] is stored with a nonzero count in this counter.
      */
     operator fun contains(key: T): Boolean = key in counts
+
+    /**
+     * Checks if this counter has a greater or equal count for each key in [other]
+     */
+    operator fun contains(other: Counter<T>): Boolean {
+        return other.entriesWithNonzeroCount.all { (key, count) -> this[key] >= count }
+    }
 
     /**
      * Returns the count stored for [key] in this counter. Defaults to 0 if [key] is not stored in the counter.
@@ -57,6 +73,13 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
         } else {
             counts[key] = count
         }
+    }
+
+    /**
+     * Counts the given [keys] and adds the resulting counts to this counter.
+     */
+    fun addAll(keys: Iterable<T>) {
+        keys.forEach { this[it]++ }
     }
 
     /**

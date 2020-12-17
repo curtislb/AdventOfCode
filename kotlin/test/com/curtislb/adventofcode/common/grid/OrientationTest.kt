@@ -11,52 +11,52 @@ class OrientationTest {
     fun testMoveForwardZeroDistance() {
         assertEquals(
             Orientation(Point(-16, -15), Direction.UP),
-            Orientation(Point(-16, -15), Direction.UP).moveForward(0)
+            Orientation(Point(-16, -15), Direction.UP).move(0)
         )
         assertEquals(
             Orientation(Point(16, -9), Direction.RIGHT),
-            Orientation(Point(16, -9), Direction.RIGHT).moveForward(0)
+            Orientation(Point(16, -9), Direction.RIGHT).move(0)
         )
         assertEquals(
             Orientation(Point(0, -4), Direction.DOWN),
-            Orientation(Point(0, -4), Direction.DOWN).moveForward(0)
+            Orientation(Point(0, -4), Direction.DOWN).move(0)
         )
         assertEquals(
             Orientation(Point(14, -5), Direction.LEFT),
-            Orientation(Point(14, -5), Direction.LEFT).moveForward(0)
+            Orientation(Point(14, -5), Direction.LEFT).move(0)
         )
     }
 
     @Test
     fun testMoveForwardWhileFacingUp() {
         val orientation = Orientation(Point(-16, 2), Direction.UP)
-        assertEquals(Orientation(Point(-16, 3), Direction.UP), orientation.moveForward())
-        assertEquals(Orientation(Point(-16, 5), Direction.UP), orientation.moveForward(3))
-        assertEquals(Orientation(Point(-16, -7), Direction.UP), orientation.moveForward(-9))
+        assertEquals(Orientation(Point(-16, 3), Direction.UP), orientation.move())
+        assertEquals(Orientation(Point(-16, 5), Direction.UP), orientation.move(3))
+        assertEquals(Orientation(Point(-16, -7), Direction.UP), orientation.move(-9))
     }
 
     @Test
     fun testMoveForwardWhileFacingRight() {
         val orientation = Orientation(Point(-10, 7), Direction.RIGHT)
-        assertEquals(Orientation(Point(-9, 7), Direction.RIGHT), orientation.moveForward())
-        assertEquals(Orientation(Point(1, 7), Direction.RIGHT), orientation.moveForward(11))
-        assertEquals(Orientation(Point(-24, 7), Direction.RIGHT), orientation.moveForward(-14))
+        assertEquals(Orientation(Point(-9, 7), Direction.RIGHT), orientation.move())
+        assertEquals(Orientation(Point(1, 7), Direction.RIGHT), orientation.move(11))
+        assertEquals(Orientation(Point(-24, 7), Direction.RIGHT), orientation.move(-14))
     }
 
     @Test
     fun testMoveForwardWhileFacingDown() {
         val orientation = Orientation(Point(0, -1), Direction.DOWN)
-        assertEquals(Orientation(Point(0, -2), Direction.DOWN), orientation.moveForward())
-        assertEquals(Orientation(Point(0, -6), Direction.DOWN), orientation.moveForward(5))
-        assertEquals(Orientation(Point(0, 2), Direction.DOWN), orientation.moveForward(-3))
+        assertEquals(Orientation(Point(0, -2), Direction.DOWN), orientation.move())
+        assertEquals(Orientation(Point(0, -6), Direction.DOWN), orientation.move(5))
+        assertEquals(Orientation(Point(0, 2), Direction.DOWN), orientation.move(-3))
     }
 
     @Test
     fun testMoveForwardWhileFacingLeft() {
         val orientation = Orientation(Point(14, -3), Direction.LEFT)
-        assertEquals(Orientation(Point(13, -3), Direction.LEFT), orientation.moveForward())
-        assertEquals(Orientation(Point(12, -3), Direction.LEFT), orientation.moveForward(2))
-        assertEquals(Orientation(Point(26, -3), Direction.LEFT), orientation.moveForward(-12))
+        assertEquals(Orientation(Point(13, -3), Direction.LEFT), orientation.move())
+        assertEquals(Orientation(Point(12, -3), Direction.LEFT), orientation.move(2))
+        assertEquals(Orientation(Point(26, -3), Direction.LEFT), orientation.move(-12))
     }
 
     @Test

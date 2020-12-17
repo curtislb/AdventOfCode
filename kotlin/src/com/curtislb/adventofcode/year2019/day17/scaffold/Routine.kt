@@ -94,7 +94,7 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
                     return if (compressedCharCount <= maxCharCount) Routine(compressedPrefix, functions) else null
                 }
 
-                // Stop if we haven't captured all instructions and have run out of functions.
+                // Stop if the function limit has been reached without capturing all instructions.
                 functions.size == maxFunctionCount -> return null
 
                 else -> {

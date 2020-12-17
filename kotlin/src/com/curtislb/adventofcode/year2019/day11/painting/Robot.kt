@@ -43,7 +43,7 @@ class Robot {
      * Moves the robot forward one space from its current position, in the direction it's currently facing.
      */
     fun moveForward() {
-        orientation = orientation.moveForward()
+        orientation = orientation.move()
     }
 
     /**

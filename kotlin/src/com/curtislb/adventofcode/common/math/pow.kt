@@ -7,7 +7,11 @@ package com.curtislb.adventofcode.common.math
  */
 fun Long.pow(exponent: Int): Long {
     require(exponent >= 0) { "Exponent must be non-negative: $exponent" }
-    return (1..exponent).fold(1L) { product, _ -> product * this }
+    var product = 1L
+    for (i in 1..exponent) {
+        product *= this
+    }
+    return product
 }
 
 /**

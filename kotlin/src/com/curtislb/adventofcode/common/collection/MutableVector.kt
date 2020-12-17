@@ -5,17 +5,7 @@ package com.curtislb.adventofcode.common.collection
  *
  * @param components The current component values of this vector.
  */
-class MutableVector(private vararg val components: Int) {
-    /**
-     * The number of components in this vector.
-     */
-    val size: Int = components.size
-
-    /**
-     * Returns the component at the given [index] in this vector.
-     */
-    operator fun get(index: Int): Int = components[index]
-
+class MutableVector(private vararg val components: Int) : Vector(*components) {
     /**
      * Updates the component at [index] to the given [value].
      */
@@ -73,26 +63,14 @@ class MutableVector(private vararg val components: Int) {
     }
 
     /**
-     * Returns the sum of [transform] applied to each component of this vector.
-     */
-    inline fun sumBy(transform: (component: Int) -> Int): Int {
-        var sum = 0
-        for (i in 0 until size) {
-            sum += transform(this[i])
-        }
-        return sum
-    }
-
-    /**
      * Returns a distinct copy of this vector, with the same component values.
      */
-    fun copy(): MutableVector = MutableVector(*components)
+    override fun copy(): MutableVector = MutableVector(*components)
 
-    override fun equals(other: Any?): Boolean = other is MutableVector && components.contentEquals(other.components)
-
-    override fun hashCode(): Int = components.contentHashCode()
-
-    override fun toString(): String = "<${components.joinToString()}>"
+    /**
+     * TODO
+     */
+    fun toVector(): Vector = copy()
 
     companion object {
         /**

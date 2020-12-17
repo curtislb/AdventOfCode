@@ -12,7 +12,20 @@ data class Point(val x: Int, val y: Int) {
     /**
      * All points on the grid that are horizontally or vertically adjacent to this one.
      */
-    val neighbors: List<Point> get() = listOf(Point(x - 1, y), Point(x, y - 1), Point(x + 1, y), Point(x, y + 1))
+    val neighbors: List<Point> get() = listOf(Point(x - 1, y), Point(x, y - 1), Point(x, y + 1), Point(x + 1, y))
+
+    /**
+     * All points on the grid that are horizontally, vertically, or diagonally adjacent to this one.
+     */
+    val surroundingPoints: List<Point> get() = mutableListOf<Point>().apply {
+        for (dx in -1..1) {
+            for (dy in -1..1) {
+                if (dx != 0 || dy != 0) {
+                    add(Point(x + dx, y + dy))
+                }
+            }
+        }
+    }
 
     /**
      * Returns the point reached by moving [distance] grid units in a given [direction] from this one.
@@ -25,6 +38,16 @@ data class Point(val x: Int, val y: Int) {
         Direction.DOWN -> Point(x, y - distance)
         Direction.LEFT -> Point(x - distance, y)
     }
+
+    /**
+     * Returns the point produced by rotating this one 90 degrees clockwise about the given [center] point.
+     */
+    fun rotateClockwise(center: Point = ORIGIN): Point = Point(y - center.y + center.x, center.x - x + center.y)
+
+    /**
+     * Returns the point produced by rotating this one 90 degrees counterclockwise about the given [center] point.
+     */
+    fun rotateCounterclockwise(center: Point = ORIGIN): Point = Point(center.y - y + center.x, x - center.x + center.y)
 
     /**
      * Returns the Manhattan distance between this point and [other].

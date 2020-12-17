@@ -5,11 +5,13 @@ package com.curtislb.adventofcode.common.grid
  */
 data class Orientation(val position: Point, val direction: Direction) {
     /**
-     * Returns the orientation given by moving [distance] grid units forward from this one.
+     * Returns the orientation given by moving [distance] grid units in [direction] from this one.
      *
-     * If [distance] is negative, this is equivalent to moving `-distance` units backward without changing direction.
+     * If [distance] is negative, this is equivalent to moving `-distance` units opposite [direction].
      */
-    fun moveForward(distance: Int = 1): Orientation = Orientation(position.move(direction, distance), direction)
+    fun move(distance: Int = 1, direction: Direction = this.direction): Orientation {
+        return Orientation(position.move(direction, distance), this.direction)
+    }
 
     /**
      * Returns the orientation given by turning 180 degrees from this one.

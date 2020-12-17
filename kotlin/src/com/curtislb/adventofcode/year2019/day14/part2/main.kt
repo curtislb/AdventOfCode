@@ -26,7 +26,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param rawMaterial The name of a raw material that can be used in arbitrary quantities for reactions.
  * @param rawMaterialAvailable The amount of raw material that is available to use for reactions.
- * @param desiredMaterial The name of the material that we ultimately want to produce.
+ * @param desiredMaterial The name of the material that should ultimately be produced.
  */
 fun solve(
     inputPath: Path = pathToInput(year = 2019, day = 14),

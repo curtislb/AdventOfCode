@@ -102,7 +102,7 @@ class ScaffoldGrid {
         var moveCount = 0
         while (true) {
             // Check if the robot can safely move forward.
-            val forwardOrientation = orientation.moveForward()
+            val forwardOrientation = orientation.move()
             if (isSafeSpace(forwardOrientation.position)) {
                 orientation = forwardOrientation
                 moveCount++
@@ -114,8 +114,8 @@ class ScaffoldGrid {
                 }
 
                 // Check if the robot can safely move forward after turning.
-                val rightOrientation = orientation.turnRight().moveForward()
-                val leftOrientation = orientation.turnLeft().moveForward()
+                val rightOrientation = orientation.turnRight().move()
+                val leftOrientation = orientation.turnLeft().move()
                 when {
                     isSafeSpace(rightOrientation.position) -> {
                         orientation = rightOrientation

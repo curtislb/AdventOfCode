@@ -46,7 +46,7 @@ class Droid(file: File) {
      */
     private val intcode: Intcode = Intcode(file) { output ->
         lastSpace = Space.from(output)
-        knownSpaces[orientation.moveForward().position] = lastSpace
+        knownSpaces[orientation.move().position] = lastSpace
     }
 
     /**
@@ -99,7 +99,7 @@ class Droid(file: File) {
 
         if (lastSpace.isOccupiable == true) {
             // Update the droid's position to the new space.
-            orientation = orientation.moveForward()
+            orientation = orientation.move()
 
             // Check if we've found the location of the oxygen system.
             if (lastSpace == Space.OXYGEN) {
