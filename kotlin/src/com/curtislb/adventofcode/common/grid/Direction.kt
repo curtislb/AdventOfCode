@@ -36,6 +36,39 @@ enum class Direction {
         LEFT -> UP
     }
 
+    /**
+     * TODO
+     */
+    fun countRightTurns(other: Direction) = when (this) {
+        UP -> when (other) {
+            UP -> 0
+            RIGHT -> 1
+            DOWN -> 2
+            LEFT -> 3
+        }
+
+        RIGHT -> when (other) {
+            UP -> 3
+            RIGHT -> 0
+            DOWN -> 1
+            LEFT -> 2
+        }
+
+        DOWN -> when (other) {
+            UP -> 2
+            RIGHT -> 3
+            DOWN -> 0
+            LEFT -> 1
+        }
+
+        LEFT -> when (other) {
+            UP -> 1
+            RIGHT -> 2
+            DOWN -> 3
+            LEFT -> 0
+        }
+    }
+
     companion object {
         /**
          * Returns the direction corresponding to [char].

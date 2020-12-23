@@ -119,18 +119,13 @@ fun solve(inputPath: Path = pathToInput(year = 2020, day = 19)): Int? {
     parsedRules[42] = parseRule(ruleStrings[42]!!, ruleStrings, parsedRules)
     parsedRules[31] = parseRule(ruleStrings[31]!!, ruleStrings, parsedRules)
     parsedRules[8] = "(?:${parsedRules[42]})+"
-    parsedRules[11] = (1..8).joinToString(separator = "|") { count ->
+    parsedRules[11] = (1..4).joinToString(separator = "|") { count ->
         "(?:(?:${parsedRules[42]}){$count}(?:${parsedRules[31]}){$count})"
     }
-    parsedRules[0] = parseRule(ruleStrings[0]!!, ruleStrings, parsedRules)
 
-    val primaryRule = parsedRules[0]
-    return if (primaryRule != null) {
-        val primaryRuleRegex = primaryRule.toRegex()
-        messages.count { primaryRuleRegex.matches(it) }
-    } else {
-        null
-    }
+    val primaryRule = parseRule(ruleStrings[0]!!, ruleStrings, parsedRules)
+    val primaryRuleRegex = primaryRule.toRegex()
+    return messages.count { primaryRuleRegex.matches(it) }
 }
 
 fun main() {
