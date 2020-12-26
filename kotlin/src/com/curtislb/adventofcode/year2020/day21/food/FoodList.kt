@@ -35,7 +35,7 @@ class FoodList(foodListString: String) {
                 if (allergen !in allergenIngredientsMap) {
                     allergenIngredientsMap[allergen] = ingredients.toMutableSet()
                 } else {
-                    allergenIngredientsMap[allergen]!!.retainAll(ingredients.toMutableSet())
+                    allergenIngredientsMap[allergen]!!.retainAll(ingredients)
                 }
             }
         }
