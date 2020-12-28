@@ -30,7 +30,7 @@ class CupCircle(labeling: String, fillUpTo: Int? = null) {
     }
 
     private val minLabel = cups.keys.minOrNull() ?: 1
-    
+
     private val maxLabel = cups.keys.maxOrNull() ?: 0
 
     fun performMove() {
