@@ -42,7 +42,7 @@ import java.nio.file.Path
  */
 fun solve(
     inputPath: Path = pathToInput(year = 2020, day = 16),
-    fieldRegex: Regex = Regex("""^departure.*""")
+    fieldRegex: Regex = Regex("""departure.*""")
 ): Long {
     val file = inputPath.toFile()
     var sectionIndex = 0

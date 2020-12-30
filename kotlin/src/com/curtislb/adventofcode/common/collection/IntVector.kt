@@ -1,19 +1,19 @@
 package com.curtislb.adventofcode.common.collection
 
-open class Vector(private vararg val components: Int) {
+open class IntVector(protected open vararg val components: Int) {
     /**
      * The number of components in this vector.
      */
-    val size: Int = components.size
+    val size: Int get() = components.size
 
     /**
      * TODO
      */
-    val neighbors: List<Vector> get() = mutableListOf<Vector>().apply {
-        (-1..1).toList().forEachNested(this@Vector.size) { indexedOffsets ->
+    val neighbors: List<IntVector> get() = mutableListOf<IntVector>().apply {
+        (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
             val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
             if (offsets.any { it != 0 }) {
-                add(this@Vector + Vector(*offsets))
+                add(this@IntVector + IntVector(*offsets))
             }
             false // Don't stop iterating.
         }
@@ -29,10 +29,10 @@ open class Vector(private vararg val components: Int) {
      *
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
-    open operator fun plus(other: Vector): Vector {
+    open operator fun plus(other: IntVector): IntVector {
         require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
         val componentSums = IntArray(size) { this[it] + other[it] }
-        return Vector(*componentSums)
+        return IntVector(*componentSums)
     }
 
     /**
@@ -49,9 +49,9 @@ open class Vector(private vararg val components: Int) {
     /**
      * Returns a distinct copy of this vector, with the same component values.
      */
-    open fun copy(): Vector = Vector(*components)
+    open fun copy(): IntVector = IntVector(*components)
 
-    override fun equals(other: Any?): Boolean = other is Vector && components.contentEquals(other.components)
+    override fun equals(other: Any?): Boolean = other is IntVector && components.contentEquals(other.components)
 
     override fun hashCode(): Int = components.contentHashCode()
 
@@ -60,15 +60,15 @@ open class Vector(private vararg val components: Int) {
     /**
      * TODO
      */
-    fun toMutableVector(): MutableVector = MutableVector(*components)
+    fun toMutableVector(): MutableIntVector = MutableIntVector(*components)
 
     companion object {
         /**
          * Returns a vector of the given [size] with all components set to 0.
          */
-        fun ofZeros(size: Int): Vector {
+        fun ofZeros(size: Int): IntVector {
             require(size >= 0) { "Size must be non-negative: $size" }
-            return Vector(*IntArray(size))
+            return IntVector(*IntArray(size))
         }
     }
 }

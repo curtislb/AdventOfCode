@@ -5,7 +5,7 @@ package com.curtislb.adventofcode.common.collection
  *
  * @param components The current component values of this vector.
  */
-class MutableVector(private vararg val components: Int) : Vector(*components) {
+class MutableIntVector(override vararg val components: Int) : IntVector(*components) {
     /**
      * Updates the component at [index] to the given [value].
      */
@@ -23,7 +23,7 @@ class MutableVector(private vararg val components: Int) : Vector(*components) {
             "The sizes of this vector ($size) and the new components (${newComponents.size}) must match."
         }
         for (i in 0 until size) {
-            this[i] = newComponents[i]
+            components[i] = newComponents[i]
         }
     }
 
@@ -35,7 +35,7 @@ class MutableVector(private vararg val components: Int) : Vector(*components) {
     fun update(componentValues: Map<Int, Int>) {
         componentValues.forEach { (index, value) ->
             require(index in 0 until size) { "Each index must be in the range 0..${size - 1}: $index" }
-            this[index] = value
+            components[index] = value
         }
     }
 
@@ -44,10 +44,10 @@ class MutableVector(private vararg val components: Int) : Vector(*components) {
      *
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
-    fun add(other: MutableVector) {
+    fun add(other: MutableIntVector) {
         require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
         for (i in 0 until size) {
-            this[i] += other[i]
+            components[i] += other[i]
         }
     }
 
@@ -56,29 +56,30 @@ class MutableVector(private vararg val components: Int) : Vector(*components) {
      *
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
-    operator fun plus(other: MutableVector): MutableVector {
+    operator fun plus(other: MutableIntVector): MutableIntVector {
         require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
         val componentSums = IntArray(size) { this[it] + other[it] }
-        return MutableVector(*componentSums)
+        return MutableIntVector(*componentSums)
     }
 
     /**
      * Returns a distinct copy of this vector, with the same component values.
      */
-    override fun copy(): MutableVector = MutableVector(*components)
+    override fun copy(): MutableIntVector = MutableIntVector(*components.clone())
 
     /**
      * TODO
      */
-    fun toVector(): Vector = copy()
+    fun toVector(): IntVector = copy()
 
     companion object {
         /**
          * Returns a vector of the given [size] with all components set to 0.
          */
-        fun ofZeros(size: Int): MutableVector {
+        fun ofZeros(size: Int): MutableIntVector {
             require(size >= 0) { "Size must be non-negative: $size" }
-            return MutableVector(*IntArray(size))
+            val components = IntArray(size) { 0 }
+            return MutableIntVector(*components)
         }
     }
 }

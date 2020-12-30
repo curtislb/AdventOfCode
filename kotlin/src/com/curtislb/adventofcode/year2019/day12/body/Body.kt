@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day12.body
 
-import com.curtislb.adventofcode.common.collection.MutableVector
+import com.curtislb.adventofcode.common.collection.MutableIntVector
 import java.util.Objects
 import kotlin.math.abs
 
@@ -13,8 +13,8 @@ import kotlin.math.abs
  * @throws IllegalArgumentException If either [position] or [velocity] has the wrong number of components.
  */
 class Body(
-    val position: MutableVector = MutableVector.ofZeros(DIMENSION_COUNT),
-    val velocity: MutableVector = MutableVector.ofZeros(DIMENSION_COUNT)
+    val position: MutableIntVector = MutableIntVector.ofZeros(DIMENSION_COUNT),
+    val velocity: MutableIntVector = MutableIntVector.ofZeros(DIMENSION_COUNT)
 ) {
     init {
         require(position.size == DIMENSION_COUNT) { "Position must have $DIMENSION_COUNT components: ${position.size}" }
@@ -86,7 +86,7 @@ class Body(
          *
          * @throws IllegalArgumentException If this vector has the wrong number of components.
          */
-        fun MutableVector.toXyzString(): String {
+        fun MutableIntVector.toXyzString(): String {
             require(size == DIMENSION_COUNT) { "Vector must have $DIMENSION_COUNT components: $size" }
             return "<x=${this[0]}, y=${this[1]}, z=${this[2]}>"
         }

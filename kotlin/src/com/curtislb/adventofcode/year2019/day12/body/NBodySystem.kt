@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day12.body
 
-import com.curtislb.adventofcode.common.collection.MutableVector
+import com.curtislb.adventofcode.common.collection.MutableIntVector
 import com.curtislb.adventofcode.common.collection.deepCopy
 import com.curtislb.adventofcode.common.collection.uniquePairs
 import com.curtislb.adventofcode.common.io.mapLines
@@ -9,7 +9,7 @@ import java.io.File
 /**
  * A system of multiple celestial bodies, which move and exert gravity on each other in 3D space.
  *
- * @param file The file from which the initial [MutableVector] positions for all bodies will be read, one per line.
+ * @param file The file from which the initial [MutableIntVector] positions for all bodies will be read, one per line.
  */
 class NBodySystem(file: File) {
     /**
@@ -57,7 +57,7 @@ class NBodySystem(file: File) {
      * Calling this method will modify the positions and velocities of bodies in this system. In order to restore the
      * system to its initial configuration following this method, use [reset].
      */
-    fun findAxialPeriodicity(): MutableVector {
+    fun findAxialPeriodicity(): MutableIntVector {
         // Store the initial body configurations for each axis.
         val initialValues: List<List<Int>> = (0 until Body.DIMENSION_COUNT).map { index ->
             bodies.flatMap { listOf(it.position[index], it.velocity[index]) }
@@ -82,7 +82,7 @@ class NBodySystem(file: File) {
             }
         } while (periods.any { it == null })
 
-        return MutableVector(*IntArray(periods.size) { index -> periods[index]!! })
+        return MutableIntVector(*IntArray(periods.size) { index -> periods[index]!! })
     }
 
     override fun toString(): String = bodies.joinToString(separator = "\n")

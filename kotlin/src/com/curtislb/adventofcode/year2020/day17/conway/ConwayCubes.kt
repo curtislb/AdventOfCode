@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2020.day17.conway
 
-import com.curtislb.adventofcode.common.collection.MutableVector
-import com.curtislb.adventofcode.common.collection.Vector
+import com.curtislb.adventofcode.common.collection.IntVector
+import com.curtislb.adventofcode.common.collection.MutableIntVector
 import com.curtislb.adventofcode.common.grid.Point
 
 /**
@@ -11,15 +11,14 @@ class ConwayCubes(initialState: String, dimensionCount: Int = 3) {
     /**
      * TODO
      */
-    private var activeCubes: Set<Vector> = mutableSetOf<Vector>().apply {
+    private var activeCubes: Set<IntVector> = mutableSetOf<IntVector>().apply {
         initialState.trim().lines().forEachIndexed { rowIndex, line ->
             line.forEachIndexed { colIndex, char ->
                 if (char == '#') {
                     val point = Point.fromMatrixCoordinates(rowIndex, colIndex)
-                    val vector = MutableVector.ofZeros(dimensionCount).run {
+                    val vector = MutableIntVector.ofZeros(dimensionCount).apply {
                         this[0] = point.x
                         this[1] = point.y
-                        toVector()
                     }
                     add(vector)
                 }
@@ -34,9 +33,9 @@ class ConwayCubes(initialState: String, dimensionCount: Int = 3) {
 
     fun update(cycleCount: Int = 1) {
         for (cycle in 1..cycleCount) {
-            val newActiveCubes = mutableSetOf<Vector>()
+            val newActiveCubes = mutableSetOf<IntVector>()
 
-            val inactiveCubes = mutableSetOf<Vector>()
+            val inactiveCubes = mutableSetOf<IntVector>()
             activeCubes.forEach { cube ->
                 var activeNeighborCount = 0
                 cube.neighbors.forEach { neighbor ->
