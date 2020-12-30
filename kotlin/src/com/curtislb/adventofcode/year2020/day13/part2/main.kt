@@ -75,7 +75,6 @@ list?
 package com.curtislb.adventofcode.year2020.day13.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.common.math.leastCommonMultiple
 import java.nio.file.Path
 
 /**
@@ -84,11 +83,28 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 13)): Long {
-//    for (n in 1..100) {
-//        println("${"%4d".format(17 * n)} ${"%4d".format(13 * n)}")
-//    }
-    println(leastCommonMultiple(7L, 13L, 59L, 31L, 19L).toDouble() / 1068781.0)
-    return 0
+    val file = inputPath.toFile()
+    val busSchedule = file.readLines()[1]
+    val busIDOffsetPairs = mutableListOf<Pair<Long, Long>>().apply {
+        busSchedule.split(',').forEachIndexed { index, busIDString ->
+            if (busIDString != "x") {
+                add(Pair(busIDString.toLong(), index.toLong()))
+            }
+        }
+        sortBy { (busID, _) -> busID }
+    }
+
+    val (time, _) = busIDOffsetPairs.foldRight(Pair(0L, 1L)) { (busID, offset), (prevTime, step) ->
+        var startTime = prevTime
+        var remainder = (prevTime + offset) % busID
+        while (remainder != 0L) {
+            startTime += step
+            remainder = (remainder + step) % busID
+        }
+        Pair(startTime, step * busID)
+    }
+
+    return time
 }
 
 fun main() {
