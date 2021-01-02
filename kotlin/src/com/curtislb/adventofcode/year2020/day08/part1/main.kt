@@ -72,16 +72,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 8)): Int {
     val file = inputPath.toFile()
-    val bootCode = BootCode(file.readText())
-    bootCode.run()
+    val bootCode = BootCode(file.readText()).apply { run() }
     return bootCode.accumulator
-}
-
-fun runInstruction(operation: String, argument: String, pointer: Int, acc: Int): Pair<Int, Int> = when (operation) {
-    "acc" -> Pair(pointer + 1, acc + argument.toInt())
-    "jmp" -> Pair(pointer + argument.toInt(), acc)
-    "nop" -> Pair(pointer + 1, acc)
-    else -> throw IllegalArgumentException("Unknown operation: $operation")
 }
 
 fun main() {

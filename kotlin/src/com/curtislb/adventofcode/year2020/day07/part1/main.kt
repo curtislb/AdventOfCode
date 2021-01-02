@@ -54,7 +54,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 7)): Int {
     val file = inputPath.toFile()
-    val rules = BagRules(file.readLines())
+    val rules = BagRules(file.readText())
     return rules.findBagsContaining("shiny gold").size
 }
 

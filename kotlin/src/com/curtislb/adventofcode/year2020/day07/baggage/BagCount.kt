@@ -1,19 +1,19 @@
 package com.curtislb.adventofcode.year2020.day07.baggage
 
 /**
- * TODO
+ * A [count] of bags of the given [bagType].
  */
 data class BagCount(val bagType: String, val count: Int) {
     override fun toString(): String = "$count $bagType bag${if (count != 1) "s" else ""}"
 
     companion object {
         /**
-         * TODO
+         * A regex used to match the count and type of bag in a string.
          */
         private val MATCH_REGEX = Regex("""(\d+)(\D+)""")
 
         /**
-         * TODO
+         * Returns a [BagCount] from a [string] of the form `"$count $bagType"`.
          */
         fun from(string: String): BagCount {
             val matchGroups = MATCH_REGEX.matchEntire(string.trim())?.groupValues

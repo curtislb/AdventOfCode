@@ -3,17 +3,19 @@ package com.curtislb.adventofcode.year2020.day08.bootcode
 import com.curtislb.adventofcode.year2020.day08.bootcode.operation.Operation
 
 /**
- * TODO
+ * A single boot code instruction, consisting of an [operation] and an integer [argument].
  */
-class Instruction(var operation: Operation, var argument: Int) {
+class Instruction(val operation: Operation, val argument: Int) {
     /**
-     * TODO
+     * Returns the newly modified program [state] after executing [operation] with the given [argument].
      */
-    fun execute(state: BootCode.State): BootCode.State = operation.execute(argument, state)
+    fun execute(state: State): State = operation.execute(argument, state)
 
     companion object {
         /**
-         * TODO
+         * Returns the instruction corresponding to a [string] of the form `"$operation $argument"`.
+         *
+         * @throws IllegalArgumentException If [string] does not represent a valid instruction.
          */
         fun from(string: String): Instruction {
             val tokens = string.trim().split(' ')

@@ -48,6 +48,7 @@ package com.curtislb.adventofcode.year2020.day08.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day08.bootcode.BootCode
+import com.curtislb.adventofcode.year2020.day08.bootcode.Instruction
 import com.curtislb.adventofcode.year2020.day08.bootcode.operation.JumpOperation
 import com.curtislb.adventofcode.year2020.day08.bootcode.operation.NoOperation
 import java.nio.file.Path
@@ -60,19 +61,31 @@ import java.nio.file.Path
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 8)): Int? {
     val file = inputPath.toFile()
     val bootCode = BootCode(file.readText())
-    bootCode.instructions.forEach { instruction ->
-        val oldOperation = instruction.operation
-        if (oldOperation == JumpOperation || oldOperation == NoOperation) {
-            instruction.operation = if (oldOperation == JumpOperation) NoOperation else JumpOperation
-            if (bootCode.run()) {
+
+    // Try replacing each jmp/nop instruction until the program terminates.
+    bootCode.instructions.forEachIndexed { index, instruction ->
+        // Determine the new operation to try.
+        val newOperation = when(instruction.operation) {
+            JumpOperation -> NoOperation
+            NoOperation -> JumpOperation
+            else -> instruction.operation
+        }
+
+        if (newOperation != instruction.operation) {
+            // Run the program with the substituted operation and check if it terminates.
+            bootCode.instructions[index] = Instruction(newOperation, instruction.argument)
+            bootCode.run()
+            if (!bootCode.isLoopDetected) {
                 return bootCode.accumulator
             }
 
+            // Restore the original operation and reset the program before trying again.
+            bootCode.instructions[index] = instruction
             bootCode.resetState()
-            instruction.operation = oldOperation
         }
     }
 
+    // Failed to find a substitution that causes the program to terminate.
     return null
 }
 
