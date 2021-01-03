@@ -33,10 +33,15 @@ class FifoCache<E>(val capacity: Int) : Collection<E> {
     operator fun get(index: Int): E = deque[index]
 
     /**
+     * TODO
+     */
+    fun isFull(): Boolean = deque.size == capacity
+
+    /**
      * Appends a new [element] to this collection, removing the least recently added element if necessary.
      */
     fun add(element: E) {
-        if (deque.size == capacity) {
+        if (isFull()) {
             deque.removeFirst()
         }
         deque.addLast(element)

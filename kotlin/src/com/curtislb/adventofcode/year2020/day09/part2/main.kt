@@ -39,8 +39,8 @@ What is the encryption weakness in your XMAS-encrypted list of numbers?
 package com.curtislb.adventofcode.year2020.day09.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.common.search.findContiguousSubsetSum
-import com.curtislb.adventofcode.common.search.findPairSum
+import com.curtislb.adventofcode.common.io.readLongs
+import com.curtislb.adventofcode.year2020.day09.encryption.Xmas
 import java.nio.file.Path
 
 /**
@@ -50,35 +50,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 9), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
-    val values = file.readLines().map { it.toLong() }
-
-    val deque = ArrayDeque<Long>()
-    var invalidNumber: Long? = null
-    for (value in values) {
-        if (deque.size < preambleSize) {
-            deque.addLast(value)
-        } else {
-            if (deque.findPairSum(value) == null) {
-                invalidNumber = value
-                break
-            }
-            deque.removeFirst()
-            deque.addLast(value)
-        }
-    }
-
-    invalidNumber?.let { targetSum ->
-        val subset = values.findContiguousSubsetSum(targetSum, minSize = 2)
-        if (subset != null) {
-            val minValue = subset.minOrNull()
-            val maxValue = subset.maxOrNull()
-            if (minValue != null && maxValue != null) {
-                return minValue + maxValue
-            }
-        }
-    }
-
-    return null
+    val xmas = Xmas(file.readLongs().toList(), preambleSize)
+    return xmas.findEncryptionWeakness()
 }
 
 fun main() = when (val solution = solve()) {

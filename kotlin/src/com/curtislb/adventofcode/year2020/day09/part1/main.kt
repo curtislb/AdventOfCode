@@ -62,9 +62,9 @@ which is not the sum of two of the 25 numbers before it. What is the first numbe
 
 package com.curtislb.adventofcode.year2020.day09.part1
 
-import com.curtislb.adventofcode.common.io.forEachLineTerminable
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.common.search.findPairSum
+import com.curtislb.adventofcode.common.io.readLongs
+import com.curtislb.adventofcode.year2020.day09.encryption.Xmas
 import java.nio.file.Path
 
 /**
@@ -74,22 +74,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 9), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
-    val deque = ArrayDeque<Long>()
-    file.forEachLineTerminable { line ->
-        val value = line.toLong()
-        if (deque.size < preambleSize) {
-            deque.addLast(value)
-        } else {
-            if (deque.findPairSum(value) == null) {
-                return value
-            }
-            deque.removeFirst()
-            deque.addLast(value)
-        }
-        false // Don't stop iterating.
-    }
-
-    return null
+    val xmas = Xmas(file.readLongs().toList(), preambleSize)
+    return xmas.firstInvalidNumber
 }
 
 fun main() = when (val solution = solve()) {
