@@ -74,7 +74,7 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 9), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
-    val xmas = Xmas(file.readLongs().toList(), preambleSize)
+    val xmas = Xmas(file.readLongs(), preambleSize)
     return xmas.firstInvalidNumber
 }
 

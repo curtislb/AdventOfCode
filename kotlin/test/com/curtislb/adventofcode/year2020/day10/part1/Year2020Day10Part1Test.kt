@@ -10,12 +10,12 @@ import kotlin.test.assertEquals
 class Year2020Day10Part1Test {
     @Test
     fun testSolutionWithRealInput() {
-        assertEquals(2170, solve())
+        assertEquals(2170L, solve())
     }
 
     @Test
     fun testSolutionWithTestInput() {
         val solution = solve(inputPath = pathToInput(year = 2020, day = 10, fileName = "test_input.txt"))
-        assertEquals(220, solution)
+        assertEquals(220L, solution)
     }
 }

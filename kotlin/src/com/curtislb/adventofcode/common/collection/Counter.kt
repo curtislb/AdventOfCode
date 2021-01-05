@@ -13,7 +13,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
 
     init {
         // Remove all items with a count of 0. Subsequent method calls maintain this invariant.
-        counts.entries.filter { (_, count) -> count == 0L }.forEach { (key, _) -> counts.remove(key) }
+        counts.entries.filter { it.value == 0L }.forEach { counts.remove(it.key) }
     }
 
     /**
@@ -25,7 +25,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
      * All `(key, count)` entries in this counter for which `count > 0`.
      */
     val entriesWithPositiveCount: Set<Map.Entry<T, Long>>
-        get() = counts.entries.filter { (_, count) -> count > 0L }.toSet()
+        get() = counts.entries.filter { it.value > 0L }.toSet()
 
     /**
      * All keys stored in this counter with a nonzero count.
@@ -36,7 +36,7 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
      * All keys stored in this counter with a count greater than 0.
      */
     val keysWithPositiveCount: Set<T>
-        get() = counts.entries.filter { (_, count) -> count > 0L }.map { (key, _) -> key }.toSet()
+        get() = counts.entries.filter { it.value > 0L }.map { it.key }.toSet()
 
     /**
      * A map-like object that keeps track of the integer quantity (either positive or negative) of various items.
@@ -76,21 +76,30 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     }
 
     /**
+     * TODO
+     */
+    fun add(key: T, count: Long = 1L) {
+        this[key] += count
+    }
+
+    /**
      * Counts the given [keys] and adds the resulting counts to this counter.
      */
     fun addAll(keys: Iterable<T>) {
-        keys.forEach { this[it]++ }
+        keys.forEach { add(it) }
     }
 
     /**
      * Removes all items with negative counts from this counter, resetting their effective counts to 0.
      */
     fun clearNegativeCounts() {
-        counts.entries.filter { (_, count) -> count < 0L }.forEach { (key, _) -> counts.remove(key) }
+        counts.entries.filter { it.value < 0L }.forEach { counts.remove(it.key) }
     }
 
     /**
      * Returns a map containing all `(key, count)` entries in this counter for which `count` is nonzero.
      */
     fun toMap(): Map<T, Long> = counts.toMap()
+
+    override fun toString() = counts.toString()
 }

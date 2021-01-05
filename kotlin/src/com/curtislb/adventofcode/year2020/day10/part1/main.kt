@@ -105,6 +105,8 @@ differences multiplied by the number of 3-jolt differences?
 package com.curtislb.adventofcode.year2020.day10.part1
 
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.common.io.readInts
+import com.curtislb.adventofcode.year2020.day10.joltage.JoltageAdapters
 import java.nio.file.Path
 
 /**
@@ -112,23 +114,11 @@ import java.nio.file.Path
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 10)): Int {
+fun solve(inputPath: Path = pathToInput(year = 2020, day = 10)): Long {
     val file = inputPath.toFile()
-    val ratings: List<Int> = mutableListOf(0).apply {
-        addAll(file.readLines().map { it.toInt() })
-        sort()
-    }
-
-    var deltaOneCount = 0
-    var deltaThreeCount = 1
-    for (index in 1..ratings.lastIndex) {
-        when (ratings[index] - ratings[index - 1]) {
-            1 -> deltaOneCount++
-            3 -> deltaThreeCount++
-        }
-    }
-
-    return deltaOneCount * deltaThreeCount
+    val adapters = JoltageAdapters(file.readInts().toSet())
+    val differenceCounts = adapters.countRatingDifferences()
+    return differenceCounts[1] * (differenceCounts[3] + 1L)
 }
 
 fun main() {

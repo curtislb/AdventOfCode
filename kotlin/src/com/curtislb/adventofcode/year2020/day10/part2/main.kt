@@ -61,8 +61,9 @@ What is the total number of distinct ways you can arrange the adapters to connec
 
 package com.curtislb.adventofcode.year2020.day10.part2
 
-import com.curtislb.adventofcode.common.collection.FifoCache
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.common.io.readInts
+import com.curtislb.adventofcode.year2020.day10.joltage.JoltageAdapters
 import java.nio.file.Path
 
 /**
@@ -72,24 +73,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 10)): Long {
     val file = inputPath.toFile()
-    val ratings: List<Int> = mutableListOf(0).apply {
-        addAll(file.readLines().map { it.toInt() })
-        sort()
-    }
-
-    val prevCounts = FifoCache<Long>(3)
-    prevCounts.add(1L)
-    for (i in 1..ratings.lastIndex) {
-        var count = 0L
-        prevCounts.forEachIndexed { j, prevCount ->
-            if (ratings[i] - ratings[i - prevCounts.size + j] <= 3) {
-                count += prevCount
-            }
-        }
-        prevCounts.add(count)
-    }
-
-    return prevCounts.last()
+    val adapters = JoltageAdapters(file.readInts().toSet())
+    return adapters.countArrangements()
 }
 
 fun main() {
