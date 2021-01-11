@@ -54,7 +54,7 @@ class ScaffoldGrid {
                 row.forEachIndexed { j, space ->
                     if (space == Space.SCAFFOLD) {
                         val point = Point.fromMatrixCoordinates(i, j)
-                        val isIntersection = point.neighbors.all { neighbor ->
+                        val isIntersection = point.cardinalNeighbors.all { neighbor ->
                             grid.getCellOrNull(neighbor) == Space.SCAFFOLD
                         }
                         if (isIntersection) {

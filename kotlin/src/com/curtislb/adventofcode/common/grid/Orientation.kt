@@ -9,7 +9,7 @@ data class Orientation(val position: Point, val direction: Direction) {
      *
      * If [distance] is negative, this is equivalent to moving `-distance` units opposite [direction].
      */
-    fun move(distance: Int = 1, direction: Direction = this.direction): Orientation {
+    fun move(direction: Direction = this.direction, distance: Int = 1): Orientation {
         return Orientation(position.move(direction, distance), this.direction)
     }
 

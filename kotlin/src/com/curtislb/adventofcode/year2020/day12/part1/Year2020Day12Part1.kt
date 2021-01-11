@@ -65,13 +65,13 @@ fun solve(inputPath: Path = pathToInput(year = 2020, day = 12)): Int {
     file.forEachLine { line ->
         val units = line.substring(1).toInt()
         when (line[0]) {
-            'N' -> orientation = orientation.move(units, Direction.UP)
-            'S' -> orientation = orientation.move(units, Direction.DOWN)
-            'E' -> orientation = orientation.move(units, Direction.RIGHT)
-            'W' -> orientation = orientation.move(units, Direction.LEFT)
+            'N' -> orientation = orientation.move(Direction.UP, units)
+            'S' -> orientation = orientation.move(Direction.DOWN, units)
+            'E' -> orientation = orientation.move(Direction.RIGHT, units)
+            'W' -> orientation = orientation.move(Direction.LEFT, units)
             'L' -> repeat(units / 90) { orientation = orientation.turnLeft() }
             'R' -> repeat(units / 90) { orientation = orientation.turnRight() }
-            'F' -> orientation = orientation.move(units)
+            'F' -> orientation = orientation.move(distance = units)
             else -> throw IllegalArgumentException("Invalid instruction: $line")
         }
     }

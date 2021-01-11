@@ -55,9 +55,9 @@ class Maze(file: File) {
             },
             getNeighbors = { location ->
                 sequence {
-                    location.point.neighbors.forEach { neighborPoint ->
-                        if (grid.getCellOrNull(neighborPoint)?.isOccupiable == true) {
-                            yield(Location(neighborPoint, location.depth))
+                    location.point.cardinalNeighbors.forEach { neighbor ->
+                        if (grid.getCellOrNull(neighbor)?.isOccupiable == true) {
+                            yield(Location(neighbor, location.depth))
                         }
                     }
                     yieldAll(getPortalLocations(location, isRecursive))

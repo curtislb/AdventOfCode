@@ -12,12 +12,27 @@ data class Point(val x: Int, val y: Int) {
     /**
      * All points on the grid that are horizontally or vertically adjacent to this one.
      */
-    val neighbors: List<Point> get() = listOf(Point(x - 1, y), Point(x, y - 1), Point(x, y + 1), Point(x + 1, y))
+    val cardinalNeighbors: List<Point> get() = listOf(
+        Point(x - 1, y),
+        Point(x, y - 1),
+        Point(x, y + 1),
+        Point(x + 1, y)
+    )
+
+    /**
+     * All points on the grid that are diagonally adjacent to this one.
+     */
+    val diagonalNeighbors: List<Point> get() = listOf(
+        Point(x - 1, y - 1),
+        Point(x - 1, y + 1),
+        Point(x + 1, y - 1),
+        Point(x + 1, y + 1)
+    )
 
     /**
      * All points on the grid that are horizontally, vertically, or diagonally adjacent to this one.
      */
-    val surroundingPoints: List<Point> get() = mutableListOf<Point>().apply {
+    val allNeighbors: List<Point> get() = ArrayList<Point>(8).apply {
         for (dx in -1..1) {
             for (dy in -1..1) {
                 if (dx != 0 || dy != 0) {

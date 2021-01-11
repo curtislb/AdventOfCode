@@ -59,7 +59,7 @@ class Droid(file: File) {
      * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
      */
     fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
-        return position.neighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
+        return position.cardinalNeighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
 
     /**

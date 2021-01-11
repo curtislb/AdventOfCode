@@ -53,12 +53,12 @@ class SeatLayout(file: File) {
 
         private fun isIsolated(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
             val point = Point.fromMatrixCoordinates(rowIndex, colIndex)
-            return point.surroundingPoints.none { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
+            return point.allNeighbors.none { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
         }
 
         private fun isCrowded(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
             val point = Point.fromMatrixCoordinates(rowIndex, colIndex)
-            val occupiedCount = point.surroundingPoints.count { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
+            val occupiedCount = point.allNeighbors.count { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
             return occupiedCount >= 4
         }
 
