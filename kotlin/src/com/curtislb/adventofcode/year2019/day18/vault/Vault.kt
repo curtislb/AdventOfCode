@@ -1,8 +1,11 @@
 package com.curtislb.adventofcode.year2019.day18.vault
 
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.getCellOrNull
-import com.curtislb.adventofcode.common.io.mapLines
+import com.curtislb.adventofcode.common.grid.addRowWith
+import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.year2019.day18.vault.space.EntranceSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.Space
@@ -18,18 +21,20 @@ class Vault(file: File) {
     /**
      * A matrix representing the space at each position in the vault.
      */
-    private val grid: List<List<Space>> = file.mapLines { line -> line.trim().map { char -> Space.from(char) } }
+    private val grid: Grid<Space> = mutableGridOf<Space>().apply {
+        file.forEachLine { line ->
+            addRowWith { line.trim().forEach { char -> add(Space.from(char)) } }
+        }
+    }
 
     /**
      * All positions in this vault that contain an [EntranceSpace].
      */
     val entranceLocations: Set<Point> by lazy {
         mutableSetOf<Point>().apply {
-            for (i in grid.indices) {
-                for (j in grid[i].indices) {
-                    if (grid[i][j] == EntranceSpace) {
-                        add(Point.fromMatrixCoordinates(i, j))
-                    }
+            grid.forEachPoint { point, space ->
+                if (space == EntranceSpace) {
+                    add(point)
                 }
             }
         }
@@ -40,11 +45,9 @@ class Vault(file: File) {
      */
     val keyLocations: Map<Char, Point> by lazy {
         mutableMapOf<Char, Point>().apply {
-            grid.forEachIndexed { i, row ->
-                row.forEachIndexed { j, space ->
-                    if (space is KeySpace) {
-                        this[space.symbol] = Point.fromMatrixCoordinates(i, j)
-                    }
+            grid.forEachPoint { point, space ->
+                if (space is KeySpace) {
+                    this[space.symbol] = point
                 }
             }
         }
@@ -53,9 +56,11 @@ class Vault(file: File) {
     /**
      * Returns the space located at [position] in the vault, or `null` if [position] is not in the vault.
      */
-    operator fun get(position: Point): Space? = grid.getCellOrNull(position)
+    operator fun get(position: Point): Space? = grid.getOrNull(position)
 
     override fun toString(): String {
-        return grid.joinToString(separator = "\n") { row -> row.joinToString(separator = "") { it.symbol.toString() } }
+        return grid.joinRowsToString(separator = "\n") { row ->
+            row.joinToString(separator = "") { it.symbol.toString() }
+        }
     }
 }

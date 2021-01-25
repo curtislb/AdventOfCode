@@ -127,6 +127,7 @@ package com.curtislb.adventofcode.year2020.day11.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day11.seating.SeatLayout
+import com.curtislb.adventofcode.year2020.day11.seating.findVisibleSeats
 import java.nio.file.Path
 
 /**
@@ -136,9 +137,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 11)): Int {
     val file = inputPath.toFile()
-    val seatLayout = SeatLayout(file)
-    seatLayout.stabilize(useUpdatedRules = true)
-    return seatLayout.countOccupied()
+    val seatLayout = SeatLayout(file.readText(), maxNeighbors = 4, ::findVisibleSeats)
+    return seatLayout.apply{ updateUntilStable() }.countOccupied()
 }
 
 fun main() {

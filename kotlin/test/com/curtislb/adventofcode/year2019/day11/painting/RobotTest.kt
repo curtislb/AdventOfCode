@@ -3,6 +3,8 @@ package com.curtislb.adventofcode.year2019.day11.painting
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.grid.emptyGrid
+import com.curtislb.adventofcode.common.grid.gridOf
 import com.curtislb.adventofcode.common.intcode.Intcode
 import org.junit.Before
 import org.junit.Test
@@ -72,21 +74,21 @@ class RobotTest {
     @Test
     fun testPaintAndConstructGrid() {
         assertEquals(0, robot.paintedArea)
-        assertEquals(emptyList(), robot.constructPaintedGrid())
+        assertEquals(emptyGrid(), robot.constructPaintedGrid())
 
         robot.paint(Color.BLACK)
         assertEquals(1, robot.paintedArea)
-        assertEquals(listOf(listOf(Color.BLACK)), robot.constructPaintedGrid())
+        assertEquals(gridOf(listOf(Color.BLACK)), robot.constructPaintedGrid())
 
         robot.paint(Color.WHITE)
         assertEquals(1, robot.paintedArea)
-        assertEquals(listOf(listOf(Color.WHITE)), robot.constructPaintedGrid())
+        assertEquals(gridOf(listOf(Color.WHITE)), robot.constructPaintedGrid())
 
         robot.moveForward()
         robot.paint(Color.WHITE)
         assertEquals(2, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE),
                 listOf(Color.WHITE)
             ),
@@ -96,7 +98,7 @@ class RobotTest {
         robot.paint(Color.BLACK)
         assertEquals(2, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.BLACK),
                 listOf(Color.WHITE)
             ),
@@ -108,7 +110,7 @@ class RobotTest {
         robot.paint(Color.WHITE)
         assertEquals(3, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE),
                 listOf(Color.BLACK),
                 listOf(Color.BLACK),
@@ -122,7 +124,7 @@ class RobotTest {
         robot.paint(Color.WHITE)
         assertEquals(4, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE),
                 listOf(Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK),
@@ -137,7 +139,7 @@ class RobotTest {
         robot.paint(Color.BLACK)
         assertEquals(5, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE),
                 listOf(Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK),
@@ -152,7 +154,7 @@ class RobotTest {
         robot.paint(Color.BLACK)
         assertEquals(6, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
@@ -164,7 +166,7 @@ class RobotTest {
         robot.paint(Color.WHITE)
         assertEquals(6, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE),
@@ -179,7 +181,7 @@ class RobotTest {
         robot.paint(Color.WHITE)
         assertEquals(7, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE),
@@ -192,7 +194,7 @@ class RobotTest {
         robot.paint(Color.BLACK)
         assertEquals(7, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.WHITE, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE),
@@ -221,7 +223,7 @@ class RobotTest {
         robot.executeProgram(intcode)
         assertEquals(6, robot.paintedArea)
         assertEquals(
-            listOf(
+            gridOf(
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK, Color.WHITE),
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK)

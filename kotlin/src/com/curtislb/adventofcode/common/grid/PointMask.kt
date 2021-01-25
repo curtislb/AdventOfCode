@@ -34,10 +34,10 @@ class PointMask(val includedPoints: Set<Point>) {
     /**
      * TODO
      */
-    fun <T> applyMask(grid: List<List<T>>): Map<Point, T> {
+    fun <T> applyMask(grid: Grid<T>): Map<Point, T> {
         return mutableMapOf<Point, T>().apply {
             includedPoints.forEach { point ->
-                val value = grid.getCellOrNull(point)
+                val value = grid.getOrNull(point)
                 if (value != null) {
                     this[point] = value
                 }

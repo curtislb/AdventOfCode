@@ -10,29 +10,19 @@ import kotlin.math.atan2
  */
 data class Point(val x: Int, val y: Int) {
     /**
-     * All points on the grid that are horizontally or vertically adjacent to this one.
+     * TODO
      */
-    val cardinalNeighbors: List<Point> get() = listOf(
-        Point(x - 1, y),
-        Point(x, y - 1),
-        Point(x, y + 1),
-        Point(x + 1, y)
-    )
+    operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
 
     /**
-     * All points on the grid that are diagonally adjacent to this one.
+     * TODO
      */
-    val diagonalNeighbors: List<Point> get() = listOf(
-        Point(x - 1, y - 1),
-        Point(x - 1, y + 1),
-        Point(x + 1, y - 1),
-        Point(x + 1, y + 1)
-    )
+    operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
 
     /**
-     * All points on the grid that are horizontally, vertically, or diagonally adjacent to this one.
+     * Returns all points on the grid that are horizontally, vertically, or diagonally adjacent to this one.
      */
-    val allNeighbors: List<Point> get() = ArrayList<Point>(8).apply {
+    fun allNeighbors(): List<Point> = ArrayList<Point>(8).apply {
         for (dx in -1..1) {
             for (dy in -1..1) {
                 if (dx != 0 || dy != 0) {
@@ -41,6 +31,26 @@ data class Point(val x: Int, val y: Int) {
             }
         }
     }
+
+    /**
+     * Returns all points on the grid that are horizontally or vertically adjacent to this one.
+     */
+    fun cardinalNeighbors(): List<Point> = listOf(
+        Point(x - 1, y),
+        Point(x, y - 1),
+        Point(x, y + 1),
+        Point(x + 1, y)
+    )
+
+    /**
+     * Returns all points on the grid that are diagonally adjacent to this one.
+     */
+    fun diagonalNeighbors(): List<Point> = listOf(
+        Point(x - 1, y - 1),
+        Point(x - 1, y + 1),
+        Point(x + 1, y - 1),
+        Point(x + 1, y + 1)
+    )
 
     /**
      * Returns the point reached by moving [distance] grid units in a given [direction] from this one.

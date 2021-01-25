@@ -14,8 +14,13 @@ class Robot(file: File) {
     /**
      * The initial layout of the scaffold grid, including the location of the vacuum robot.
      */
-    var grid: ScaffoldGrid = ScaffoldGrid()
+    var grid: ScaffoldGrid? = null
         private set
+
+    /**
+     * TODO
+     */
+    private var gridBuilder: ScaffoldGrid.Builder? = ScaffoldGrid.Builder()
 
     /**
      * Whether the last program output was a newline. Used to construct the initial grid.
@@ -53,7 +58,8 @@ class Robot(file: File) {
      * Restores the vacuum robot to its starting state, immediately after initialization.
      */
     fun reset() {
-        grid = ScaffoldGrid()
+        grid = null
+        gridBuilder = ScaffoldGrid.Builder()
         isPrevOutputNewline = false
         ascii.resetState()
         ascii.processOutput = { output, _ -> processOutput(output) }
@@ -71,16 +77,18 @@ class Robot(file: File) {
         when (output) {
             Ascii.NEWLINE_CODE -> {
                 if (isPrevOutputNewline) {
-                    grid.removeRow()
+                    gridBuilder?.removeRow()
+                    grid = gridBuilder?.build()
+                    gridBuilder = null
                     ascii.processOutput = null
                 } else {
-                    grid.addRow()
+                    gridBuilder?.addRow()
                     isPrevOutputNewline = true
                 }
             }
 
             else -> {
-                grid.addSpace(Space.from(output))
+                gridBuilder?.addSpace(Space.from(output))
                 isPrevOutputNewline = false
             }
         }

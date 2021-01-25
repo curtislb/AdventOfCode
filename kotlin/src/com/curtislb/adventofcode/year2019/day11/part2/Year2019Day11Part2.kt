@@ -15,6 +15,7 @@ identifier does it paint on your hull?
 
 package com.curtislb.adventofcode.year2019.day11.part2
 
+import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day11.painting.Color
@@ -33,7 +34,7 @@ fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): String {
     robot.executeProgram(Intcode(inputPath.toFile()))
 
     // Convert the painted portion of the grid to a string.
-    return robot.constructPaintedGrid().joinToString(separator = "\n") { row ->
+    return robot.constructPaintedGrid().joinRowsToString(separator = "\n") { row ->
         row.joinToString(separator = "") { color -> color.symbol.toString() }
     }
 }

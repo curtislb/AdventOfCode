@@ -29,7 +29,7 @@ enum class Bit(val symbol: Char) {
                     return bit
                 }
             }
-            throw IllegalArgumentException("Invalid bit symbol: $symbol")
+            throw IllegalArgumentException("Unknown bit symbol: $symbol")
         }
     }
 }

@@ -30,7 +30,7 @@ class RecursiveBugGrid(file: File) {
      * Each space at each layer of the grid is updated according to the rules given by [BugGrid.next] for each minute.
      */
     fun update(minutes: Int = 1) {
-        for (minute in 1..minutes) {
+        repeat(minutes) {
             // Add new upper- and lower-level grids that may become infested with bugs.
             upperLevels.add(BugGrid.EMPTY)
             lowerLevels.add(BugGrid.EMPTY)

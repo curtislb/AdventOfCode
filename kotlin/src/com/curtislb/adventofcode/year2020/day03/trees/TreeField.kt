@@ -1,39 +1,36 @@
 package com.curtislb.adventofcode.year2020.day03.trees
 
-import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.grid.Ray
+import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.common.math.Fraction
 
 /**
  * A collection of trees arranged in a 2D grid, consisting of a base pattern repeated infinitely to the right.
  *
- * @param patternString A string representing the base pattern for this tree field. Each line should contain a row of
+ * @param treePattern A string representing the base pattern for this tree field. Each line should contain a row of
  *  characters, with each representing an empty grid space (`'.'`) or a tree (`'#'`).
  */
-class TreeField(patternString: String) {
+class TreeField(treePattern: String) {
     /**
      * A boolean grid representing the base pattern for this tree field. Contains `true` at each tree position.
      */
-    private val treePattern: List<List<Boolean>> = patternString.trim().lines().map { line ->
+    private val patternGrid: Grid<Boolean> = treePattern.trim().lines().map { line ->
         line.trim().map { char -> char == '#' }
-    }
+    }.toGrid()
 
     /**
      * The height (in grid units) of this tree field.
      */
-    val height = treePattern.size
-
-    /**
-     * The width (in grid units) of the base pattern for this tree field.
-     */
-    private val patternWidth = treePattern.getOrNull(0)?.size ?: 0
+    val height = patternGrid.height
 
     /**
      * Checks if there is a tree at the given [position] in the grid.
      */
     fun isTreeAt(position: Point): Boolean {
         val (rowIndex, colIndex) = position.toMatrixCoordinates()
-        return treePattern[rowIndex][colIndex % patternWidth]
+        return patternGrid[rowIndex, colIndex % patternGrid.width]
     }
 
     /**
@@ -44,19 +41,22 @@ class TreeField(patternString: String) {
      * @throws IllegalArgumentException If [slope] is not negative or `null`.
      */
     fun countTreesAlongSlope(slope: Fraction?): Int {
-        // Convert slope to integer x and y step values.
+        // Convert slope to a ray originating from the top-left corner.
         require(slope == null || slope.numerator < 0L) { "Slope must be negative or null: $slope" }
-        val deltaX = slope?.denominator?.toInt() ?: 0
-        val deltaY = slope?.numerator?.toInt() ?: -1
+        val ray = Ray(Point.ORIGIN, slope, directionParity = slope != null)
 
-        // Count trees at each possible position, incrementing by the given step sizes.
+        // Count trees at each point intersected by the ray.
         var count = 0
-        var position = Point(deltaX, deltaY)
-        while (-position.y < height) {
-            if (isTreeAt(position)) {
+        for (point in ray.points()) {
+            // Stop after reaching the bottom of the pattern.
+            if (-point.y >= height) {
+                break
+            }
+
+            // Check for a tree at the current point.
+            if (isTreeAt(point)) {
                 count++
             }
-            position = position.move(Direction.RIGHT, deltaX).move(Direction.UP, deltaY)
         }
         return count
     }

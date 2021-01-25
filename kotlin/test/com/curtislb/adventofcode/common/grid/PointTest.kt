@@ -12,12 +12,12 @@ import kotlin.test.assertEquals
 class PointTest {
     @Test
     fun testNeighbors() {
-        assertContainsExactly(listOf(Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0)), Point(0, 0).cardinalNeighbors)
-        assertContainsExactly(listOf(Point(10, 1), Point(11, 0), Point(10, -1), Point(9, 0)), Point(10, 0).cardinalNeighbors)
-        assertContainsExactly(listOf(Point(18, 10), Point(19, 9), Point(18, 8), Point(17, 9)), Point(18, 9).cardinalNeighbors)
+        assertContainsExactly(listOf(Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0)), Point(0, 0).cardinalNeighbors())
+        assertContainsExactly(listOf(Point(10, 1), Point(11, 0), Point(10, -1), Point(9, 0)), Point(10, 0).cardinalNeighbors())
+        assertContainsExactly(listOf(Point(18, 10), Point(19, 9), Point(18, 8), Point(17, 9)), Point(18, 9).cardinalNeighbors())
         assertContainsExactly(
             listOf(Point(-18, -18), Point(-17, -19), Point(-18, -20), Point(-19, -19)),
-            Point(-18, -19).cardinalNeighbors
+            Point(-18, -19).cardinalNeighbors()
         )
     }
 

@@ -14,7 +14,7 @@ class SpringScript private constructor(val instructions: List<String>) {
          * instructions to the program [Builder].
          */
         inline fun create(extendedMode: Boolean = false, prepare: Builder.() -> Unit): SpringScript {
-            return Builder(extendedMode).apply { prepare() }.build()
+            return Builder(extendedMode).apply(prepare).build()
         }
     }
 

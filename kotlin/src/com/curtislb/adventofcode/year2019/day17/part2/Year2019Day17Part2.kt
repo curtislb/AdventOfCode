@@ -118,7 +118,7 @@ fun solve(
     maxCharCount: Int = 20
 ): BigInteger? {
     val robot = Robot(inputPath.toFile())
-    val instructions = robot.grid.planRoute()
+    val instructions = robot.grid?.planRoute() ?: return null
     val routine = Routine.compressInstructions(instructions, functionCount, maxCharCount)?.padFunctions(functionCount)
     return if (routine != null) robot.moveRobot(routine) else null
 }

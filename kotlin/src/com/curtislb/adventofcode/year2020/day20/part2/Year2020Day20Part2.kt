@@ -107,9 +107,10 @@ package com.curtislb.adventofcode.year2020.day20.part2
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.PointMask
-import com.curtislb.adventofcode.common.grid.constructGrid
-import com.curtislb.adventofcode.common.grid.flippedHorizontal
-import com.curtislb.adventofcode.common.grid.rotatedLeft
+import com.curtislb.adventofcode.common.grid.constructPointGrid
+import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.sumRowsBy
+import com.curtislb.adventofcode.common.grid.toMutableGrid
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
@@ -141,7 +142,7 @@ fun solve(inputPath: Path = pathToInput(year = 2020, day = 20)): Int {
         Point(19, -1)
     )
 
-    val maskGrids = mutableListOf(constructGrid(maskPoints) { it in maskPoints })
+    val maskGrids = mutableListOf(constructPointGrid(maskPoints) { it in maskPoints })
     for (rotationCount in 1..3) {
         maskGrids.add(maskGrids.last().rotatedLeft())
     }
@@ -153,11 +154,9 @@ fun solve(inputPath: Path = pathToInput(year = 2020, day = 20)): Int {
     val pointMasks = mutableListOf<PointMask>().apply {
         maskGrids.forEach { maskGrid ->
             val points = mutableSetOf<Point>().apply {
-                maskGrid.forEachIndexed { rowIndex, row ->
-                    row.forEachIndexed { colIndex, isIncluded ->
-                        if (isIncluded) {
-                            add(Point.fromMatrixCoordinates(rowIndex, colIndex))
-                        }
+                maskGrid.forEachPoint { point, isIncluded ->
+                    if (isIncluded) {
+                        add(point)
                     }
                 }
             }
@@ -183,7 +182,7 @@ fun solve(inputPath: Path = pathToInput(year = 2020, day = 20)): Int {
         }
     }
 
-    val filledPointCount = imageGrid.sumBy { row -> row.count { isFilled -> isFilled } }
+    val filledPointCount = imageGrid.toMutableGrid().sumRowsBy { row -> row.count { isFilled -> isFilled } }
     return filledPointCount - monsterPoints.size
 }
 

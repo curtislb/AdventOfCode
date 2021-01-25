@@ -5,12 +5,10 @@ package com.curtislb.adventofcode.common.math
  *
  * @throws IllegalArgumentException If [exponent] is negative.
  */
-fun Long.pow(exponent: Int): Long {
+fun Int.pow(exponent: Int): Int {
     require(exponent >= 0) { "Exponent must be non-negative: $exponent" }
-    var product = 1L
-    for (i in 1..exponent) {
-        product *= this
-    }
+    var product = 1
+    repeat(exponent) { product *= this }
     return product
 }
 
@@ -19,4 +17,9 @@ fun Long.pow(exponent: Int): Long {
  *
  * @throws IllegalArgumentException If [exponent] is negative.
  */
-fun Int.pow(exponent: Int): Int = toLong().pow(exponent).toInt()
+fun Long.pow(exponent: Int): Long {
+    require(exponent >= 0) { "Exponent must be non-negative: $exponent" }
+    var product = 1L
+    repeat(exponent) { product *= this }
+    return product
+}

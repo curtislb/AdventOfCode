@@ -59,7 +59,7 @@ class KeySearch(private val vault: Vault) {
                 isGoal = { it in keyPositions },
                 getNeighbors = { point ->
                     sequence {
-                        for (neighbor in point.cardinalNeighbors) {
+                        for (neighbor in point.cardinalNeighbors()) {
                             val space = vault[neighbor]
                             if (space != null && space.isOccupiable) {
                                 yield(neighbor)

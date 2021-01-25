@@ -1,9 +1,10 @@
 package com.curtislb.adventofcode.year2019.day15.repair
 
 import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.constructGrid
+import com.curtislb.adventofcode.common.grid.constructPointGrid
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
@@ -59,20 +60,20 @@ class Droid(file: File) {
      * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
      */
     fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
-        return position.cardinalNeighbors.filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
+        return position.cardinalNeighbors().filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
 
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored.
      */
-    fun constructKnownGrid(): List<List<Space>> = constructGrid(knownSpaces.keys) { spaceAt(it) }
+    fun constructKnownGrid(): Grid<Space> = constructPointGrid(knownSpaces.keys) { spaceAt(it) }
 
     /**
      * Returns a matrix representing the portion of the grid that the repair droid has explored, including the droid's
      * current position, represented by [Space.DROID].
      */
-    fun constructKnownGridWithDroid(): List<List<Space>> {
-        return constructGrid(knownSpaces.keys) { point ->
+    fun constructKnownGridWithDroid(): Grid<Space> {
+        return constructPointGrid(knownSpaces.keys) { point ->
             if (point == orientation.position) Space.DROID else spaceAt(point)
         }
     }

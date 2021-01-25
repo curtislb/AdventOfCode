@@ -112,9 +112,10 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 11)): Int {
     val file = inputPath.toFile()
-    val seatLayout = SeatLayout(file)
-    seatLayout.stabilize()
-    return seatLayout.countOccupied()
+    val seatLayout = SeatLayout(file.readText(), maxNeighbors = 3) { grid, position ->
+        position.allNeighbors().asSequence().filter { it in grid }
+    }
+    return seatLayout.apply{ updateUntilStable() }.countOccupied()
 }
 
 fun main() {

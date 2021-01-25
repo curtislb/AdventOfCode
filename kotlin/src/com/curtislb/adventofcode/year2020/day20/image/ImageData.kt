@@ -2,9 +2,11 @@ package com.curtislb.adventofcode.year2020.day20.image
 
 import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.Grid
+import com.curtislb.adventofcode.common.grid.MutableGrid
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.constructGrid
-import com.curtislb.adventofcode.common.grid.getCellOrNull
+import com.curtislb.adventofcode.common.grid.constructPointGrid
+import com.curtislb.adventofcode.common.grid.emptyGrid
 import com.curtislb.adventofcode.common.io.forEachSection
 import java.io.File
 import kotlin.math.roundToInt
@@ -17,7 +19,7 @@ class ImageData(file: File) {
     /**
      * TODO
      */
-    private val tileArrangement: List<List<Tile>>
+    private val tileArrangement: Grid<Tile>
 
     init {
         val tileMap = mutableMapOf<Int, Tile>().apply {
@@ -56,7 +58,7 @@ class ImageData(file: File) {
         }
 
         val tilesPerSide = sqrt(tileMap.size.toDouble()).roundToInt()
-        val arrangedTiles = List(tilesPerSide) { MutableList(tilesPerSide) { Tile(0, emptyList()) } }
+        val arrangedTiles = MutableGrid(tilesPerSide, tilesPerSide) { _, _ -> Tile(0, emptyGrid()) }
         val arrangedTileIDs = mutableSetOf<Int>()
         for (startColumn in 0 until tilesPerSide) {
             val startRows = if (startColumn < tilesPerSide - 1) 0..0 else tileMap.keys.indices
@@ -64,8 +66,8 @@ class ImageData(file: File) {
                 var rowIndex = startRow
                 var colIndex = startColumn
                 while (rowIndex in 0 until tilesPerSide && colIndex in 0 until tilesPerSide) {
-                    val tileAbove = arrangedTiles.getCellOrNull(rowIndex - 1, colIndex)
-                    val tileLeft = arrangedTiles.getCellOrNull(rowIndex, colIndex - 1)
+                    val tileAbove = arrangedTiles.getOrNull(rowIndex - 1, colIndex)
+                    val tileLeft = arrangedTiles.getOrNull(rowIndex, colIndex - 1)
 
                     val maxAdjacentTileCount = 4 - listOf(tileAbove, tileLeft).count { it == null }
                     val matchingEntries = adjacencyMap.entries.filter { (tileID, adjacentTiles) ->
@@ -79,7 +81,7 @@ class ImageData(file: File) {
                     for ((tileID, adjacentTiles) in matchingEntries) {
                         val tile = tileMap[tileID]?.orient(tileAbove, tileLeft, adjacentTiles)
                         if (tile != null) {
-                            arrangedTiles[rowIndex][colIndex] = tile
+                            arrangedTiles[rowIndex, colIndex] = tile
                             arrangedTileIDs.add(tileID)
                             isMatchFound = true
                             break
@@ -102,21 +104,21 @@ class ImageData(file: File) {
     /**
      * TODO
      */
-    private val tileSideLength = tileArrangement.first().first().sideLength
+    private val tileSideLength = tileArrangement.firstRow().first().sideLength
 
     /**
      * TODO
      */
-    val sideLength: Int = tileArrangement.size * tileSideLength
+    val sideLength: Int = tileArrangement.height * tileSideLength
 
     /**
      * TODO
      */
     val cornerTiles: List<Tile> get() = listOf(
-        tileArrangement.first().first(),
-        tileArrangement.first().last(),
-        tileArrangement.last().first(),
-        tileArrangement.last().last()
+        tileArrangement[0, 0],
+        tileArrangement[0, tileArrangement.lastColumnIndex],
+        tileArrangement[tileArrangement.lastRowIndex, 0],
+        tileArrangement[tileArrangement.lastRowIndex, tileArrangement.lastColumnIndex]
     )
 
     /**
@@ -135,14 +137,14 @@ class ImageData(file: File) {
         val tileColIndex = colIndex / tileSideLength
         val innerRowIndex = rowIndex % tileSideLength
         val innerColIndex = colIndex % tileSideLength
-        return tileArrangement[tileRowIndex][tileColIndex][innerRowIndex, innerColIndex]
+        return tileArrangement[tileRowIndex, tileColIndex][innerRowIndex, innerColIndex]
     }
 
     /**
      * TODO
      */
-    fun constructImageGrid(): List<List<Boolean>> {
-        return constructGrid(listOf(Point.ORIGIN, Point(sideLength - 1, 1 - sideLength))) { this[it] }
+    fun constructImageGrid(): Grid<Boolean> {
+        return constructPointGrid(listOf(Point.ORIGIN, Point(sideLength - 1, 1 - sideLength))) { this[it] }
     }
 
     companion object {

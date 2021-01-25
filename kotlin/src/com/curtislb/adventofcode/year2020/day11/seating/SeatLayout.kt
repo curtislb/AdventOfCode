@@ -1,122 +1,79 @@
 package com.curtislb.adventofcode.year2020.day11.seating
 
+import com.curtislb.adventofcode.common.grid.Grid
+import com.curtislb.adventofcode.common.grid.MutableGrid
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.getCellOrNull
-import java.io.File
+import com.curtislb.adventofcode.common.grid.addRowWith
+import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.mutableGridOf
+import com.curtislb.adventofcode.common.grid.sumRowsBy
+import com.curtislb.adventofcode.common.grid.toMutableGrid
+import com.curtislb.adventofcode.common.simulation.runGameOfLife
 
 /**
- * TODO
+ * A fixed-size grid containing seats that may become occupied or empty over time.
+ *
+ * @param initialLayout A string representation of the initial seat layout. Each line should contain a row of
+ *  characters, with each representing part of the floor (`'.'`) an empty seat (`'L'`), or an occupied seat (`'#'`).
+ * @param maxNeighbors The maximum number of neighboring seats that can be occupied without causing a currently occupied
+ *  seat to become empty.
+ * @param getNeighborSeats Returns the positions of all neighboring seats for a given position in the grid.
  */
-class SeatLayout(file: File) {
+class SeatLayout(
+    initialLayout: String,
+    private val maxNeighbors: Int = 0,
+    private val getNeighborSeats: (grid: Grid<Space>, position: Point) -> Sequence<Point>
+) {
     /**
-     * TODO
+     * A grid of spaces representing the current seat layout.
      */
-    private var seatGrid: List<List<Space>> = mutableListOf<List<Space>>().apply {
-        file.forEachLine { line ->
-            add(mutableListOf<Space>().apply { line.forEach { char -> add(Space.from(char)) } })
+    private var spaceGrid: Grid<Space> = mutableGridOf<Space>().apply {
+        initialLayout.trim().lines().forEach { line ->
+            addRowWith { line.forEach { char -> add(Space.from(char)) } }
         }
     }
 
     /**
-     * TODO
+     * Returns the number of occupied seats in the current layout.
      */
-    fun countOccupied(): Int = seatGrid.sumBy { row -> row.sumBy { space -> if (space == Space.OCCUPIED) 1 else 0 } }
+    fun countOccupied(): Int = spaceGrid.sumRowsBy { row -> row.count { space -> space == Space.OCCUPIED } }
 
     /**
-     * TODO
+     * Updates the current layout by applying update rules to all spaces simultaneously until the layout no longer
+     * changes.
+     *
+     * The rules for updating each space are as follows:
+     * - An empty seat becomes occupied if none of its neighboring seats (as given by [getNeighborSeats]) are occupied.
+     * - An occupied seat becomes empty if more than [maxNeighbors] of its neighboring seats are occupied.
+     * - In all other cases, the space does not change.
      */
-    fun stabilize(useUpdatedRules: Boolean = false) {
-        var nextGrid = if (useUpdatedRules) applyUpdatedRules(seatGrid) else applyRules(seatGrid)
-        while (seatGrid != nextGrid) {
-            seatGrid = nextGrid
-            nextGrid = if (useUpdatedRules) applyUpdatedRules(seatGrid) else applyRules(seatGrid)
-        }
-    }
-
-    companion object {
-        fun applyRules(seatGrid: List<List<Space>>): List<List<Space>> {
-            val newGrid = mutableListOf<List<Space>>()
-            seatGrid.forEachIndexed { rowIndex, row ->
-                val newRow = mutableListOf<Space>()
-                row.forEachIndexed { colIndex, space ->
-                    val newSpace = when (space) {
-                        Space.EMPTY -> if (isIsolated(seatGrid, rowIndex, colIndex)) Space.OCCUPIED else space
-                        Space.OCCUPIED -> if (isCrowded(seatGrid, rowIndex, colIndex)) Space.EMPTY else space
-                        else -> space
-                    }
-                    newRow.add(newSpace)
-                }
-                newGrid.add(newRow)
-            }
-            return newGrid
-        }
-
-        private fun isIsolated(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
-            val point = Point.fromMatrixCoordinates(rowIndex, colIndex)
-            return point.allNeighbors.none { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
-        }
-
-        private fun isCrowded(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
-            val point = Point.fromMatrixCoordinates(rowIndex, colIndex)
-            val occupiedCount = point.allNeighbors.count { seatGrid.getCellOrNull(it) == Space.OCCUPIED }
-            return occupiedCount >= 4
-        }
-
-        fun applyUpdatedRules(seatGrid: List<List<Space>>): List<List<Space>> {
-            val newGrid = mutableListOf<List<Space>>()
-            seatGrid.forEachIndexed { rowIndex, row ->
-                val newRow = mutableListOf<Space>()
-                row.forEachIndexed { colIndex, space ->
-                    val newSpace = when (space) {
-                        Space.EMPTY -> if (isVisuallyIsolated(seatGrid, rowIndex, colIndex)) Space.OCCUPIED else space
-                        Space.OCCUPIED -> if (isVisuallyCrowded(seatGrid, rowIndex, colIndex)) Space.EMPTY else space
-                        else -> space
-                    }
-                    newRow.add(newSpace)
-                }
-                newGrid.add(newRow)
-            }
-            return newGrid
-        }
-
-        private val DELTAS = listOf(
-            Pair(-1, -1),
-            Pair(-1, 0),
-            Pair(-1, 1),
-            Pair(0, -1),
-            Pair(0, 1),
-            Pair(1, -1),
-            Pair(1, 0),
-            Pair(1, 1)
+    fun updateUntilStable() {
+        spaceGrid = runGameOfLife(
+            spaceGrid.toMutableGrid(),
+            shouldTerminate = { prevGrid, grid -> prevGrid == grid },
+            copyState = MutableGrid<Space>::toMutableGrid,
+            getValue = MutableGrid<Space>::get,
+            setValue = { grid, point, space -> grid.apply { this[point] = space } },
+            getUpdatableKeys = { grid -> grid.points().filter { grid[it] != Space.FLOOR } },
+            getNeighborKeys = getNeighborSeats,
+            applyUpdateRules = ::applyRules
         )
+    }
 
-        private fun isVisuallyIsolated(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
-            return DELTAS.none { delta -> isVisibleOccupiedSeat(seatGrid, rowIndex, colIndex, delta) }
+    /**
+     * Returns the resulting [Space] after applying the rules from [updateUntilStable] to the given [space] with given
+     * [neighbors].
+     */
+    private fun applyRules(space: Space, neighbors: Sequence<Space>): Space = when (space) {
+        Space.FLOOR -> space
+        Space.EMPTY -> if (neighbors.none { it == Space.OCCUPIED }) Space.OCCUPIED else space
+        Space.OCCUPIED -> {
+            val occupiedCount = neighbors.count { it == Space.OCCUPIED }
+            if (occupiedCount > maxNeighbors) Space.EMPTY else space
         }
+    }
 
-        private fun isVisuallyCrowded(seatGrid: List<List<Space>>, rowIndex: Int, colIndex: Int): Boolean {
-            return DELTAS.count { delta -> isVisibleOccupiedSeat(seatGrid, rowIndex, colIndex, delta) } >= 5
-        }
-
-        private fun isVisibleOccupiedSeat(
-            seatGrid: List<List<Space>>,
-            rowIndex: Int,
-            colIndex: Int,
-            delta: Pair<Int, Int>
-        ): Boolean {
-            var visibleRow = rowIndex + delta.first
-            var visibleCol = colIndex + delta.second
-            while (visibleRow in seatGrid.indices && visibleCol in seatGrid[0].indices) {
-                val visibleSeat = seatGrid[visibleRow][visibleCol]
-                if (visibleSeat == Space.EMPTY) {
-                    return false
-                } else if (visibleSeat == Space.OCCUPIED) {
-                    return true
-                }
-                visibleRow += delta.first
-                visibleCol += delta.second
-            }
-            return false
-        }
+    override fun toString(): String = spaceGrid.joinRowsToString(separator = "\n") { row ->
+        row.joinToString(separator = "") { space -> space.symbol.toString() }
     }
 }

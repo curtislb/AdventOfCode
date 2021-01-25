@@ -1,8 +1,11 @@
 package com.curtislb.adventofcode.year2019.day20.maze
 
+import com.curtislb.adventofcode.common.collection.getOrNull
 import com.curtislb.adventofcode.common.graph.bfsDistance
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.getCellOrNull
+import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.io.mapLines
 import com.curtislb.adventofcode.year2019.day20.maze.space.EmptySpace
 import com.curtislb.adventofcode.year2019.day20.maze.space.LabeledSpace
@@ -19,12 +22,12 @@ class Maze(file: File) {
     /**
      * A matrix representing the space at each position in the maze.
      */
-    private val grid: List<List<Space>>
+    private val grid: Grid<Space>
 
     init {
-        val charGrid = file.mapLines { it.trimEnd().toMutableList() }
-        val spaceLabels = processLabels(charGrid)
-        grid = createSpaceGrid(charGrid, spaceLabels)
+        val charRows = file.mapLines { it.trimEnd().toMutableList() }
+        val spaceLabels = processLabels(charRows)
+        grid = createSpaceGrid(charRows, spaceLabels)
     }
 
     /**
@@ -50,13 +53,13 @@ class Maze(file: File) {
                 if (location.depth != 0) {
                     return@bfsDistance false
                 }
-                val space = grid.getCellOrNull(location.point)
+                val space = grid.getOrNull(location.point)
                 space is LabeledSpace && space.label == exitLabel
             },
             getNeighbors = { location ->
                 sequence {
-                    location.point.cardinalNeighbors.forEach { neighbor ->
-                        if (grid.getCellOrNull(neighbor)?.isOccupiable == true) {
+                    location.point.cardinalNeighbors().forEach { neighbor ->
+                        if (grid.getOrNull(neighbor)?.isOccupiable == true) {
                             yield(Location(neighbor, location.depth))
                         }
                     }
@@ -85,7 +88,7 @@ class Maze(file: File) {
      * @see [getPortalLocations]
      */
     private fun getRecursivePortalLocations(location: Location): List<Location> {
-        val space = grid.getCellOrNull(location.point)
+        val space = grid.getOrNull(location.point)
         val isOuterPortal = isOuterPoint(location.point)
         return when {
             space !is LabeledSpace || (isOuterPortal && location.depth == 0) -> emptyList()
@@ -105,7 +108,7 @@ class Maze(file: File) {
      * @see [getPortalLocations]
      */
     private fun getNonRecursivePortalLocations(location: Location): List<Location> {
-        return when (val space = grid.getCellOrNull(location.point)) {
+        return when (val space = grid.getOrNull(location.point)) {
             is LabeledSpace -> {
                 val newPoints = labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
                 newPoints.map { Location(it) }
@@ -120,53 +123,53 @@ class Maze(file: File) {
      */
     private fun isOuterPoint(point: Point): Boolean {
         val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return rowIndex == 0 || rowIndex == grid.lastIndex || colIndex == 0 || colIndex == grid[0].lastIndex
+        return rowIndex == 0 || rowIndex == grid.lastRowIndex || colIndex == 0 || colIndex == grid.lastColumnIndex
     }
 
     companion object {
         /**
-         * Processes the given [charGrid] (representing a maze) by removing all label characters, and returns a map from
+         * Processes the given [charRows] (representing a maze) by removing all label characters, and returns a map from
          * each labeled point in the grid to its associated label.
          */
-        private fun processLabels(charGrid: List<MutableList<Char>>): Map<Point, String> {
+        private fun processLabels(charRows: List<MutableList<Char>>): Map<Point, String> {
             val spaceLabels = mutableMapOf<Point, String>()
 
             // Search the grid for any characters that may be part of a label.
-            for (i in charGrid.indices) {
-                for (j in charGrid[i].indices) {
-                    if (charGrid[i][j].isLetter()) {
+            charRows.forEachIndexed { rowIndex, row ->
+                row.forEachIndexed { colIndex, char ->
+                    if (char.isLetter()) {
                         var label: String? = null
                         var position: Point? = null
-                        if (charGrid.getCellOrNull(i + 1, j)?.isLetter() == true) {
+                        if (charRows.getOrNull(rowIndex + 1, colIndex)?.isLetter() == true) {
                             // Read this vertical label from top to bottom.
-                            label = "${charGrid[i][j]}${charGrid[i + 1][j]}"
+                            label = "${charRows[rowIndex][colIndex]}${charRows[rowIndex + 1][colIndex]}"
 
                             // Check above and below the label for a non-empty space.
-                            val charAbove = charGrid.getCellOrNull(i - 1, j)
+                            val charAbove = charRows.getOrNull(rowIndex - 1, colIndex)
                             position = if (charAbove != null && charAbove != EmptySpace.symbol) {
-                                Point.fromMatrixCoordinates(i - 1, j)
+                                Point.fromMatrixCoordinates(rowIndex - 1, colIndex)
                             } else {
-                                Point.fromMatrixCoordinates(i + 2, j)
+                                Point.fromMatrixCoordinates(rowIndex + 2, colIndex)
                             }
 
                             // Remove the label characters from the grid.
-                            charGrid[i][j] = EmptySpace.symbol
-                            charGrid[i + 1][j] = EmptySpace.symbol
-                        } else if (charGrid.getCellOrNull(i, j + 1)?.isLetter() == true) {
+                            charRows[rowIndex][colIndex] = EmptySpace.symbol
+                            charRows[rowIndex + 1][colIndex] = EmptySpace.symbol
+                        } else if (charRows.getOrNull(rowIndex, colIndex + 1)?.isLetter() == true) {
                             // Read this horizontal label from left to right.
-                            label = "${charGrid[i][j]}${charGrid[i][j + 1]}"
+                            label = "${charRows[rowIndex][colIndex]}${charRows[rowIndex][colIndex + 1]}"
 
                             // Check left and right of the label for a non-empty space
-                            val charLeft = charGrid.getCellOrNull(i, j - 1)
+                            val charLeft = charRows.getOrNull(rowIndex, colIndex - 1)
                             position = if (charLeft != null && charLeft != EmptySpace.symbol) {
-                                Point.fromMatrixCoordinates(i, j - 1)
+                                Point.fromMatrixCoordinates(rowIndex, colIndex - 1)
                             } else {
-                                Point.fromMatrixCoordinates(i, j + 2)
+                                Point.fromMatrixCoordinates(rowIndex, colIndex + 2)
                             }
 
                             // Remove the label characters from the grid.
-                            charGrid[i][j] = EmptySpace.symbol
-                            charGrid[i][j + 1] = EmptySpace.symbol
+                            charRows[rowIndex][colIndex] = EmptySpace.symbol
+                            charRows[rowIndex][colIndex + 1] = EmptySpace.symbol
                         }
 
                         // Add a mapping for this label.
@@ -181,25 +184,25 @@ class Maze(file: File) {
         }
 
         /**
-         * Returns a grid of spaces within a maze from the given [charGrid] containing space symbols and the map
-         * [spaceLabels], which maps points in [charGrid] to their associated labels.
+         * Returns a grid of spaces within a maze from the given [charRows] containing space symbols and the map
+         * [spaceLabels], which maps points in [charRows] to their associated labels.
          *
          * The resulting grid is made as compact as possible, with empty spaces on the exterior of the maze excluded.
          */
-        private fun createSpaceGrid(charGrid: List<List<Char>>, spaceLabels: Map<Point, String>): List<List<Space>> {
-            val fullGrid = charGrid.mapIndexed { i, row ->
-                row.mapIndexed { j, char ->
+        private fun createSpaceGrid(charRows: List<List<Char>>, spaceLabels: Map<Point, String>): Grid<Space> {
+            val fullGrid = charRows.mapIndexed { rowIndex, row ->
+                row.mapIndexed { colIndex, char ->
                     val space = Space.from(char)
-                    val label = spaceLabels[Point.fromMatrixCoordinates(i, j)]
+                    val label = spaceLabels[Point.fromMatrixCoordinates(rowIndex, colIndex)]
                     if (label != null) LabeledSpace(space, label) else space
                 }
             }
 
-            return mutableListOf<List<Space>>().apply {
-                for (i in 2..(fullGrid.lastIndex - 2)) {
-                    val fullRow = fullGrid[i]
+            return mutableGridOf<Space>().apply {
+                for (rowIndex in 2..(fullGrid.lastIndex - 2)) {
+                    val fullRow = fullGrid[rowIndex]
                     val compactRow = fullRow.subList(2, fullRow.size).dropLastWhile { it == EmptySpace }
-                    add(compactRow)
+                    addRow(compactRow)
                 }
             }
         }
@@ -207,13 +210,11 @@ class Maze(file: File) {
         /**
          * Returns a map from each unique label in [grid] to the positions of all corresponding labeled spaces.
          */
-        private fun findLabeledSpaces(grid: List<List<Space>>): Map<String, List<Point>> {
+        private fun findLabeledSpaces(grid: Grid<Space>): Map<String, List<Point>> {
             return mutableMapOf<String, MutableList<Point>>().apply {
-                grid.forEachIndexed { i, row ->
-                    row.forEachIndexed { j, space ->
-                        if (space is LabeledSpace) {
-                            getOrPut(space.label) { mutableListOf() }.add(Point.fromMatrixCoordinates(i, j))
-                        }
+                grid.forEachPoint { point, space ->
+                    if (space is LabeledSpace) {
+                        getOrPut(space.label) { mutableListOf() }.add(point)
                     }
                 }
             }

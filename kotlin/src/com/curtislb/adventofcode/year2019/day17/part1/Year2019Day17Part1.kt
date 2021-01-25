@@ -74,12 +74,13 @@ import kotlin.math.abs
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int {
+fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int? {
     val robot = Robot(inputPath.toFile())
-    val intersections = robot.grid.findIntersections()
-    return intersections.sumBy { abs(it.x * it.y) }
+    val intersections = robot.grid?.findIntersections()
+    return intersections?.sumBy { abs(it.x * it.y) }
 }
 
-fun main() {
-    println(solve())
+fun main() = when (val solution = solve()) {
+    null -> println("No solution found.")
+    else -> println(solution)
 }

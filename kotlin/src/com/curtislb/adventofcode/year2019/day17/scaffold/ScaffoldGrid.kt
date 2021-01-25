@@ -1,10 +1,12 @@
 package com.curtislb.adventofcode.year2019.day17.scaffold
 
-import com.curtislb.adventofcode.common.collection.removeLast
 import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.getCellOrNull
+import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.TurnLeft
@@ -13,36 +15,23 @@ import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.TurnRight
 /**
  * A grid representing the ship's scaffold and the vacuum robot's position on it.
  */
-class ScaffoldGrid {
-    /**
-     * A matrix representing the space at each position in the grid.
-     */
-    private var grid: MutableList<MutableList<Space>> = mutableListOf(mutableListOf())
+class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
+    class Builder {
+        private val rowList: MutableList<MutableList<Space>> = mutableListOf(mutableListOf())
 
-    /**
-     * Returns the row at [index] in this grid.
-     */
-    operator fun get(index: Int): List<Space> = grid[index]
+        fun addRow() {
+            rowList.add(mutableListOf())
+        }
 
-    /**
-     * Adds a new empty row to the bottom of the grid.
-     */
-    fun addRow() {
-        grid.add(mutableListOf())
-    }
+        fun addSpace(space: Space) {
+            rowList.last().add(space)
+        }
 
-    /**
-     * Appends a [space] to the bottom row of the grid.
-     */
-    fun addSpace(space: Space) {
-        grid.last().add(space)
-    }
+        fun removeRow() {
+            rowList.removeLast()
+        }
 
-    /**
-     * Removes one row from the bottom of the grid.
-     */
-    fun removeRow() {
-        grid.removeLast()
+        fun build(): ScaffoldGrid = ScaffoldGrid(rowList.toGrid())
     }
 
     /**
@@ -50,16 +39,13 @@ class ScaffoldGrid {
      */
     fun findIntersections(): List<Point> {
         return mutableListOf<Point>().apply {
-            grid.forEachIndexed { i, row ->
-                row.forEachIndexed { j, space ->
-                    if (space == Space.SCAFFOLD) {
-                        val point = Point.fromMatrixCoordinates(i, j)
-                        val isIntersection = point.cardinalNeighbors.all { neighbor ->
-                            grid.getCellOrNull(neighbor) == Space.SCAFFOLD
-                        }
-                        if (isIntersection) {
-                            add(point)
-                        }
+            grid.forEachPoint { point, space ->
+                if (space == Space.SCAFFOLD) {
+                    val isIntersection = point.cardinalNeighbors().all { neighbor ->
+                        grid.getOrNull(neighbor) == Space.SCAFFOLD
+                    }
+                    if (isIntersection) {
+                        add(point)
                     }
                 }
             }
@@ -74,19 +60,28 @@ class ScaffoldGrid {
 
         // Find the vacuum robot's starting orientation in the grid.
         var robotStart: Orientation? = null
-        for (i in grid.indices) {
+        for (rowIndex in grid.rowIndices) {
             if (robotStart != null) {
                 break
             }
-            for (j in grid[i].indices) {
+            for (colIndex in grid.columnIndices) {
                 if (robotStart != null) {
                     break
                 }
-                when (grid[i][j]) {
-                    Space.ROBOT_UP -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.UP)
-                    Space.ROBOT_RIGHT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.RIGHT)
-                    Space.ROBOT_DOWN -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.DOWN)
-                    Space.ROBOT_LEFT -> robotStart = Orientation(Point.fromMatrixCoordinates(i, j), Direction.LEFT)
+
+                when (grid[rowIndex, colIndex]) {
+                    Space.ROBOT_UP ->
+                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.UP)
+
+                    Space.ROBOT_RIGHT ->
+                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.RIGHT)
+
+                    Space.ROBOT_DOWN ->
+                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.DOWN)
+
+                    Space.ROBOT_LEFT ->
+                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.LEFT)
+
                     else -> Unit
                 }
             }
@@ -139,10 +134,10 @@ class ScaffoldGrid {
     /**
      * Returns `true` if the vacuum robot can safely occupy [position], or `false` otherwise.
      */
-    private fun isSafeSpace(position: Point): Boolean = grid.getCellOrNull(position)?.isSafe == true
+    private fun isSafeSpace(position: Point): Boolean = grid.getOrNull(position)?.isSafe == true
 
     override fun toString(): String {
-        return grid.joinToString(separator = "\n") { row ->
+        return grid.joinRowsToString(separator = "\n") { row ->
             row.joinToString(separator = "") { space -> space.symbol.toString() }
         }
     }

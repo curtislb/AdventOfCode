@@ -17,7 +17,7 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
     /**
      * The end point of this segment.
      */
-    val end: Point get() = start.move(direction, length)
+    val end: Point by lazy { start.move(direction, length) }
 
     /**
      * Whether this segment is horizontal, as opposed to vertical.

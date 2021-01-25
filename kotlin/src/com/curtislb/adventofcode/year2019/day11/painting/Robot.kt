@@ -1,9 +1,10 @@
 package com.curtislb.adventofcode.year2019.day11.painting
 
 import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.constructGrid
+import com.curtislb.adventofcode.common.grid.constructPointGrid
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.math.BigInteger
 
@@ -35,8 +36,8 @@ class Robot {
     /**
      * Returns a matrix representing the portion of the grid that the robot has painted.
      */
-    fun constructPaintedGrid(): List<List<Color>> {
-        return constructGrid(paintedPanels.keys) { paintedPanels.getOrDefault(it, Color.BLACK) }
+    fun constructPaintedGrid(): Grid<Color> {
+        return constructPointGrid(paintedPanels.keys) { paintedPanels.getOrDefault(it, Color.BLACK) }
     }
 
     /**

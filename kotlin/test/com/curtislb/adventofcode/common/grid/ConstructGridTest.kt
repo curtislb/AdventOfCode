@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class ConstructGridTest {
     @Test
     fun testWithNoPoints() {
-        assertEquals(emptyList(), constructGrid(emptyList()) { it })
+        assertEquals(emptyGrid(), constructPointGrid(emptyList()) { it })
     }
 
     @Test
@@ -14,8 +14,8 @@ class ConstructGridTest {
         for (x in -2..2) {
             for (y in -2..2) {
                 val point = Point(x, y)
-                val expected = listOf(listOf(point.toString()))
-                assertEquals(expected, constructGrid(listOf(point)) { it.toString() })
+                val expected: Grid<String> = gridOf(listOf(point.toString()))
+                assertEquals(expected, constructPointGrid(listOf(point)) { it.toString() })
             }
         }
     }
@@ -31,7 +31,7 @@ class ConstructGridTest {
             Point(1, 0),
             Point(4, -2)
         )
-        val expected = listOf(
+        val expected: Grid<Int> = gridOf(
             listOf(0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
             listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             listOf(1, 0, 0, 0, 0, 1, 0, 0, 0, 0),
@@ -39,6 +39,6 @@ class ConstructGridTest {
             listOf(0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
             listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         )
-        assertEquals(expected, constructGrid(points) { if (it in points) 1 else 0 })
+        assertEquals(expected, constructPointGrid(points) { if (it in points) 1 else 0 })
     }
 }
