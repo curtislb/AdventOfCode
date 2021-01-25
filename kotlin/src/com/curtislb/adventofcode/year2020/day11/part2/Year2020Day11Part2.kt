@@ -125,6 +125,7 @@ many seats end up occupied?
 
 package com.curtislb.adventofcode.year2020.day11.part2
 
+import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day11.seating.SeatLayout
 import com.curtislb.adventofcode.year2020.day11.seating.findVisibleSeats
@@ -137,8 +138,11 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 11)): Int {
     val file = inputPath.toFile()
-    val seatLayout = SeatLayout(file.readText(), maxNeighbors = 4, ::findVisibleSeats)
-    return seatLayout.apply{ updateUntilStable() }.countOccupied()
+    val neighborsCache = mutableMapOf<Point, List<Point>>()
+    val seatLayout = SeatLayout(file.readText(), maxNeighbors = 4) { grid, position ->
+        neighborsCache.getOrPut(position) { findVisibleSeats(grid, position) }.asSequence()
+    }
+    return seatLayout.apply { updateUntilStable() }.countOccupied()
 }
 
 fun main() {

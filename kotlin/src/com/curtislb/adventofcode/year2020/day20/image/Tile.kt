@@ -10,10 +10,16 @@ import com.curtislb.adventofcode.common.grid.toGrid
  * TODO
  */
 class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
+    init {
+        require(dataGrid.height == dataGrid.width) {
+            "Data grid must be square: height = ${dataGrid.height}, width = ${dataGrid.width}"
+        }
+    }
+
     /**
      * TODO
      */
-    val sideLength = dataGrid.width - 2
+    val sideLength = dataGrid.height - 2
 
     /**
      * TODO
@@ -48,7 +54,7 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
     /**
      * TODO
      */
-    fun rotateLeft() = Tile(id, dataGrid.rotatedLeft())
+    fun rotateLeft(): Tile = Tile(id, dataGrid.rotatedLeft())
 
     /**
      * TODO

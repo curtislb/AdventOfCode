@@ -10,24 +10,26 @@ import com.curtislb.adventofcode.common.grid.Ray
  * A seat is visible from a point if it is the closest (empty or occupied) seat to that point in one of the eight
  * cardinal or diagonal directions.
  */
-fun findVisibleSeats(grid: Grid<Space>, position: Point): Sequence<Point> = sequence {
+fun findVisibleSeats(grid: Grid<Space>, position: Point): List<Point> {
     // Look for seats in each of eight possible directions.
-    position.allNeighbors().forEach { neighbor ->
-        // Look for a seat at each point along a directional ray.
-        val ray = Ray(position, neighbor)
-        for (point in ray.points().drop(1)) {
-            when (grid.getOrNull(point)) {
-                // Stop and yield the first visible seat.
-                Space.EMPTY, Space.OCCUPIED -> {
-                    yield(point)
-                    break
+    return mutableListOf<Point>().apply {
+        position.allNeighbors().forEach { neighbor ->
+            // Look for a seat at each point along a directional ray.
+            val ray = Ray(position, neighbor)
+            for (point in ray.points().drop(1)) {
+                when (grid.getOrNull(point)) {
+                    // Stop and add the first visible seat.
+                    Space.EMPTY, Space.OCCUPIED -> {
+                        add(point)
+                        break
+                    }
+
+                    // Floor spaces don't block visible seats.
+                    Space.FLOOR -> Unit
+
+                    // Reached the edge of the grid without finding a seat.
+                    null -> break
                 }
-
-                // Floor spaces don't block visible seats.
-                Space.FLOOR -> Unit
-
-                // Reached the edge of the grid without finding a seat.
-                null -> break
             }
         }
     }
