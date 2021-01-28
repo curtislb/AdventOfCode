@@ -11,13 +11,13 @@ quickly volunteer.
 The navigation instructions (your puzzle input) consists of a sequence of single-character actions paired with integer
 input values. After staring at them for a few minutes, you work out what they probably mean:
 
-Action N means to move north by the given value.
-Action S means to move south by the given value.
-Action E means to move east by the given value.
-Action W means to move west by the given value.
-Action L means to turn left the given number of degrees.
-Action R means to turn right the given number of degrees.
-Action F means to move forward by the given value in the direction the ship is currently facing.
+- Action N means to move north by the given value.
+- Action S means to move south by the given value.
+- Action E means to move east by the given value.
+- Action W means to move west by the given value.
+- Action L means to turn left the given number of degrees.
+- Action R means to turn right the given number of degrees.
+- Action F means to move forward by the given value in the direction the ship is currently facing.
 
 The ship starts by facing east. Only the L and R actions change the direction the ship is facing. (That is, if the ship
 is facing east and the next instruction is N10, the ship would move north 10 units, but would still move east if the
@@ -52,6 +52,7 @@ import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.year2020.day12.navigation.SimpleNavigationShip
 import java.nio.file.Path
 
 /**
@@ -61,21 +62,9 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 12)): Int {
     val file = inputPath.toFile()
-    var orientation = Orientation(Point.ORIGIN, Direction.RIGHT)
-    file.forEachLine { line ->
-        val units = line.substring(1).toInt()
-        when (line[0]) {
-            'N' -> orientation = orientation.move(Direction.UP, units)
-            'S' -> orientation = orientation.move(Direction.DOWN, units)
-            'E' -> orientation = orientation.move(Direction.RIGHT, units)
-            'W' -> orientation = orientation.move(Direction.LEFT, units)
-            'L' -> repeat(units / 90) { orientation = orientation.turnLeft() }
-            'R' -> repeat(units / 90) { orientation = orientation.turnRight() }
-            'F' -> orientation = orientation.move(distance = units)
-            else -> throw IllegalArgumentException("Invalid instruction: $line")
-        }
-    }
-    return orientation.position.manhattanDistance(Point.ORIGIN)
+    val ship = SimpleNavigationShip(Orientation(Point.ORIGIN, Direction.RIGHT))
+    file.forEachLine { ship.followInstruction(it) }
+    return ship.orientation.position.manhattanDistance(Point.ORIGIN)
 }
 
 fun main() {

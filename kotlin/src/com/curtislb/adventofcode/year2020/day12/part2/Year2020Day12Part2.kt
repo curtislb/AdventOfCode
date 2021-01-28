@@ -38,9 +38,9 @@ ship's starting position?
 
 package com.curtislb.adventofcode.year2020.day12.part2
 
-import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.year2020.day12.navigation.WaypointNavigationShip
 import java.nio.file.Path
 
 /**
@@ -50,22 +50,9 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 12)): Int {
     val file = inputPath.toFile()
-    var position = Point.ORIGIN
-    var waypoint = Point(10, 1)
-    file.forEachLine { line ->
-        val units = line.substring(1).toInt()
-        when (line[0]) {
-            'N' -> waypoint = waypoint.move(Direction.UP, units)
-            'S' -> waypoint = waypoint.move(Direction.DOWN, units)
-            'E' -> waypoint = waypoint.move(Direction.RIGHT, units)
-            'W' -> waypoint = waypoint.move(Direction.LEFT, units)
-            'L' -> repeat(units / 90) { waypoint = waypoint.rotateCounterclockwise() }
-            'R' -> repeat(units / 90) { waypoint = waypoint.rotateClockwise() }
-            'F' -> position = Point(position.x + units * waypoint.x, position.y + units * waypoint.y)
-            else -> throw IllegalArgumentException("Invalid instruction: $line")
-        }
-    }
-    return position.manhattanDistance(Point.ORIGIN)
+    val ship = WaypointNavigationShip(waypoint = Point(10, 1))
+    file.forEachLine { ship.followInstruction(it) }
+    return ship.position.manhattanDistance(Point.ORIGIN)
 }
 
 fun main() {

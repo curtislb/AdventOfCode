@@ -75,6 +75,11 @@ data class Point(val x: Int, val y: Int) {
     fun rotateCounterclockwise(center: Point = ORIGIN): Point = Point(center.y - y + center.x, x - center.x + center.y)
 
     /**
+     * Returns the point produced by rotating this one 180 degrees about the given [center] point.
+     */
+    fun rotate180Degrees(center: Point = ORIGIN): Point = Point(center.x - x + center.x, center.y - y + center.y)
+
+    /**
      * Returns the Manhattan distance between this point and [other].
      *
      * The Manhattan distance is the length (in grid units) of the shortest possible path between this point and

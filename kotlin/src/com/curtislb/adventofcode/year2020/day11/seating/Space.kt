@@ -24,6 +24,8 @@ enum class Space(val symbol: Char) {
     companion object {
         /**
          * Returns the space corresponding to [symbol].
+         *
+         * @throws IllegalArgumentException If [symbol] has no corresponding space.
          */
         fun from(symbol: Char): Space {
             values().forEach { space ->
