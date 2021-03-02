@@ -63,8 +63,8 @@ for that bus?
 
 package com.curtislb.adventofcode.year2020.day13.part1
 
-import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.io.pathToInput
+import com.curtislb.adventofcode.year2020.day13.bus.BusSchedule
 import java.nio.file.Path
 
 /**
@@ -72,15 +72,12 @@ import java.nio.file.Path
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 13)): Int? {
+fun solve(inputPath: Path = pathToInput(year = 2020, day = 13)): Long? {
     val file = inputPath.toFile()
     val lines = file.readLines()
-    val startTime = lines[0].toInt()
-    val busTimes = lines[1].split(',').filter { it != "x" }.mapToMap { busIDString ->
-        val busID = busIDString.toInt()
-        busID to busID - (startTime % busID)
-    }
-    return busTimes.minByOrNull { (_, time) -> time }?.let { (busID, time) -> busID * time }
+    val arrivalTime = lines[0].toLong()
+    val busSchedule = BusSchedule(lines[1])
+    return busSchedule.findShortestWait(arrivalTime)?.let { (busID, waitTime) -> busID * waitTime }
 }
 
 fun main() = when (val solution = solve()) {

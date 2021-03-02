@@ -7,7 +7,7 @@ package com.curtislb.adventofcode.common.collection
  *
  * @throws IllegalArgumentException If [capacity] is negative.
  */
-class FifoCache<E>(val capacity: Int) : Collection<E> {
+class FifoCache<T>(val capacity: Int) : Collection<T> {
     init {
         require(capacity >= 0) { "Capacity must be non-negative: $capacity" }
     }
@@ -15,22 +15,22 @@ class FifoCache<E>(val capacity: Int) : Collection<E> {
     /**
      * An internal deque used to store the cached elements.
      */
-    private val deque: ArrayDeque<E> = ArrayDeque(capacity)
+    private val deque: ArrayDeque<T> = ArrayDeque(capacity)
 
     override val size: Int get() = deque.size
 
-    override fun contains(element: E): Boolean = element in deque
+    override fun contains(element: T): Boolean = element in deque
 
-    override fun containsAll(elements: Collection<E>): Boolean = deque.containsAll(elements)
+    override fun containsAll(elements: Collection<T>): Boolean = deque.containsAll(elements)
 
     override fun isEmpty(): Boolean = deque.isEmpty()
 
-    override fun iterator(): Iterator<E> = deque.iterator()
+    override fun iterator(): Iterator<T> = deque.iterator()
 
     /**
      * Returns the element at a given [index] in this collection.
      */
-    operator fun get(index: Int): E = deque[index]
+    operator fun get(index: Int): T = deque[index]
 
     /**
      * TODO
@@ -40,7 +40,7 @@ class FifoCache<E>(val capacity: Int) : Collection<E> {
     /**
      * Appends a new [element] to this collection, removing the least recently added element if necessary.
      */
-    fun add(element: E) {
+    fun add(element: T) {
         if (isFull()) {
             deque.removeFirst()
         }

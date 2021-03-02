@@ -3,11 +3,11 @@ package com.curtislb.adventofcode.year2020.day02.password
 /**
  * A policy for validating passwords against associated rule strings.
  */
-abstract class PasswordPolicy {
+interface PasswordPolicy {
     /**
      * Checks if [password] is valid according to the given [rule] string.
      */
-    abstract fun isValid(rule: String, password: String): Boolean
+    fun isValid(rule: String, password: String): Boolean
 
     /**
      * Returns the number of password [entries] that are valid, where each entry is of the form `"$rule: $password"`.

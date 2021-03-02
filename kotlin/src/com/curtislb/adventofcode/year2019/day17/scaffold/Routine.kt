@@ -1,6 +1,5 @@
 package com.curtislb.adventofcode.year2019.day17.scaffold
 
-import com.curtislb.adventofcode.common.collection.removeLast
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
 

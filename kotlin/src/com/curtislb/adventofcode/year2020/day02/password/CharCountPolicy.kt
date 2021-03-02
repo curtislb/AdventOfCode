@@ -6,7 +6,7 @@ package com.curtislb.adventofcode.year2020.day02.password
  * Password rules for this policy are of the form `"$minValue-$maxValue $char"`, indicating that the character `char`
  * must appear `minValue..maxValue` times in a valid password.
  */
-object CharCountPolicy : PasswordPolicy() {
+object CharCountPolicy : PasswordPolicy {
     override fun isValid(rule: String, password: String): Boolean {
         val (countRange, char) = processRule(rule)
         return password.count { it == char } in countRange

@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.common.graph
 
-import com.curtislb.adventofcode.common.collection.removeLast
-
 /**
  * Conducts a depth-first graph search from [source] and returns a map from each reachable node for which [isGoal] is
  * `true` to a list of all paths to that node, with the neighbors of each node given by [getNeighbors].
