@@ -1,40 +1,40 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
-import com.curtislb.adventofcode.common.collection.forEachNested
-
 /**
- * TODO
+ * A program that keeps track of a bitmask and interprets instructions writing values to memory addresses.
+ *
+ * @param programString A string representation of the program, consisting of one statement per line.
  */
-class BitmaskProgram(private val programString: String, private val isVersion2: Boolean = false) {
+abstract class BitmaskProgram(private val programString: String) {
     /**
-     * TODO
+     * A map from each [Bit] value to its little-endian indices in the current bitmask.
      */
-    private var maskBits: Map<Bit, List<Int>> = emptyMap()
+    protected var maskBits: Map<Bit, List<Int>> = emptyMap()
 
     /**
-     * TODO
+     * A map from each memory address with a non-zero value to its current value.
      */
-    private val memory: MutableMap<Long, Long> = mutableMapOf()
+    protected val memory: MutableMap<Long, Long> = mutableMapOf()
 
     /**
-     * TODO
+     * All memory addresses with non-zero values, along with their current values.
      */
     val nonzeroMemoryEntries: Set<Map.Entry<Long, Long>> get() = memory.entries
 
     /**
-     * TODO
+     * Whether the program has already been run.
      */
     private var isDone: Boolean = false
 
     /**
-     * TODO
+     * Returns the current value at the given memory [address].
      */
     operator fun get(address: Long): Long = memory.getOrDefault(address, 0L)
 
     /**
-     * TODO
+     * Updates the [value] at the given memory [address].
      */
-    operator fun set(address: Long, value: Long) {
+    protected operator fun set(address: Long, value: Long) {
         if (value == 0L) {
             memory.remove(address)
         } else {
@@ -43,127 +43,62 @@ class BitmaskProgram(private val programString: String, private val isVersion2: 
     }
 
     /**
-     * TODO
+     * Runs the program by processing statements one at a time, in order, if the program has not been run previously.
+     *
+     * Each statement must match one of the following patterns:
+     * - `"mask = $bitmaskString"` - Calls [updateBitmask] to update the current bitmask for the program.
+     * - `"mem[${addressString}] = $valueString"` - Calls [writeMemory] to update the value at the given memory address.
      */
     fun run() {
         if (!isDone) {
-            programString.trim().lines().forEach { line ->
-                val (lvalue, expression) = line.split('=').map { it.trim() }
-                assign(lvalue, expression)
-            }
+            programString.trim().lines().forEach(::processStatement)
             isDone = true
         }
     }
 
     /**
-     * TODO
+     * Processes the given program [statement].
+     *
+     * See [run] for a list of statement types recognized by a bitmask program.
+     *
+     * @throws IllegalArgumentException If [statement] does not match a known statement type.
      */
-    private fun assign(lvalue: String, expression: String) {
-        when {
-            lvalue == "mask" -> assignMask(expression)
-            lvalue.startsWith("mem") -> assignMemory(lvalue, expression)
-            else -> throw IllegalArgumentException("Invalid assignment: $lvalue = $expression")
-        }
+    private fun processStatement(statement: String) {
+        UPDATE_BITMASK_REGEX.matchEntire(statement)?.let { matchResult ->
+            val bitmaskString = matchResult.groupValues[1]
+            updateBitmask(bitmaskString)
+        } ?: WRITE_MEMORY_REGEX.matchEntire(statement)?.let { matchResult ->
+            val addressString = matchResult.groupValues[1]
+            val valueString = matchResult.groupValues[2]
+            writeMemory(addressString, valueString)
+        } ?: throw IllegalArgumentException("Illegal statement: $statement")
     }
 
     /**
-     * TODO
+     * Updates the current program bitmask to match the given big-endian [bitmaskString].
      */
-    private fun assignMask(expression: String) {
-        val newMaskBits = mutableMapOf<Bit, MutableList<Int>>()
-        expression.forEachIndexed { index, char ->
-            newMaskBits.getOrPut(Bit.from(char)) { mutableListOf() }.add(expression.lastIndex - index)
-        }
-        maskBits = newMaskBits
-    }
-
-    /**
-     * TODO
-     */
-    private fun assignMemory(lvalue: String, expression: String) {
-        if (isVersion2) {
-            assignMemoryV2(lvalue, expression)
-        } else {
-            assignMemoryV1(lvalue, expression)
-        }
-    }
-
-    /**
-     * TODO
-     */
-    private fun assignMemoryV1(lvalue: String, expression: String) {
-        val address = extractAddress(lvalue)
-        val value = applyValueMask(expression.toLong())
-        this[address] = value
-    }
-
-    /**
-     * TODO
-     */
-    private fun assignMemoryV2(lvalue: String, expression: String) {
-        val addresses = applyAddressMask(extractAddress(lvalue))
-        val value = expression.toLong()
-        addresses.forEach { this[it] = value }
-    }
-
-    /**
-     * TODO
-     */
-    private fun applyValueMask(value: Long): Long {
-        var maskedValue = value
-        maskBits.forEach { (bit, indices) ->
-            when (bit) {
-                Bit.ZERO -> indices.forEach { maskedValue = maskedValue.withZeroBit(it) }
-                Bit.ONE ->  indices.forEach { maskedValue = maskedValue.withOneBit(it) }
-                else -> Unit
+    private fun updateBitmask(bitmaskString: String) {
+        maskBits = mutableMapOf<Bit, MutableList<Int>>().apply {
+            bitmaskString.forEachIndexed { index, char ->
+                getOrPut(Bit.from(char)) { mutableListOf() }.add(bitmaskString.lastIndex - index)
             }
         }
-        return maskedValue
     }
 
     /**
-     * TODO
+     * Writes the value(s) represented by [valueString] to the memory address(es) represented by [addressString].
      */
-    private fun applyAddressMask(address: Long): List<Long> {
-        var initialAddress = address
-        maskBits.forEach { (bit, indices) ->
-            if (bit == Bit.ONE) {
-                indices.forEach { initialAddress = initialAddress.withOneBit(it) }
-            }
-        }
-
-        val maskedAddresses = mutableListOf<Long>()
-        val floatingIndices = maskBits[Bit.FLOATING] ?: emptyList()
-        listOf(false, true).forEachNested(floatingIndices.size) { indexedBitFlags ->
-            var maskedAddress = initialAddress
-            indexedBitFlags.forEachIndexed { index, (_, isOneBit) ->
-                val floatingIndex = floatingIndices[index]
-                maskedAddress = if (isOneBit) {
-                    maskedAddress.withOneBit(floatingIndex)
-                } else {
-                    maskedAddress.withZeroBit(floatingIndex)
-                }
-            }
-            maskedAddresses.add(maskedAddress)
-            false // Don't stop iterating.
-        }
-        return maskedAddresses
-    }
+    abstract fun writeMemory(addressString: String, valueString: String)
 
     companion object {
         /**
-         * TODO
+         * A regex used to identify and parse [updateBitmask] statements.
          */
-        private fun extractAddress(lvalue: String): Long = lvalue.filter { it.isDigit() }.toLong()
+        private val UPDATE_BITMASK_REGEX = Regex("""mask = ([01X]+)""")
 
         /**
-         * TODO
+         * A regex used to identify and parse [writeMemory] statements.
          */
-        private fun Long.withZeroBit(bitIndex: Int): Long = this and (1L shl bitIndex).inv()
-
-        /**
-         * TODO
-         */
-        private fun Long.withOneBit(bitIndex: Int): Long = this or (1L shl bitIndex)
+        private val WRITE_MEMORY_REGEX = Regex("""mem\[(\d+)] = (\d+)""")
     }
 }

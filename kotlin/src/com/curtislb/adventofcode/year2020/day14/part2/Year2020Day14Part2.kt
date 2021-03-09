@@ -64,7 +64,7 @@ memory after it completes?
 package com.curtislb.adventofcode.year2020.day14.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import com.curtislb.adventofcode.year2020.day14.bitmask.BitmaskProgram
+import com.curtislb.adventofcode.year2020.day14.bitmask.BitmaskProgramV2
 import java.nio.file.Path
 
 /**
@@ -74,8 +74,8 @@ import java.nio.file.Path
  */
 fun solve(inputPath: Path = pathToInput(year = 2020, day = 14)): Long {
     val file = inputPath.toFile()
-    val program = BitmaskProgram(file.readText(), isVersion2 = true).apply { run() }
-    return program.nonzeroMemoryEntries.map { (_, value) -> value }.sum()
+    val program = BitmaskProgramV2(file.readText()).apply { run() }
+    return program.nonzeroMemoryEntries.map { it.value }.sum()
 }
 
 fun main() {

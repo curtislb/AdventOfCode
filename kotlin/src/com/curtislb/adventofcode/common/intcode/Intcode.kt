@@ -133,7 +133,6 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * contains a two-digit opcode (see [Operation]) and may contain additional digits representing the mode(s) in which
      * parameters for that operation should be interpreted (see [Mode]). After processing an operation, the program will
      * move its pointer to a new position and repeat the process. This will continue until one of the following occurs:
-     *
      * - The pointer is moved to an invalid (negative) position, at which point the program will *finish*.
      * - The program requests input, but no next input is available, at which point the program will *pause*.
      *

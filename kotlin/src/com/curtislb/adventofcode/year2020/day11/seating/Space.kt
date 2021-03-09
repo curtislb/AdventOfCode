@@ -28,12 +28,8 @@ enum class Space(val symbol: Char) {
          * @throws IllegalArgumentException If [symbol] has no corresponding space.
          */
         fun from(symbol: Char): Space {
-            values().forEach { space ->
-                if (space.symbol == symbol) {
-                    return space
-                }
-            }
-            throw IllegalArgumentException("Unknown space symbol: $symbol")
+            return values().find { it.symbol == symbol }
+                ?: throw IllegalArgumentException("Unknown space symbol: $symbol")
         }
     }
 }

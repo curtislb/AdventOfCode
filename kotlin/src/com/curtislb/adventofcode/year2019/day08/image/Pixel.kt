@@ -23,7 +23,7 @@ enum class Pixel(val symbol: Char) {
 
     companion object {
         /**
-         * Returns the [Pixel] corresponding to [value].
+         * Returns the pixel corresponding to [value].
          *
          * @throws IllegalArgumentException If [value] has no corresponding pixel.
          */
