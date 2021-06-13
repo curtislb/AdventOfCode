@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.common.math
 /**
  * Returns a copy of this integer with the bit at the given little-endian [bitIndex] set to 1.
  */
-fun Int.withOneBit(bitIndex: Int): Int = this or (1L shl bitIndex).toInt()
+fun Int.withOneBit(bitIndex: Int): Int = this or (1 shl bitIndex)
 
 /**
  * Returns a copy of this integer with the bit at the given little-endian [bitIndex] set to 1.
