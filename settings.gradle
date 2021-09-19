@@ -1,0 +1,23 @@
+rootProject.name = 'AdventOfCode'
+
+// Common utilities
+include 'common:collection'
+include 'common:graph'
+include 'common:grid'
+include 'common:heap'
+include 'common:intcode'
+include 'common:io'
+include 'common:math'
+include 'common:parse'
+include 'common:range'
+include 'common:search'
+include 'common:simulation'
+include 'common:testing'
+
+// Advent of Code 2019
+include 'year2019:day01:fuel'
+include 'year2019:day01:part1'
+include 'year2019:day01:part2'
+
+// Advent of Code 2020
+// TODO
