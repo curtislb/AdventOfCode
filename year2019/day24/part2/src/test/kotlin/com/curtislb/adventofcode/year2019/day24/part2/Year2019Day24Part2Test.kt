@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2019.day24.part2
 
 import com.curtislb.adventofcode.common.io.pathToInput
-import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import org.junit.jupiter.api.Test
 
 /**
  * Tests the solution to the puzzle for 2019, day 24, part 2.
