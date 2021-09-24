@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class FractionTest {
     @Test
     fun testConstructWithZeroDenominator() {
-        assertThrows(IllegalArgumentException::class.java) { Fraction(2, 0) }
+        assertThrows<IllegalArgumentException> { Fraction(2, 0) }
     }
 
     @Test
@@ -301,7 +301,7 @@ class FractionTest {
 
     @Test
     fun testDivByZero() {
-        assertThrows(IllegalArgumentException::class.java) { Fraction(1, 2) / Fraction(0) }
+        assertThrows<IllegalArgumentException> { Fraction(1, 2) / Fraction(0) }
     }
 
     @Test

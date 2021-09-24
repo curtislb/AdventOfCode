@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.common.intcode.mode
 
 import java.math.BigInteger
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -18,7 +18,7 @@ class ModeTest {
 
     @Test
     fun testFromInvalidIntValue() {
-        assertThrows(IllegalArgumentException::class.java) { Mode.from(-1) }
+        assertThrows<IllegalArgumentException> { Mode.from(-1) }
     }
 
     @Test
@@ -30,6 +30,6 @@ class ModeTest {
 
     @Test
     fun testFromInvalidBigIntegerValue() {
-        assertThrows(IllegalArgumentException::class.java) { Mode.from(BigInteger("-1")) }
+        assertThrows<IllegalArgumentException> { Mode.from(BigInteger("-1")) }
     }
 }

@@ -24,7 +24,7 @@ class MapToMapTest {
 
     @Test
     fun testWithNonEmptyMap() {
-        val actual = mapOf("x" to 2, "y" to 3, "z" to 5).mapToMap { (key, value) -> -value to key.toUpperCase() }
+        val actual = mapOf("x" to 2, "y" to 3, "z" to 5).mapToMap { (key, value) -> -value to key.uppercase() }
         assertEquals(mapOf(-2 to "X", -3 to "Y", -5 to "Z"), actual)
     }
 }

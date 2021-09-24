@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -37,7 +37,7 @@ class IntcodeTest {
 
     @Test
     fun testWithEmptyProgram() {
-        assertThrows(IllegalArgumentException::class.java) { Intcode("") }
+        assertThrows<IllegalArgumentException> { Intcode("") }
     }
 
     @Test
@@ -99,13 +99,13 @@ class IntcodeTest {
     @Test
     fun testGetWithInvalidPosition() {
         val intcode = Intcode("99")
-        assertThrows(IndexOutOfBoundsException::class.java) { intcode[-1] }
+        assertThrows<IndexOutOfBoundsException> { intcode[-1] }
     }
 
     @Test
     fun testSetWithInvalidPosition() {
         val intcode = Intcode("99")
-        assertThrows(IndexOutOfBoundsException::class.java) { intcode[-1] = BigInteger.ONE }
+        assertThrows<IndexOutOfBoundsException> { intcode[-1] = BigInteger.ONE }
     }
 
     @Test

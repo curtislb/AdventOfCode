@@ -4,7 +4,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
 class SegmentTest {
     @Test
     fun testConstructWithNegativeLength() {
-        assertThrows(IllegalArgumentException::class.java) { Segment(Point(8, -12), Direction.RIGHT, length = -2) }
+        assertThrows<IllegalArgumentException> { Segment(Point(8, -12), Direction.RIGHT, length = -2) }
     }
 
     @Test

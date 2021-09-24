@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 class DirectionTest {
@@ -43,6 +43,6 @@ class DirectionTest {
 
     @Test
     fun testFromInvalidChar() {
-        assertThrows(IllegalArgumentException::class.java) { Direction.from('F') }
+        assertThrows<IllegalArgumentException> { Direction.from('F') }
     }
 }

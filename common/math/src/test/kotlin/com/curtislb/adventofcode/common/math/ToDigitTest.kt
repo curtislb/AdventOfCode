@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -56,6 +56,6 @@ class ToDigitTest {
 
     @Test
     fun testInvalidCharToDigit() {
-        assertThrows(IllegalArgumentException::class.java) { '!'.toDigit() }
+        assertThrows<IllegalArgumentException> { '!'.toDigit() }
     }
 }

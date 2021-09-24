@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.common.grid
 
 import com.curtislb.adventofcode.common.math.Fraction
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -12,7 +12,7 @@ class RayTest {
     @Test
     fun testConstructWithIdenticalPoints() {
         val point = Point(20, -18)
-        assertThrows(IllegalArgumentException::class.java) { Ray(point, point) }
+        assertThrows<IllegalArgumentException> { Ray(point, point) }
     }
 
     @Test

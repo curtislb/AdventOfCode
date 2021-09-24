@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.testing.assertAlmostEquals
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.math.PI
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -73,7 +73,7 @@ class PointTest {
 
     @Test
     fun testAngleClockwiseFromPositiveYWithSamePoint() {
-        assertThrows(IllegalArgumentException::class.java) { Point(6, 3).angleClockwiseFromPositiveY(Point(6, 3)) }
+        assertThrows<IllegalArgumentException> { Point(6, 3).angleClockwiseFromPositiveY(Point(6, 3)) }
     }
 
     @Test

@@ -92,7 +92,7 @@ class Ascii private constructor(
      * @see [Intcode.sendInput]
      */
     fun sendInput(input: String, sendNewline: Boolean = true) {
-        intcode.sendInput(input.map { it.toInt().toBigInteger() }.asSequence())
+        intcode.sendInput(input.map { it.code.toBigInteger() }.asSequence())
         if (sendNewline) {
             intcode.sendInput(NEWLINE_CODE)
         }

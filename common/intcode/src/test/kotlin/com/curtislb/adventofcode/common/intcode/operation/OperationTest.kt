@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.common.intcode.operation
 
 import java.math.BigInteger
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -25,7 +25,7 @@ class OperationTest {
 
     @Test
     fun testFromInvalidIntValue() {
-        assertThrows(IllegalArgumentException::class.java) { Operation.from(0) }
+        assertThrows<IllegalArgumentException> { Operation.from(0) }
     }
 
     @Test
@@ -44,6 +44,6 @@ class OperationTest {
 
     @Test
     fun testFromInvalidBigIntegerValue() {
-        assertThrows(IllegalArgumentException::class.java) { Operation.from(BigInteger.ZERO) }
+        assertThrows<IllegalArgumentException> { Operation.from(BigInteger.ZERO) }
     }
 }

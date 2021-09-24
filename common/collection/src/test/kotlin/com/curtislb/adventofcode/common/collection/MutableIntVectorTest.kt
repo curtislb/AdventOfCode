@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.collection
 
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -64,7 +64,7 @@ class MutableIntVectorTest {
 
     @Test
     fun testUpdateWithWrongNumberOfNewComponents() {
-        assertThrows(IllegalArgumentException::class.java) { MutableIntVector(-6, 7).update(8, -9, 10) }
+        assertThrows<IllegalArgumentException> { MutableIntVector(-6, 7).update(8, -9, 10) }
     }
 
     @Test
@@ -80,7 +80,7 @@ class MutableIntVectorTest {
 
     @Test
     fun testUpdateWithInvalidComponentValues() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows<IllegalArgumentException> {
             MutableIntVector(11, 12, -13).update(mapOf(0 to -14, 3 to 15))
         }
     }
@@ -108,7 +108,7 @@ class MutableIntVectorTest {
 
     @Test
     fun testAddWithWrongSizeVector() {
-        assertThrows(IllegalArgumentException::class.java) { MutableIntVector(3, -4).add(MutableIntVector(5)) }
+        assertThrows<IllegalArgumentException> { MutableIntVector(3, -4).add(MutableIntVector(5)) }
     }
 
     @Test
@@ -134,7 +134,7 @@ class MutableIntVectorTest {
 
     @Test
     fun testPlusWithWrongSizeVector() {
-        assertThrows(IllegalArgumentException::class.java) { MutableIntVector(1) + MutableIntVector(2, 3) }
+        assertThrows<IllegalArgumentException> { MutableIntVector(1) + MutableIntVector(2, 3) }
     }
 
     @Test

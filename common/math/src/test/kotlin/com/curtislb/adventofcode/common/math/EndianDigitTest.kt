@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class EndianDigitTest {
     @Test
     fun testBigEndianDigitWithInvalidPosition() {
-        assertThrows(IllegalArgumentException::class.java) { 2.bigEndianDigit(1) }
+        assertThrows<IllegalArgumentException> { 2.bigEndianDigit(1) }
     }
 
     @Test

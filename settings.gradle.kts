@@ -1,0 +1,100 @@
+rootProject.name = "AdventOfCode"
+
+// Common utilities
+include(
+    ":common:collection",
+    ":common:graph",
+    ":common:grid",
+    ":common:heap",
+    ":common:intcode",
+    ":common:io",
+    ":common:math",
+    ":common:parse",
+    ":common:range",
+    ":common:search",
+    ":common:simulation",
+    ":common:testing"
+)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Advent of Code 2019
+
+// Day 1: The Tyranny of the Rocket Equation
+include(":year2019:day01:fuel", ":year2019:day01:part1", ":year2019:day01:part2")
+
+// Day 2: 1202 Program Alarm
+include(":year2019:day02:part1", ":year2019:day02:part2")
+
+// Day 3: Crossed Wires
+include(":year2019:day03:part1", ":year2019:day03:part2", ":year2019:day03:wire")
+
+// Day 4: Secure Container
+include(":year2019:day04:part1", ":year2019:day04:part2", ":year2019:day04:password")
+
+// Day 5: Sunny with a Chance of Asteroids
+include(":year2019:day05:part1", ":year2019:day05:part2")
+
+// Day 6: Universal Orbit Map
+include(":year2019:day06:orbits", ":year2019:day06:part1", ":year2019:day06:part2")
+
+// Day 7: Amplification Circuit
+include(":year2019:day07:amplifier", ":year2019:day07:part1", ":year2019:day07:part2")
+
+// Day 8: Space Image Format
+include(":year2019:day08:image", ":year2019:day08:part1", ":year2019:day08:part2")
+
+// Day 9: Sensor Boost
+include(":year2019:day09:part1", ":year2019:day09:part2")
+
+// Day 10: Monitoring Station
+include(":year2019:day10:asteroid", ":year2019:day10:part1", ":year2019:day10:part2")
+
+// Day 11: Space Police
+include(":year2019:day11:painting", ":year2019:day11:part1", ":year2019:day11:part2")
+
+// Day 12: The N-Body Problem
+include(":year2019:day12:body", ":year2019:day12:part1", ":year2019:day12:part2")
+
+// Day 13: Care Package
+include(":year2019:day13:game", ":year2019:day13:part1", ":year2019:day13:part2")
+
+// Day 14: Space Stoichiometry
+include(":year2019:day14:chemistry", ":year2019:day14:part1", ":year2019:day14:part2")
+
+// Day 15: Oxygen System
+include(":year2019:day15:part1", ":year2019:day15:part2", ":year2019:day15:repair")
+
+// Day 16: Flawed Frequency Transmission
+include(":year2019:day16:fft", ":year2019:day16:part1", ":year2019:day16:part2")
+
+// Day 17: Set and Forget
+include(":year2019:day17:part1", ":year2019:day17:part2", ":year2019:day17:scaffold")
+
+// Day 18: Many-Worlds Interpretation
+include(":year2019:day18:part1", ":year2019:day18:part2", ":year2019:day18:vault")
+
+// Day 19: Tractor Beam
+include(":year2019:day19:drone", ":year2019:day19:part1", ":year2019:day19:part2")
+
+// Day 20: Donut Maze
+include(":year2019:day20:maze", ":year2019:day20:part1", ":year2019:day20:part2")
+
+// Day 21: Springdroid Adventure
+include(":year2019:day21:part1", ":year2019:day21:part2", ":year2019:day21:spring")
+
+// Day 22: Slam Shuffle
+include(":year2019:day22:part1", ":year2019:day22:part2", ":year2019:day22:shuffle")
+
+// Day 23: Category Six
+include(":year2019:day23:network", ":year2019:day23:part1", ":year2019:day23:part2")
+
+// Day 24: Planet of Discord
+include(":year2019:day24:bugs", ":year2019:day24:part1", ":year2019:day24:part2")
+
+// Day 25: Cryostasis
+include(":year2019:day25:part1", ":year2019:day25:rescue")
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Advent of Code 2020
+
+// TODO

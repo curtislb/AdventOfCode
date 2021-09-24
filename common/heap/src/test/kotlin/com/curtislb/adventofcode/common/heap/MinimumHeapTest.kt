@@ -4,7 +4,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -71,29 +71,29 @@ class MinimumHeapTest {
     @Test
     fun testAddExistingValue() {
         heap.add("foo", 2L)
-        assertThrows(IllegalArgumentException::class.java) { heap.add("foo", 3L) }
+        assertThrows<IllegalArgumentException> { heap.add("foo", 3L) }
     }
 
     @Test
     fun testDecreaseKeyWithUnknownValue() {
         heap.add("foo", 2L)
-        assertThrows(IllegalArgumentException::class.java) { heap.decreaseKey("bar", 1L) }
+        assertThrows<IllegalArgumentException> { heap.decreaseKey("bar", 1L) }
     }
 
     @Test
     fun testDecreaseKeyToSameKey() {
         heap.add("foo", 2L)
-        assertThrows(IllegalArgumentException::class.java) { heap.decreaseKey("foo", 2L) }
+        assertThrows<IllegalArgumentException> { heap.decreaseKey("foo", 2L) }
     }
 
     @Test
     fun testDecreaseKeyToGreaterKey() {
         heap.add("foo", 2L)
-        assertThrows(IllegalArgumentException::class.java) { heap.decreaseKey("foo", 3L) }
+        assertThrows<IllegalArgumentException> { heap.decreaseKey("foo", 3L) }
     }
 
     @Test
     fun testPopMinimumWhenEmpty() {
-        assertThrows(NoSuchElementException::class.java) { heap.popMinimum() }
+        assertThrows<NoSuchElementException> { heap.popMinimum() }
     }
 }
