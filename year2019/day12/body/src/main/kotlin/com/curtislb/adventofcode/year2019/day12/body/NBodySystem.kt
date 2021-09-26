@@ -26,7 +26,7 @@ class NBodySystem(file: File) {
     /**
      * The current total energy (potential and kinetic) of this system.
      */
-    val totalEnergy: Int get() = bodies.sumBy { it.totalEnergy }
+    val totalEnergy: Int get() = bodies.sumOf { it.totalEnergy }
 
     /**
      * Updates the positions and velocities of all bodies in this system for a given number of time [steps].

@@ -166,7 +166,7 @@ inline class BugGrid(val biodiversity: Int) {
         /**
          * A bit mask for selecting spaces in the leftmost column of the grid.
          */
-        private val SPACE_MASK_LEFT_EXTERIOR = (0 until GRID_SPACE_COUNT step GRID_SIZE).sumBy { 1 shl it }
+        private val SPACE_MASK_LEFT_EXTERIOR = (0 until GRID_SPACE_COUNT step GRID_SIZE).sumOf { 1 shl it }
 
         /**
          * A bit mask for selecting spaces in the rightmost column of the grid.

@@ -97,4 +97,50 @@ include(":year2019:day25:part1", ":year2019:day25:rescue")
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Advent of Code 2020
 
-// TODO
+// Day 1: Report Repair
+include(":year2020:day01:part1", ":year2020:day01:part2")
+
+// Day 2: Password Philosophy
+include(":year2020:day02:part1", ":year2020:day02:part2", ":year2020:day02:password")
+
+// Day 3: Toboggan Trajectory
+include(":year2020:day03:part1", ":year2020:day03:part2", ":year2020:day03:trees")
+
+// Day 4: Passport Processing
+include(":year2020:day04:part1", ":year2020:day04:part2", ":year2020:day04:passport")
+
+// Day 5: Binary Boarding
+include(":year2020:day05:boarding", ":year2020:day05:part1", ":year2020:day05:part2")
+
+// Day 6: Custom Customs
+include(":year2020:day06:part1", ":year2020:day06:part2")
+
+// Day 7: Handy Haversacks
+include(":year2020:day07:baggage", ":year2020:day07:part1", ":year2020:day07:part2")
+
+// Day 8: Handheld Halting
+include(":year2020:day08:bootcode", ":year2020:day08:part1", ":year2020:day08:part2")
+
+// Day 9: Encoding Error
+include(":year2020:day09:encryption", ":year2020:day09:part1", ":year2020:day09:part2")
+
+// Day 10: Adapter Array
+include(":year2020:day10:joltage", ":year2020:day10:part1", ":year2020:day10:part2")
+
+// Day 11: Seating System
+include(":year2020:day11:part1", ":year2020:day11:part2", ":year2020:day11:seating")
+
+// Day 12: Rain Risk
+include(":year2020:day12:navigation", ":year2020:day12:part1", ":year2020:day12:part2")
+
+// Day 13: Shuttle Search
+include(":year2020:day13:bus", ":year2020:day13:part1", ":year2020:day13:part2")
+
+// Day 14: Docking Data
+include(":year2020:day14:bitmask", ":year2020:day14:part1", ":year2020:day14:part2")
+
+// Day 15: Rambunctious Recitation
+include(":year2020:day15:memory", ":year2020:day15:part1", ":year2020:day15:part2")
+
+// Day 16: Ticket Translation
+include(":year2020:day16:part1", ":year2020:day16:part2", ":year2020:day16:ticket")

@@ -15,7 +15,7 @@ class DoorSpace(override val symbol: Char) : Space {
     /**
      * The symbol for the key that corresponds to this door.
      */
-    val keySymbol: Char get() = symbol.toLowerCase()
+    val keySymbol: Char get() = symbol.lowercaseChar()
 
     override fun equals(other: Any?): Boolean = other is DoorSpace && other.symbol == symbol
 

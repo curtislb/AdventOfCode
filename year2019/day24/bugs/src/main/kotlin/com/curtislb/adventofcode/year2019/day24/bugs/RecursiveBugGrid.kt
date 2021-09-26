@@ -78,6 +78,6 @@ class RecursiveBugGrid(file: File) {
      * Returns the total number of bugs in all levels of the recursive grid.
      */
     fun countBugs(): Int {
-        return baseGrid.countBugs() + upperLevels.sumBy { it.countBugs() } + lowerLevels.sumBy { it.countBugs() }
+        return baseGrid.countBugs() + upperLevels.sumOf { it.countBugs() } + lowerLevels.sumOf { it.countBugs() }
     }
 }

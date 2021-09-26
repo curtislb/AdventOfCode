@@ -77,7 +77,7 @@ import kotlin.math.abs
 fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int? {
     val robot = Robot(inputPath.toFile())
     val intersections = robot.grid?.findIntersections()
-    return intersections?.sumBy { abs(it.x * it.y) }
+    return intersections?.sumOf { abs(it.x * it.y) }
 }
 
 fun main() = when (val solution = solve()) {

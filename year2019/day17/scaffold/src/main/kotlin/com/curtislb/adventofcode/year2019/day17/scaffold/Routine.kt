@@ -36,7 +36,7 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
      * program.
      */
     fun toAsciiInput(): String {
-        val callOrderString = callOrder.joinToString(separator = ",") { ('A'.toInt() + it).toChar().toString() }
+        val callOrderString = callOrder.joinToString(separator = ",") { ('A'.code + it).toChar().toString() }
         val functionStrings = functions.map { function -> function.joinToString(separator = ",") }
         return "$callOrderString\n${functionStrings.joinToString(separator = "\n")}"
     }

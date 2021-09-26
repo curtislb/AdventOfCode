@@ -29,6 +29,6 @@ inline class KeyCollection(private val keyFlags: Int = 0) {
         /**
          * Returns the integer flag corresponding to [key].
          */
-        private fun flag(key: Char): Int = 1 shl (key.toInt() - 96)
+        private fun flag(key: Char): Int = 1 shl (key.code - 96)
     }
 }

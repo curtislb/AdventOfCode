@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.common.math
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
 /**
