@@ -144,3 +144,30 @@ include(":year2020:day15:memory", ":year2020:day15:part1", ":year2020:day15:part
 
 // Day 16: Ticket Translation
 include(":year2020:day16:part1", ":year2020:day16:part2", ":year2020:day16:ticket")
+
+// Day 17: Conway Cubes
+include(":year2020:day17:conway", ":year2020:day17:part1", ":year2020:day17:part2")
+
+// Day 18: Operation Order
+include(":year2020:day18:expression", ":year2020:day18:part1", ":year2020:day18:part2")
+
+// Day 19: Monster Messages
+include(":year2020:day19:part1", ":year2020:day19:part2", ":year2020:day19:rule")
+
+// Day 20: Jurassic Jigsaw
+include(":year2020:day20:image", ":year2020:day20:part1", ":year2020:day20:part2")
+
+// Day 21: Allergen Assessment
+include(":year2020:day21:food", ":year2020:day21:part1", ":year2020:day21:part2")
+
+// Day 22: Crab Combat
+include(":year2020:day22:part1", ":year2020:day22:part2")
+
+// Day 23: Crab Cups
+include(":year2020:day23:cups", ":year2020:day23:part1", ":year2020:day23:part2")
+
+// Day 24: Lobby Layout
+include(":year2020:day24:hexagon", ":year2020:day24:part1", ":year2020:day24:part2")
+
+// Day 25: Combo Breaker
+include(":year2020:day25:part1")
