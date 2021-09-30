@@ -1,6 +1,6 @@
 # Runs the Gradle build action for CI
 
-name: Gradle Build
+name: build
 
 on:
   push:
