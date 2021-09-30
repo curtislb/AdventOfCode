@@ -23,10 +23,16 @@ My solutions to various programming puzzles from
 
 ### Installation
 
-```
-git clone git@github.com:curtislb/AdventOfCode.git      # Clone with SSH (recommended)
+Clone with SSH (recommended):
 
-git clone https://github.com/curtislb/AdventOfCode.git  # Clone with HTTPS
+```
+git clone git@github.com:curtislb/AdventOfCode.git
+```
+
+Clone with HTTPS:
+
+```
+git clone https://github.com/curtislb/AdventOfCode.git 
 ```
 
 ### Usage
@@ -36,14 +42,32 @@ This project can be opened with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 
 Alternatively, the following commands can be run from the project root directory:
 
-```
-./gradlew build                       # Build whole project (and run tests)
-
-./gradlew test                        # Run all tests in project
-
-./gradlew :common:collection:test     # Run tests for a specific library
-
-./gradlew :year2019:day01:part1:test  # Run tests for a specific puzzle
-
-./gradlew :year2019:day01:part1:run   # Solve a given puzzle and print the answer
-```
+* Build whole project (and run tests):
+  
+  ```
+  ./gradlew build
+  ```
+  
+* Run all tests in project:
+  
+  ```
+  ./gradlew test
+  ```
+  
+* Run tests for a specific library:
+  
+  ```
+  ./gradlew :common:collection:test
+  ```
+  
+* Run tests for a specific puzzle:
+  
+  ```
+  ./gradlew :year2019:day01:part1:test
+  ```
+  
+* Solve a given puzzle and print the answer:
+  
+  ```
+  ./gradlew :year2019:day01:part1:run
+  ```
