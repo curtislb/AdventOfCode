@@ -34,12 +34,12 @@ Boot up all 50 computers and attach them to your network. What is the Y value of
 
 package com.curtislb.adventofcode.year2019.day23.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day23.network.Network
 import com.curtislb.adventofcode.year2019.day23.network.packet.BasePacketListener
 import com.curtislb.adventofcode.year2019.day23.network.packet.Packet
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 23, part 1.
@@ -47,7 +47,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param computerCount The number of computers in the network.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 23), computerCount: Int = 50): BigInteger? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), computerCount: Int = 50): BigInteger? {
     // Listen for the first Y value received by the NAT.
     var firstNatPacketY: BigInteger? = null
     val natPacketListener = object : BasePacketListener() {

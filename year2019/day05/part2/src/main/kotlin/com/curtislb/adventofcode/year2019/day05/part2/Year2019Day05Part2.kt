@@ -61,9 +61,9 @@ What is the diagnostic code for system ID 5?
 package com.curtislb.adventofcode.year2019.day05.part2
 
 import com.curtislb.adventofcode.common.intcode.Intcode
-import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 5, part 2.
@@ -71,7 +71,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param systemId The system ID to be provided as input to the program.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 5), systemId: BigInteger = BigInteger("5")): BigInteger? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), systemId: BigInteger = BigInteger("5")): BigInteger? {
     var diagnosticCode: BigInteger? = null
     val intcode = Intcode(inputPath.toFile()) { diagnosticCode = it }
     intcode.sendInput(systemId)

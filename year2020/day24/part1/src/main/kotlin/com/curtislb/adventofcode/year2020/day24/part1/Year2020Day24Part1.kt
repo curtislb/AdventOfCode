@@ -58,16 +58,16 @@ been followed, how many tiles are left with the black side up?
 
 package com.curtislb.adventofcode.year2020.day24.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day24.hexagon.HexFloor
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 24, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 24)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val hexFloor = HexFloor(file.readText())
     return hexFloor.blackTiles.size

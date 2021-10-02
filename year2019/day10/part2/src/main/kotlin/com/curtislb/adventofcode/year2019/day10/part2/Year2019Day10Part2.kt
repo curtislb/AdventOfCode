@@ -78,9 +78,9 @@ example, 8,2 becomes 802.)
 
 package com.curtislb.adventofcode.year2019.day10.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 10, part 2.
@@ -90,7 +90,7 @@ import java.nio.file.Path
  * @param targetXFactor The number by which the x-coordinate of the target asteroid should be multiplied.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 10),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     targetNumber: Int = 200,
     targetXFactor: Int = 100
 ): Int? {

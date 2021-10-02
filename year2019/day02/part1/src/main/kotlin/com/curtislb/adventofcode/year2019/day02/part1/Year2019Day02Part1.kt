@@ -75,9 +75,9 @@ the program halts?
 package com.curtislb.adventofcode.year2019.day02.part1
 
 import com.curtislb.adventofcode.common.intcode.Intcode
-import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 2, part 1.
@@ -87,7 +87,7 @@ import java.nio.file.Path
  * @param verbValue The value to be set at position 2 in the program.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 2),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     nounValue: BigInteger = BigInteger("12"),
     verbValue: BigInteger = BigInteger.TWO
 ): BigInteger {

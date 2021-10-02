@@ -75,16 +75,16 @@ optional. In your batch file, how many passports are valid?
 
 package com.curtislb.adventofcode.year2020.day04.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day04.passport.Passport
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 4, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 4)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val passports = Passport.processBatch(file)
     return passports.count { it.isValid() }

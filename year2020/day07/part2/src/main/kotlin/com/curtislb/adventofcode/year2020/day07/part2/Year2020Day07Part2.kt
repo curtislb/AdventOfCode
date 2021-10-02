@@ -34,17 +34,17 @@ How many individual bags are required inside your single shiny gold bag?
 
 package com.curtislb.adventofcode.year2020.day07.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day07.baggage.BagCount
 import com.curtislb.adventofcode.year2020.day07.baggage.BagRules
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 7, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 7)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val rules = BagRules(file.readText())
     return rules.countTotalBags(BagCount("shiny gold", 1)) - 1

@@ -39,10 +39,10 @@ tractor beam in the 50x50 area closest to the emitter? (For each of X and Y, thi
 
 package com.curtislb.adventofcode.year2019.day19.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 19, part 1.
@@ -51,7 +51,7 @@ import java.nio.file.Path
  * @param gridRange The range of x and y-coordinate values on the grid for the drones to scan.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 19),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     gridRange: BigIntegerRange = BigIntegerRange(0 until 50)
 ): Int {
     val droneSystem = DroneSystem(inputPath.toFile())

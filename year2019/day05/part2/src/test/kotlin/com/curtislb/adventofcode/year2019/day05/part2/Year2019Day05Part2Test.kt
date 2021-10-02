@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day05.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
+import java.nio.file.Paths
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -17,7 +17,7 @@ class Year2019Day05Part2Test {
     @Test
     fun testSolutionWithTestInput() {
         val solution = solve(
-            inputPath = pathToInput(year = 2019, day = 5, part = 2, fileName = "test_input.txt"),
+            inputPath = Paths.get("..", "input", "part2", "test_input.txt"),
             systemId = BigInteger("8")
         )
         assertEquals(BigInteger("1000"), solution)

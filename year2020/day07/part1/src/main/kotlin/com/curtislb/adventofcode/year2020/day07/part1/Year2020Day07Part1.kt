@@ -43,16 +43,16 @@ get all of it.)
 
 package com.curtislb.adventofcode.year2020.day07.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day07.baggage.BagRules
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 7, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 7)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val rules = BagRules(file.readText())
     return rules.findBagsContaining("shiny gold").size

@@ -17,17 +17,17 @@ package com.curtislb.adventofcode.year2019.day11.part2
 
 import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.intcode.Intcode
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day11.painting.Color
 import com.curtislb.adventofcode.year2019.day11.painting.Robot
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 11, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 11)): String {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     // Run the robot from a white starting panel.
     val robot = Robot()
     robot.paint(Color.WHITE)

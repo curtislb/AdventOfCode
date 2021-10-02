@@ -91,16 +91,16 @@ After updating rules 8 and 11, how many messages completely match rule 0?
 package com.curtislb.adventofcode.year2020.day19.part2
 
 import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day19.rule.parseRule
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 19, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 19)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
     val ruleStrings = mutableMapOf<Int, String>()
     val messages = mutableListOf<String>()

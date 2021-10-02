@@ -66,9 +66,9 @@ What is the total number of direct and indirect orbits in your map data?
 
 package com.curtislb.adventofcode.year2019.day06.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day06.orbits.Universe
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 6, part 1.
@@ -76,7 +76,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param center The name of the node representing the universal center of mass.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), center: String = "COM"): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), center: String = "COM"): Int {
     val universe = Universe(inputPath.toFile())
     return universe.countOrbits(center)
 }

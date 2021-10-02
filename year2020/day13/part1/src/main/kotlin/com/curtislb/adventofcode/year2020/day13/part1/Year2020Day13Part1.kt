@@ -63,16 +63,16 @@ for that bus?
 
 package com.curtislb.adventofcode.year2020.day13.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day13.bus.BusSchedule
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 13, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 13)): Long? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     val file = inputPath.toFile()
     val lines = file.readLines()
     val arrivalTime = lines[0].toLong()

@@ -180,17 +180,17 @@ Assemble the tiles into an image. What do you get if you multiply together the I
 
 package com.curtislb.adventofcode.year2020.day20.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.product
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 20, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 20)): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     val imageData = ImageData(file)
     return imageData.cornerTiles.map { it.id.toLong() }.product()

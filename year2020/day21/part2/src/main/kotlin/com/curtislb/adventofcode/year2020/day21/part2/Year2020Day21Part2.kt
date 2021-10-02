@@ -19,16 +19,16 @@ Time to stock your raft with supplies. What is your canonical dangerous ingredie
 
 package com.curtislb.adventofcode.year2020.day21.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day21.food.FoodList
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 21, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 21)): String {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     val file = inputPath.toFile()
     val foodList = FoodList(file.readText())
     val sortedEntries = foodList.dangerousIngredientAllergens.entries.toMutableList().apply { sortBy { it.value } }

@@ -101,16 +101,16 @@ occupied?
 
 package com.curtislb.adventofcode.year2020.day11.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day11.seating.SeatLayout
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 11, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 11)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val seatLayout = SeatLayout(file.readText(), maxNeighbors = 3) { grid, position ->
         position.allNeighbors().asSequence().filter { it in grid }

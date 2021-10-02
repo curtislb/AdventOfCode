@@ -126,17 +126,17 @@ many seats end up occupied?
 package com.curtislb.adventofcode.year2020.day11.part2
 
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day11.seating.SeatLayout
 import com.curtislb.adventofcode.year2020.day11.seating.findVisibleSeats
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 11, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 11)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val neighborsCache = mutableMapOf<Point, List<Point>>()
     val seatLayout = SeatLayout(file.readText(), maxNeighbors = 4) { grid, position ->

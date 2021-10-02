@@ -56,9 +56,9 @@ test mode; it should only output a single value, the BOOST keycode. What BOOST k
 package com.curtislb.adventofcode.year2019.day09.part1
 
 import com.curtislb.adventofcode.common.intcode.Intcode
-import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 9, part 1.
@@ -66,7 +66,10 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param programMode An input code that determines the mode in which the program will run.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 9), programMode: BigInteger = BigInteger.ONE): BigInteger? {
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    programMode: BigInteger = BigInteger.ONE
+): BigInteger? {
     var boostKeycode: BigInteger? = null
     val intcode = Intcode(inputPath.toFile()) { boostKeycode = it }
     intcode.sendInput(programMode)

@@ -137,9 +137,9 @@ open tile marked ZZ, both at the outermost layer?
 
 package com.curtislb.adventofcode.year2019.day20.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day20.maze.Maze
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 20, part 2.
@@ -149,7 +149,7 @@ import java.nio.file.Path
  * @param exitLabel The label of the space representing the exit of the maze.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 20),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     entranceLabel: String = "AA",
     exitLabel: String = "ZZ"
 ): Long? {

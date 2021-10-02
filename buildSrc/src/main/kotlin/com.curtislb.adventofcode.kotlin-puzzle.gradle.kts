@@ -3,15 +3,13 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-dependencies {
-    implementation(project(":common:io"))
-    testImplementation(project(":common:io"))
-}
+// Extract year, day, and part strings from the project path.
+val regex = Regex("""\d+""")
+val path = projectDir.toPath().toAbsolutePath()
+val year = regex.find(path.parent.parent.fileName.toString())?.value
+val day = regex.find(path.parent.fileName.toString())?.value
+val part = regex.find(path.fileName.toString())?.value
 
-tasks.run<JavaExec> {
-    workingDir = rootDir
-}
-
-tasks.test {
-    workingDir = rootDir
+application {
+    mainClass.set("com.curtislb.adventofcode.year$year.day$day.part$part.Year${year}Day${day}Part${part}Kt")
 }

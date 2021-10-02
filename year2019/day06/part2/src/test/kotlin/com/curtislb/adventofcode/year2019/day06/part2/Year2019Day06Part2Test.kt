@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day06.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
+import java.nio.file.Paths
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ class Year2019Day06Part2Test {
 
     @Test
     fun testSolutionWithTestInput() {
-        val solution = solve(inputPath = pathToInput(year = 2019, day = 6, part = 2, fileName = "test_input.txt"))
+        val solution = solve(inputPath = Paths.get("..", "input", "part2", "test_input.txt"))
         assertEquals(4, solution)
     }
 }

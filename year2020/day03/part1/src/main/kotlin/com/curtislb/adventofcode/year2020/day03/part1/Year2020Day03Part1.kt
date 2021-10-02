@@ -67,17 +67,17 @@ encounter?
 
 package com.curtislb.adventofcode.year2020.day03.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.Fraction
 import com.curtislb.adventofcode.year2020.day03.trees.TreeField
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 3, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 3)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val field = TreeField(file.readText())
     return field.countTreesAlongSlope(Fraction(-1, 3))

@@ -106,7 +106,6 @@ damage does it report?
 
 package com.curtislb.adventofcode.year2019.day21.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day21.spring.Register.A
 import com.curtislb.adventofcode.year2019.day21.spring.Register.B
 import com.curtislb.adventofcode.year2019.day21.spring.Register.C
@@ -117,6 +116,7 @@ import com.curtislb.adventofcode.year2019.day21.spring.SpringDroid
 import com.curtislb.adventofcode.year2019.day21.spring.SpringScript
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 21, part 1.
@@ -124,7 +124,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param maxInstructions The maximum number of springscript instructions that the springdroid can remember.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 21), maxInstructions: Int = 15): BigInteger? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), maxInstructions: Int = 15): BigInteger? {
     val droid = SpringDroid(inputPath.toFile(), maxInstructions)
     val script = SpringScript.create {
         not(A, T)

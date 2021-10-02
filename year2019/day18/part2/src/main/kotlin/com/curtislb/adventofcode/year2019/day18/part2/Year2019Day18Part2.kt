@@ -151,17 +151,17 @@ the keys?
 
 package com.curtislb.adventofcode.year2019.day18.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day18.vault.Vault
 import com.curtislb.adventofcode.year2019.day18.vault.search.KeySearch
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 18, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 18, part = 2)): Long? {
+fun solve(inputPath: Path = Paths.get("..", "input", "part2", "input.txt")): Long? {
     val vault = Vault(inputPath.toFile())
     return KeySearch(vault).searchDistance
 }

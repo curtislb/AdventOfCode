@@ -31,9 +31,9 @@ do you get if you multiply those six values together?
 package com.curtislb.adventofcode.year2020.day16.part2
 
 import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.product
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 16, part 2.
@@ -41,7 +41,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2020, day = 16),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     fieldRegex: Regex = Regex("""departure.*""")
 ): Long {
     val file = inputPath.toFile()

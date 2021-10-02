@@ -95,17 +95,17 @@ package com.curtislb.adventofcode.year2019.day15.part1
 
 import com.curtislb.adventofcode.common.graph.bfsDistance
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
 import com.curtislb.adventofcode.year2019.day15.repair.Space
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 15, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 15)): Long? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     // Have the droid fully explore the grid.
     val droid = Droid(inputPath.toFile()).apply { explore() }
 

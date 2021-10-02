@@ -56,9 +56,9 @@ orbiting? (Between the objects they are orbiting - not between YOU and SAN.)
 
 package com.curtislb.adventofcode.year2019.day06.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day06.orbits.Universe
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 6, part 2.
@@ -67,7 +67,11 @@ import java.nio.file.Path
  * @param start The name of the node representing our starting location.
  * @param target The name of the node representing the location of our target.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 6), start: String = "YOU", target: String = "SAN"): Int? {
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    start: String = "YOU",
+    target: String = "SAN"
+): Int? {
     val universe = Universe(inputPath.toFile())
     return universe.findOrbitalTransferDistance(start, target)
 }

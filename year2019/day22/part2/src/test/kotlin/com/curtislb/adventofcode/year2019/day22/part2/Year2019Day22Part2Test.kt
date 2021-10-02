@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day22.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import java.math.BigInteger
+import java.nio.file.Paths
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -17,7 +17,7 @@ class Year2019Day22Part2Test {
     @Test
     fun testSolutionWithTestInput() {
         val solution = solve(
-            inputPath = pathToInput(year = 2019, day = 22, fileName = "test_input.txt"),
+            inputPath = Paths.get("..", "input", "test_input.txt"),
             deckSize = BigInteger("11"),
             shuffleCount = BigInteger.TWO,
             targetPosition = BigInteger.ONE

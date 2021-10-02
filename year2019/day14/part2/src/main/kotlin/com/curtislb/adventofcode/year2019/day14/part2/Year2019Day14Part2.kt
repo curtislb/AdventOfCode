@@ -14,11 +14,11 @@ Given 1 trillion ORE, what is the maximum amount of FUEL you can produce?
 
 package com.curtislb.adventofcode.year2019.day14.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.search.bisectIndex
 import com.curtislb.adventofcode.year2019.day14.chemistry.MaterialAmount
 import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 14, part 2.
@@ -29,7 +29,7 @@ import java.nio.file.Path
  * @param desiredMaterial The name of the material that should ultimately be produced.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 14),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     rawMaterial: String = "ORE",
     rawMaterialAvailable: Long = 1_000_000_000_000L,
     desiredMaterial: String = "FUEL"

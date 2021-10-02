@@ -27,10 +27,10 @@ in the final output list?
 
 package com.curtislb.adventofcode.year2019.day16.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day16.fft.FastFftAlgorithm
 import com.curtislb.adventofcode.year2019.day16.fft.readSignal
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 16, part 2.
@@ -42,7 +42,7 @@ import java.nio.file.Path
  * @param messageLength The number of digits at the given offset in the final signal that represent the message.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 16),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     phaseCount: Int = 100,
     signalRepeatCount: Int = 10_000,
     offsetDigits: Int = 7,

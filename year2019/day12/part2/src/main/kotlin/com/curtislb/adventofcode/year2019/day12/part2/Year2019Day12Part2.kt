@@ -50,17 +50,17 @@ How many steps does it take to reach the first state that exactly matches a prev
 
 package com.curtislb.adventofcode.year2019.day12.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.leastCommonMultiple
 import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 12, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 12)): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val system = NBodySystem(inputPath.toFile())
     val periodicity = system.findAxialPeriodicity()
     return leastCommonMultiple(periodicity[0].toLong(), periodicity[1].toLong(), periodicity[2].toLong())

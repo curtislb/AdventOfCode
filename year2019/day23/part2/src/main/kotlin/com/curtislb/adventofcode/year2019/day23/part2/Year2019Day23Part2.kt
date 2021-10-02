@@ -21,12 +21,12 @@ computer at address 0 twice in a row?
 
 package com.curtislb.adventofcode.year2019.day23.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day23.network.Network
 import com.curtislb.adventofcode.year2019.day23.network.packet.BasePacketListener
 import com.curtislb.adventofcode.year2019.day23.network.packet.Packet
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 23, part 2.
@@ -34,7 +34,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param computerCount The number of computers in the network.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 23), computerCount: Int = 50): BigInteger? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), computerCount: Int = 50): BigInteger? {
     // Listen for the first repeated Y value sent by the NAT.
     val natPacketYValues = mutableSetOf<BigInteger>()
     var repeatedYValue: BigInteger? = null

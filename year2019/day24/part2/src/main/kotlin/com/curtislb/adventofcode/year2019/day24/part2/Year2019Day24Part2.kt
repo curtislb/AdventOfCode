@@ -176,9 +176,9 @@ Starting with your scan, how many bugs are present after 200 minutes?
 
 package com.curtislb.adventofcode.year2019.day24.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day24.bugs.RecursiveBugGrid
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 24, part 2.
@@ -186,7 +186,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param durationMinutes The number of minutes to wait before counting the number of bugs.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 24), durationMinutes: Int = 200): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), durationMinutes: Int = 200): Int {
     val grid = RecursiveBugGrid(inputPath.toFile()).apply { update(durationMinutes) }
     return grid.countBugs()
 }

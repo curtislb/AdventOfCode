@@ -120,16 +120,16 @@ Find the best location for a new monitoring station. How many other asteroids ca
 
 package com.curtislb.adventofcode.year2019.day10.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day10.asteroid.AsteroidField
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 10, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 10)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val asteroidField = AsteroidField(inputPath.toFile())
     val (bestStation, asteroidCount) = asteroidField.findBestStation()
     return if (bestStation != null) asteroidCount else null

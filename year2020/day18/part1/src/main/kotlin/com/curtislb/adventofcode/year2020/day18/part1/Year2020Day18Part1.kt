@@ -46,16 +46,16 @@ homework; what is the sum of the resulting values?
 
 package com.curtislb.adventofcode.year2020.day18.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day18.expression.evaluate
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 18, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 18)): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     var total = 0L
     file.forEachLine { total += evaluate(it) }

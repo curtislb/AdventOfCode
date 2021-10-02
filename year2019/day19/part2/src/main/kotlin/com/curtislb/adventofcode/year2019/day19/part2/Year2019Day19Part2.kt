@@ -55,11 +55,11 @@ add the point's Y coordinate? (In the example above, this would be 250020.)
 
 package com.curtislb.adventofcode.year2019.day19.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.search.bisectIndex
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 19, part 2.
@@ -69,7 +69,7 @@ import java.nio.file.Path
  * @param positionXFactor The number by which the x-coordinate of the final position should be multiplied.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 19),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     shipSize: BigInteger = BigInteger("100"),
     positionXFactor: BigInteger = BigInteger("10000")
 ): BigInteger? {

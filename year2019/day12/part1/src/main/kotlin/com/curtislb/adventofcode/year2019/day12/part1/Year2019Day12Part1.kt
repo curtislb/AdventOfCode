@@ -202,9 +202,9 @@ What is the total energy in the system after simulating the moons given in your 
 
 package com.curtislb.adventofcode.year2019.day12.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 12, part 1.
@@ -212,7 +212,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param stepCount The number of time steps for which to run the simulation.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 12), stepCount: Int = 1000): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), stepCount: Int = 1000): Int {
     val system = NBodySystem(inputPath.toFile()).apply { simulate(stepCount) }
     return system.totalEnergy
 }

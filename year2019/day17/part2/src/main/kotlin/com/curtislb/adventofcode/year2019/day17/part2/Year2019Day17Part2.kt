@@ -99,11 +99,11 @@ After visiting every part of the scaffold at least once, how much dust does the 
 
 package com.curtislb.adventofcode.year2019.day17.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
 import com.curtislb.adventofcode.year2019.day17.scaffold.Routine
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 17, part 2.
@@ -113,7 +113,7 @@ import java.nio.file.Path
  * @param maxCharCount The maximum number of ASCII characters per line that can be given to the vacuum robot.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 17),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     functionCount: Int = 3,
     maxCharCount: Int = 20
 ): BigInteger? {

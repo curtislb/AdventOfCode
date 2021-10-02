@@ -104,17 +104,17 @@ differences multiplied by the number of 3-jolt differences?
 
 package com.curtislb.adventofcode.year2020.day10.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.io.readInts
 import com.curtislb.adventofcode.year2020.day10.joltage.JoltageAdapters
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 10, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 10)): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     val adapters = JoltageAdapters(file.readInts().toSet())
     val differenceCounts = adapters.countRatingDifferences()

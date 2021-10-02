@@ -64,9 +64,9 @@ Run your ASCII program. What is the sum of the alignment parameters for the scaf
 
 package com.curtislb.adventofcode.year2019.day17.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day17.scaffold.Robot
 import java.nio.file.Path
+import java.nio.file.Paths
 import kotlin.math.abs
 
 /**
@@ -74,7 +74,7 @@ import kotlin.math.abs
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 17)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val robot = Robot(inputPath.toFile())
     val intersections = robot.grid?.findIntersections()
     return intersections?.sumOf { abs(it.x * it.y) }

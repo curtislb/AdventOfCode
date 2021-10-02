@@ -41,10 +41,10 @@ What message is produced after decoding your image?
 
 package com.curtislb.adventofcode.year2019.day08.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day08.image.Pixel
 import com.curtislb.adventofcode.year2019.day08.image.processLayers
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 8, part 2.
@@ -53,7 +53,7 @@ import java.nio.file.Path
  * @param imageWidth The width of each layer of the image, in number of pixels.
  * @param imageHeight The height of each layer of the image, in number of pixels.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 8), imageWidth: Int = 25, imageHeight: Int = 6): String {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), imageWidth: Int = 25, imageHeight: Int = 6): String {
     // Calculate pixel values for the composed image.
     val image = Array(imageHeight) { Array(imageWidth) { Pixel.ALPHA } }
     processLayers(

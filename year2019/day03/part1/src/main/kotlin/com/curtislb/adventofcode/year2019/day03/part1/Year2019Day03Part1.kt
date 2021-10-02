@@ -55,16 +55,16 @@ What is the Manhattan distance from the central port to the closest intersection
 
 package com.curtislb.adventofcode.year2019.day03.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day03.wire.Wire
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 3, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 3)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val (wireA, wireB) = inputPath.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
     val (intersection, distance) = wireA.findNearestIntersection(wireB)
     return if (intersection != null) distance else null

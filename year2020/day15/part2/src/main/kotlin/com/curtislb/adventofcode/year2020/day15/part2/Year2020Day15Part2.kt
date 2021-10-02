@@ -17,17 +17,17 @@ Given your starting numbers, what will be the 30000000th number spoken?
 
 package com.curtislb.adventofcode.year2020.day15.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.io.readInts
 import com.curtislb.adventofcode.year2020.day15.memory.MemoryGame
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 15, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 15)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
     val startingNums = file.readInts()
     val game = MemoryGame(startingNums).apply { playTurns(30_000_000) }

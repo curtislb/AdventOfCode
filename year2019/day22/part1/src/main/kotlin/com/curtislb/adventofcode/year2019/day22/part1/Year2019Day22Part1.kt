@@ -161,10 +161,10 @@ After shuffling your factory order deck of 10007 cards, what is the position of 
 
 package com.curtislb.adventofcode.year2019.day22.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day22.shuffle.Shuffle
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 22, part 1.
@@ -174,7 +174,7 @@ import java.nio.file.Path
  * @param targetCard The value of the card whose position we're interested in.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 22),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     deckSize: BigInteger = BigInteger("10007"),
     targetCard: BigInteger = BigInteger("2019")
 ): BigInteger {

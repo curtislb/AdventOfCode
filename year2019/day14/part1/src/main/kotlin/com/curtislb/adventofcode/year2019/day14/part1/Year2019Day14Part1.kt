@@ -107,10 +107,10 @@ Given the list of reactions in your puzzle input, what is the minimum amount of 
 
 package com.curtislb.adventofcode.year2019.day14.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day14.chemistry.MaterialAmount
 import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 14, part 1.
@@ -120,7 +120,7 @@ import java.nio.file.Path
  * @param desiredProduct The name and amount of the material that should ultimately be produced.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 14),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     rawMaterial: String = "ORE",
     desiredProduct: MaterialAmount = MaterialAmount("FUEL", 1L)
 ): Long? {

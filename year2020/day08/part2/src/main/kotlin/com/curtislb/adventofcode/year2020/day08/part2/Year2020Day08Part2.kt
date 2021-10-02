@@ -48,19 +48,19 @@ of the accumulator after the program terminates?
 
 package com.curtislb.adventofcode.year2020.day08.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day08.bootcode.BootCode
 import com.curtislb.adventofcode.year2020.day08.bootcode.Instruction
 import com.curtislb.adventofcode.year2020.day08.bootcode.operation.JumpOperation
 import com.curtislb.adventofcode.year2020.day08.bootcode.operation.NoOperation
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 8, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 8)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
     val bootCode = BootCode(file.readText())
 

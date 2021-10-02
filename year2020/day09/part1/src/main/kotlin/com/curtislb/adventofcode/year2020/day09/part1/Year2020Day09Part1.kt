@@ -62,17 +62,17 @@ which is not the sum of two of the 25 numbers before it. What is the first numbe
 
 package com.curtislb.adventofcode.year2020.day09.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.io.readLongs
 import com.curtislb.adventofcode.year2020.day09.encryption.Xmas
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 9, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 9), preambleSize: Int = 25): Long? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
     val xmas = Xmas(file.readLongs(), preambleSize)
     return xmas.firstInvalidNumber

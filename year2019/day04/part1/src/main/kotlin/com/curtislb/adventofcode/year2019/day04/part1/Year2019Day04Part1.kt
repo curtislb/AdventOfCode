@@ -23,7 +23,6 @@ How many different passwords within the range given in your puzzle input meet th
 
 package com.curtislb.adventofcode.year2019.day04.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.io.readIntRange
 import com.curtislb.adventofcode.year2019.day04.password.ExactLengthGenerator
 import com.curtislb.adventofcode.year2019.day04.password.HasRepeatedDigitGenerator
@@ -31,6 +30,7 @@ import com.curtislb.adventofcode.year2019.day04.password.InRangeGenerator
 import com.curtislb.adventofcode.year2019.day04.password.NonDecreasingGenerator
 import com.curtislb.adventofcode.year2019.day04.password.SatisfiesAllGenerator
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 4, part 1.
@@ -38,7 +38,7 @@ import java.nio.file.Path
  * @param inputPath The path to the input file for this puzzle.
  * @param passwordLength The number of digits in a valid password.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 4), passwordLength: Int = 6): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), passwordLength: Int = 6): Int {
     val passwordRange = inputPath.toFile().readIntRange()
     val generator = SatisfiesAllGenerator(
         ExactLengthGenerator(passwordLength),

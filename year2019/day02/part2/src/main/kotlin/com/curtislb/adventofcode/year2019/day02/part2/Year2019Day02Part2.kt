@@ -39,10 +39,10 @@ Find the input noun and verb that cause the program to produce the output 196907
 package com.curtislb.adventofcode.year2019.day02.part2
 
 import com.curtislb.adventofcode.common.intcode.Intcode
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 2, part 2.
@@ -53,7 +53,7 @@ import java.nio.file.Path
  * @param targetOutput The target output value to be produced by the program.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 2),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     nounVerbValues: BigIntegerRange = BigIntegerRange(0..99),
     nounFactor: BigInteger = BigInteger("100"),
     targetOutput: BigInteger = BigInteger("19690720")

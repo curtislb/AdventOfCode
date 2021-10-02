@@ -37,18 +37,18 @@ Look around the ship and see if you can find the password for the main airlock.
 package com.curtislb.adventofcode.year2019.day25.part1
 
 import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day25.rescue.Droid
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Move
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Take
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 25, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 25)): String? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String? {
     // Send a list of predetermined commands to the droid.
     val droid = Droid(inputPath.toFile()).apply { start() }
     val commands = listOf(

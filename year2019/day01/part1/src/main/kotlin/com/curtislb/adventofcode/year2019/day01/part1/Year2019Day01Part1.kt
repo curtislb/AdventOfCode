@@ -31,16 +31,16 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 
 package com.curtislb.adventofcode.year2019.day01.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day01.fuel.calculateFuel
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 1, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2019, day = 1)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     var totalFuel = 0
     inputPath.toFile().forEachLine { totalFuel += calculateFuel(it.trim().toInt()) }
     return totalFuel

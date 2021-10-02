@@ -21,10 +21,10 @@ position 2020?
 package com.curtislb.adventofcode.year2019.day22.part2
 
 import com.curtislb.adventofcode.common.io.mapLines
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2019.day22.shuffle.Shuffle
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 22, part 2.
@@ -35,7 +35,7 @@ import java.nio.file.Path
  * @param targetPosition The final position in the deck that we're interested in.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 22),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     deckSize: BigInteger = BigInteger("119315717514047"),
     shuffleCount: BigInteger = BigInteger("101741582076661"),
     targetPosition: BigInteger = BigInteger("2020")

@@ -13,17 +13,17 @@ In your expense report, what is the product of the three entries that sum to 202
 
 package com.curtislb.adventofcode.year2020.day01.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.math.product
 import com.curtislb.adventofcode.common.search.findTupleSum
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 1, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 1)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
     val entries = file.readLines().map { it.toInt() }
     val sumEntries = entries.findTupleSum(count = 3, targetSum = 2020)

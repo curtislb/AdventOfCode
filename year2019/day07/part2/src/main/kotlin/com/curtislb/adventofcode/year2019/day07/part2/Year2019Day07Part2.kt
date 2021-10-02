@@ -51,11 +51,11 @@ sent to the thrusters?
 
 package com.curtislb.adventofcode.year2019.day07.part2
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.year2019.day07.amplifier.AmplifierSeries
 import java.math.BigInteger
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2019, day 7, part 2.
@@ -65,7 +65,7 @@ import java.nio.file.Path
  * @param phaseSettings All possible phase settings for the amplifiers.
  */
 fun solve(
-    inputPath: Path = pathToInput(year = 2019, day = 7),
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
     amplifierCount: Int = 5,
     phaseSettings: Collection<BigInteger> = BigIntegerRange(5..9).toList()
 ): BigInteger {

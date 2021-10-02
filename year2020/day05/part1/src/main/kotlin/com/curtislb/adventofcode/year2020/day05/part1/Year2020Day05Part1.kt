@@ -54,16 +54,16 @@ As a sanity check, look through your list of boarding passes. What is the highes
 
 package com.curtislb.adventofcode.year2020.day05.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day05.boarding.Seat
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 5, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 5)): Int? {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
     var highestId: Int? = null
     file.forEachLine { line ->

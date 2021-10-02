@@ -59,16 +59,16 @@ Execute the initialization program. What is the sum of all values left in memory
 
 package com.curtislb.adventofcode.year2020.day14.part1
 
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day14.bitmask.BitmaskProgramV1
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 14, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 14)): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     val program = BitmaskProgramV1(file.readText()).apply { run() }
     return program.nonzeroMemoryEntries.sumOf { it.value }

@@ -51,16 +51,16 @@ package com.curtislb.adventofcode.year2020.day12.part1
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.io.pathToInput
 import com.curtislb.adventofcode.year2020.day12.navigation.SimpleNavigationShip
 import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Returns the solution to the puzzle for 2020, day 12, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = pathToInput(year = 2020, day = 12)): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val ship = SimpleNavigationShip(Orientation(Point.ORIGIN, Direction.RIGHT))
     file.forEachLine { ship.followInstruction(it) }
