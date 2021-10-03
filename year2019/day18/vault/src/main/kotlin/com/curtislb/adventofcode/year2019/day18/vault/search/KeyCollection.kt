@@ -5,7 +5,8 @@ package com.curtislb.adventofcode.year2019.day18.vault.search
  *
  * @param keyFlags An integer whose 26 rightmost bits indicate whether each possible key is in this collection.
  */
-inline class KeyCollection(private val keyFlags: Int = 0) {
+@JvmInline
+value class KeyCollection(private val keyFlags: Int = 0) {
     /**
      * Returns `true` if [key] is in this collection, or `false` otherwise.
      */

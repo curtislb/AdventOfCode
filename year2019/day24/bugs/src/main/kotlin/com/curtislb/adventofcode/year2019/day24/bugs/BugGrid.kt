@@ -7,7 +7,8 @@ import java.io.File
  *
  * @param biodiversity A number that uniquely identifies the positions of all bugs in the grid.
  */
-inline class BugGrid(val biodiversity: Int) {
+@JvmInline
+value class BugGrid(val biodiversity: Int) {
     /**
      * Returns the grid that results after waiting one minute for bugs to die off and infest other spaces.
      *

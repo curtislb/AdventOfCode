@@ -7,8 +7,8 @@
 
 ## Summary
 
-My solutions to various programming puzzles from
-[adventofcode.com](https://adventofcode.com/). Currently, this includes:
+My solutions to various programming puzzles from [adventofcode.com](https://adventofcode.com/).
+Currently, this includes:
 
 * [Advent of Code 2019](https://adventofcode.com/2019) (Days 1-25)
 * [Advent of Code 2020](https://adventofcode.com/2020) (Days 1-25)
@@ -46,6 +46,8 @@ Alternatively, the following commands can be run from the project root directory
 ./gradlew build                       # Build whole project (and run tests)
 
 ./gradlew test                        # Run all tests in project
+
+./gradlew codeCoverageReport          # Create a code coverage report (under coverage/build)
 
 ./gradlew :common:collection:test     # Run tests for a specific library
 
