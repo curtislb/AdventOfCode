@@ -27,7 +27,7 @@ dependencies {
             }
         }
 
-        // The puzzle for day 25 has only one part
+        // The puzzle for day 25 only has one part
         implementation(project(":year$year:day25:part1"))
     }
 }
@@ -38,7 +38,7 @@ repositories {
 
 val rootPath = rootDir.toPath().toAbsolutePath()
 
-// Checks if the given file or directory is part of the root project.
+// Checks if the given file or directory is part of the root project
 fun File.isInProject(): Boolean = toPath().toAbsolutePath().startsWith(rootPath)
 
 // A resolvable configuration to collect source code

@@ -43,11 +43,11 @@ This project can be opened with [IntelliJ IDEA](https://www.jetbrains.com/idea/)
 Alternatively, the following commands can be run from the project root directory:
 
 ```
-./gradlew build                       # Build whole project (and run tests)
+./gradlew build                       # Build the whole project (and run tests)
 
-./gradlew test                        # Run all tests in project
+./gradlew test                        # Run all tests in the project
 
-./gradlew codeCoverageReport          # Create a code coverage report (under coverage/build)
+./gradlew codeCoverageReport          # Create a code coverage report (in build/reports/jacoco)
 
 ./gradlew :common:collection:test     # Run tests for a specific library
 

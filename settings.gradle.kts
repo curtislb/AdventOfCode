@@ -16,9 +16,6 @@ include(
     ":common:testing"
 )
 
-// Meta-project for generating aggregated code coverage reports
-include(":coverage")
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Advent of Code 2019
 
@@ -174,4 +171,3 @@ include(":year2020:day24:hexagon", ":year2020:day24:part1", ":year2020:day24:par
 
 // Day 25: Combo Breaker
 include(":year2020:day25:part1")
-include("coverage")
