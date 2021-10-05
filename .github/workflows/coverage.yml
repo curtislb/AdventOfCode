@@ -1,0 +1,40 @@
+# Generates a coverage report and uploads it to codecov.io
+
+name: coverage
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allow this workflow to be run manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Generate coverage report
+        run: ./gradlew codeCoverageReport
+      - name: Upload report to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml
+          fail_ci_if_error: true
+      - name: Clean up Gradle cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
