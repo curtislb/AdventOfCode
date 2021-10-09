@@ -1,6 +1,7 @@
 package com.curtislb.adventofcode.common.graph
 
 import java.util.ArrayDeque
+import lombok.Generated
 
 /**
  * Applies the function [process] to all nodes reachable via a breadth-first graph search from [source], with the
@@ -9,6 +10,7 @@ import java.util.ArrayDeque
  * Continues searching until all nodes reachable from [source] have been processed or until [process] returns `true`,
  * indicating that the search should be terminated early.
  */
+@Generated
 inline fun <T> bfsApply(
     source: T,
     getNeighbors: (node: T) -> Sequence<T>,
@@ -45,6 +47,7 @@ inline fun <T> bfsApply(
  *
  * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead returns `null`.
  */
+@Generated
 inline fun <T> bfsDistance(source: T, isGoal: (node: T) -> Boolean, getNeighbors: (node: T) -> Sequence<T>): Long? {
     var result: Long? = null
     bfsApply(source, getNeighbors) { node, distance ->

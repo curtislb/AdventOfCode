@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
+import lombok.Generated
+
 /**
  * A mutable rectangular grid of values.
  */
@@ -59,6 +61,7 @@ interface MutableGrid<T> : Grid<T> {
 /**
  * Returns a new mutable grid with the given [height] and [width], with each element set by the given [init] function.
  */
+@Generated
 @Suppress("FunctionName")
 inline fun <T> MutableGrid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> T): MutableGrid<T> {
     return RowArrayGrid(height, width, init)

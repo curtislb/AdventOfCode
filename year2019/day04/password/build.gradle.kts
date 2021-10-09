@@ -4,5 +4,6 @@ plugins {
 
 dependencies {
     implementation(project(":common:math"))
+
     testImplementation(project(":common:testing"))
 }

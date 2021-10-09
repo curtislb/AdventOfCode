@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.collection
 
+import lombok.Generated
+
 open class IntVector(protected open vararg val components: Int) {
     /**
      * The number of components in this vector.
@@ -38,6 +40,7 @@ open class IntVector(protected open vararg val components: Int) {
     /**
      * Returns the sum of [transform] applied to each component of this vector.
      */
+    @Generated
     inline fun sumBy(transform: (component: Int) -> Int): Int {
         var sum = 0
         for (i in 0 until size) {

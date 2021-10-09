@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.year2019.day21.spring
 
+import lombok.Generated
+
 /**
  * A springscript program that can be interpreted and run by a springdroid.
  *
@@ -13,6 +15,7 @@ class SpringScript private constructor(val instructions: List<String>) {
          * Returns a springscript program with the given [extendedMode] setting and a [prepare] function that provides
          * instructions to the program [Builder].
          */
+        @Generated
         inline fun create(extendedMode: Boolean = false, prepare: Builder.() -> Unit): SpringScript {
             return Builder(extendedMode).apply(prepare).build()
         }

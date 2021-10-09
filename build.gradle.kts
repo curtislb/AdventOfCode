@@ -4,38 +4,15 @@ plugins {
 }
 
 dependencies {
-    // Common libraries
-    implementation(project(":common:collection"))
-    implementation(project(":common:graph"))
-    implementation(project(":common:grid"))
-    implementation(project(":common:heap"))
-    implementation(project(":common:intcode"))
-    implementation(project(":common:io"))
-    implementation(project(":common:math"))
-    implementation(project(":common:parse"))
-    implementation(project(":common:range"))
-    implementation(project(":common:search"))
-    implementation(project(":common:simulation"))
-    implementation(project(":common:testing"))
-
-    // Puzzle solutions
-    for (year in 2019..2020) {
-        // Puzzles for days 1-24 have two parts
-        for (day in 1..24) {
-            for (part in 1..2) {
-                implementation(project(":year$year:day${"%02d".format(day)}:part$part"))
-            }
-        }
-
-        // The puzzle for day 25 only has one part
-        implementation(project(":year$year:day25:part1"))
-    }
+    // Add all leaf subprojects as dependencies.
+    subprojects.filter { it.subprojects.isEmpty() }.forEach { implementation(it) }
 }
 
 repositories {
     mavenCentral()
 }
 
+@Suppress("HasPlatformType")
 val rootPath = rootDir.toPath().toAbsolutePath()
 
 // Checks if the given file or directory is part of the root project

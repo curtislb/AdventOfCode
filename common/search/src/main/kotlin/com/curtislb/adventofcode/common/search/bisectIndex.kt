@@ -1,11 +1,14 @@
 package com.curtislb.adventofcode.common.search
 
+import lombok.Generated
+
 /**
  * Returns the first index in the range from [knownFalse] to [knownTrue] (inclusive) for which the function [predicate]
  * switches from returning `false` to returning `true`, or `null` if no such index exists.
  *
  * If [knownTrue] is set to `null`, the search will instead be conducted forward from [knownFalse] without bound.
  */
+@Generated
 inline fun bisectIndex(knownFalse: Long = 0L, knownTrue: Long? = null, predicate: ((index: Long) -> Boolean)): Long? {
     // If only a false index is known, search for a true index.
     var falseIndex = knownFalse

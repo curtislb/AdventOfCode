@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
+import lombok.Generated
+
 /**
  * A read-only rectangular grid of values.
  */
@@ -188,6 +190,7 @@ interface Grid<out T> {
      *
      * @throws IllegalArgumentException If the current grid is empty and either [newHeight] or [newWidth] is nonzero.
      */
+    @Generated
     private inline fun transformed(newHeight: Int, newWidth: Int, mapPoint: (point: Point) -> Point): Grid<T> {
         if (isEmpty()) {
             require(newHeight == 0 && newWidth == 0) { "Empty grid can't be transformed into a non-empty grid." }
@@ -204,6 +207,7 @@ interface Grid<out T> {
 /**
  * Returns a read-only grid with the given [height] and [width], with each element set by the given [init] function.
  */
+@Generated
 @Suppress("FunctionName")
 inline fun <T> Grid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> T): Grid<T> {
     return RowArrayGrid(height, width, init)

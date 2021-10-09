@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
+import lombok.Generated
+
 /**
  * A mutable rectangular grid of values, implemented as an [ArrayList] of [ArrayList] rows.
  *
@@ -74,6 +76,7 @@ class RowArrayGrid<T>(private val rowList: ArrayList<ArrayList<T>> = ArrayList()
 /**
  * Returns a new array grid with the given [height] and [width], with each element set by the given [init] function.
  */
+@Generated
 @Suppress("FunctionName")
 inline fun <T> RowArrayGrid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> T): RowArrayGrid<T> {
     require(height >= 0) { "Height must be non-negative: $height" }
