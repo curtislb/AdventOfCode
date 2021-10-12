@@ -3,7 +3,8 @@ package com.curtislb.adventofcode.year2019.day04.password
 import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
 
 /**
- * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
+ * A generator that produces numeric passwords whose corresponding base-10 integer values are within
+ * a given range.
  *
  * @param minValue The minimum (inclusive) non-negative integer value for a valid password.
  * @param maxValue The maximum (inclusive) non-negative integer value for a valid password.
@@ -30,7 +31,8 @@ class InRangeGenerator private constructor(
     }
 
     /**
-     * A generator that produces numeric passwords whose corresponding base-10 integer values are within a given range.
+     * A generator that produces numeric passwords whose corresponding base-10 integer values are
+     * within a given range.
      *
      * @param minValue The minimum (inclusive) non-negative integer value for a valid password.
      * @param maxValue The maximum (inclusive) non-negative integer value for a valid password.

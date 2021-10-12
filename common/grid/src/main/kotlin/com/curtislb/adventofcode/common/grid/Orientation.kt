@@ -7,7 +7,7 @@ data class Orientation(val position: Point, val direction: Direction) {
     /**
      * Returns the orientation given by moving [distance] grid units in [direction] from this one.
      *
-     * If [distance] is negative, this is equivalent to moving `-distance` units opposite [direction].
+     * If [distance] is negative, this is equivalent to `-distance` units opposite [direction].
      */
     fun move(direction: Direction = this.direction, distance: Int = 1): Orientation {
         return Orientation(position.move(direction, distance), this.direction)

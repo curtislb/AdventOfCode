@@ -3,9 +3,9 @@ package com.curtislb.adventofcode.common.intcode.mode
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.math.BigInteger
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [ImmediateMode].

@@ -3,9 +3,9 @@ package com.curtislb.adventofcode.common.collection
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlin.test.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [ValueSequencer].
@@ -21,7 +21,7 @@ class ValueSequencerTest {
     @Test
     fun testWhenEmpty() {
         assertFalse(sequencer.hasNext())
-        assertNextThrows(sequencer)
+        assertThrows<NoSuchElementException> { sequencer.next() }
         sequencer.clear()
         assertFalse(sequencer.hasNext())
     }
@@ -46,7 +46,7 @@ class ValueSequencerTest {
         assertTrue(sequencer.hasNext())
         assertEquals(33, sequencer.next())
         assertFalse(sequencer.hasNext())
-        assertNextThrows(sequencer)
+        assertThrows<NoSuchElementException> { sequencer.next() }
     }
 
     @Test
@@ -55,27 +55,13 @@ class ValueSequencerTest {
         assertTrue(sequencer.hasNext())
         sequencer.clear()
         assertFalse(sequencer.hasNext())
-        assertNextThrows(sequencer)
+        assertThrows<NoSuchElementException> { sequencer.next() }
 
         sequencer.queue(sequenceOf(64))
         sequencer.queue(sequenceOf(-6, 91))
         assertTrue(sequencer.hasNext())
         sequencer.clear()
         assertFalse(sequencer.hasNext())
-        assertNextThrows(sequencer)
-    }
-
-    companion object {
-        /**
-         * Checks that calling [ValueSequencer.next] on [sequencer] throws a [NoSuchElementException].
-         */
-        private fun assertNextThrows(sequencer: ValueSequencer<*>) {
-            try {
-                sequencer.next()
-                fail("Expected NoSuchElementException.")
-            } catch (e: NoSuchElementException) {
-                // This is expected.
-            }
-        }
+        assertThrows<NoSuchElementException> { sequencer.next() }
     }
 }

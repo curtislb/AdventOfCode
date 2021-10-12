@@ -7,15 +7,21 @@ import java.math.BigInteger
 /**
  * Represents the move-relative-base operation (opcode 9) for an [Intcode] program.
  *
- * This operation takes 1 parameter: `A`. It first gets the value of `A` and then increases the current value of
- * [Intcode.relativeBase] by that amount (or decreases it if the value of `A` is negative).
+ * This operation takes 1 parameter: `A`. It first gets the value of `A` and then increases the
+ * current value of [Intcode.relativeBase] by that amount (or decreases it if the value of `A` is
+ * negative).
  */
 object MoveRelativeBaseOperation : Operation {
     override val parameterCount: Int = 1
 
-    override fun process(intcode: Intcode, pointer: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int {
-        require(parameters.size == parameterCount) { "Wanted $parameterCount parameters, but got ${parameters.size}." }
-        require(modes.size == parameterCount) { "Wanted $parameterCount modes, but got ${modes.size}." }
+    override fun process(
+        intcode: Intcode,
+        pointer: Int,
+        parameters: Array<BigInteger>,
+        modes: Array<Mode>
+    ): Int {
+        checkParameters(parameters)
+        checkModes(modes)
 
         val value = modes[0].getValue(intcode, parameters[0])
         intcode.relativeBase += value.toInt()

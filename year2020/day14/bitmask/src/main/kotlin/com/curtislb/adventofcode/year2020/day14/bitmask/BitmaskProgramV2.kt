@@ -5,15 +5,17 @@ import com.curtislb.adventofcode.common.math.withOneBit
 import com.curtislb.adventofcode.common.math.withZeroBit
 
 /**
- * A bitmask program that uses the current bitmask to modify the memory address(es) in which values are stored.
+ * A bitmask program that uses the current bitmask to modify the memory address(es) in which values
+ * are stored.
  *
- * When [writeMemory] is called, the current bitmask is applied to the given address according to the following rules
- * for each bit:
- * - [Bit.ZERO] - Leaves the corresponding address bit unchanged.
- * - [Bit.ONE] - Overwrites the corresponding address bit with 1.
- * - [Bit.FLOATING] - Produces multiple addresses, with the corresponding address bit set to 0 *and* 1.
+ * When [writeMemory] is called, the current bitmask is applied to the given address according to
+ * the following rules for each bit:
  *
- * @param programString A string representation of the program, consisting of one statement per line.
+ * - [Bit.ZERO]: Leaves the corresponding address bit unchanged.
+ * - [Bit.ONE]: Overwrites the corresponding address bit with 1.
+ * - [Bit.FLOATING]: Produces multiple addresses, with the corresponding address bit set to 0 and 1.
+ *
+ * @param programString A string representation of the program, containing one statement per line.
  */
 class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
     override fun writeMemory(addressString: String, valueString: String) {
@@ -23,7 +25,7 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
     }
 
     /**
-     * Returns a list of memory addresses that result from applying the current bitmask to the given [address].
+     * Returns a list of memory addresses from applying the current bitmask to the given [address].
      */
     private fun applyBitmask(address: Long): List<Long> {
         var baseAddress = address

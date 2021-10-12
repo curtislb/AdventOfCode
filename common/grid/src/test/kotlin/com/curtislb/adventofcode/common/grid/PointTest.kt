@@ -4,8 +4,8 @@ import com.curtislb.adventofcode.common.testing.assertAlmostEquals
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.math.PI
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [Point].
@@ -73,7 +73,14 @@ class PointTest {
 
     @Test
     fun testAngleClockwiseFromPositiveYWithSamePoint() {
-        assertThrows<IllegalArgumentException> { Point(6, 3).angleClockwiseFromPositiveY(Point(6, 3)) }
+        assertThrows<IllegalArgumentException> {
+            Point(6, 3).angleClockwiseFromPositiveY(
+                Point(
+                    6,
+                    3
+                )
+            )
+        }
     }
 
     @Test
@@ -81,15 +88,27 @@ class PointTest {
         assertAlmostEquals(0.0, Point(13, -20).angleClockwiseFromPositiveY(Point(13, -19)))
         assertAlmostEquals(PI / 2.0, Point(0, -9).angleClockwiseFromPositiveY(Point(12, -9)))
         assertAlmostEquals(PI, Point(-6, 17).angleClockwiseFromPositiveY(Point(-6, 12)))
-        assertAlmostEquals(PI * 1.5,  Point(4, 16).angleClockwiseFromPositiveY(Point(-2, 16)))
+        assertAlmostEquals(PI * 1.5, Point(4, 16).angleClockwiseFromPositiveY(Point(-2, 16)))
         assertAlmostEquals(PI / 4.0, Point(4, 7).angleClockwiseFromPositiveY(Point(9, 12)))
-        assertAlmostEquals(0.3217505543966, Point(-19, 3).angleClockwiseFromPositiveY(Point(-16, 12)))
-        assertAlmostEquals(2.9562447035941, Point(-11, 5).angleClockwiseFromPositiveY(Point(-8, -11)))
-        assertAlmostEquals(2.8555412118725, Point(-20, 13).angleClockwiseFromPositiveY(Point(-15, -4)))
+        assertAlmostEquals(
+            0.3217505543966,
+            Point(-19, 3).angleClockwiseFromPositiveY(Point(-16, 12))
+        )
+        assertAlmostEquals(
+            2.9562447035941,
+            Point(-11, 5).angleClockwiseFromPositiveY(Point(-8, -11))
+        )
+        assertAlmostEquals(
+            2.8555412118725,
+            Point(-20, 13).angleClockwiseFromPositiveY(Point(-15, -4))
+        )
         assertAlmostEquals(3.4400915851760, Point(16, 16).angleClockwiseFromPositiveY(Point(12, 3)))
         assertAlmostEquals(3.2522498747637, Point(9, 4).angleClockwiseFromPositiveY(Point(7, -14)))
         assertAlmostEquals(4.7891608716545, Point(12, -1).angleClockwiseFromPositiveY(Point(-1, 0)))
-        assertAlmostEquals(5.6577002669404, Point(18, -19).angleClockwiseFromPositiveY(Point(5, -1)))
+        assertAlmostEquals(
+            5.6577002669404,
+            Point(18, -19).angleClockwiseFromPositiveY(Point(5, -1))
+        )
     }
 
     @Test

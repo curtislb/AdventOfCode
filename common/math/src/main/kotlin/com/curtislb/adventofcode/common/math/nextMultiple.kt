@@ -32,7 +32,8 @@ fun Long.nextMultipleAbove(n: Long): Long {
 fun Int.nextMultipleAbove(n: Int): Int = toLong().nextMultipleAbove(n.toLong()).toInt()
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this one.
+ * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
+ * one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -43,7 +44,8 @@ fun BigInteger.nextMultipleAtLeast(n: BigInteger): BigInteger {
 }
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this one.
+ * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
+ * one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -54,7 +56,8 @@ fun Long.nextMultipleAtLeast(n: Long): Long {
 }
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this one.
+ * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
+ * one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */

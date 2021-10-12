@@ -51,7 +51,9 @@ data class Seat(val id: Int) {
                 when (char) {
                     'F' -> false
                     'B' -> true
-                    else -> throw IllegalArgumentException("Invalid row partition character: $char")
+                    else -> throw IllegalArgumentException(
+                        "Invalid row partition character: $char"
+                    )
                 }
             }.toPartitionIndex()
 
@@ -60,7 +62,9 @@ data class Seat(val id: Int) {
                 when (char) {
                     'L' -> false
                     'R' -> true
-                    else -> throw IllegalArgumentException("Invalid column partition character: $char")
+                    else -> throw IllegalArgumentException(
+                        "Invalid column partition character: $char"
+                    )
                 }
             }.toPartitionIndex()
 
@@ -70,9 +74,9 @@ data class Seat(val id: Int) {
         /**
          * Returns the index corresponding to a list of boolean partition values.
          *
-         * Initially, the range `0..(2^size)` represents all possible partition indices. From here, each boolean value
-         * indicates whether to keep the lower (`false`) or upper (`true`) half of possible indices after partitioning,
-         * until only one index remains.
+         * Initially, the range `0..(2^size)` represents all possible partition indices. From here,
+         * each boolean value indicates whether to keep the lower (`false`) or upper (`true`) half
+         * of possible indices after partitioning, until only one index remains.
          */
         private fun List<Boolean>.toPartitionIndex(): Int {
             var minIndexInclusive = 0

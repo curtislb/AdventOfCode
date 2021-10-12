@@ -10,15 +10,19 @@ import kotlin.math.abs
  * @param position The 3D position vector of this body.
  * @param velocity The 3D velocity vector of this body.
  *
- * @throws IllegalArgumentException If either [position] or [velocity] has the wrong number of components.
+ * @throws IllegalArgumentException If [position] or [velocity] have the wrong number of components.
  */
 class Body(
     val position: MutableIntVector = MutableIntVector.ofZeros(DIMENSION_COUNT),
     val velocity: MutableIntVector = MutableIntVector.ofZeros(DIMENSION_COUNT)
 ) {
     init {
-        require(position.size == DIMENSION_COUNT) { "Position must have $DIMENSION_COUNT components: ${position.size}" }
-        require(velocity.size == DIMENSION_COUNT) { "Velocity must have $DIMENSION_COUNT components: ${velocity.size}" }
+        require(position.size == DIMENSION_COUNT) {
+            "Position vector must have size $DIMENSION_COUNT: $position"
+        }
+        require(velocity.size == DIMENSION_COUNT) {
+            "Velocity vector must have size $DIMENSION_COUNT: $velocity"
+        }
     }
 
     /**
@@ -29,7 +33,8 @@ class Body(
     /**
      * A celestial body, with a [position] and [velocity] in 3D space.
      *
-     * @param positionString A string representation of the position for this body, in the form `<x=$x, y=$y, z=$z>`.
+     * @param positionString A string representation of the position for this body, in the form
+     *  `<x=$x, y=$y, z=$z>`.
      */
     constructor(positionString: String) : this() {
         val fieldStrings = positionString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
@@ -77,7 +82,7 @@ class Body(
 
     companion object {
         /**
-         * The number of spatial dimensions represented by the position and velocity vectors for this body.
+         * The number of spatial dimensions for the position and velocity of a body.
          */
         internal const val DIMENSION_COUNT = 3
 
@@ -87,7 +92,7 @@ class Body(
          * @throws IllegalArgumentException If this vector has the wrong number of components.
          */
         fun MutableIntVector.toXyzString(): String {
-            require(size == DIMENSION_COUNT) { "Vector must have $DIMENSION_COUNT components: $size" }
+            require(size == DIMENSION_COUNT) { "Vector must have size $DIMENSION_COUNT: $this" }
             return "<x=${this[0]}, y=${this[1]}, z=${this[2]}>"
         }
     }

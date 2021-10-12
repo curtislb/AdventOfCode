@@ -7,7 +7,8 @@ import com.curtislb.adventofcode.year2020.day08.bootcode.State
  */
 interface Operation {
     /**
-     * Returns the newly modified program [state] after executing this operation with the given [argument].
+     * Returns the newly modified program [state] after executing this operation with the given
+     * [argument].
      */
     fun execute(argument: Int, state: State): State
 

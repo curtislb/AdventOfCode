@@ -19,7 +19,7 @@ class Robot {
         private set
 
     /**
-     * A map from the position of each grid panel the robot has painted to the current color of that panel.
+     * A map from the grid position of each panel the robot has painted to the current panel color.
      */
     private val paintedPanels: MutableMap<Point, Color> = mutableMapOf()
 
@@ -37,11 +37,16 @@ class Robot {
      * Returns a matrix representing the portion of the grid that the robot has painted.
      */
     fun constructPaintedGrid(): Grid<Color> {
-        return constructPointGrid(paintedPanels.keys) { paintedPanels.getOrDefault(it, Color.BLACK) }
+        return constructPointGrid(paintedPanels.keys) {
+            paintedPanels.getOrDefault(
+                it,
+                Color.BLACK
+            )
+        }
     }
 
     /**
-     * Moves the robot forward one space from its current position, in the direction it's currently facing.
+     * Moves the robot forward one space from its current position, in the direction it's facing.
      */
     fun moveForward() {
         orientation = orientation.move()
@@ -71,14 +76,15 @@ class Robot {
     /**
      * Causes the robot to follow the instructions given by an [intcode] program.
      *
-     * The program should expect as input a value representing the color (0 for a black, or 1 for white) of the panel on
-     * which the robot is currently located. This should be provided once initially and again each time the robot moves
-     * to another position. The program should then output a series of 0 or 1 values. These will be interpreted
-     * alternately by the robot as:
-     * 1. A color to paint the current panel, with 0 representing black and 1 representing white.
-     * 2. A direction to turn before moving forward, with 0 representing left and 1 representing right.
+     * The program will receive as input a value representing the color (0 for black, or 1 for
+     * white) of the panel on which the robot is currently located. This should be provided once
+     * initially and again each time the robot moves to another position. The program should then
+     * output a series of 0 or 1 values. These will be interpreted alternately by the robot as:
      *
-     * This process will continue until the [intcode] program halts, at which point this method will return.
+     * 1. A color to paint the current panel (0 for black, or 1 for white).
+     * 2. A direction to turn before moving forward (0 for left, or 1 for right).
+     *
+     * This process will continue until the program halts, at which point this method will return.
      *
      * @throws IllegalArgumentException If [intcode] produces an invalid output value.
      */

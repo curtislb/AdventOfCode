@@ -18,7 +18,7 @@ class RobotTest {
     private lateinit var robot: Robot
 
     @BeforeEach
-    fun setUp () {
+    fun setUp() {
         robot = Robot()
     }
 
@@ -220,7 +220,9 @@ class RobotTest {
 
     @Test
     fun testExecuteProgram() {
-        val intcode = Intcode("3,100,4,100,108,0,100,100,4,100,101,1,101,101,1007,101,6,102,1005,102,2,99")
+        val intcode = Intcode(
+            "3,100,4,100,108,0,100,100,4,100,101,1,101,101,1007,101,6,102,1005,102,2,99"
+        )
         robot.executeProgram(intcode)
         assertEquals(6, robot.paintedArea)
         assertEquals(

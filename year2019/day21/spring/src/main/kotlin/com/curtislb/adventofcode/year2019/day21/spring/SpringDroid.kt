@@ -5,12 +5,12 @@ import java.io.File
 import java.math.BigInteger
 
 /**
- * A springdroid that navigates and jumps over holes in the ship's hull. It accepts springscript instructions and
- * reports information through an [Ascii]-compatible Intcode program.
+ * A springdroid that navigates and jumps over holes in the ship's hull. It accepts springscript
+ * instructions and reports information through an [Ascii]-compatible Intcode program.
  *
  * @param file A file containing the program that controls the springdroid.
- * @param maxInstructions The maximum number of springscript instructions that the springdroid can remember, or `null`
- *  if the springdroid can remember any number of instructions.
+ * @param maxInstructions The maximum number of springscript instructions that the springdroid can
+ *  remember, or `null` if the springdroid can remember any number of instructions.
  */
 class SpringDroid(file: File, private val maxInstructions: Int? = null) {
     /**
@@ -19,10 +19,11 @@ class SpringDroid(file: File, private val maxInstructions: Int? = null) {
     private val ascii: Ascii = Ascii(file)
 
     /**
-     * Returns the hull damage reported the springdroid after following the given [springscript] program, or `null` if
-     * the springdroid fell into a hole.
+     * Returns the hull damage reported the springdroid after following the given [springscript]
+     * program, or `null` if the springdroid fell into a hole.
      *
-     * @throws IllegalArgumentException If the [springscript] program has too many instructions for the springdroid.
+     * @throws IllegalArgumentException If the [springscript] program has too many instructions for
+     *  the springdroid.
      */
     fun runProgram(springscript: SpringScript): BigInteger? {
         // Check that the program doesn't have too many instructions.

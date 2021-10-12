@@ -4,10 +4,12 @@ import com.curtislb.adventofcode.common.heap.MinimumHeap
 import lombok.Generated
 
 /**
- * Applies Dijkstra's shortest path algorithm from [source] and returns the shortest weighted distance to any node for
- * which [isGoal] is `true`, with the edges from each node given by [getEdges].
+ * Applies Dijkstra's shortest path algorithm from [source] and returns the shortest weighted
+ * distance to any node for which [isGoal] is `true`, with the edges from each node given by
+ * [getEdges].
  *
- * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead returns `null`.
+ * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead
+ * returns `null`.
  */
 @Generated
 inline fun <T> dijkstraShortestDistance(

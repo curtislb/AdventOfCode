@@ -21,4 +21,5 @@ fun greatestCommonDivisor(m: Long, n: Long): Long {
  *
  * @throws IllegalArgumentException If either [m] or [n] is negative or 0.
  */
-fun greatestCommonDivisor(m: Int, n: Int): Int = greatestCommonDivisor(m.toLong(), n.toLong()).toInt()
+fun greatestCommonDivisor(m: Int, n: Int): Int =
+    greatestCommonDivisor(m.toLong(), n.toLong()).toInt()

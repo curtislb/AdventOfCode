@@ -5,7 +5,7 @@ package com.curtislb.adventofcode.year2019.day17.scaffold.instruction
  */
 interface Instruction {
     /**
-     * The string representing this instruction, which can be provided to the vacuum robot as an ASCII command.
+     * The string for this instruction, which can be given as an ASCII command to the vacuum robot.
      */
     override fun toString(): String
 }

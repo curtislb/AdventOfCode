@@ -9,9 +9,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
 
 /**
@@ -200,16 +200,37 @@ class IntcodeTest {
         assertTrue(printedChars.isEmpty())
 
         intcode.run()
-        assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertEquals(
+            listOf(
+                BigInteger("-74"),
+                BigInteger("16"),
+                BigInteger("-74"),
+                BigInteger("16")
+            ), outputs.toList()
+        )
         assertTrue(printedChars.isEmpty())
 
         intcode.resetOutput()
-        assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertEquals(
+            listOf(
+                BigInteger("-74"),
+                BigInteger("16"),
+                BigInteger("-74"),
+                BigInteger("16")
+            ), outputs.toList()
+        )
         assertTrue(printedChars.isEmpty())
 
         intcode.resetState()
         intcode.run()
-        assertEquals(listOf(BigInteger("-74"), BigInteger("16"), BigInteger("-74"), BigInteger("16")), outputs.toList())
+        assertEquals(
+            listOf(
+                BigInteger("-74"),
+                BigInteger("16"),
+                BigInteger("-74"),
+                BigInteger("16")
+            ), outputs.toList()
+        )
         assertEquals("-74%n16%n".format(), printedChars.joinToString(separator = ""))
     }
 }

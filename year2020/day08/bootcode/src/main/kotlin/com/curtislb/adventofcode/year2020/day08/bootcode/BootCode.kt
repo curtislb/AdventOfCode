@@ -3,13 +3,15 @@ package com.curtislb.adventofcode.year2020.day08.bootcode
 /**
  * A boot code program, consisting of a list of instructions that are executed in order.
  *
- * @param programString A string representation of the program, consisting of one instruction per line.
+ * @param programString A string representation of the program, consisting of one instruction per
+ *  line.
  */
 class BootCode(programString: String) {
     /**
      * A list of instructions that make up the program.
      */
-    val instructions: Array<Instruction> = programString.trim().lines().map { Instruction.from(it) }.toTypedArray()
+    val instructions: Array<Instruction> =
+        programString.trim().lines().map { Instruction.from(it) }.toTypedArray()
 
     /**
      * The current state of the program, which may be updated during execution.
@@ -28,17 +30,19 @@ class BootCode(programString: String) {
         private set
 
     /**
-     * Runs the program by executing instructions one at a time until a stopping condition is reached.
+     * Runs the program by executing instructions in sequence until a stopping condition is reached.
      *
-     * The program begins by executing the instruction at pointer position 0. Each executed instruction may then modify
-     * the state of the program (see [Instruction]), including by updating the pointer to the position of the next
-     * instruction to be executed. This process will continue until one of the following occurs:
+     * The program begins by executing the instruction at pointer position 0. Each executed
+     * instruction may then modify the state of the program (see [Instruction]), including by
+     * updating the pointer to the position of the next instruction to be executed. This process
+     * will continue until one of the following occurs:
      *
      * - The pointer is moved to a position with no corresponding instruction.
-     * - The pointer is moved to the position of a previously executed instruction, meaning a loop has been detected.
+     * - The pointer is moved to the position of a previously executed instruction, meaning a loop
+     *   has been detected.
      *
-     * In either case, this method will return. Any future calls to [run] will then immediately return, until
-     * [resetState] is invoked.
+     * In either case, this method will return. Any future calls to [run] will then immediately
+     * return, until [resetState] is invoked.
      */
     fun run() {
         if (!isLoopDetected && state.pointer in instructions.indices) {
@@ -56,8 +60,8 @@ class BootCode(programString: String) {
     }
 
     /**
-     * Restores the [State] of the program to its starting value and clears the [isLoopDetected] flag so that the
-     * program can be run again.
+     * Restores the [State] of the program to its starting value and clears the [isLoopDetected]
+     * flag so that the program can be run again.
      *
      * Note that any modified [instructions] are *not* reset by this method.
      */

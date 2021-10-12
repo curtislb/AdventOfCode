@@ -6,13 +6,14 @@ import com.curtislb.adventofcode.common.math.withZeroBit
 /**
  * A bitmask program that uses the current bitmask to modify the values stored to memory addresses.
  *
- * When [writeMemory] is called, the current bitmask is applied to the given value according to the following rules for
- * each bit:
- * - [Bit.ZERO] - Overwrites the corresponding value bit with 0.
- * - [Bit.ONE] - Overwrites the corresponding value bit with 1.
- * - [Bit.FLOATING] - Leaves the corresponding value bit unchanged.
+ * When [writeMemory] is called, the current bitmask is applied to the given value according to the
+ * following rules for each bit:
  *
- * @param programString A string representation of the program, consisting of one statement per line.
+ * - [Bit.ZERO]: Overwrites the corresponding value bit with 0.
+ * - [Bit.ONE]: Overwrites the corresponding value bit with 1.
+ * - [Bit.FLOATING]: Leaves the corresponding value bit unchanged.
+ *
+ * @param programString A string representation of the program, containing one statement per line.
  */
 class BitmaskProgramV1(programString: String) : BitmaskProgram(programString) {
     override fun writeMemory(addressString: String, valueString: String) {
@@ -29,7 +30,7 @@ class BitmaskProgramV1(programString: String) : BitmaskProgram(programString) {
         maskBits.forEach { (bit, indices) ->
             when (bit) {
                 Bit.ZERO -> indices.forEach { maskedValue = maskedValue.withZeroBit(it) }
-                Bit.ONE ->  indices.forEach { maskedValue = maskedValue.withOneBit(it) }
+                Bit.ONE -> indices.forEach { maskedValue = maskedValue.withOneBit(it) }
                 else -> Unit
             }
         }

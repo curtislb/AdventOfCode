@@ -7,10 +7,11 @@ import com.curtislb.adventofcode.common.math.Fraction
  *
  * @param source The origin point of the ray.
  * @param slope The slope of the ray, or `null` if its slope is infinite.
- * @param directionParity A flag indicating the direction of the ray. If [slope] is non-null, `true` indicates
- *  that the x values of points on the ray approach positive infinity, whereas `false` indicates that they approach
- *  negative infinity. If [slope] is `null`, `true` indicates that the y values of points on the ray approach positive
- *  infinity, whereas `false` indicates that they approach negative infinity.
+ * @param directionParity A flag indicating the direction of the ray. If [slope] is non-null, `true`
+ *  indicates that the x values of points on the ray approach positive infinity, whereas `false`
+ *  indicates that they approach negative infinity. If [slope] is `null`, `true` indicates that the
+ *  y values of points on the ray approach positive infinity, whereas `false` indicates that they
+ *  approach negative infinity.
  */
 data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boolean) {
     /**
@@ -24,7 +25,9 @@ data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boo
     constructor(source: Point, member: Point) : this(
         source,
         when {
-            member == source -> throw IllegalArgumentException("Source and member points must be distinct.")
+            member == source -> {
+                throw IllegalArgumentException("Source and member points must be distinct.")
+            }
             member.x == source.x -> null
             else -> Fraction(member.y - source.y, member.x - source.x)
         },
@@ -32,8 +35,8 @@ data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boo
     )
 
     /**
-     * Returns an infinite sequence of all grid points that fall on this ray, sorted by their distances from (and
-     * including) the [source] point.
+     * Returns an infinite sequence of all grid points that fall on this ray, sorted by their
+     * distances from (and including) the [source] point.
      */
     fun points(): Sequence<Point> = sequence {
         // Calculate the change in x and y values between subsequent points.

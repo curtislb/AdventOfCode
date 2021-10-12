@@ -27,6 +27,7 @@ data class Passport(
 ) {
     /**
      * Checks if all fields of this passport are valid, according to the following rules:
+     *
      * - [birthYear] must be at least 1920 and at most 2002.
      * - [issueYear] must be at least 2010 and at most 2020.
      * - [expirationYear] must be at least 2020 and at most 2030.
@@ -154,7 +155,7 @@ data class Passport(
         /**
          * Returns the passport corresponding to the given [string].
          *
-         * @throws IllegalArgumentException If [string] is missing one or more required passport fields.
+         * @throws IllegalArgumentException If [string] is missing any required passport fields.
          */
         fun from(string: String): Passport {
             var birthYear: String? = null
@@ -169,7 +170,13 @@ data class Passport(
             // Map values to the corresponding passport fields.
             val fieldValues = string.trim().split(' ').map { it.split(':') }
             fieldValues.forEach { tokens ->
-                require (tokens.size == 2) { "Malformed field value string: ${tokens.joinToString(separator = ":")}" }
+                require(tokens.size == 2) {
+                    "Malformed field value string: ${
+                        tokens.joinToString(
+                            separator = ":"
+                        )
+                    }"
+                }
                 val (field, value) = tokens
                 when (field) {
                     "byr" -> birthYear = value
@@ -185,13 +192,14 @@ data class Passport(
             }
 
             // Check that all required fields are present.
-            require(birthYear != null &&
-                issueYear != null &&
-                expirationYear != null &&
-                height != null &&
-                hairColor != null &&
-                eyeColor != null &&
-                passportId != null
+            require(
+                birthYear != null &&
+                    issueYear != null &&
+                    expirationYear != null &&
+                    height != null &&
+                    hairColor != null &&
+                    eyeColor != null &&
+                    passportId != null
             ) {
                 """
                     Missing one or more required fields:
@@ -220,8 +228,10 @@ data class Passport(
         /**
          * Returns the list of passports represented by the given batch [file].
          *
-         * Each passport in [file] is represented as a sequence of `"$field:$value"` pairs separated by spaces and/or
-         * newlines. Passports in [file] are separated by blank lines. The valid `field` strings are:
+         * Each passport in [file] is represented as a sequence of `"$field:$value"` pairs separated
+         * by spaces and/or newlines. Passports in [file] are separated by blank lines. The valid
+         * `field` strings are:
+         *
          * - `"byr"`, corresponding to [Passport.birthYear]
          * - `"iyr"`, corresponding to [Passport.issueYear]
          * - `"eyr"`, corresponding to [Passport.expirationYear]
@@ -231,8 +241,8 @@ data class Passport(
          * - `"pid"`, corresponding to [Passport.passportID]
          * - `"cid"`, corresponding to [Passport.countryID]
          *
-         * Passports in [file] that are missing one or more required fields will be skipped and not appear in the list
-         * returned by this function.
+         * Passports in [file] that are missing one or more required fields will be skipped and not
+         * appear in the list returned by this function.
          */
         fun processBatch(file: File): List<Passport> {
             val passports = mutableListOf<Passport>()

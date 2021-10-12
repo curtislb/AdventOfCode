@@ -7,4 +7,8 @@ package com.curtislb.adventofcode.year2019.day06.orbits
  * @param parent The planet orbited by this one.
  * @param children A list of all planets that orbit this one.
  */
-data class Planet(val name: String, var parent: Planet? = null, val children: MutableList<Planet> = mutableListOf())
+data class Planet(
+    val name: String,
+    var parent: Planet? = null,
+    val children: MutableList<Planet> = mutableListOf()
+)

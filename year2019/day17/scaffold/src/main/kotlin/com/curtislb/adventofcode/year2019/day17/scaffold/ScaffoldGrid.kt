@@ -53,7 +53,7 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
     }
 
     /**
-     * Returns a list of instructions that will cause the vacuum robot to safely visit all scaffold spaces.
+     * Returns a list of instructions that lets the vacuum robot safely visit all scaffold spaces.
      */
     fun planRoute(): List<Instruction> {
         val instructions = mutableListOf<Instruction>()
@@ -70,17 +70,33 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
                 }
 
                 when (grid[rowIndex, colIndex]) {
-                    Space.ROBOT_UP ->
-                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.UP)
+                    Space.ROBOT_UP -> {
+                        robotStart = Orientation(
+                            Point.fromMatrixCoordinates(rowIndex, colIndex),
+                            Direction.UP
+                        )
+                    }
 
-                    Space.ROBOT_RIGHT ->
-                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.RIGHT)
+                    Space.ROBOT_RIGHT -> {
+                        robotStart = Orientation(
+                            Point.fromMatrixCoordinates(rowIndex, colIndex),
+                            Direction.RIGHT
+                        )
+                    }
 
-                    Space.ROBOT_DOWN ->
-                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.DOWN)
+                    Space.ROBOT_DOWN -> {
+                        robotStart = Orientation(
+                            Point.fromMatrixCoordinates(rowIndex, colIndex),
+                            Direction.DOWN
+                        )
+                    }
 
-                    Space.ROBOT_LEFT ->
-                        robotStart = Orientation(Point.fromMatrixCoordinates(rowIndex, colIndex), Direction.LEFT)
+                    Space.ROBOT_LEFT -> {
+                        robotStart = Orientation(
+                            Point.fromMatrixCoordinates(rowIndex, colIndex),
+                            Direction.LEFT
+                        )
+                    }
 
                     else -> Unit
                 }

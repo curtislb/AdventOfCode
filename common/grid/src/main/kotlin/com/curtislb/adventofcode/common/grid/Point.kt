@@ -20,7 +20,8 @@ data class Point(val x: Int, val y: Int) {
     operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
 
     /**
-     * Returns all points on the grid that are horizontally, vertically, or diagonally adjacent to this one.
+     * Returns all points on the grid that are horizontally, vertically, or diagonally adjacent to
+     * this one.
      */
     fun allNeighbors(): List<Point> = ArrayList<Point>(8).apply {
         for (dx in -1..1) {
@@ -53,9 +54,9 @@ data class Point(val x: Int, val y: Int) {
     )
 
     /**
-     * Returns the point reached by moving [distance] grid units in a given [direction] from this one.
+     * Returns the point that is [distance] grid units in a given [direction] from this one.
      *
-     * If [distance] is negative, this is equivalent to moving `abs(distance)` units opposite the given [direction].
+     * If [distance] is negative, this is equivalent to `abs(distance)` units opposite [direction].
      */
     fun move(direction: Direction, distance: Int = 1): Point = when (direction) {
         Direction.UP -> Point(x, y + distance)
@@ -65,25 +66,29 @@ data class Point(val x: Int, val y: Int) {
     }
 
     /**
-     * Returns the point produced by rotating this one 90 degrees clockwise about the given [center] point.
+     * Returns the point produced by rotating this one 90 degrees clockwise about a [center] point.
      */
-    fun rotateClockwise(center: Point = ORIGIN): Point = Point(y - center.y + center.x, center.x - x + center.y)
+    fun rotateClockwise(center: Point = ORIGIN): Point =
+        Point(y - center.y + center.x, center.x - x + center.y)
 
     /**
-     * Returns the point produced by rotating this one 90 degrees counterclockwise about the given [center] point.
+     * Returns the point produced by rotating this one 90 degrees counterclockwise about a [center]
+     * point.
      */
-    fun rotateCounterclockwise(center: Point = ORIGIN): Point = Point(center.y - y + center.x, x - center.x + center.y)
+    fun rotateCounterclockwise(center: Point = ORIGIN): Point =
+        Point(center.y - y + center.x, x - center.x + center.y)
 
     /**
-     * Returns the point produced by rotating this one 180 degrees about the given [center] point.
+     * Returns the point produced by rotating this one 180 degrees about a [center] point.
      */
-    fun rotate180Degrees(center: Point = ORIGIN): Point = Point(center.x - x + center.x, center.y - y + center.y)
+    fun rotate180Degrees(center: Point = ORIGIN): Point =
+        Point(center.x - x + center.x, center.y - y + center.y)
 
     /**
      * Returns the Manhattan distance between this point and [other].
      *
-     * The Manhattan distance is the length (in grid units) of the shortest possible path between this point and
-     * [other], while moving only up, down, left, or right.
+     * The Manhattan distance is the length (in grid units) of the shortest possible path between
+     * this point and [other], while moving only up, down, left, or right.
      */
     fun manhattanDistance(other: Point) = abs(x - other.x) + abs(y - other.y)
 
@@ -93,8 +98,8 @@ data class Point(val x: Int, val y: Int) {
     fun squaredDistance(other: Point): Int = (x - other.x).pow(2) + (y - other.y).pow(2)
 
     /**
-     * Returns the angle (in radians) of the line segment formed by this point and [other], measured clockwise from the
-     * positive y-axis, with this point as the origin.
+     * Returns the angle (in radians) of the line segment formed by this point and [other], measured
+     * clockwise from the positive y-axis, with this point as the origin.
      *
      * @throws IllegalArgumentException If this point and [other] are the same point.
      */

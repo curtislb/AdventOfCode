@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.search
 
 /**
- * Returns a contiguous list of at least [minSize] numbers from this iterable that sum to [targetSum].
+ * Returns a contiguous list of [minSize] or more numbers in this iterable that sum to [targetSum].
  *
  * Both [targetSum] and all values in this iterable must be non-negative.
  *

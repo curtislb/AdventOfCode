@@ -20,21 +20,24 @@ class MutableIntVector(override vararg val components: Int) : IntVector(*compone
      */
     fun update(vararg newComponents: Int) {
         require(size == newComponents.size) {
-            "The sizes of this vector ($size) and the new components (${newComponents.size}) must match."
+            "Sizes of this vector ($size) and of new components (${newComponents.size}) must match."
         }
+
         for (i in 0 until size) {
             components[i] = newComponents[i]
         }
     }
 
     /**
-     * Updates the specified `(index, value)` component pairs of this vector to those given by [componentValues].
+     * Updates the specified `(index, value)` component pairs of this vector to those given by
+     * [componentValues].
      *
-     * @throws IllegalArgumentException If any key of [componentValues] is not a valid component index for this vector.
+     * @throws IllegalArgumentException If any key of [componentValues] is not a valid component
+     * index for this vector.
      */
     fun update(componentValues: Map<Int, Int>) {
         componentValues.forEach { (index, value) ->
-            require(index in 0 until size) { "Each index must be in the range 0..${size - 1}: $index" }
+            require(index in 0 until size) { "Index not in range 0..${size - 1}: $index" }
             components[index] = value
         }
     }
@@ -45,7 +48,10 @@ class MutableIntVector(override vararg val components: Int) : IntVector(*compone
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
     fun add(other: MutableIntVector) {
-        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        require(size == other.size) {
+            "Sizes of this vector ($size) and of other vector (${other.size}) must match."
+        }
+
         for (i in 0 until size) {
             components[i] += other[i]
         }
@@ -57,7 +63,10 @@ class MutableIntVector(override vararg val components: Int) : IntVector(*compone
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
     operator fun plus(other: MutableIntVector): MutableIntVector {
-        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        require(size == other.size) {
+            "Sizes of this vector ($size) and of other vector (${other.size}) must match."
+        }
+
         val componentSums = IntArray(size) { this[it] + other[it] }
         return MutableIntVector(*componentSums)
     }

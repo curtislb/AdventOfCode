@@ -45,7 +45,10 @@ class AmplifierSeriesTest {
     fun testFindMaxSignalForThreeAmplifiers(@TempDir tempDir: Path) {
         val file = tempDir.createTempFile(text = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0")
         val series = AmplifierSeries(file, 3)
-        assertEquals(BigInteger("1021"), series.findMaxSignal(setOf(BigInteger.ONE, BigInteger.TWO, BigInteger.TEN)))
+        assertEquals(
+            BigInteger("1021"),
+            series.findMaxSignal(setOf(BigInteger.ONE, BigInteger.TWO, BigInteger.TEN))
+        )
     }
 
     @Test
@@ -60,7 +63,8 @@ class AmplifierSeriesTest {
     @Test
     fun testFindMaxSignalWithFeedbackForOneAmplifier(@TempDir tempDir: Path) {
         val file = tempDir.createTempFile(
-            text = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
+            text =
+            "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
         )
         val series = AmplifierSeries(file, 1)
         assertEquals(BigInteger.ZERO, series.findMaxSignalWithFeedback(setOf(BigInteger.TEN)))
@@ -69,21 +73,32 @@ class AmplifierSeriesTest {
     @Test
     fun testFindMaxSignalWithFeedbackForTwoAmplifiers(@TempDir tempDir: Path) {
         val file = tempDir.createTempFile(
-            text = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
+            text =
+            "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
         )
         val series = AmplifierSeries(file, 2)
-        assertEquals(BigInteger("6820"), series.findMaxSignalWithFeedback(setOf(BigInteger.TEN, BigInteger("11"))))
+        assertEquals(
+            BigInteger("6820"),
+            series.findMaxSignalWithFeedback(setOf(BigInteger.TEN, BigInteger("11")))
+        )
     }
 
     @Test
     fun testFindMaxSignalWithFeedbackForThreeAmplifiers(@TempDir tempDir: Path) {
         val file = tempDir.createTempFile(
-            text = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
+            text =
+            "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5"
         )
         val series = AmplifierSeries(file, 3)
         assertEquals(
             BigInteger("243412"),
-            series.findMaxSignalWithFeedback(setOf(BigInteger.TEN, BigInteger("11"), BigInteger("12")))
+            series.findMaxSignalWithFeedback(
+                setOf(
+                    BigInteger.TEN,
+                    BigInteger("11"),
+                    BigInteger("12")
+                )
+            )
         )
     }
 }

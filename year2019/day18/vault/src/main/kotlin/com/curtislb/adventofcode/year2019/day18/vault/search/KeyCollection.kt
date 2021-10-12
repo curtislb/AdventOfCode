@@ -1,9 +1,11 @@
 package com.curtislb.adventofcode.year2019.day18.vault.search
 
 /**
- * A collection of keys in the vault, each of which is represented by a character from `'a'` to `'z'`.
+ * A collection of keys in the vault, each of which is represented by a character from `'a'` to
+ * `'z'`.
  *
- * @param keyFlags An integer whose 26 rightmost bits indicate whether each possible key is in this collection.
+ * @param keyFlags An integer whose 26 rightmost bits indicate whether each possible key is in this
+ *  collection.
  */
 @JvmInline
 value class KeyCollection(private val keyFlags: Int = 0) {

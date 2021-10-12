@@ -77,7 +77,10 @@ class AsciiTest {
 
         ascii.sendInput("Hi")
         ascii.run()
-        assertEquals(listOf(BigInteger("72"), BigInteger("105"), BigInteger.TEN), asciiOutputs.toList())
+        assertEquals(
+            listOf(BigInteger("72"), BigInteger("105"), BigInteger.TEN),
+            asciiOutputs.toList()
+        )
         assertTrue(nonAsciiOutputs.isEmpty())
     }
 
@@ -123,7 +126,10 @@ class AsciiTest {
 
     @Test
     fun testRunWhileShowingAsciiOutput() {
-        val ascii = Ascii("4,9,4,10,4,11,4,12,99,-19,72,128,105", showAsciiOutput = true) { output, isAscii ->
+        val ascii = Ascii(
+            "4,9,4,10,4,11,4,12,99,-19,72,128,105",
+            showAsciiOutput = true
+        ) { output, isAscii ->
             if (isAscii) {
                 asciiOutputs.add(output)
             } else {

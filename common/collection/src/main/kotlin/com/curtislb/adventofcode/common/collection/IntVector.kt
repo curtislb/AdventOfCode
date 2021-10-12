@@ -11,15 +11,16 @@ open class IntVector(protected open vararg val components: Int) {
     /**
      * TODO
      */
-    val neighbors: List<IntVector> get() = mutableListOf<IntVector>().apply {
-        (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
-            val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
-            if (offsets.any { it != 0 }) {
-                add(this@IntVector + IntVector(*offsets))
+    val neighbors: List<IntVector>
+        get() = mutableListOf<IntVector>().apply {
+            (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
+                val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
+                if (offsets.any { it != 0 }) {
+                    add(this@IntVector + IntVector(*offsets))
+                }
+                false // Don't stop iterating.
             }
-            false // Don't stop iterating.
         }
-    }
 
     /**
      * Returns the component at the given [index] in this vector.
@@ -32,7 +33,9 @@ open class IntVector(protected open vararg val components: Int) {
      * @throws IllegalArgumentException If this vector and [other] are not the same size.
      */
     open operator fun plus(other: IntVector): IntVector {
-        require(size == other.size) { "The sizes of this vector ($size) and other (${other.size}) must match." }
+        require(size == other.size) {
+            "The sizes of this vector ($size) and other (${other.size}) must match."
+        }
         val componentSums = IntArray(size) { this[it] + other[it] }
         return IntVector(*componentSums)
     }
@@ -54,7 +57,9 @@ open class IntVector(protected open vararg val components: Int) {
      */
     open fun copy(): IntVector = IntVector(*components)
 
-    override fun equals(other: Any?): Boolean = other is IntVector && components.contentEquals(other.components)
+    override fun equals(other: Any?): Boolean {
+        return other is IntVector && components.contentEquals(other.components)
+    }
 
     override fun hashCode(): Int = components.contentHashCode()
 

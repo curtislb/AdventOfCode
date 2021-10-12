@@ -12,10 +12,10 @@ import com.curtislb.adventofcode.year2019.day18.vault.space.Space
 import java.io.File
 
 /**
- * A vault consisting of a grid of tunnels, which contain doors that may be unlocked by corresponding keys.
+ * A vault consisting of a grid of tunnels, which contain doors that may be unlocked by keys.
  *
- * @param file A file containing the grid layout for this vault. Each line should contain a row of characters, with each
- *  representing a [Space] in the vault.
+ * @param file A file containing the grid layout for this vault. Each line should contain a row of
+ *  characters, with each representing a [Space] in the vault.
  */
 class Vault(file: File) {
     /**
@@ -54,7 +54,7 @@ class Vault(file: File) {
     }
 
     /**
-     * Returns the space located at [position] in the vault, or `null` if [position] is not in the vault.
+     * Returns the space at [position] in the vault, or `null` if [position] is not in the vault.
      */
     operator fun get(position: Point): Space? = grid.getOrNull(position)
 

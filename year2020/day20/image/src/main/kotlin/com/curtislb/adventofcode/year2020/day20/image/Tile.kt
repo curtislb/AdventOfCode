@@ -35,7 +35,7 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
     operator fun get(rowIndex: Int, colIndex: Int): Boolean {
         if (rowIndex !in 0..sideLength || colIndex !in 0..sideLength) {
             throw IndexOutOfBoundsException(
-                "Row ($rowIndex) and column ($colIndex) indices must be in the range 0..$sideLength."
+                "Row ($rowIndex) and column ($colIndex) indices must be in range 0..$sideLength."
             )
         }
         return dataGrid[rowIndex + 1, colIndex + 1]
@@ -70,7 +70,10 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
             val lines = string.trim().lines()
             val tileID = lines[0].filter { it.isDigit() }.toInt()
             val rowStrings = lines.subList(1, lines.size)
-            return Tile(tileID, rowStrings.map { rowString -> rowString.trim().map { char -> char == '#' } }.toGrid())
+            return Tile(
+                tileID,
+                rowStrings.map { rowStr -> rowStr.trim().map { char -> char == '#' } }.toGrid()
+            )
         }
     }
 }

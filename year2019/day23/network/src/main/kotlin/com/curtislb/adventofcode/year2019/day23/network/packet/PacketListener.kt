@@ -5,12 +5,12 @@ package com.curtislb.adventofcode.year2019.day23.network.packet
  */
 interface PacketListener {
     /**
-     * Processes a [packet] immediately after it has been sent and returns a boolean status indicator.
+     * Processes a [packet] after it has been sent and returns a boolean status indicator.
      */
     fun onPacketSent(packet: Packet): Boolean
 
     /**
-     * Processes a [packet] immediately after it has been received and returns a boolean status indicator.
+     * Processes a [packet] after it has been received and returns a boolean status indicator.
      */
     fun onPacketReceived(packet: Packet): Boolean
 }

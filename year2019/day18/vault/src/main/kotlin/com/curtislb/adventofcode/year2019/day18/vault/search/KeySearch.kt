@@ -14,8 +14,9 @@ import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
  */
 class KeySearch(private val vault: Vault) {
     /**
-     * The fewest steps that a group of searchers (starting from each [EntranceSpace]) can travel in order to collect
-     * all keys, or `null` if not all keys can be collected from the searchers' starting positions.
+     * The fewest steps that a group of searchers (starting from each [EntranceSpace]) can travel
+     * in order to collect all keys, or `null` if not all keys can be collected from the searchers'
+     * starting positions.
      */
     val searchDistance: Long? by lazy {
         val searchEdges = findSearchEdges()
@@ -29,7 +30,8 @@ class KeySearch(private val vault: Vault) {
                         searchEdges[position]?.forEach { (neighbor, edges) ->
                             val key = vault[neighbor]?.symbol
                             if (key != null && key !in heldKeys) {
-                                val newPositions = positions.toMutableList().apply { set(index, neighbor) }
+                                val newPositions =
+                                    positions.toMutableList().apply { set(index, neighbor) }
                                 val newKeys = heldKeys.withKey(key)
                                 val newState = SearchState(newPositions, newKeys)
                                 edges.forEach { searchEdge ->
@@ -46,12 +48,13 @@ class KeySearch(private val vault: Vault) {
     }
 
     /**
-     * Returns a map from each possible starting position ([EntranceSpace] or [KeySpace]) to a map from each reachable
-     * key position to the [SearchEdge] representation of the path to that key.
+     * Returns a map from each possible starting position ([EntranceSpace] or [KeySpace]) to a map
+     * from each reachable key position to the [SearchEdge] representation of the path to that key.
      */
     private fun findSearchEdges(): Map<Point, Map<Point, List<SearchEdge>>> {
         val keyPositions = vault.keyLocations.values.toSet()
-        val startPositions: Set<Point> = vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) }
+        val startPositions: Set<Point> =
+            vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) }
         return startPositions.mapToMap { startPosition ->
             // Use DFS to find all paths to keys from startPosition.
             val pathsFromStart = dfsPaths(
@@ -71,7 +74,9 @@ class KeySearch(private val vault: Vault) {
 
             // Create a SearchEdge for each path and store it in the map.
             val edgesFromStart = pathsFromStart.mapToMap { (endPosition, paths) ->
-                endPosition to paths.map { path -> SearchEdge.from(path.map { point -> vault[point]!! }) }
+                endPosition to paths.map { path ->
+                    SearchEdge.from(path.map { point -> vault[point]!! })
+                }
             }
             startPosition to edgesFromStart
         }

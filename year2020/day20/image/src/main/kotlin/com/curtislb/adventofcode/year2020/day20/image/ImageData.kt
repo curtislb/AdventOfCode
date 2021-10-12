@@ -89,7 +89,9 @@ class ImageData(file: File) {
                     }
 
                     if (!isMatchFound) {
-                        throw IllegalArgumentException("No suitable tile for row $rowIndex, column $colIndex.")
+                        throw IllegalArgumentException(
+                            "No suitable tile for row $rowIndex, column $colIndex."
+                        )
                     }
 
                     rowIndex++
@@ -114,12 +116,13 @@ class ImageData(file: File) {
     /**
      * TODO
      */
-    val cornerTiles: List<Tile> get() = listOf(
-        tileArrangement[0, 0],
-        tileArrangement[0, tileArrangement.lastColumnIndex],
-        tileArrangement[tileArrangement.lastRowIndex, 0],
-        tileArrangement[tileArrangement.lastRowIndex, tileArrangement.lastColumnIndex]
-    )
+    val cornerTiles: List<Tile>
+        get() = listOf(
+            tileArrangement[0, 0],
+            tileArrangement[0, tileArrangement.lastColumnIndex],
+            tileArrangement[tileArrangement.lastRowIndex, 0],
+            tileArrangement[tileArrangement.lastRowIndex, tileArrangement.lastColumnIndex]
+        )
 
     /**
      * TODO
@@ -144,20 +147,30 @@ class ImageData(file: File) {
      * TODO
      */
     fun constructImageGrid(): Grid<Boolean> {
-        return constructPointGrid(listOf(Point.ORIGIN, Point(sideLength - 1, 1 - sideLength))) { this[it] }
+        return constructPointGrid(
+            listOf(
+                Point.ORIGIN,
+                Point(sideLength - 1, 1 - sideLength)
+            )
+        ) { this[it] }
     }
 
     companion object {
         /**
          * TODO
          */
-        private fun Tile.orient(tileAbove: Tile?, tileLeft: Tile?, adjacentTiles: Map<Direction, Int>): Tile? {
+        private fun Tile.orient(
+            tileAbove: Tile?,
+            tileLeft: Tile?,
+            adjacentTiles: Map<Direction, Int>
+        ): Tile? {
             var orientedTile = this
             var orientedAdjacentTiles = adjacentTiles
             val borderAbove = tileAbove?.border(Direction.DOWN)
             val borderLeft = tileLeft?.border(Direction.RIGHT)
             for (rotationCount in 0..3) {
-                if (orientedAdjacentTiles[Direction.UP] == tileAbove?.id &&
+                if (
+                    orientedAdjacentTiles[Direction.UP] == tileAbove?.id &&
                     orientedAdjacentTiles[Direction.LEFT] == tileLeft?.id &&
                     (borderAbove == null || borderAbove == orientedTile.border(Direction.UP)) &&
                     (borderLeft == null || borderLeft == orientedTile.border(Direction.LEFT))
@@ -181,7 +194,8 @@ class ImageData(file: File) {
             }
 
             for (rotationCount in 0..3) {
-                if (orientedAdjacentTiles[Direction.UP] == tileAbove?.id &&
+                if (
+                    orientedAdjacentTiles[Direction.UP] == tileAbove?.id &&
                     orientedAdjacentTiles[Direction.LEFT] == tileLeft?.id &&
                     (borderAbove == null || borderAbove == orientedTile.border(Direction.UP)) &&
                     (borderLeft == null || borderLeft == orientedTile.border(Direction.LEFT))

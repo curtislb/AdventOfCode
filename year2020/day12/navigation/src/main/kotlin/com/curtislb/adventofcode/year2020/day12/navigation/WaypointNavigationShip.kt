@@ -9,7 +9,10 @@ import com.curtislb.adventofcode.common.grid.Point
  * @param position The initial position of the ship in the grid.
  * @param waypoint The initial position of the waypoint relative to the ship.
  */
-class WaypointNavigationShip(position: Point = Point.ORIGIN, waypoint: Point = Point.ORIGIN) : Ship {
+class WaypointNavigationShip(
+    position: Point = Point.ORIGIN,
+    waypoint: Point = Point.ORIGIN
+) : Ship {
     /**
      * The current position of the ship in the grid.
      */
@@ -40,7 +43,8 @@ class WaypointNavigationShip(position: Point = Point.ORIGIN, waypoint: Point = P
     }
 
     /**
-     * Moves the ship to the position of the waypoint [count] times (without moving the waypoint relative to the ship).
+     * Moves the ship to the position of the waypoint [count] times (without moving the waypoint
+     * relative to the ship).
      */
     override fun goForward(count: Int) {
         repeat(count) { position += waypoint }

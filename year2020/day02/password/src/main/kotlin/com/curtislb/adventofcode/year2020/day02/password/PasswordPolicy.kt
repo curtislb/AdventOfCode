@@ -10,7 +10,8 @@ interface PasswordPolicy {
     fun isValid(rule: String, password: String): Boolean
 
     /**
-     * Returns the number of password [entries] that are valid, where each entry is of the form `"$rule: $password"`.
+     * Returns the number of password [entries] that are valid, where each entry is of the form
+     * `"$rule: $password"`.
      *
      * @throws IllegalArgumentException If [entries] contains one or more invalid password entries.
      */

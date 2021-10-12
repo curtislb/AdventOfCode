@@ -6,7 +6,8 @@ import java.io.File
 import java.math.BigInteger
 
 /**
- * A collection of signal amplifiers wired in series, such that the output of each becomes input for the next amplifier.
+ * A collection of signal amplifiers wired in series, such that the output of each becomes input for
+ * the next amplifier.
  *
  * @param file A file containing the [Intcode] program to be run by each of the amplifiers.
  * @param count The number of amplifiers to be wired in series.
@@ -30,15 +31,14 @@ class AmplifierSeries(file: File, count: Int) {
     }
 
     /**
-     * Returns the maximum signal that can be produced by this amplifier series when [phaseSettings] are provided to the
-     * amplifiers in any order.
+     * Returns the maximum signal that can be produced by this amplifier series when [phaseSettings]
+     * are provided to the amplifiers in any order.
      *
-     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number of amplifiers.
+     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number
+     *  of amplifiers.
      */
     fun findMaxSignal(phaseSettings: Collection<BigInteger>): BigInteger {
-        require(phaseSettings.size == amplifiers.size) {
-            "The number of phase settings (${phaseSettings.size}) must match the amplifier count (${amplifiers.size})."
-        }
+        checkPhaseSettings(phaseSettings)
 
         // Keep track of maximum output from the last amplifier.
         var maxSignal = BigInteger.ZERO
@@ -47,7 +47,9 @@ class AmplifierSeries(file: File, count: Int) {
         try {
             // Try all permutations of phase settings.
             phaseSettings.permutations().forEach { settings ->
-                amplifiers.forEachIndexed { index, amplifier -> amplifier.sendInput(settings[index]) }
+                amplifiers.forEachIndexed { index, amplifier ->
+                    amplifier.sendInput(settings[index])
+                }
                 amplifiers[0].sendInput(BigInteger.ZERO)
                 amplifiers.forEach { amplifier ->
                     amplifier.run()
@@ -62,17 +64,16 @@ class AmplifierSeries(file: File, count: Int) {
     }
 
     /**
-     * Returns the maximum signal that can be produced by this amplifier series when it is wired to create a feedback
-     * loop and [phaseSettings] are provided to the amplifiers in any order.
+     * Returns the maximum signal that can be produced by this amplifier series when it is wired to
+     * create a feedback loop and [phaseSettings] are provided to the amplifiers in any order.
      *
-     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number of amplifiers.
+     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number
+     *  of amplifiers.
      */
     fun findMaxSignalWithFeedback(phaseSettings: Collection<BigInteger>): BigInteger {
-        require(phaseSettings.size == amplifiers.size) {
-            "The number of phase settings (${phaseSettings.size}) must match the amplifier count (${amplifiers.size})."
-        }
+        checkPhaseSettings(phaseSettings)
 
-        // Feed output from the last amplifier into the first, keeping track of the maximum final output.
+        // Feed output from the last amplifier into the first, tracking the maximum final output.
         var maxSignal = BigInteger.ZERO
         amplifiers.last().onOutput = { output ->
             if (amplifiers[0].isDone) {
@@ -109,7 +110,20 @@ class AmplifierSeries(file: File, count: Int) {
     }
 
     /**
-     * Restores all amplifiers in this series to their original states, immediately after initialization.
+     * Validates the given [phaseSettings] for this amplifier series.
+     *
+     * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number
+     *  of amplifiers.
+     */
+    private fun checkPhaseSettings(phaseSettings: Collection<BigInteger>) {
+        require(phaseSettings.size == amplifiers.size) {
+            "Expected ${amplifiers.size} phase settings, but got ${phaseSettings.size}."
+        }
+    }
+
+    /**
+     * Restores all amplifiers in this series to their original states, immediately after
+     * initialization.
      */
     private fun resetAmplifiers() {
         amplifiers.forEach { it.resetState() }

@@ -11,5 +11,7 @@ val day = regex.find(path.parent.fileName.toString())?.value
 val part = regex.find(path.fileName.toString())?.value
 
 application {
-    mainClass.set("com.curtislb.adventofcode.year$year.day$day.part$part.Year${year}Day${day}Part${part}Kt")
+    mainClass.set(
+        "com.curtislb.adventofcode.year$year.day$day.part$part.Year${year}Day${day}Part${part}Kt"
+    )
 }

@@ -90,10 +90,12 @@ class SatisfiesAllGeneratorTest {
             var nextDigitsAnswer: Set<Int>? = null
 
             override val isValid: Boolean
-                get() = isValidAnswer ?: throw IllegalStateException("No answer provided for isValid.")
+                get() = isValidAnswer
+                    ?: throw IllegalStateException("No answer provided for isValid.")
 
             override val nextDigits: Set<Int>
-                get() = nextDigitsAnswer ?: throw IllegalStateException("No answer provided for nextDigits.")
+                get() = nextDigitsAnswer
+                    ?: throw IllegalStateException("No answer provided for nextDigits.")
 
             override fun addDigit(digit: Int): PasswordGenerator = this
         }

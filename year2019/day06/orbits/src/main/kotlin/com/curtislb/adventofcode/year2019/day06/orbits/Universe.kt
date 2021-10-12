@@ -14,8 +14,8 @@ class Universe() {
     /**
      * A collection of planets that may orbit one another.
      *
-     * @param file A file containing orbital data that is used to populate the universe. Each line of the file should
-     *  contain a string such as `"A)B"`, indicating that planet B orbits planet A.
+     * @param file A file containing orbital data that is used to populate the universe. Each line
+     *  of the file should contain a string like `"A)B"`, indicating that planet B orbits planet A.
      */
     constructor(file: File) : this() {
         file.forEachLine { line ->
@@ -25,7 +25,8 @@ class Universe() {
     }
 
     /**
-     * Makes [orbited] a parent of [orbiter] in the orbital graph, adding each planet to the universe if needed.
+     * Makes [orbited] a parent of [orbiter] in the orbital graph, adding each planet to the
+     * universe if needed.
      */
     fun addOrbit(orbited: String, orbiter: String) {
         val parent = getOrAddPlanet(orbited)
@@ -57,12 +58,17 @@ class Universe() {
      * Recursive helper function for [countOrbits].
      */
     private fun countOrbitsInternal(root: Planet?, depth: Int): Int {
-        return if (root == null) 0 else depth + root.children.sumOf { countOrbitsInternal(it, depth + 1) }
+        return if (root == null) 0 else depth + root.children.sumOf {
+            countOrbitsInternal(
+                it,
+                depth + 1
+            )
+        }
     }
 
     /**
-     * Returns the minimum number of orbital transfers required for [start] to enter the same orbit as [target], or
-     * `null` if this is not possible for the current orbital graph.
+     * Returns the minimum number of orbital transfers required for [start] to enter the same orbit
+     * as [target], or `null` if this is not possible for the current orbital graph.
      */
     fun findOrbitalTransferDistance(start: String, target: String): Int? {
         // Both planets must be in the orbital graph.
@@ -83,14 +89,14 @@ class Universe() {
         while (planetA != null || planetB != null) {
             stepCount++
 
-            // Step to planet A's parent, checking if it has been seen in planet B's ancestral chain.
+            // Step to planet A's parent, checking if it's been seen in planet B's ancestral chain.
             planetA = planetA?.parent
             if (planetA != null) {
                 visited[planetA.name]?.let { return stepCount + it - 2 }
                 visited[planetA.name] = stepCount
             }
 
-            // Step to planet B's parent, checking if it has been seen in planet A's ancestral chain.
+            // Step to planet B's parent, checking if it's been seen in planet A's ancestral chain.
             planetB = planetB?.parent
             if (planetB != null) {
                 visited[planetB.name]?.let { return stepCount + it - 2 }

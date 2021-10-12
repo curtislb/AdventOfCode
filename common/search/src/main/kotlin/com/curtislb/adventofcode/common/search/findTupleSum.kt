@@ -4,7 +4,8 @@ import com.curtislb.adventofcode.common.collection.Counter
 import com.curtislb.adventofcode.common.collection.forEachNested
 
 /**
- * Returns a list of [count] values in this iterable that sum to [targetSum], or `null` if there are no such values.
+ * Returns a list of [count] values in this iterable that sum to [targetSum], or `null` if there are
+ * no such values.
  */
 fun Iterable<Int>.findTupleSum(count: Int, targetSum: Int): List<Int>? {
     val tupleSum = map { it.toLong() }.findTupleSum(count, targetSum.toLong())
@@ -12,11 +13,12 @@ fun Iterable<Int>.findTupleSum(count: Int, targetSum: Int): List<Int>? {
 }
 
 /**
- * Returns a list of [count] values in this iterable that sum to [targetSum], or `null` if there are no such values.
+ * Returns a list of [count] values in this iterable that sum to [targetSum], or `null` if there are
+ * no such values.
  */
 fun Iterable<Long>.findTupleSum(count: Int, targetSum: Long): List<Long>? {
     require(count >= 0) { "Count must be non-negative: $count" }
-    return when(count) {
+    return when (count) {
         0 -> if (targetSum == 0L) emptyList() else null
         1 -> find { it == targetSum }?.let { listOf(it) }
         2 -> findPairSum(targetSum)?.toList()

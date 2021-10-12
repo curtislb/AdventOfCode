@@ -1,11 +1,11 @@
 /*
 --- Part Two ---
 
-As soon as people start to arrive, you realize your mistake. People don't just care about adjacent seats - they care
-about the first seat they can see in each of those eight directions!
+As soon as people start to arrive, you realize your mistake. People don't just care about adjacent
+seats - they care about the first seat they can see in each of those eight directions!
 
-Now, instead of considering just the eight immediately adjacent seats, consider the first seat in each of those eight
-directions. For example, the empty seat below would see eight occupied seats:
+Now, instead of considering just the eight immediately adjacent seats, consider the first seat in
+each of those eight directions. For example, the empty seat below would see eight occupied seats:
 
 .......#.
 ...#.....
@@ -17,7 +17,8 @@ directions. For example, the empty seat below would see eight occupied seats:
 #........
 ...#.....
 
-The leftmost empty seat below would only see one empty seat, but cannot see any of the occupied ones:
+The leftmost empty seat below would only see one empty seat, but cannot see any of the occupied
+ones:
 
 .............
 .L.L.#.#.#.#.
@@ -33,11 +34,13 @@ The empty seat below would see no occupied seats:
 #.#.#.#
 .##.##.
 
-Also, people seem to be more tolerant than you expected: it now takes five or more visible occupied seats for an
-occupied seat to become empty (rather than four or more from the previous rules). The other rules still apply: empty
-seats that see no occupied seats become occupied, seats matching no rule don't change, and floor never changes.
+Also, people seem to be more tolerant than you expected: it now takes five or more visible occupied
+seats for an occupied seat to become empty (rather than four or more from the previous rules). The
+other rules still apply: empty seats that see no occupied seats become occupied, seats matching no
+rule don't change, and floor never changes.
 
-Given the same starting layout as above, these new rules cause the seating area to shift around as follows:
+Given the same starting layout as above, these new rules cause the seating area to shift around as
+follows:
 
 L.LL.LL.LL
 LLLLLLL.LL
@@ -116,11 +119,11 @@ LLL###LLL#
 #.LLLLL#.L
 #.L#LL#.L#
 
-Again, at this point, people stop shifting around and the seating area reaches equilibrium. Once this occurs, you count
-26 occupied seats.
+Again, at this point, people stop shifting around and the seating area reaches equilibrium. Once
+this occurs, you count 26 occupied seats.
 
-Given the new visibility method and the rule change for occupied seats becoming empty, once equilibrium is reached, how
-many seats end up occupied?
+Given the new visibility method and the rule change for occupied seats becoming empty, once
+equilibrium is reached, how many seats end up occupied?
 */
 
 package com.curtislb.adventofcode.year2020.day11.part2

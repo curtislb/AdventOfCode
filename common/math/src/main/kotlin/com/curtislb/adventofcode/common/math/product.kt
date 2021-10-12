@@ -15,4 +15,6 @@ fun Iterable<Long>.product(): Long = fold(1L) { product, value -> product * valu
 /**
  * Returns the product of all values in this iterable.
  */
-fun Iterable<BigInteger>.product(): BigInteger = fold(BigInteger.ONE) { product, value -> product * value }
+fun Iterable<BigInteger>.product(): BigInteger {
+    return fold(BigInteger.ONE) { product, value -> product * value }
+}

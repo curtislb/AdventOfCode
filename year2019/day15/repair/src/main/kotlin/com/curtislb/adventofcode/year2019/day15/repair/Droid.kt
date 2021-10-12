@@ -51,8 +51,8 @@ class Droid(file: File) {
     }
 
     /**
-     * Returns the space at [position] on the grid if it has been identified by the repair droid, or [Space.UNKNOWN]
-     * otherwise.
+     * Returns the space at [position] on the grid if it has been identified by the repair droid, or
+     * [Space.UNKNOWN] otherwise.
      */
     fun spaceAt(position: Point): Space = knownSpaces.getOrDefault(position, Space.UNKNOWN)
 
@@ -60,7 +60,8 @@ class Droid(file: File) {
      * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
      */
     fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
-        return position.cardinalNeighbors().filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
+        return position.cardinalNeighbors()
+            .filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
 
     /**
@@ -69,8 +70,8 @@ class Droid(file: File) {
     fun constructKnownGrid(): Grid<Space> = constructPointGrid(knownSpaces.keys) { spaceAt(it) }
 
     /**
-     * Returns a matrix representing the portion of the grid that the repair droid has explored, including the droid's
-     * current position, represented by [Space.DROID].
+     * Returns a matrix representing the portion of the grid that the repair droid has explored,
+     * including the droid's current position, represented by [Space.DROID].
      */
     fun constructKnownGridWithDroid(): Grid<Space> {
         return constructPointGrid(knownSpaces.keys) { point ->
@@ -79,10 +80,11 @@ class Droid(file: File) {
     }
 
     /**
-     * Attempts to move the repair droid one unit in [direction] from its current position on the grid.
+     * Attempts to move the repair droid one unit in [direction] from its current grid position.
      *
-     * The repair droid first turns to face [direction] and then identifies the space one unit forward from its current
-     * position. If that space is one that the droid can occupy, it then moves forward into that position.
+     * The repair droid first turns to face [direction] and then identifies the space one unit
+     * forward from its current position. If that space is one that the droid can occupy, it then
+     * moves forward into that position.
      */
     fun move(direction: Direction = orientation.direction) {
         // Update the direction the droid is facing.
@@ -110,7 +112,7 @@ class Droid(file: File) {
     }
 
     /**
-     * Causes the repair droid to exhaustively search all grid spaces reachable from its current position.
+     * Makes the repair droid search all grid spaces reachable from its current position.
      */
     fun explore() = exploreInternal(visited = mutableSetOf())
 

@@ -26,26 +26,28 @@ class Board {
     /**
      * Returns the type of the [Tile] at a given [position] on the board.
      *
-     * A valid board [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is 0 or negative.
+     * A valid board [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is
+     * 0 or negative.
      *
      * @throws IllegalArgumentException If [position] is invalid.
      */
     operator fun get(position: Point): Tile {
-        require(position.x >= 0) { "Position must have a non-negative x-coordinate: ${position.x}" }
-        require(position.y <= 0) { "Position must have a non-positive y-coordinate: ${position.y}" }
+        require(position.x >= 0) { "Position must have a non-negative x-coordinate: $position" }
+        require(position.y <= 0) { "Position must have a non-positive y-coordinate: $position" }
         return tiles.getOrDefault(position, Tile.EMPTY)
     }
 
     /**
      * Updates the tile at a given [position] on the board to match the given [type].
      *
-     * A valid [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is 0 or negative.
+     * A valid [position] is one whose x-coordinate is 0 or positive and whose y-coordinate is 0 or
+     * negative.
      *
      * @throws IllegalArgumentException If [position] is invalid.
      */
     operator fun set(position: Point, type: Tile) {
-        require(position.x >= 0) { "Position must have a non-negative x-coordinate: ${position.x}" }
-        require(position.y <= 0) { "Position must have a non-positive y-coordinate: ${position.y}" }
+        require(position.x >= 0) { "Position must have a non-negative x-coordinate: $position" }
+        require(position.y <= 0) { "Position must have a non-positive y-coordinate: $position" }
         tiles[position] = type
         height = height.coerceAtLeast(-position.y + 1)
         width = width.coerceAtLeast(position.x + 1)
@@ -76,7 +78,12 @@ class Board {
         val stringBuilder = StringBuilder()
         for (row in 0 until height) {
             for (col in 0 until width) {
-                stringBuilder.append(tiles.getOrDefault(Point.fromMatrixCoordinates(row, col), Tile.EMPTY).symbol)
+                stringBuilder.append(
+                    tiles.getOrDefault(
+                        Point.fromMatrixCoordinates(row, col),
+                        Tile.EMPTY
+                    ).symbol
+                )
             }
             if (row < height - 1) {
                 stringBuilder.append('\n')

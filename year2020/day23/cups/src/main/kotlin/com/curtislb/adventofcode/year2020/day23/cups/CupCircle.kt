@@ -56,7 +56,8 @@ class CupCircle(labeling: String, fillUpTo: Int? = null) {
         currentCup = newCurrentCup
     }
 
-    private fun findNextHighestLabel(label: Int): Int = if (label == minLabel) maxLabel else label - 1
+    private fun findNextHighestLabel(label: Int): Int =
+        if (label == minLabel) maxLabel else label - 1
 
     fun findLabelsAfter(label: Int, count: Int = cups.size - 1): List<Int> {
         val labelList = mutableListOf<Int>()

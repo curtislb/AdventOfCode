@@ -5,11 +5,11 @@ import com.curtislb.adventofcode.year2019.day25.rescue.command.Command
 import java.io.File
 
 /**
- * A search and rescue droid that can navigate Santa's ship, picking up items along the way. It accepts commands and
- * reports information through an [Ascii]-compatible Intcode program.
+ * A search and rescue droid that can navigate Santa's ship, picking up items along the way. It
+ * accepts commands and reports information through an [Ascii]-compatible Intcode program.
  *
  * @param file A file containing the program that controls the droid.
- * @param isInteractive Whether the program should show all ASCII output and echo any provided commands.
+ * @param isInteractive Whether the program should show all ASCII output and echo any commands.
  */
 class Droid(file: File, private val isInteractive: Boolean = false) {
     /**
@@ -34,7 +34,8 @@ class Droid(file: File, private val isInteractive: Boolean = false) {
     private val lineBuffer: StringBuilder = StringBuilder()
 
     /**
-     * The most recent line of output produced by the program, or `null` if the program has not produced any lines.
+     * The most recent line of output produced by the program, or `null` if the program has not
+     * produced any lines.
      */
     var lastLine: String? = null
         private set

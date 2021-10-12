@@ -2,8 +2,8 @@ package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [Fraction].

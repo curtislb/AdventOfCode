@@ -15,7 +15,8 @@ class Year2020Day09Part1Test {
 
     @Test
     fun testSolutionWithTestInput() {
-        val solution = solve(inputPath = Paths.get("..", "input", "test_input.txt"), preambleSize = 5)
+        val solution =
+            solve(inputPath = Paths.get("..", "input", "test_input.txt"), preambleSize = 5)
         assertEquals(127L, solution)
     }
 }

@@ -1,9 +1,9 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
 /**
- * A program that keeps track of a bitmask and interprets instructions writing values to memory addresses.
+ * A program that tracks a bitmask and interprets instructions writing values to memory addresses.
  *
- * @param programString A string representation of the program, consisting of one statement per line.
+ * @param programString A string representation of the program, containing one statement per line.
  */
 abstract class BitmaskProgram(private val programString: String) {
     /**
@@ -43,11 +43,15 @@ abstract class BitmaskProgram(private val programString: String) {
     }
 
     /**
-     * Runs the program by processing statements one at a time, in order, if the program has not been run previously.
+     * Runs the program by processing statements in sequence if the program has not been run
+     * previously.
      *
      * Each statement must match one of the following patterns:
-     * - `"mask = $bitmaskString"` - Calls [updateBitmask] to update the current bitmask for the program.
-     * - `"mem[${addressString}] = $valueString"` - Calls [writeMemory] to update the value at the given memory address.
+     *
+     * - `"mask = $bitmaskString"` - Calls [updateBitmask] to update the current bitmask for the
+     *   program.
+     * - `"mem[${addressString}] = $valueString"` - Calls [writeMemory] to update the value at the
+     *   given memory address.
      */
     fun run() {
         if (!isDone) {
@@ -86,7 +90,8 @@ abstract class BitmaskProgram(private val programString: String) {
     }
 
     /**
-     * Writes the value(s) represented by [valueString] to the memory address(es) represented by [addressString].
+     * Writes the value(s) represented by [valueString] to the memory address(es) represented by
+     * [addressString].
      */
     abstract fun writeMemory(addressString: String, valueString: String)
 

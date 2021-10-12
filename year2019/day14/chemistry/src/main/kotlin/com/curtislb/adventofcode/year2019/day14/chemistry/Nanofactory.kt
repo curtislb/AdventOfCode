@@ -20,30 +20,40 @@ class Nanofactory(file: File) {
         file.forEachLine { line ->
             val reaction = Reaction.from(line)
             val material = reaction.product.material
-            require(material !in this) { "Material is produced by two or more reactions: $material" }
+            require(material !in this) {
+                "Material is produced by two or more reactions: $material"
+            }
             this[material] = reaction
         }
     }
 
     /**
-     * Returns a map representing the amount of [rawMaterials] needed to create given quantities of [products], or
-     * `null` if no amount of [rawMaterials] can be used to create [products].
+     * Returns a map representing the amount of [rawMaterials] needed to create given quantities of
+     * [products], or `null` if no amount of [rawMaterials] can be used to create [products].
      */
-    fun findRequiredMaterials(rawMaterials: Set<String>, products: List<MaterialAmount>): List<MaterialAmount>? {
+    fun findRequiredMaterials(
+        rawMaterials: Set<String>,
+        products: List<MaterialAmount>
+    ): List<MaterialAmount>? {
         // Work backwards from the desired products to determine the amount of raw materials needed.
         val requiredMaterials = Counter(products.mapToMap { it.material to it.amount })
         while (requiredMaterials.keysWithPositiveCount != rawMaterials) {
-            val (requiredMaterial, requiredAmount) = requiredMaterials.entriesWithPositiveCount.find { (material, _) ->
-                material !in rawMaterials
-            } ?: break
+            val (requiredMaterial, requiredAmount) =
+                requiredMaterials.entriesWithPositiveCount.find { (material, _) ->
+                    material !in rawMaterials
+                } ?: break
             val reaction = reactions[requiredMaterial] ?: break
             val coefficient = Fraction(requiredAmount, reaction.product.amount).ceil()
-            reaction.reactants.forEach { (material, amount) -> requiredMaterials[material] += coefficient * amount }
+            reaction.reactants.forEach { (material, amount) ->
+                requiredMaterials[material] += coefficient * amount
+            }
             requiredMaterials[reaction.product.material] -= coefficient * reaction.product.amount
         }
 
         return if (requiredMaterials.keysWithPositiveCount == rawMaterials) {
-            requiredMaterials.entriesWithPositiveCount.map { (material, amount) -> MaterialAmount(material, amount) }
+            requiredMaterials.entriesWithPositiveCount.map { (material, amount) ->
+                MaterialAmount(material, amount)
+            }
         } else {
             null
         }

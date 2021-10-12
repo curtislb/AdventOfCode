@@ -20,7 +20,10 @@ class BigIntegerRangeTest {
         assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ONE, BigInteger.TWO).size)
         assertEquals(BigInteger("9"), BigIntegerRange(BigInteger.TWO, BigInteger.TEN).size)
         assertEquals(BigInteger("18"), BigIntegerRange(BigInteger("-5"), BigInteger("12")).size)
-        assertEquals(BigInteger("1420198"), BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size)
+        assertEquals(
+            BigInteger("1420198"),
+            BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size
+        )
     }
 
     @Test
@@ -86,11 +89,26 @@ class BigIntegerRangeTest {
     fun testEquals() {
         assertEquals(BigIntegerRange.EMPTY, BigIntegerRange.EMPTY)
         assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ZERO), BigIntegerRange.EMPTY)
-        assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ZERO), BigIntegerRange(BigInteger.TWO, BigInteger.ZERO))
-        assertEquals(BigIntegerRange(BigInteger.TEN, BigInteger.TWO), BigIntegerRange(BigInteger.TWO, BigInteger.ZERO))
-        assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ONE), BigIntegerRange(BigInteger.ONE, BigInteger.ONE))
-        assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.TWO), BigIntegerRange(BigInteger.ONE, BigInteger.TWO))
-        assertEquals(BigIntegerRange(BigInteger.TWO, BigInteger.TEN), BigIntegerRange(BigInteger.TWO, BigInteger.TEN))
+        assertEquals(
+            BigIntegerRange(BigInteger.ONE, BigInteger.ZERO),
+            BigIntegerRange(BigInteger.TWO, BigInteger.ZERO)
+        )
+        assertEquals(
+            BigIntegerRange(BigInteger.TEN, BigInteger.TWO),
+            BigIntegerRange(BigInteger.TWO, BigInteger.ZERO)
+        )
+        assertEquals(
+            BigIntegerRange(BigInteger.ONE, BigInteger.ONE),
+            BigIntegerRange(BigInteger.ONE, BigInteger.ONE)
+        )
+        assertEquals(
+            BigIntegerRange(BigInteger.ONE, BigInteger.TWO),
+            BigIntegerRange(BigInteger.ONE, BigInteger.TWO)
+        )
+        assertEquals(
+            BigIntegerRange(BigInteger.TWO, BigInteger.TEN),
+            BigIntegerRange(BigInteger.TWO, BigInteger.TEN)
+        )
         assertEquals(
             BigIntegerRange(BigInteger("-3"), BigInteger("4")),
             BigIntegerRange(BigInteger("-3"), BigInteger("4"))
@@ -123,13 +141,13 @@ class BigIntegerRangeTest {
     fun testHashCode() {
         val ranges = listOf(
             BigIntegerRange(BigInteger("90"), BigInteger("-4")),
-            BigIntegerRange(BigInteger("-100"),  BigInteger("-27")),
+            BigIntegerRange(BigInteger("-100"), BigInteger("-27")),
             BigIntegerRange(BigInteger("8"), BigInteger("58")),
             BigIntegerRange(BigInteger("72"), BigInteger("94")),
-            BigIntegerRange(BigInteger("-89"),  BigInteger("-53")),
+            BigIntegerRange(BigInteger("-89"), BigInteger("-53")),
             BigIntegerRange(BigInteger("-16"), BigInteger("83")),
             BigIntegerRange(BigInteger("-43"), BigInteger("-5")),
-            BigIntegerRange(BigInteger("-85"),  BigInteger("-51")),
+            BigIntegerRange(BigInteger("-85"), BigInteger("-51")),
             BigIntegerRange(BigInteger("-29"), BigInteger("90")),
             BigIntegerRange(BigInteger("-63"), BigInteger("10"))
         )

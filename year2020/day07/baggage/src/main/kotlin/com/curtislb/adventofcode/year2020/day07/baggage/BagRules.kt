@@ -1,10 +1,12 @@
 package com.curtislb.adventofcode.year2020.day07.baggage
 
 /**
- * A set of rules indicating the number and type of bags (see [BagCount]) that must be contained in other bags.
+ * A set of rules indicating the number and type of bags (see [BagCount]) that must be contained in
+ * other bags.
  *
- * @param rulesString A string representing all bag rules. Each line may end with a `'.'` and must be a rule of the form
- *  `"$container bags contain $bagCount1, ..., $bagCountN"` or `"$container bags contain no other bags"`.
+ * @param rulesString A string representing all bag rules. Each line may end with a `'.'` and must
+ *  be a rule of the form `"$container bags contain $bagCount1, ..., $bagCountN"` or
+ *  `"$container bags contain no other bags"`.
  */
 class BagRules(rulesString: String) {
     /**
@@ -22,7 +24,8 @@ class BagRules(rulesString: String) {
         val bagContainersMap = mutableMapOf<String, MutableList<String>>()
         rulesString.trim().lines().forEach { ruleString ->
             // Parse the relevant tokens from each rule string.
-            val tokens = ruleString.trimEnd('.').replace(REMOVAL_REGEX, "").split("contain").map { it.trim() }
+            val tokens = ruleString.trimEnd('.').replace(REMOVAL_REGEX, "").split("contain")
+                .map { it.trim() }
             require(tokens.size == 2) { "Malformed rule string: $ruleString" }
 
             // Convert tokens into the containing bag type and contained bag counts.
@@ -65,7 +68,8 @@ class BagRules(rulesString: String) {
 
     override fun toString(): String {
         return bagContents.map { (bagType, contents) ->
-            "$bagType bags contain ${if (contents.isEmpty()) "no other bags" else contents.joinToString()}."
+            val contentString = if (contents.isEmpty()) "no other bags" else contents.joinToString()
+            "$bagType bags contain $contentString."
         }.joinToString(separator = "\n")
     }
 

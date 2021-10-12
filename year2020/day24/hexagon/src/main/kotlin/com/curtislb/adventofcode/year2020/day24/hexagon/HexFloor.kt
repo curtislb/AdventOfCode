@@ -44,14 +44,15 @@ class HexFloor(floorString: String) {
     }
 
     companion object {
-        private val Point.hexNeighbors: List<Point> get() = listOf(
-            Point(x + 2, y),
-            Point(x + 1, y - 1),
-            Point(x - 1, y - 1),
-            Point(x - 2, y),
-            Point(x - 1, y + 1),
-            Point(x + 1, y + 1)
-        )
+        private val Point.hexNeighbors: List<Point>
+            get() = listOf(
+                Point(x + 2, y),
+                Point(x + 1, y - 1),
+                Point(x - 1, y - 1),
+                Point(x - 2, y),
+                Point(x - 1, y + 1),
+                Point(x + 1, y + 1)
+            )
 
         private fun String.toHexPoint(): Point {
             var x = 0
@@ -74,7 +75,9 @@ class HexFloor(floorString: String) {
                         when (val secondLetter = this[index + 1]) {
                             'e' -> x++
                             'w' -> x--
-                            else -> throw IllegalArgumentException("Invalid direction: n$secondLetter")
+                            else -> throw IllegalArgumentException(
+                                "Invalid direction: n$secondLetter"
+                            )
                         }
                         index += 2
                     }
@@ -84,7 +87,9 @@ class HexFloor(floorString: String) {
                         when (val secondLetter = this[index + 1]) {
                             'e' -> x++
                             'w' -> x--
-                            else -> throw IllegalArgumentException("Invalid direction: s$secondLetter")
+                            else -> throw IllegalArgumentException(
+                                "Invalid direction: s$secondLetter"
+                            )
                         }
                         index += 2
                     }

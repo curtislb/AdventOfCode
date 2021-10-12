@@ -7,7 +7,7 @@ import com.curtislb.adventofcode.year2020.day08.bootcode.operation.Operation
  */
 class Instruction(val operation: Operation, val argument: Int) {
     /**
-     * Returns the newly modified program [state] after executing [operation] with the given [argument].
+     * Returns the new program [state] after executing [operation] with the given [argument].
      */
     fun execute(state: State): State = operation.execute(argument, state)
 

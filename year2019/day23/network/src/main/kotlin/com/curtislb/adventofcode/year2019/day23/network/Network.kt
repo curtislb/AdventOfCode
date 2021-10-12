@@ -8,13 +8,17 @@ import java.io.File
 import java.math.BigInteger
 
 /**
- * A network of computers that may send and receive packets from one another and a NAT that moderates network activity.
+ * A network of computers that send and receive packets and a NAT that moderates network activity.
  *
  * @param file A file containing the [Intcode] program that controls each computer in the network.
  * @param computerCount The number of computers that make up the network.
  * @param natPacketListener A listener for packets that are received or sent by the NAT.
  */
-class Network(file: File, computerCount: Int, var natPacketListener: PacketListener = BasePacketListener()) {
+class Network(
+    file: File,
+    computerCount: Int,
+    var natPacketListener: PacketListener = BasePacketListener()
+) {
     /**
      * An array containing the Intcode programs for all computers in address order.
      */
@@ -68,13 +72,16 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
     /**
      * Runs all computers in the network until a stopping condition is reached.
      *
-     * All computers will be run repeatedly, in address order, sending and receiving packets between each other and the
-     * NAT. This will continue until one of the following occurs:
-     * - The NAT receives a packet for which [PacketListener.onPacketReceived] of [natPacketListener] returns `true`.
-     * - The NAT sends a packet for which [PacketListener.onPacketSent] of [natPacketListener] returns `true`.
+     * All computers will be run repeatedly, in address order, sending and receiving packets between
+     * each other and the NAT. This will continue until one of the following occurs:
      *
-     * In either case, this method will return. Any future calls to [run] will then immediately return, until [reset] is
-     * invoked.
+     * - The NAT receives a packet for which [PacketListener.onPacketReceived] of
+     *   [natPacketListener] returns `true`.
+     * - The NAT sends a packet for which [PacketListener.onPacketSent] of [natPacketListener]
+     *   returns `true`.
+     *
+     * In either case, this method will return. Any future calls to [run] will then immediately
+     * return, until [reset] is invoked.
      */
     fun run() {
         // Check if the network has already finished running.
@@ -130,8 +137,9 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
     /**
      * Runs the [Intcode] program for the computer at the given [address] in the network.
      *
-     * If there are queued packets for the computer to receive, sends the x and y value of each packet in order as input
-     * before running the program. Otherwise, sends an input value of -1 to the program and increments its idle counter.
+     * If there are queued packets for the computer to receive, sends the x and y value of each
+     * packet in order as input before running the program. Otherwise, sends an input value of -1 to
+     * the program and increments its idle counter.
      *
      * @see [Intcode.run]
      */
@@ -150,7 +158,8 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
     }
 
     /**
-     * If the network is idle, sends the last packet received by the NAT to the computer at address 0.
+     * If the network is idle, sends the last packet received by the NAT to the computer at address
+     * 0.
      */
     private fun handleIdleState() {
         if (idleCounts.all { it >= IDLE_THRESHOLD }) {
@@ -163,7 +172,8 @@ class Network(file: File, computerCount: Int, var natPacketListener: PacketListe
 
     companion object {
         /**
-         * The number of times in a row a computer can poll for and not receive packets before it is considered idle.
+         * The number of times in a row a computer can poll for and not receive packets before it is
+         * considered idle.
          */
         private const val IDLE_THRESHOLD = 2
 

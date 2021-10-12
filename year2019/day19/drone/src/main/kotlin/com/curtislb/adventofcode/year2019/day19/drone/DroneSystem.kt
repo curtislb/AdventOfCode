@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 /**
- * A system for deploying drones within a grid, in order to observe the effective range of an invisible tractor beam.
+ * A system for deploying drones within a grid, in order to observe the effective range of an
+ * invisible tractor beam.
  *
  * @param file A file containing the [Intcode] program that controls each drone.
  */
@@ -23,20 +24,26 @@ class DroneSystem(file: File) {
     private val programString: String = file.readText().trim()
 
     /**
-     * Deploys a drone to position ([rowIndex], [colIndex]) in the grid, invoking the function [onOutput] to handle
-     * either of the following outputs from its associated program:
-     * - 0 - The drone is *not* being pulled, indicating that the tractor beam does *not* affect this position.
-     * - 1 - The drone *is* being pulled, indicating that the tractor beam *does* affect this position.
+     * Deploys a drone to position ([rowIndex], [colIndex]) in the grid, invoking the function
+     * [onOutput] to handle either of the following outputs from its associated program:
+     *
+     * - 0: The drone is *not* being pulled; the tractor beam does *not* affect this position.
+     * - 1: The drone *is* being pulled; the tractor beam *does* affect this position.
      */
-    fun deployDrone(rowIndex: BigInteger, colIndex: BigInteger, onOutput: (output: BigInteger) -> Unit) {
+    fun deployDrone(
+        rowIndex: BigInteger,
+        colIndex: BigInteger,
+        onOutput: (output: BigInteger) -> Unit
+    ) {
         val drone = Intcode(programString, onOutput)
         drone.sendInput(colIndex, rowIndex)
         drone.run()
     }
 
     /**
-     * Deploys drones to all grid positions whose row indices are in [rowRange] and whose column indices are in
-     * [colRange], and returns the total number of these positions that are affected by the tractor beam.
+     * Deploys drones to all grid positions whose row indices are in [rowRange] and whose column
+     * indices are in [colRange], and returns the total number of these positions that are affected
+     * by the tractor beam.
      */
     fun scanArea(rowRange: BigIntegerRange, colRange: BigIntegerRange): Int {
         val count = AtomicInteger(0)
@@ -55,8 +62,8 @@ class DroneSystem(file: File) {
     /**
      * Returns the range of column indices that are affected by the tractor beam in row [rowIndex].
      *
-     * If provided, [beamStartGuess] and [beamEndGuess] specify the initial column indices around which this method will
-     * search for the beginning and end of the beam, respectively.
+     * If provided, [beamStartGuess] and [beamEndGuess] specify the initial column indices around
+     * which this method will search for the beginning and end of the beam, respectively.
      */
     fun findBeamRange(
         rowIndex: BigInteger,
@@ -96,8 +103,8 @@ class DroneSystem(file: File) {
     }
 
     /**
-     * Returns a range containing the overlapping column indices of the beam in the row [rowIndex] and the one
-     * [rowDelta] rows below it in the grid.
+     * Returns a range containing the overlapping column indices of the beam in the row [rowIndex]
+     * and the one [rowDelta] rows below it in the grid.
      */
     fun findBeamOverlap(rowIndex: BigInteger, rowDelta: BigInteger): BigIntegerRange {
         val row1Range = findBeamRange(rowIndex)

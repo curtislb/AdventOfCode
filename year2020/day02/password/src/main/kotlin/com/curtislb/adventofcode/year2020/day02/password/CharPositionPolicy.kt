@@ -3,8 +3,9 @@ package com.curtislb.adventofcode.year2020.day02.password
 /**
  * A policy requiring a character to appear in exactly one of two positions in a password.
  *
- * Password rules for this policy are of the form `"$positionA-$positionB $char"`, indicating that the character `char`
- * must appear at either `positionA` or `positionB` (indexed from 1), but *not* both in a valid password.
+ * Password rules for this policy are of the form `"$positionA-$positionB $char"`, indicating that
+ * the character `char` must appear at either `positionA` or `positionB` (indexed from 1), but *not*
+ * both in a valid password.
  */
 object CharPositionPolicy : PasswordPolicy {
     override fun isValid(rule: String, password: String): Boolean {

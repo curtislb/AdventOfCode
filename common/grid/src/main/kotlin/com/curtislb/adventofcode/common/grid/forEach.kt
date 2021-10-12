@@ -19,5 +19,12 @@ inline fun <T> Grid<T>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, val
  */
 @Generated
 inline fun <T> Grid<T>.forEachPoint(action: (point: Point, value: T) -> Unit) {
-    forEachIndexed { rowIndex, colIndex, value -> action(Point.fromMatrixCoordinates(rowIndex, colIndex), value) }
+    forEachIndexed { rowIndex, colIndex, value ->
+        action(
+            Point.fromMatrixCoordinates(
+                rowIndex,
+                colIndex
+            ), value
+        )
+    }
 }

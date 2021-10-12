@@ -61,15 +61,17 @@ Remove the gaps to form the actual image:
 .#.###..##..##..####.##.
 ...###...##...#...#..###
 
-Now, you're ready to search for sea monsters! Because your image is monochrome, a sea monster will look like this:
+Now, you're ready to search for sea monsters! Because your image is monochrome, a sea monster will
+look like this:
 
                   #
 #    ##    ##    ###
  #  #  #  #  #  #
 
-When looking for this pattern in the image, the spaces can be anything; only the # need to match. Also, you might need
-to rotate or flip your image before it's oriented correctly to find sea monsters. In the above image, after flipping and
-rotating it to the appropriate orientation, there are two sea monsters (marked with O):
+When looking for this pattern in the image, the spaces can be anything; only the # need to match.
+Also, you might need to rotate or flip your image before it's oriented correctly to find sea
+monsters. In the above image, after flipping and rotating it to the appropriate orientation, there
+are two sea monsters (marked with O):
 
 .####...#####..#...###..
 #####..#..#.#.####..#.#.
@@ -96,8 +98,8 @@ rotating it to the appropriate orientation, there are two sea monsters (marked w
 #...#.....#..##...###.##
 #..###....##.#...##.##.#
 
-Determine how rough the waters are in the sea monsters' habitat by counting the number of # that are not part of a sea
-monster. In the above example, the habitat's water roughness is 273.
+Determine how rough the waters are in the sea monsters' habitat by counting the number of # that are
+not part of a sea monster. In the above example, the habitat's water roughness is 273.
 
 How many # are not part of a sea monster?
 */
@@ -178,11 +180,13 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
                 }
                 pointMask = pointMask.translated(Direction.RIGHT)
             }
-            pointMask = pointMask.translated(Direction.LEFT, maxColIndex + 1).translated(Direction.DOWN)
+            pointMask =
+                pointMask.translated(Direction.LEFT, maxColIndex + 1).translated(Direction.DOWN)
         }
     }
 
-    val filledPointCount = imageGrid.toMutableGrid().sumRowsBy { row -> row.count { isFilled -> isFilled } }
+    val filledPointCount =
+        imageGrid.toMutableGrid().sumRowsBy { row -> row.count { isFilled -> isFilled } }
     return filledPointCount - monsterPoints.size
 }
 

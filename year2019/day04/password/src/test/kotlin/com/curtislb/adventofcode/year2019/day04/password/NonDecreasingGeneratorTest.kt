@@ -113,7 +113,8 @@ class NonDecreasingGeneratorTest {
 
     @Test
     fun testWithNonDecreasingDigits() {
-        var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(0).addDigit(1)
+        var generator: PasswordGenerator =
+            NonDecreasingGenerator().addDigit(0).addDigit(0).addDigit(1)
         assertTrue(generator.isValid)
         assertEquals(setOf(1, 2, 3, 4, 5, 6, 7, 8, 9), generator.nextDigits)
 
@@ -133,14 +134,16 @@ class NonDecreasingGeneratorTest {
         assertTrue(generator.isValid)
         assertEquals(setOf(8, 9), generator.nextDigits)
 
-        generator = NonDecreasingGenerator().addDigit(2).addDigit(4).addDigit(4).addDigit(5).addDigit(6)
+        generator =
+            NonDecreasingGenerator().addDigit(2).addDigit(4).addDigit(4).addDigit(5).addDigit(6)
         assertTrue(generator.isValid)
         assertEquals(setOf(6, 7, 8, 9), generator.nextDigits)
     }
 
     @Test
     fun testWithNonIncreasingDigits() {
-        var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(1).addDigit(0).addDigit(0)
+        var generator: PasswordGenerator =
+            NonDecreasingGenerator().addDigit(1).addDigit(0).addDigit(0)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
 
@@ -160,14 +163,16 @@ class NonDecreasingGeneratorTest {
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
 
-        generator = NonDecreasingGenerator().addDigit(6).addDigit(5).addDigit(4).addDigit(4).addDigit(2)
+        generator =
+            NonDecreasingGenerator().addDigit(6).addDigit(5).addDigit(4).addDigit(4).addDigit(2)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
     }
 
     @Test
     fun testWithUnorderedDigits() {
-        var generator: PasswordGenerator = NonDecreasingGenerator().addDigit(0).addDigit(2).addDigit(1)
+        var generator: PasswordGenerator =
+            NonDecreasingGenerator().addDigit(0).addDigit(2).addDigit(1)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
 
@@ -195,7 +200,8 @@ class NonDecreasingGeneratorTest {
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
 
-        generator = NonDecreasingGenerator().addDigit(8).addDigit(6).addDigit(8).addDigit(2).addDigit(2)
+        generator =
+            NonDecreasingGenerator().addDigit(8).addDigit(6).addDigit(8).addDigit(2).addDigit(2)
         assertFalse(generator.isValid)
         assertEquals(emptySet(), generator.nextDigits)
     }

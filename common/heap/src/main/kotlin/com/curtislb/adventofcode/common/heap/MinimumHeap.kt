@@ -3,7 +3,8 @@ package com.curtislb.adventofcode.common.heap
 import java.util.PriorityQueue
 
 /**
- * A minimum-order heap, which stores values with associated keys and produces them in increasing order by key.
+ * A minimum-order heap, which stores values with associated keys and produces them in increasing
+ * order by key.
  */
 class MinimumHeap<T> {
     /**
@@ -47,12 +48,16 @@ class MinimumHeap<T> {
     /**
      * Decreases the key in the heap associated with [value] to [newKey].
      *
-     * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is at most [newKey].
+     * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is
+     *  at most [newKey].
      */
     fun decreaseKey(value: T, newKey: Long) {
         val oldKey = priorityKeys[value]
         require(oldKey != null) { "Value is not in the heap: $value" }
-        require(oldKey > newKey) { "Value ($value) is in the heap with an equal or lower key: $oldKey <= $newKey" }
+        require(oldKey > newKey) {
+            "Value ($value) is in the heap with an equal or lower key: $oldKey <= $newKey"
+        }
+
         priorityKeys[value] = newKey
         priorityQueue.add(HeapEntry(value, newKey))
     }

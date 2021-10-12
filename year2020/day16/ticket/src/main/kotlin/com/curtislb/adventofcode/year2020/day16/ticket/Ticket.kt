@@ -29,7 +29,9 @@ class Ticket(val fieldValues: List<Int>) {
      * TODO
      */
     fun assignFieldName(fieldIndex: Int, name: String) {
-        require(fieldIndex in fieldValues.indices) { "Field index not in range ${fieldValues.indices}: $fieldIndex" }
+        require(fieldIndex in fieldValues.indices) {
+            "Field index not in range ${fieldValues.indices}: $fieldIndex"
+        }
 
         fieldNames[fieldIndex]?.let { nameToFieldMap.remove(it) }
 
@@ -48,7 +50,9 @@ class Ticket(val fieldValues: List<Int>) {
     operator fun get(fieldName: String): Int? = nameToFieldMap[fieldName]?.let { fieldValues[it] }
 
     override fun toString(): String {
-        return fields.joinToString(separator = "\n") { (name, value) -> "${name ?: UNKNOWN_FIELD_STRING}: $value" }
+        return fields.joinToString(separator = "\n") { (name, value) ->
+            "${name ?: UNKNOWN_FIELD_STRING}: $value"
+        }
     }
 
     companion object {

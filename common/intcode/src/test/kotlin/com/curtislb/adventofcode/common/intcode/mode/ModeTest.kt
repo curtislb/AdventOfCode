@@ -2,8 +2,8 @@ package com.curtislb.adventofcode.common.intcode.mode
 
 import java.math.BigInteger
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [Mode].

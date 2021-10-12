@@ -1,7 +1,8 @@
 package com.curtislb.adventofcode.common.collection
 
 /**
- * A map-like object that keeps track of the integer quantity (either positive or negative) of various items.
+ * A map-like object that keeps track of the integer quantity (either positive or negative) of
+ * various items.
  *
  * @param initialCounts A map of initial item counts with which to populate the counter.
  */
@@ -39,7 +40,8 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
         get() = counts.entries.filter { it.value > 0L }.map { it.key }.toSet()
 
     /**
-     * A map-like object that keeps track of the integer quantity (either positive or negative) of various items.
+     * A map-like object that keeps track of the integer quantity (either positive or negative) of
+     * various items.
      *
      * @param items A list of initial items with which to populate the counter.
      */
@@ -60,12 +62,14 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     }
 
     /**
-     * Returns the count stored for [key] in this counter. Defaults to 0 if [key] is not stored in the counter.
+     * Returns the count stored for [key] in this counter. Defaults to 0 if [key] is not stored in
+     * the counter.
      */
     operator fun get(key: T): Long = counts.getOrDefault(key, 0L)
 
     /**
-     * Updates the [count] stored for [key] in this counter. If [count] is 0, [key] is removed from the counter.
+     * Updates the [count] stored for [key] in this counter. If [count] is 0, [key] is removed from
+     * the counter.
      */
     operator fun set(key: T, count: Long) {
         if (count == 0L) {
@@ -90,14 +94,15 @@ class Counter<T>(initialCounts: Map<T, Long> = mutableMapOf()) {
     }
 
     /**
-     * Removes all items with negative counts from this counter, resetting their effective counts to 0.
+     * Removes all items with negative counts from this counter, resetting their counts to 0.
      */
     fun clearNegativeCounts() {
         counts.entries.filter { it.value < 0L }.forEach { counts.remove(it.key) }
     }
 
     /**
-     * Returns a map containing all `(key, count)` entries in this counter for which `count` is nonzero.
+     * Returns a map containing all `(key, count)` entries in this counter for which `count` is
+     * nonzero.
      */
     fun toMap(): Map<T, Long> = counts.toMap()
 

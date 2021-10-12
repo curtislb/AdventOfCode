@@ -26,15 +26,25 @@ PasswordGenerator {
      *
      * The number of such passwords must be finite; otherwise, this method will not return.
      */
-    fun countPasswords(): Int = (if (isValid) 1 else 0) + nextDigits.sumOf { addDigit(it).countPasswords() }
+    fun countPasswords(): Int =
+        (if (isValid) 1 else 0) + nextDigits.sumOf { addDigit(it).countPasswords() }
 
     /**
-     * Returns a (possibly infinite) sequence of all suffixes that form valid passwords with the current prefix.
+     * Returns a (possibly infinite) sequence of all suffixes that form valid passwords with the
+     * current prefix.
      *
-     * For a generator whose current prefix is empty, this is equivalent to generating all valid passwords.
+     * For a generator whose current prefix is empty, this is equivalent to generating all valid
+     * passwords.
      */
     fun generatePasswordSuffixes(): Sequence<String> = sequence {
-        val queue = ArrayDeque<Pair<PasswordGenerator, String>>().apply { addLast(Pair(this@PasswordGenerator, "")) }
+        val queue = ArrayDeque<Pair<PasswordGenerator, String>>().apply {
+            addLast(
+                Pair(
+                    this@PasswordGenerator,
+                    ""
+                )
+            )
+        }
         while (!queue.isEmpty()) {
             // Check if the current generator matches a valid password.
             val (generator, suffix) = queue.removeFirst()

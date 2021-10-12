@@ -5,8 +5,9 @@ import com.curtislb.adventofcode.common.intcode.mode.Mode
 import java.math.BigInteger
 
 /**
- * An operation recognized by an [Intcode] program, which may modify the program's state, return a new position for the
- * program's instruction pointer, and have side effects such as printing to standard output
+ * An operation recognized by an [Intcode] program, which may modify the program's state, return a
+ * new position for the program's instruction pointer, and have side effects such as printing to
+ * standard output.
  */
 interface Operation {
     /**
@@ -15,12 +16,40 @@ interface Operation {
     val parameterCount: Int
 
     /**
-     * Processes this operation for the [intcode] program, with the given [parameters] and parameter [modes], and
-     * returns the position to which [pointer] should be updated following the operation.
+     * Processes this operation for the [intcode] program, with the given [parameters] and parameter
+     * [modes], and returns the position to which [pointer] should be updated following the
+     * operation.
      *
-     * @throws IllegalArgumentException If called with an incorrect number of [parameters] or [modes].
+     * @throws IllegalArgumentException If called with the wrong number of [parameters] or [modes].
      */
-    fun process(intcode: Intcode, pointer: Int, parameters: Array<BigInteger>, modes: Array<Mode>): Int
+    fun process(
+        intcode: Intcode,
+        pointer: Int,
+        parameters: Array<BigInteger>,
+        modes: Array<Mode>
+    ): Int
+
+    /**
+     * Validates the given [parameters] for this operation.
+     *
+     * @throws IllegalArgumentException If this operation can't accept the given [parameters].
+     */
+    fun checkParameters(parameters: Array<BigInteger>) {
+        require(parameters.size == parameterCount) {
+            "Expected $parameterCount parameters, but got ${parameters.size}."
+        }
+    }
+
+    /**
+     * Validates the given parameter [modes] for this operation.
+     *
+     * @throws IllegalArgumentException If this operation can't accept the given [modes].
+     */
+    fun checkModes(modes: Array<Mode>) {
+        require(modes.size == parameterCount) {
+            "Expected $parameterCount modes, but got ${modes.size}."
+        }
+    }
 
     companion object {
         /**

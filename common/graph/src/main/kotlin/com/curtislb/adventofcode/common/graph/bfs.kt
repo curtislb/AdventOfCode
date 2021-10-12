@@ -4,11 +4,11 @@ import java.util.ArrayDeque
 import lombok.Generated
 
 /**
- * Applies the function [process] to all nodes reachable via a breadth-first graph search from [source], with the
- * neighbors of each node given by [getNeighbors].
+ * Applies the function [process] to all nodes reachable via a breadth-first graph search from
+ * [source], with the neighbors of each node given by [getNeighbors].
  *
- * Continues searching until all nodes reachable from [source] have been processed or until [process] returns `true`,
- * indicating that the search should be terminated early.
+ * Continues searching until all nodes reachable from [source] have been processed or until
+ * [process] returns `true`, indicating that the search should be terminated early.
  */
 @Generated
 inline fun <T> bfsApply(
@@ -42,13 +42,18 @@ inline fun <T> bfsApply(
 }
 
 /**
- * Conducts a breadth-first graph search from [source] and returns the shortest distance to any node for which [isGoal]
- * is `true`, with the neighbors of each node given by [getNeighbors].
+ * Conducts a breadth-first graph search from [source] and returns the shortest distance to any node
+ * for which [isGoal] is `true`, with the neighbors of each node given by [getNeighbors].
  *
- * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead returns `null`.
+ * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead
+ * returns `null`.
  */
 @Generated
-inline fun <T> bfsDistance(source: T, isGoal: (node: T) -> Boolean, getNeighbors: (node: T) -> Sequence<T>): Long? {
+inline fun <T> bfsDistance(
+    source: T,
+    isGoal: (node: T) -> Boolean,
+    getNeighbors: (node: T) -> Sequence<T>
+): Long? {
     var result: Long? = null
     bfsApply(source, getNeighbors) { node, distance ->
         if (isGoal(node)) {

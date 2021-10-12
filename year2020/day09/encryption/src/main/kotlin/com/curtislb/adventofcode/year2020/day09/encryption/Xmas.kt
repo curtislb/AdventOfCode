@@ -36,8 +36,9 @@ class Xmas(private val values: List<Long>, private val preambleSize: Int) {
     /**
      * Returns the encryption weakness for the encrypted data.
      *
-     * Let `S` be the first contiguous subset of at least two numbers in [values] whose sum is [firstInvalidNumber]. The
-     * encryption weakness is the sum of the minimum and maximum value of `S`, or `null` if `S` does not exist.
+     * Let `S` be the first contiguous subset of at least two numbers in [values] whose sum is
+     * [firstInvalidNumber]. The encryption weakness is the sum of the minimum and maximum value of
+     * `S`, or `null` if `S` does not exist.
      */
     fun findEncryptionWeakness(): Long? {
         // Search for a contiguous subset that meets the criteria.

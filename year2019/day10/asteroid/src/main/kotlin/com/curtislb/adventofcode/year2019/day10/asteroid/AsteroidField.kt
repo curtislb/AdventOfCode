@@ -8,8 +8,8 @@ import java.io.File
 /**
  * A collection of asteroids, arranged in a 2D grid.
  *
- * @param file A file containing the grid layout for this asteroid field. Each line should contain a row of characters,
- *  with each representing an empty grid space (`'.'`) or an asteroid (`'#'`).
+ * @param file A file containing the grid layout for this asteroid field. Each line should contain a
+ *  row of characters, with each representing an empty grid space (`'.'`) or an asteroid (`'#'`).
  */
 class AsteroidField(file: File) {
     /**
@@ -31,13 +31,14 @@ class AsteroidField(file: File) {
     val size: Int get() = asteroids.size
 
     /**
-     * Finds the best location for a monitoring station, given the positions of all asteroids in the grid.
+     * Finds the best location for a monitoring station, based on the positions of all asteroids.
      *
-     * A station must be located at the same position as an asteroid. Among these, the best location is the one from
-     * which the maximum number of other asteroids are visible.
+     * A station must be located at the same position as an asteroid. Among these, the best location
+     * is the one from which the maximum number of other asteroids are visible.
      *
-     * @return A pair containing the best [Point] for a station to be located and the number of other asteroids
-     *  visible from that location, or the pair `(null, 0)` if there are no possible locations.
+     * @return A pair containing the best [Point] for a station to be located and the number of
+     *  other asteroids visible from that location, or the pair `(null, 0)` if there are no possible
+     *  locations.
      */
     fun findBestStation(): Pair<Point?, Int> {
         if (asteroids.size == 1) {
@@ -52,16 +53,19 @@ class AsteroidField(file: File) {
     }
 
     /**
-     * Vaporizes as many asteroids as possible up to [count] from a given [station], removing them from the grid.
+     * Vaporizes as many asteroids as possible up to [count] from a given [station], removing them
+     * from the grid.
      *
-     * Asteroids are vaporized from [station] (which must be at a point with an asteroid) by a laser that begins
-     * pointing up and proceeds clockwise, removing at most one asteroid (the one closest to [station]) per angle, per
-     * rotation. This continues until either [count] asteroids have been vaporized or no more can be vaporized from
-     * [station].
+     * Asteroids are vaporized from [station] (which must be at a point with an asteroid) by a laser
+     * that begins pointing up and proceeds clockwise, removing at most one asteroid (the one
+     * closest to [station]) per angle, per rotation. This continues until either [count] asteroids
+     * have been vaporized or no more can be vaporized from [station].
      *
-     * @return The position of the last vaporized asteroid if exactly [count] are vaporized, or `null` otherwise.
+     * @return The position of the last vaporized asteroid if exactly [count] are vaporized, or
+     *  `null` otherwise.
      *
-     * @throws IllegalArgumentException If [station] is not located on an asteroid, or if [count] is negative.
+     * @throws IllegalArgumentException If [station] is not at a point with an asteroid, or if
+     *  [count] is negative.
      */
     fun vaporizeAsteroids(station: Point, count: Int): Point? {
         require(station in asteroids) { "Station must be located on an asteroid: $station" }
@@ -99,8 +103,9 @@ class AsteroidField(file: File) {
     /**
      * Returns the number of asteroids visible from [source].
      *
-     * An asteroid is visible if and only if there is a direct line of sight from [source] to its position that is not
-     * obstructed by other asteroids. Asteroids located at [source] are not considered to be visible.
+     * An asteroid is visible if and only if there is a direct line of sight from [source] to its
+     * position that is not obstructed by other asteroids. Asteroids located at [source] are not
+     * considered to be visible.
      */
     private fun countVisibleAsteroids(source: Point): Int {
         val asteroidRays = mutableSetOf<Ray>().apply {
@@ -116,8 +121,9 @@ class AsteroidField(file: File) {
     /**
      * Returns the positions of all asteroids visible from [source].
      *
-     * An asteroid is visible if and only if there is a direct line of sight from [source] to its position that is not
-     * obstructed by other asteroids. An asteroid located at [source] is not considered to be visible.
+     * An asteroid is visible if and only if there is a direct line of sight from [source] to its
+     * position that is not obstructed by other asteroids. An asteroid located at [source] is not
+     * considered visible.
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
         val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>().apply {

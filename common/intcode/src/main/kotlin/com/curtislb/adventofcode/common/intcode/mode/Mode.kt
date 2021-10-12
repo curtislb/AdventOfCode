@@ -4,8 +4,8 @@ import com.curtislb.adventofcode.common.intcode.Intcode
 import java.math.BigInteger
 
 /**
- * A parameter mode recognized by an [Intcode] program, which indicates how a given parameter's value should be
- * interpreted while processing an operation.
+ * A parameter mode recognized by an [Intcode] program, which indicates how a given parameter's
+ * value should be interpreted while processing an operation.
  */
 interface Mode {
     /**

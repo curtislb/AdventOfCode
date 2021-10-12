@@ -3,13 +3,15 @@ package com.curtislb.adventofcode.year2019.day16.fft
 import kotlin.math.abs
 
 /**
- * An optimized implementation of [FftAlgorithm] for when only a portion of the latter half of a signal is needed.
+ * An optimized implementation of [FftAlgorithm] for when only a portion of the latter half of a
+ * signal is needed.
  *
  * @param baseSignal A list of digits representing part of the signal to be transformed.
  * @param repeatCount The number of times [baseSignal] is repeated to form the full input signal.
- * @param offset The index in the latter half of the repeated signal from which output should be read.
+ * @param offset The index in the latter half of the repeated signal from which to read output.
  *
- * @throws IllegalArgumentException If [offset] is less than half the length (rounded down) of the repeated signal.
+ * @throws IllegalArgumentException If [offset] is less than half the length (rounded down) of the
+ *  repeated signal.
  */
 class FastFftAlgorithm(
     private val baseSignal: List<Int>,
@@ -19,7 +21,7 @@ class FastFftAlgorithm(
     init {
         val minOffset = calculateMinOffset(baseSignal, repeatCount)
         if (offset >= minOffset) {
-            "Offset ($offset) must be at least $minOffset for a ${baseSignal.size} x $repeatCount signal."
+            "Offset must be >= $minOffset for a ${baseSignal.size}x$repeatCount signal: $offset"
         }
     }
 
@@ -29,10 +31,11 @@ class FastFftAlgorithm(
     private var offsetSignal: MutableList<Int> = createRepeatedSignalFromOffset()
 
     /**
-     * Transforms the relevant portion of the signal by applying the FFT transformation for a given number of [phases].
+     * Transforms the relevant portion of the signal by applying the FFT transformation for a given
+     * number of [phases].
      */
     fun run(phases: Int = 1) {
-        for (phase in 1..phases) {
+        repeat(phases) {
             for (i in offsetSignal.size - 2 downTo 0) {
                 offsetSignal[i] += offsetSignal[i + 1]
             }
@@ -46,7 +49,8 @@ class FastFftAlgorithm(
     fun readFromOffset(length: Int): List<Int> = offsetSignal.subList(0, length)
 
     /**
-     * Restores the relevant portion of the signal to its original state, immediately after initialization.
+     * Restores the relevant portion of the signal to its original state, immediately after
+     * initialization.
      */
     fun reset() {
         offsetSignal = createRepeatedSignalFromOffset()
@@ -65,7 +69,7 @@ class FastFftAlgorithm(
 
     companion object {
         /**
-         * Returns the minimum allowable offset for a given [baseSignal] repeated [repeatCount] times.
+         * Returns the minimum allowed offset for a given [baseSignal] repeated [repeatCount] times.
          */
         private fun calculateMinOffset(baseSignal: List<Int>, repeatCount: Int): Int {
             return (baseSignal.size * repeatCount) / 2

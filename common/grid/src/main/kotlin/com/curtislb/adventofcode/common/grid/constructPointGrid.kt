@@ -4,7 +4,8 @@ import com.curtislb.adventofcode.common.range.rangeSize
 import lombok.Generated
 
 /**
- * Returns the minimal 2D grid that contains all [points], where the value at each position is given by [valueAt].
+ * Returns the minimal 2D grid that contains all [points], where the value at each position is given
+ * by [valueAt].
  */
 @Generated
 inline fun <T> constructPointGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): Grid<T> {
@@ -21,5 +22,12 @@ inline fun <T> constructPointGrid(points: Iterable<Point>, valueAt: (point: Poin
     val width = xRange.rangeSize
     val minX = xRange.start
     val maxY = yRange.endInclusive
-    return Grid(height, width) { rowIndex, colIndex -> valueAt(Point(minX + colIndex, maxY - rowIndex)) }
+    return Grid(height, width) { rowIndex, colIndex ->
+        valueAt(
+            Point(
+                minX + colIndex,
+                maxY - rowIndex
+            )
+        )
+    }
 }

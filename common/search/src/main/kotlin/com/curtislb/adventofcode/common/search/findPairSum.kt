@@ -1,7 +1,8 @@
 package com.curtislb.adventofcode.common.search
 
 /**
- * Returns a pair of values in this iterable that sum to [targetSum], or `null` if there are no such values.
+ * Returns a pair of values in this iterable that sum to [targetSum], or `null` if there are no such
+ * values.
  */
 fun Iterable<Int>.findPairSum(targetSum: Int): Pair<Int, Int>? {
     val pairSum = map { it.toLong() }.findPairSum(targetSum.toLong())
@@ -9,7 +10,8 @@ fun Iterable<Int>.findPairSum(targetSum: Int): Pair<Int, Int>? {
 }
 
 /**
- * Returns a pair of values in this iterable that sum to [targetSum], or `null` if there are no such values.
+ * Returns a pair of values in this iterable that sum to [targetSum], or `null` if there are no such
+ * values.
  */
 fun Iterable<Long>.findPairSum(targetSum: Long): Pair<Long, Long>? {
     fold(mutableSetOf<Long>()) { seenValues, value ->

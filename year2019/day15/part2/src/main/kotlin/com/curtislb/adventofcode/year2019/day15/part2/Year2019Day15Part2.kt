@@ -3,11 +3,12 @@
 
 You quickly repair the oxygen system; oxygen gradually fills the area.
 
-Oxygen starts in the location containing the repaired oxygen system. It takes one minute for oxygen to spread to all
-open locations that are adjacent to a location that already contains oxygen. Diagonal locations are not adjacent.
+Oxygen starts in the location containing the repaired oxygen system. It takes one minute for oxygen
+to spread to all open locations that are adjacent to a location that already contains oxygen.
+Diagonal locations are not adjacent.
 
-In the example above, suppose you've used the droid to explore the area fully and have the following map (where
-locations that currently contain oxygen are marked O):
+In the example above, suppose you've used the droid to explore the area fully and have the following
+map (where locations that currently contain oxygen are marked O):
 
  ##
 #..##
@@ -15,8 +16,9 @@ locations that currently contain oxygen are marked O):
 #.O.#
  ###
 
-Initially, the only location which contains oxygen is the location of the repaired oxygen system. However, after one
-minute, the oxygen spreads to all open (.) locations that are adjacent to a location containing oxygen:
+Initially, the only location which contains oxygen is the location of the repaired oxygen system.
+However, after one minute, the oxygen spreads to all open (.) locations that are adjacent to a
+location containing oxygen:
 
  ##
 #..##
@@ -50,7 +52,8 @@ And finally, the whole region is full of oxygen after a total of four minutes:
 
 So, in this example, all locations contain oxygen after 4 minutes.
 
-Use the repair droid to get a complete map of the area. How many minutes will it take to fill with oxygen?
+Use the repair droid to get a complete map of the area. How many minutes will it take to fill with
+oxygen?
 */
 
 package com.curtislb.adventofcode.year2019.day15.part2
@@ -74,7 +77,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
 
     // Use BFS to find the furthest open space from the oxygen system.
     var maxDistance = 0L
-    bfsApply(oxygenStartPosition, getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }) { _, distance ->
+    bfsApply(
+        oxygenStartPosition,
+        getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }) { _, distance ->
         maxDistance = maxDistance.coerceAtLeast(distance)
         false // Not done searching.
     }

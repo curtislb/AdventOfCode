@@ -6,8 +6,8 @@ import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
 /**
  * A generator that produces numeric passwords with a given number of digits.
  *
- * @param length The number of digits (including leading zeros) that a valid password must contain.
- * @param currentLength The number of digits (including leading zeros) of the current password prefix.
+ * @param length The number of digits (with leading zeros) that a valid password must contain.
+ * @param currentLength The number of digits (with leading zeros) of the current password prefix.
  */
 class ExactLengthGenerator private constructor(
     private val length: Int,
@@ -20,9 +20,10 @@ class ExactLengthGenerator private constructor(
     /**
      * A generator that produces numeric passwords with a given number of digits.
      *
-     * @param length The number of digits (including leading zeros) that a valid password must contain.
+     * @param length The number of digits (with leading zeros) a valid password must contain.
      */
     constructor(length: Int) : this(length, currentLength = 0)
 
-    override fun addDigit(digit: Int): PasswordGenerator = ExactLengthGenerator(length, currentLength + 1)
+    override fun addDigit(digit: Int): PasswordGenerator =
+        ExactLengthGenerator(length, currentLength + 1)
 }

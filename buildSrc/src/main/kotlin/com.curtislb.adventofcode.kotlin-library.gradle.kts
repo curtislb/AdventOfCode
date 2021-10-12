@@ -66,7 +66,7 @@ configurations.create("coverageDataElements") {
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("jacoco-coverage-data"))
     }
 
-    // This will cause the test task to run if the coverage data is requested by the aggregation task
+    // Cause the test task to run if the coverage data is requested by the aggregation task
     outgoing.artifact(tasks.test.map { task ->
         task.extensions.getByType<JacocoTaskExtension>().destinationFile!!
     })

@@ -5,14 +5,17 @@ import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.Space
 
 /**
- * Information about the path to a given key location that can be used to determine its weight in the search graph.
+ * Information about the path to a given key location that can be used to determine its weight in
+ * the search graph.
  *
  * @param distance The total distance of the path, in number of steps.
- * @param doorsAndKeys A list of [DoorSpace] and [KeySpace] spaces along the path, in the order they appear.
+ * @param doorsAndKeys A list of [DoorSpace] and [KeySpace] spaces along the path, in the order they
+ *  appear.
  */
 data class SearchEdge(val distance: Int, val doorsAndKeys: List<Space>) {
     /**
-     * Returns `true` if the path for this edge can be traversed with a collection of [heldKeys], or `false` otherwise.
+     * Returns `true` if the path for this edge can be traversed with a collection of [heldKeys], or
+     * `false` otherwise.
      */
     fun isTraversable(heldKeys: KeyCollection): Boolean {
         val additionalKeys = KeyCollection()

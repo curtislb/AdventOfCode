@@ -26,9 +26,14 @@ class GameTest {
 
     @Test
     fun testFindAllTilesWithNonEmptyBoard(@TempDir tempDir: Path) {
-        val file = tempDir.createTempFile(text = "104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,99")
+        val file = tempDir.createTempFile(
+            text = "104,0,104,0,104,1,104,1,104,1,104,1,104,0,104,2,104,2,99"
+        )
         val game = Game(file)
-        assertContainsExactly(listOf(Point(1, 0), Point(0, -1), Point(1, -2)), game.findAllTiles(Tile.EMPTY))
+        assertContainsExactly(
+            listOf(Point(1, 0), Point(0, -1), Point(1, -2)),
+            game.findAllTiles(Tile.EMPTY)
+        )
         assertContainsExactly(listOf(Point.ORIGIN, Point(1, -1)), game.findAllTiles(Tile.WALL))
         assertContainsExactly(listOf(Point(0, -2)), game.findAllTiles(Tile.BLOCK))
         assertEquals(emptyList(), game.findAllTiles(Tile.PADDLE))

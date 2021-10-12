@@ -27,12 +27,16 @@ class RowArrayGrid<T>(private val rowList: ArrayList<ArrayList<T>> = ArrayList()
     }
 
     override fun addRow(row: List<T>) {
-        require(isEmpty() || row.size == width) { "Row size (${row.size}) must match grid width ($width)." }
+        require(isEmpty() || row.size == width) {
+            "Row size (${row.size}) must match grid width ($width)."
+        }
         rowList.add(ArrayList(row))
     }
 
     override fun addColumn(column: List<T>) {
-        require(isEmpty() || column.size == height) { "Column size (${column.size}) must match grid height ($height)." }
+        require(isEmpty() || column.size == height) {
+            "Column size (${column.size}) must match grid height ($height)."
+        }
         val isFirstColumn = isEmpty()
         column.forEachIndexed { index, value ->
             if (isFirstColumn) {
@@ -44,7 +48,9 @@ class RowArrayGrid<T>(private val rowList: ArrayList<ArrayList<T>> = ArrayList()
     }
 
     override fun addShallowRow(row: List<T>) {
-        require(isEmpty() || row.size == width) { "Row size (${row.size}) must match grid width ($width)." }
+        require(isEmpty() || row.size == width) {
+            "Row size (${row.size}) must match grid width ($width)."
+        }
         rowList.add(if (row is ArrayList<T>) row else ArrayList(row))
     }
 
@@ -74,11 +80,16 @@ class RowArrayGrid<T>(private val rowList: ArrayList<ArrayList<T>> = ArrayList()
 }
 
 /**
- * Returns a new array grid with the given [height] and [width], with each element set by the given [init] function.
+ * Returns a new array grid with the given [height] and [width], with each element set by the given
+ * [init] function.
  */
 @Generated
 @Suppress("FunctionName")
-inline fun <T> RowArrayGrid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> T): RowArrayGrid<T> {
+inline fun <T> RowArrayGrid(
+    height: Int,
+    width: Int,
+    init: (rowIndex: Int, colIndex: Int) -> T
+): RowArrayGrid<T> {
     require(height >= 0) { "Height must be non-negative: $height" }
     require(width >= 0) { "Width must be non-negative: $width" }
     val rows = ArrayList<ArrayList<T>>(height).apply {
@@ -98,7 +109,7 @@ inline fun <T> RowArrayGrid(height: Int, width: Int, init: (rowIndex: Int, colIn
  * Returns a new [RowArrayGrid], constructed from the given [grid].
  */
 @Suppress("FunctionName")
-fun <T> RowArrayGrid(grid: Grid<T>) : RowArrayGrid<T> {
+fun <T> RowArrayGrid(grid: Grid<T>): RowArrayGrid<T> {
     return RowArrayGrid(grid.height, grid.width) { rowIndex, colIndex -> grid[rowIndex, colIndex] }
 }
 
@@ -106,9 +117,12 @@ fun <T> RowArrayGrid(grid: Grid<T>) : RowArrayGrid<T> {
  * Returns a new [RowArrayGrid], constructed from the given [rows].
  */
 @Suppress("FunctionName")
-fun <T> RowArrayGrid(rows: List<List<T>>) : RowArrayGrid<T> {
+fun <T> RowArrayGrid(rows: List<List<T>>): RowArrayGrid<T> {
     require(rows.all { it.size == rows.first().size }) { "All rows must have the same size." }
-    return RowArrayGrid(height = rows.size, width = rows.firstOrNull()?.size ?: 0) { rowIndex, colIndex ->
+    return RowArrayGrid(
+        height = rows.size,
+        width = rows.firstOrNull()?.size ?: 0
+    ) { rowIndex, colIndex ->
         rows[rowIndex][colIndex]
     }
 }
@@ -117,9 +131,12 @@ fun <T> RowArrayGrid(rows: List<List<T>>) : RowArrayGrid<T> {
  * Returns a new [RowArrayGrid], constructed from the given [rows].
  */
 @Suppress("FunctionName")
-fun <T> RowArrayGrid(vararg rows: List<T>) : RowArrayGrid<T> {
+fun <T> RowArrayGrid(vararg rows: List<T>): RowArrayGrid<T> {
     require(rows.all { it.size == rows.first().size }) { "All rows must have the same size." }
-    return RowArrayGrid(height = rows.size, width = rows.firstOrNull()?.size ?: 0) { rowIndex, colIndex ->
+    return RowArrayGrid(
+        height = rows.size,
+        width = rows.firstOrNull()?.size ?: 0
+    ) { rowIndex, colIndex ->
         rows[rowIndex][colIndex]
     }
 }

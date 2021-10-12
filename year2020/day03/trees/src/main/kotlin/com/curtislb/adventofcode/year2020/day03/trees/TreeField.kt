@@ -7,14 +7,17 @@ import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.common.math.Fraction
 
 /**
- * A collection of trees arranged in a 2D grid, consisting of a base pattern repeated infinitely to the right.
+ * A collection of trees arranged in a 2D grid, consisting of a base pattern repeated infinitely to
+ * the right.
  *
- * @param treePattern A string representing the base pattern for this tree field. Each line should contain a row of
- *  characters, with each representing an empty grid space (`'.'`) or a tree (`'#'`).
+ * @param treePattern A string representing the base pattern for this tree field. Each line should
+ *  contain a row of characters, with each representing an empty grid space (`'.'`) or a tree
+ *  (`'#'`).
  */
 class TreeField(treePattern: String) {
     /**
-     * A boolean grid representing the base pattern for this tree field. Contains `true` at each tree position.
+     * A boolean grid representing the base pattern for this tree field. Contains `true` at each
+     * tree position.
      */
     private val patternGrid: Grid<Boolean> = treePattern.trim().lines().map { line ->
         line.trim().map { char -> char == '#' }
@@ -34,7 +37,8 @@ class TreeField(treePattern: String) {
     }
 
     /**
-     * Returns the number of trees intersected by a line with the given [slope], starting from the top-left position.
+     * Returns the number of trees intersected by a line with the given [slope], starting from the
+     * top-left position.
      *
      * A [slope] of `null` corresponds to a vertical line (i.e. one with infinite slope).
      *

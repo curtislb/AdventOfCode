@@ -17,7 +17,9 @@ data class BagCount(val bagType: String, val count: Int) {
          */
         fun from(string: String): BagCount {
             val matchGroups = MATCH_REGEX.matchEntire(string.trim())?.groupValues
-            require(matchGroups != null && matchGroups.size == 3) { "Malformed bag count string: $string" }
+            require(matchGroups != null && matchGroups.size == 3) {
+                "Malformed bag count string: $string"
+            }
             return BagCount(matchGroups[2].trim(), matchGroups[1].trim().toInt())
         }
     }

@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.common.collection
 
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [MutableIntVector].

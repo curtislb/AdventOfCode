@@ -47,7 +47,7 @@ class NBodySystemTest {
                 Body(position = MutableIntVector(2, -1, 1), velocity = MutableIntVector(3, -1, -1)),
                 Body(position = MutableIntVector(3, -7, -4), velocity = MutableIntVector(1, 3, 3)),
                 Body(position = MutableIntVector(1, -7, 5), velocity = MutableIntVector(-3, 1, -3)),
-                Body(position = MutableIntVector(2,  2, 0), velocity = MutableIntVector(-1, -3, 1))
+                Body(position = MutableIntVector(2, 2, 0), velocity = MutableIntVector(-1, -3, 1))
             ),
             system.bodies
         )
@@ -59,7 +59,7 @@ class NBodySystemTest {
                 Body(position = MutableIntVector(2, 1, -3), velocity = MutableIntVector(-3, -2, 1)),
                 Body(position = MutableIntVector(1, -8, 0), velocity = MutableIntVector(-1, 1, 3)),
                 Body(position = MutableIntVector(3, -6, 1), velocity = MutableIntVector(3, 2, -3)),
-                Body(position = MutableIntVector(2, 0, 4), velocity = MutableIntVector(1, -1, -1)),
+                Body(position = MutableIntVector(2, 0, 4), velocity = MutableIntVector(1, -1, -1))
             ),
             system.bodies
         )

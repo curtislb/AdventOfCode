@@ -6,14 +6,14 @@ import java.io.File
 import java.math.BigInteger
 
 /**
- * An interface for an [Intcode] program that accepts ASCII code values as input and may produce output corresponding to
- * printable ASCII characters.
+ * An interface for an [Intcode] program that accepts ASCII code values as input and may produce
+ * output corresponding to printable ASCII characters.
  *
  * @param intcode The [Intcode] program to be controlled through this interface.
- * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
- *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
- *  outside the normal ASCII range.
- * @param processOutput An optional function to be run for each output value produced by the program.
+ * @param showAsciiOutput If `true`, prints all output values from the program, with values within
+ *  the normal ASCII range `0..127` first converted to their corresponding characters. If
+ *  `false`, only prints output values that are outside the normal ASCII range.
+ * @param processOutput An optional function to run on each output value from the program.
  */
 class Ascii private constructor(
     private val intcode: Intcode,
@@ -45,14 +45,14 @@ class Ascii private constructor(
     val isPaused: Boolean get() = intcode.isPaused
 
     /**
-     * An interface for an [Intcode] program that accepts ASCII code values as input and may produce output
-     * corresponding to printable ASCII characters.
+     * An interface for an [Intcode] program that accepts ASCII code values as input and may produce
+     * output corresponding to printable ASCII characters.
      *
      * @param file A file containing the [Intcode] program to be controlled through this interface.
-     * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
-     *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
-     *  outside the normal ASCII range.
-     * @param processOutput An optional function to be run for each output value produced by the program.
+     * @param showAsciiOutput If `true`, prints all output values from the program, with values
+     *  within the normal ASCII range `0..127` first converted to their corresponding characters.
+     *  If `false`, only prints output values that are outside the normal ASCII range.
+     * @param processOutput An optional function to run on each output value from the program.
      */
     constructor(
         file: File,
@@ -61,14 +61,15 @@ class Ascii private constructor(
     ) : this(Intcode(file), showAsciiOutput, processOutput)
 
     /**
-     * An interface for an [Intcode] program that accepts ASCII code values as input and may produce output
-     * corresponding to printable ASCII characters.
+     * An interface for an [Intcode] program that accepts ASCII code values as input and may
+     * produce output corresponding to printable ASCII characters.
      *
-     * @param programString A string representation of the program, consisting of comma-separated integer values.
-     * @param showAsciiOutput If `true`, prints all output values from the program, with values within the normal ASCII
-     *  range `0..127` first converted to their corresponding characters. If `false`, only prints output values that are
-     *  outside the normal ASCII range.
-     * @param processOutput An optional function to be run for each output value produced by the program.
+     * @param programString A string representation of the program, consisting of comma-separated
+     *  integer values.
+     * @param showAsciiOutput If `true`, prints all output values from the program, with values
+     *  within the normal ASCII range `0..127` first converted to their corresponding characters.
+     *  If `false`, only prints output values that are outside the normal ASCII range.
+     * @param processOutput An optional function to run on each output value from the program.
      */
     constructor(
         programString: String,
@@ -86,8 +87,8 @@ class Ascii private constructor(
     }
 
     /**
-     * Converts [input] to an ASCII sequence and sends it as input to the program, followed by a newline if
-     * [sendNewline] is `true`.
+     * Converts [input] to an ASCII sequence and sends it as input to the program, followed by a
+     * newline if [sendNewline] is `true`.
      *
      * @see [Intcode.sendInput]
      */
@@ -99,7 +100,7 @@ class Ascii private constructor(
     }
 
     /**
-     * Runs the program by processing operations one at a time until a stopping condition is reached.
+     * Runs the program by processing operations in sequence until a stopping condition is reached.
      *
      * @see [Intcode.run]
      */
@@ -118,7 +119,7 @@ class Ascii private constructor(
 
     companion object {
         /**
-         * A range of all valid ASCII code values.
+         * A range containing all valid ASCII code values.
          */
         val ASCII_CODE_RANGE = BigIntegerRange(0..127)
 

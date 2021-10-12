@@ -13,21 +13,28 @@ class BigIntegerRange(
     /**
      * The number of integer values that are within this range.
      */
-    val size: BigInteger get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE
+    val size: BigInteger
+        get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE
 
     /**
      * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
      *
      * @param intRange A range of values of type [Int] from which to create this range.
      */
-    constructor(intRange: IntRange) : this(intRange.first.toBigInteger(), intRange.last.toBigInteger())
+    constructor(intRange: IntRange) : this(
+        intRange.first.toBigInteger(),
+        intRange.last.toBigInteger()
+    )
 
     /**
      * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
      *
      * @param longRange A range of values of type [Long] from which to create this range.
      */
-    constructor(longRange: LongRange) : this(longRange.first.toBigInteger(), longRange.last.toBigInteger())
+    constructor(longRange: LongRange) : this(
+        longRange.first.toBigInteger(),
+        longRange.last.toBigInteger()
+    )
 
     override fun iterator(): Iterator<BigInteger> = object : Iterator<BigInteger> {
         private var current: BigInteger = start
@@ -38,8 +45,8 @@ class BigIntegerRange(
     }
 
     override fun equals(other: Any?): Boolean {
-        return other is BigIntegerRange && ((isEmpty() && other.isEmpty())
-            || (start == other.start && endInclusive == other.endInclusive))
+        return other is BigIntegerRange && ((isEmpty() && other.isEmpty()) ||
+            (start == other.start && endInclusive == other.endInclusive))
     }
 
     override fun hashCode(): Int = if (isEmpty()) -1 else Objects.hash(start, endInclusive)
@@ -62,4 +69,6 @@ operator fun BigInteger.rangeTo(other: BigInteger): BigIntegerRange = BigInteger
 /**
  * Returns a [BigIntegerRange] containing the values from this up until (but not including) [other].
  */
-infix fun BigInteger.until(other: BigInteger): BigIntegerRange = BigIntegerRange(this, other - BigInteger.ONE)
+infix fun BigInteger.until(other: BigInteger): BigIntegerRange {
+    return BigIntegerRange(this, other - BigInteger.ONE)
+}

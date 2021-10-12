@@ -30,10 +30,12 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
     fun isPerpendicular(other: Segment): Boolean = isHorizontal != other.isHorizontal
 
     /**
-     * Returns the intersection point between this segment and [other], or `null` if the segments do not intersect.
+     * Returns the intersection point between this segment and [other], or `null` if the segments do
+     * not intersect.
      *
-     * This method only checks for an intersection with a perpendicular segment. This means that it will return `null`
-     * if this segment and [other] are parallel, even if they overlap at one or more points.
+     * This method only checks for an intersection with a perpendicular segment. This means that it
+     * will return `null` if this segment and [other] are parallel, even if they overlap at one or
+     * more points.
      */
     fun intersection(other: Segment): Point? {
         // Parallel segments cannot intersect.
@@ -53,11 +55,20 @@ data class Segment(val start: Point, val direction: Direction, val length: Int) 
         }
 
         // Check for intersection point, and return it if one exists.
-        val (horizontalLeft, horizontalRight) = listOf(horizontalSegment.start, horizontalSegment.end).sortedBy { it.x }
-        val (verticalBottom, verticalTop) = listOf(verticalSegment.start, verticalSegment.end).sortedBy { it.y }
+        val (horizontalLeft, horizontalRight) = listOf(
+            horizontalSegment.start,
+            horizontalSegment.end
+        ).sortedBy { it.x }
+        val (verticalBottom, verticalTop) = listOf(
+            verticalSegment.start,
+            verticalSegment.end
+        ).sortedBy { it.y }
         val horizontalY = horizontalSegment.start.y
         val verticalX = verticalSegment.start.x
-        if (horizontalY in verticalBottom.y..verticalTop.y && verticalX in horizontalLeft.x..horizontalRight.x) {
+        if (
+            horizontalY in verticalBottom.y..verticalTop.y &&
+            verticalX in horizontalLeft.x..horizontalRight.x
+        ) {
             return Point(verticalX, horizontalY)
         }
 

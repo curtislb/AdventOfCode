@@ -9,7 +9,8 @@ import java.io.File
 /**
  * A system of multiple celestial bodies, which move and exert gravity on each other in 3D space.
  *
- * @param file The file from which the initial [MutableIntVector] positions for all bodies will be read, one per line.
+ * @param file The file from which the initial [MutableIntVector] positions for all bodies will be
+ *  read, one per line.
  */
 class NBodySystem(file: File) {
     /**
@@ -29,7 +30,7 @@ class NBodySystem(file: File) {
     val totalEnergy: Int get() = bodies.sumOf { it.totalEnergy }
 
     /**
-     * Updates the positions and velocities of all bodies in this system for a given number of time [steps].
+     * Updates the positions and velocities of all bodies for a given number of time [steps].
      */
     fun simulate(steps: Int = 1) {
         for (step in 1..steps) {
@@ -42,7 +43,7 @@ class NBodySystem(file: File) {
     }
 
     /**
-     * Resets the positions and velocities of all bodies in this system to their initial values.
+     * Resets the positions and velocities of all bodies to their initial values.
      */
     fun reset() {
         bodies = initialStates.deepCopy { it.copy() }
@@ -51,11 +52,11 @@ class NBodySystem(file: File) {
     /**
      * Returns a vector representing the periodicity of this system along each 3D axis.
      *
-     * The period of an axis is the number of iterations required for the position and velocity of all bodies along that
-     * axis to return to their initial values.
+     * The period of an axis is the number of iterations required for the position and velocity of
+     * all bodies along that axis to return to their initial values.
      *
-     * Calling this method will modify the positions and velocities of bodies in this system. In order to restore the
-     * system to its initial configuration following this method, use [reset].
+     * Calling this method will modify the positions and velocities of bodies in this system. In
+     * order to restore the system to its initial configuration following this method, use [reset].
      */
     fun findAxialPeriodicity(): MutableIntVector {
         // Store the initial body configurations for each axis.

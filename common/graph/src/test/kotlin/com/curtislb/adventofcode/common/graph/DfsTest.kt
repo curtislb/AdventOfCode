@@ -11,7 +11,10 @@ class DfsTest {
     @Test
     fun testPathsWithNoGoals() {
         for (source in 0..3) {
-            assertEquals(emptyMap(), dfsPaths(source, isGoal = { false }, getNeighbors = ::getNeighbors))
+            assertEquals(
+                emptyMap(),
+                dfsPaths(source, isGoal = { false }, getNeighbors = ::getNeighbors)
+            )
         }
     }
 

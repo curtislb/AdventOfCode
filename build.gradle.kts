@@ -49,7 +49,9 @@ val coverageDataPath: Configuration by configurations.creating {
 // Task to gather code coverage from multiple subprojects
 val codeCoverageReport by tasks.registering(JacocoReport::class) {
     additionalClassDirs(configurations.runtimeClasspath.get().filter { it.isInProject() })
-    additionalSourceDirs(sourcesPath.incoming.artifactView { lenient(true) }.files.filter { it.isInProject() })
+    additionalSourceDirs(sourcesPath.incoming.artifactView { lenient(true) }.files.filter { file ->
+        file.isInProject()
+    })
     executionData(coverageDataPath.incoming.artifactView { lenient(true) }.files.filter { file ->
         file.exists() && file.isInProject()
     })

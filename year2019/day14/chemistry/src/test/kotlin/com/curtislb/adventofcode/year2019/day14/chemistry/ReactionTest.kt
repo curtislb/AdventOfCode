@@ -10,7 +10,12 @@ import org.junit.jupiter.api.assertThrows
 class ReactionTest {
     @Test
     fun testConstructWithNoReactants() {
-        assertThrows<IllegalArgumentException> { Reaction(emptyList(), MaterialAmount("magic", 1L)) }
+        assertThrows<IllegalArgumentException> {
+            Reaction(
+                emptyList(),
+                MaterialAmount("magic", 1L)
+            )
+        }
     }
 
     @Test
@@ -42,7 +47,10 @@ class ReactionTest {
             Reaction.from("1 lorem => 2 ipsum"),
         )
         assertEquals(
-            Reaction(listOf(MaterialAmount("foo", 2L), MaterialAmount("bar", 3L)), MaterialAmount("foobar", 1L)),
+            Reaction(
+                listOf(MaterialAmount("foo", 2L), MaterialAmount("bar", 3L)),
+                MaterialAmount("foobar", 1L)
+            ),
             Reaction.from("2 foo, 3 bar => 1 foobar"),
         )
         assertEquals(

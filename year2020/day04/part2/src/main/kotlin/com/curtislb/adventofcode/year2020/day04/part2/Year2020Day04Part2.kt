@@ -1,11 +1,11 @@
 /*
 --- Part Two ---
 
-The line is moving more quickly now, but you overhear airport security talking about how passports with invalid data are
-getting through. Better add some data validation, quick!
+The line is moving more quickly now, but you overhear airport security talking about how passports
+with invalid data are getting through. Better add some data validation, quick!
 
-You can continue to ignore the cid field, but each other field has strict rules about what values are valid for
-automatic validation:
+You can continue to ignore the cid field, but each other field has strict rules about what values
+are valid for automatic validation:
 
 - byr (Birth Year) - four digits; at least 1920 and at most 2002.
 - iyr (Issue Year) - four digits; at least 2010 and at most 2020.
@@ -18,8 +18,8 @@ automatic validation:
 - pid (Passport ID) - a nine-digit number, including leading zeroes.
 - cid (Country ID) - ignored, missing or not.
 
-Your job is to count the passports where all required fields are both present and valid according to the above rules.
-Here are some example values:
+Your job is to count the passports where all required fields are both present and valid according to
+the above rules. Here are some example values:
 
 byr valid:   2002
 byr invalid: 2003
@@ -69,8 +69,8 @@ eyr:2022
 
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 
-Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as
-optional. In your batch file, how many passports are valid?
+Count the number of valid passports - those that have all required fields and valid values. Continue
+to treat cid as optional. In your batch file, how many passports are valid?
 */
 
 package com.curtislb.adventofcode.year2020.day04.part2

@@ -1,11 +1,11 @@
 /*
 --- Part Two ---
 
-You manage to answer the child's questions and they finish part 1 of their homework, but get stuck when they reach the
-next section: advanced math.
+You manage to answer the child's questions and they finish part 1 of their homework, but get stuck
+when they reach the next section: advanced math.
 
-Now, addition and multiplication have different precedence levels, but they're not the ones you're familiar with.
-Instead, addition is evaluated before multiplication.
+Now, addition and multiplication have different precedence levels, but they're not the ones you're
+familiar with. Instead, addition is evaluated before multiplication.
 
 For example, the steps to evaluate the expression 1 + 2 * 3 + 4 * 5 + 6 are now as follows:
 

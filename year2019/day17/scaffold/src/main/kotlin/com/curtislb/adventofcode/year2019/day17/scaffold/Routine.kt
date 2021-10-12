@@ -7,17 +7,19 @@ import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
  * A movement routine that can be given as input to the vacuum robot.
  *
  * @param callOrder A list of indices, representing the [functions] to be called in order.
- * @param functions A list of ordered groups of movement instructions that can be called by this routine.
+ * @param functions A list of ordered groups of movement instructions to be called by this routine.
  *
- * @throws IllegalArgumentException If any index in [callOrder] does not correspond to a function in [functions].
+ * @throws IllegalArgumentException If any index in [callOrder] doesn't match the given [functions].
  */
 class Routine(private val callOrder: List<Int>, private val functions: List<List<Instruction>>) {
     init {
-        callOrder.forEach { require(it in functions.indices) { "No matching function for index: $it" } }
+        callOrder.forEach { index ->
+            require(index in functions.indices) { "No matching function for index: $index" }
+        }
     }
 
     /**
-     * Returns a functionally equivalent copy of this routine with at least [functionCount] functions.
+     * Returns an equivalent copy of this routine with at least [functionCount] functions.
      */
     fun padFunctions(functionCount: Int): Routine {
         if (functionCount <= functions.size) {
@@ -25,18 +27,20 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
         }
 
         val paddedFunctions = functions.toMutableList()
+        val noOpFunction = listOf(Move(0))
         for (i in 1..(functionCount - functions.size)) {
-            paddedFunctions.add(listOf(Move(0)))
+            paddedFunctions.add(noOpFunction)
         }
         return Routine(callOrder, paddedFunctions)
     }
 
     /**
-     * Returns a string representation of this routine that can be provided as input to an ASCII-compatible Intcode
-     * program.
+     * Returns a string representation of this routine that can be provided as input to an
+     * ASCII-compatible Intcode program.
      */
     fun toAsciiInput(): String {
-        val callOrderString = callOrder.joinToString(separator = ",") { ('A'.code + it).toChar().toString() }
+        val callOrderString =
+            callOrder.joinToString(separator = ",") { ('A'.code + it).toChar().toString() }
         val functionStrings = functions.map { function -> function.joinToString(separator = ",") }
         return "$callOrderString\n${functionStrings.joinToString(separator = "\n")}"
     }
@@ -44,13 +48,19 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
     companion object {
         /**
          * Returns a routine with the following properties:
+         *
          * - Is equivalent to [instructions].
          * - Has at most [maxFunctionCount] functions.
-         * - Has at most [maxCharCount] characters in the ASCII representation of [callOrder] and of each function.
+         * - Has at most [maxCharCount] characters in the ASCII representation of [callOrder] and of
+         *   each function.
          *
          * If no such routine exists, instead returns `null`.
          */
-        fun compressInstructions(instructions: List<Instruction>, maxFunctionCount: Int, maxCharCount: Int): Routine? {
+        fun compressInstructions(
+            instructions: List<Instruction>,
+            maxFunctionCount: Int,
+            maxCharCount: Int
+        ): Routine? {
             return compressInstructionsInternal(instructions, maxFunctionCount, maxCharCount)
         }
 
@@ -65,11 +75,14 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
             compressedPrefix: MutableList<Int> = mutableListOf(),
             functions: MutableList<MutableList<Instruction>> = mutableListOf()
         ): Routine? {
-            // Try to greedily match each existing function to instructions starting from startIndex.
+            // Greedily match each existing function to instructions, starting from startIndex.
             for (i in functions.indices) {
                 val function = functions[i]
                 val nextStart = startIndex + function.size
-                if (nextStart <= instructions.size && instructions.subList(startIndex, nextStart) == function) {
+                if (
+                    nextStart <= instructions.size &&
+                    instructions.subList(startIndex, nextStart) == function
+                ) {
                     compressedPrefix.add(i)
                     val result = compressInstructionsInternal(
                         instructions,
@@ -87,10 +100,14 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
             }
 
             when {
-                // Check if we've captured all instructions and if the final routine meets all criteria.
+                // Check if all instructions are captured and the final routine meets all criteria.
                 startIndex == instructions.size -> {
                     val compressedCharCount = compressedPrefix.size * 2 - 1
-                    return if (compressedCharCount <= maxCharCount) Routine(compressedPrefix, functions) else null
+                    return if (compressedCharCount <= maxCharCount) {
+                        Routine(compressedPrefix, functions)
+                    } else {
+                        null
+                    }
                 }
 
                 // Stop if the function limit has been reached without capturing all instructions.
@@ -100,7 +117,7 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
                     compressedPrefix.add(functions.size)
                     functions.add(mutableListOf())
 
-                    // Try adding all possible functions below maxCharCount starting from startIndex.
+                    // Try all possible functions below maxCharCount starting from startIndex.
                     var endIndex = startIndex
                     var charCount = instructions[endIndex].toString().length
                     while (charCount <= maxCharCount) {

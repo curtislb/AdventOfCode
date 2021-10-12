@@ -6,17 +6,18 @@ import lombok.Generated
  * Returns the resulting state after running a "game of life" simulation with the given parameters.
  *
  * @param initialState The initial state of the game, before any update rules have been applied.
- * @param maxIterations The maximum number of times to update the current game state before returning. If `null`, this
- *  function will not return until [shouldTerminate] returns `true`.
- * @param shouldTerminate Checks if the simulation should terminate after each iteration by considering the previous and
- *  current game states after applying update rules.
- * @param copyState Returns a safely modifiable (or effectively immutable) copy of the game state.
+ * @param maxIterations The maximum number of times to update the current game state before
+ *  returning. If `null`, this function will not return until [shouldTerminate] returns `true`.
+ * @param shouldTerminate Checks if the simulation should terminate after each iteration by
+ *  considering the previous and current game states after applying update rules.
+ * @param copyState Returns a safely modifiable or immutable copy of the game state.
  * @param getValue Returns the value associated with the given key for the current game state.
- * @param setValue Returns a copy of the game state with the given key associated with the given value.
- * @param getUpdatableKeys Returns all keys for the current game state whose values may change by applying update rules.
+ * @param setValue Returns a copy of the game state with the given value assigned to the given key.
+ * @param getUpdatableKeys Returns all keys for the current game state whose values may change by
+ *  applying update rules.
  * @param getNeighborKeys Returns all keys that neighbor the given key for the current game state.
- * @param applyUpdateRules Returns the result of applying any relevant update rules to the given value with its given
- *  neighbors.
+ * @param applyUpdateRules Returns the result of applying any relevant update rules to the given
+ *  value along with its given neighbors.
  */
 @Generated
 inline fun <S, K, V> runGameOfLife(
@@ -38,7 +39,7 @@ inline fun <S, K, V> runGameOfLife(
         // Create a safe copy of the current state.
         var newState = copyState(state)
 
-        // Update each (key, value) pair in the new state simultaneously, based on the previous state.
+        // Update each (key, value) pair in new state simultaneously, based on the previous state.
         getUpdatableKeys(state).forEach { key ->
             val value = getValue(state, key)
             val neighbors = getNeighborKeys(state, key).map { getValue(state, it) }

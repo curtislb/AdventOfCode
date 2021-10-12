@@ -14,7 +14,7 @@ enum class Tile(val symbol: Char) {
     EMPTY('.'),
 
     /**
-     * A tile representing a wall, which is indestructible and can't be moved.
+     * A tile representing a wall, which can't be moved.
      */
     WALL('#'),
 
@@ -24,7 +24,7 @@ enum class Tile(val symbol: Char) {
     BLOCK('X'),
 
     /**
-     * A tile representing a paddle, which is indestructible and can be moved horizontally by the player.
+     * A tile representing a paddle, which can be moved horizontally by the player.
      */
     PADDLE('='),
 

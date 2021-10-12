@@ -30,14 +30,16 @@ class InteractiveStrategyTest {
 
     @Test
     fun testNextMove() {
-        System.setIn("""
-            0
-            1
-            -1
-            
-            31
-            -172
-        """.trimIndent().byteInputStream())
+        System.setIn(
+            """
+                0
+                1
+                -1
+                
+                31
+                -172
+            """.trimIndent().byteInputStream()
+        )
         System.setOut(PrintStream(PrintStream.nullOutputStream()))
         val board = Board()
         assertEquals(BigInteger.ZERO, InteractiveStrategy.nextMove(board))

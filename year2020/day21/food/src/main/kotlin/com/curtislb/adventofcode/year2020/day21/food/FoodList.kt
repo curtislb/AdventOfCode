@@ -39,7 +39,8 @@ class FoodList(foodListString: String) {
                 }
             }
         }
-        ingredientCounts = ingredientIndicesMap.mapToMap { (ingredient, indices) -> ingredient to indices.size }
+        ingredientCounts =
+            ingredientIndicesMap.mapToMap { (ingredient, indices) -> ingredient to indices.size }
 
         val ingredientAllergenMap = mutableMapOf<String, String>()
         while (allergenIngredientsMap.isNotEmpty()) {
@@ -61,7 +62,8 @@ class FoodList(foodListString: String) {
     /**
      * TODO
      */
-    val safeIngredients: Set<String> get() = ingredientCounts.keys - dangerousIngredientAllergens.keys
+    val safeIngredients: Set<String>
+        get() = ingredientCounts.keys - dangerousIngredientAllergens.keys
 
     /**
      * TODO

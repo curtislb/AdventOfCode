@@ -3,8 +3,8 @@ package com.curtislb.adventofcode.year2020.day02.password
 /**
  * A policy requiring a character to appear a given number of times in a password.
  *
- * Password rules for this policy are of the form `"$minValue-$maxValue $char"`, indicating that the character `char`
- * must appear `minValue..maxValue` times in a valid password.
+ * Password rules for this policy are of the form `"$minValue-$maxValue $char"`, indicating that the
+ * character `char` must appear `minValue..maxValue` times in a valid password.
  */
 object CharCountPolicy : PasswordPolicy {
     override fun isValid(rule: String, password: String): Boolean {
@@ -13,7 +13,8 @@ object CharCountPolicy : PasswordPolicy {
     }
 
     /**
-     * Returns a pair of the valid count range and required character from the given password [rule].
+     * Returns a pair of the valid count range and required character from the given password
+     * [rule].
      *
      * @throws IllegalArgumentException If [rule] does not match the expected format.
      */

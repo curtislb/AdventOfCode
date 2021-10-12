@@ -1,7 +1,8 @@
 package com.curtislb.adventofcode.year2019.day18.vault.space
 
 /**
- * A space representing a key in the vault, which may be passed through once the corresponding key has been collected.
+ * A space representing a key in the vault, which may be passed through once the corresponding key
+ * has been collected.
  *
  * @throws IllegalArgumentException If [symbol] is not an uppercase letter.
  */

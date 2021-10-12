@@ -32,7 +32,10 @@ class CounterTest {
             mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L).entries,
             counter.entriesWithNonzeroCount
         )
-        assertEquals(mapOf("lorem" to 2L, "sit" to 2147483648L).entries, counter.entriesWithPositiveCount)
+        assertEquals(
+            mapOf("lorem" to 2L, "sit" to 2147483648L).entries,
+            counter.entriesWithPositiveCount
+        )
         assertEquals(setOf("lorem", "dolor", "sit"), counter.keysWithNonzeroCount)
         assertEquals(setOf("lorem", "sit"), counter.keysWithPositiveCount)
         assertTrue("lorem" in counter)
@@ -54,8 +57,14 @@ class CounterTest {
         counter["badger"] += 12L
         counter["mushroom"] += 2L
         assertEquals(mapOf("badger" to 12L, "mushroom" to 2L), counter.toMap())
-        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L).entries, counter.entriesWithNonzeroCount)
-        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L).entries, counter.entriesWithPositiveCount)
+        assertEquals(
+            mapOf("badger" to 12L, "mushroom" to 2L).entries,
+            counter.entriesWithNonzeroCount
+        )
+        assertEquals(
+            mapOf("badger" to 12L, "mushroom" to 2L).entries,
+            counter.entriesWithPositiveCount
+        )
         assertTrue("badger" in counter)
         assertTrue("mushroom" in counter)
         assertFalse("snake" in counter)
@@ -67,7 +76,10 @@ class CounterTest {
         counter["mushroom"] -= 2L
         counter["snake"] -= 5L
         assertEquals(mapOf("badger" to 23L, "snake" to -5L), counter.toMap())
-        assertEquals(mapOf("badger" to 23L, "snake" to -5L).entries, counter.entriesWithNonzeroCount)
+        assertEquals(
+            mapOf("badger" to 23L, "snake" to -5L).entries,
+            counter.entriesWithNonzeroCount
+        )
         assertEquals(mapOf("badger" to 23L).entries, counter.entriesWithPositiveCount)
         assertTrue("badger" in counter)
         assertFalse("mushroom" in counter)
@@ -90,7 +102,10 @@ class CounterTest {
             )
         )
         counter.clearNegativeCounts()
-        assertEquals(mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L), counter.toMap())
+        assertEquals(
+            mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L),
+            counter.toMap()
+        )
         assertEquals(
             mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L).entries,
             counter.entriesWithNonzeroCount

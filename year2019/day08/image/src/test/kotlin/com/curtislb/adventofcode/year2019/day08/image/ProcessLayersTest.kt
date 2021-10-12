@@ -97,6 +97,9 @@ class ProcessLayersTest {
             onDigit = { indexInLayer, digit -> calls.add("onDigit($indexInLayer, $digit)") },
             onLayerFinished = { calls.add("onLayerFinished") }
         )
-        assertEquals(listOf("onDigit(0, 2)", "onLayerFinished", "onDigit(0, 1)", "onLayerFinished"), calls)
+        assertEquals(
+            listOf("onDigit(0, 2)", "onLayerFinished", "onDigit(0, 1)", "onLayerFinished"),
+            calls
+        )
     }
 }

@@ -9,7 +9,9 @@ import com.curtislb.adventofcode.common.grid.Point
  *
  * @param orientation The initial orientation of the ship in the grid.
  */
-class SimpleNavigationShip(orientation: Orientation = Orientation(Point.ORIGIN, Direction.UP)) : Ship {
+class SimpleNavigationShip(
+    orientation: Orientation = Orientation(Point.ORIGIN, Direction.UP)
+) : Ship {
     /**
      * The current orientation of this ship in the grid.
      */
@@ -17,7 +19,8 @@ class SimpleNavigationShip(orientation: Orientation = Orientation(Point.ORIGIN, 
         private set
 
     /**
-     * Moves this ship [distance] grid units in the given [direction] without changing the direction it's facing.
+     * Moves this ship [distance] grid units in the given [direction] without changing the direction
+     * it's facing.
      */
     override fun move(direction: Direction, distance: Int) {
         orientation = orientation.move(direction, distance)

@@ -7,8 +7,9 @@ import com.curtislb.adventofcode.common.grid.Segment
 /**
  * A wire consisting of a series of segments laid out in a 2D grid.
  *
- * @param wireString A string representation of the wire, where each comma-separated value represents the [Direction]
- *  and length of the next wire segment (e.g. `"U3"` for [Direction.UP], length 3), starting from the point `(0, 0)`.
+ * @param wireString A string representation of the wire, where each comma-separated value
+ *  represents the [Direction] and length of the next wire segment (e.g. `"U3"` for [Direction.UP],
+ *  length 3), starting from the point `(0, 0)`.
  */
 class Wire(wireString: String) {
     /**
@@ -34,13 +35,15 @@ class Wire(wireString: String) {
     }
 
     /**
-     * Finds the intersection between this wire and [other] that is closest to the origin.
+     * Finds the intersection of this wire and [other] that is closest to the origin.
      *
-     * The origin point `(0, 0)` is not considered an intersection unless both wires return to this point. Parallel
-     * wire segments are not considered to intersect, even if they overlap at one or more points.
+     * The origin point `(0, 0)` is not considered an intersection unless both wires return to this
+     * point. Parallel wire segments are not considered intersecting, even if they overlap at one or
+     * more points.
      *
-     * @return A pair containing the nearest intersection point and its Manhattan distance from the origin. If this wire
-     *  and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
+     * @return A pair containing the nearest intersection point and its Manhattan distance from the
+     *  origin. If this wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is
+     *  returned instead.
      */
     fun findNearestIntersection(other: Wire): Pair<Point?, Int> {
         var nearestIntersection: Point? = null
@@ -63,16 +66,18 @@ class Wire(wireString: String) {
     }
 
     /**
-     * Finds the intersection between this wire and [other] that is the shortest distance along both wires.
+     * Finds the intersection of this wire and [other] with the shortest total distance along wires.
      *
-     * The total distance to an intersection point is the sum of the distances to that point (in grid units) along each
-     * of the two wires.
+     * The total distance to an intersection point is the sum of the distances to that point (in
+     * grid units) along each of the two wires.
      *
      * The origin point `(0, 0)` is not considered an intersection unless both wires return to this
-     * point. Parallel wire segments are not considered to intersect, even if they overlap at one or more points.
+     * point. Parallel wire segments are not considered intersecting, even if they overlap at one or
+     * more points.
      *
-     * @return A pair containing the shortest-path intersection point and its total distance along both wires. If this
-     *  wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is returned instead.
+     * @return A pair containing the shortest-path intersection point and its total distance along
+     *  both wires. If this wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is
+     *  returned instead.
      */
     fun findShortestPathIntersection(other: Wire): Pair<Point?, Int> {
         var shortestPathIntersection: Point? = null

@@ -1,7 +1,8 @@
 package com.curtislb.adventofcode.common.math
 
 /**
- * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this one.
+ * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this
+ * one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -12,7 +13,8 @@ fun Long.prevMultipleAtMost(n: Long): Long {
 }
 
 /**
- * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this one.
+ * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this
+ * one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */

@@ -5,7 +5,7 @@ package com.curtislb.adventofcode.year2019.day25.rescue.command
  */
 interface Command {
     /**
-     * The string representing this command, which can be provided to the rescue robot as an ASCII instruction.
+     * The string for this command, which can be as an ASCII instruction to the rescue droid.
      */
     override fun toString(): String
 }

@@ -19,11 +19,13 @@ fun File.readIntRange(charset: Charset = Charsets.UTF_8): IntRange = readText(ch
  *
  * TODO
  */
-fun File.readLongRange(charset: Charset = Charsets.UTF_8): LongRange = readText(charset).toLongRange()
+fun File.readLongRange(charset: Charset = Charsets.UTF_8): LongRange =
+    readText(charset).toLongRange()
 
 /**
  * Returns the contents of this file as an integer range with start and end (inclusive) values.
  *
  * TODO
  */
-fun File.readBigIntegerRange(charset: Charset = Charsets.UTF_8): BigIntegerRange = readText(charset).toBigIntegerRange()
+fun File.readBigIntegerRange(charset: Charset = Charsets.UTF_8): BigIntegerRange =
+    readText(charset).toBigIntegerRange()

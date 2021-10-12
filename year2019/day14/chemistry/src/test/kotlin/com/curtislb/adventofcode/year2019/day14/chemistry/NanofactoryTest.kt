@@ -32,25 +32,36 @@ class NanofactoryTest {
         )
 
         val nanofactory = Nanofactory(file)
-        var requiredMaterials = nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("NVRVD", 4L)))
+        var requiredMaterials =
+            nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("NVRVD", 4L)))
         assertNotNull(requiredMaterials)
         assertContainsExactly(listOf(MaterialAmount("ORE", 139L)), requiredMaterials)
 
-        requiredMaterials = nanofactory.findRequiredMaterials(setOf("JNWZP"), listOf(MaterialAmount("VPVL", 1L)))
+        requiredMaterials =
+            nanofactory.findRequiredMaterials(setOf("JNWZP"), listOf(MaterialAmount("VPVL", 1L)))
         assertNull(requiredMaterials)
 
-        requiredMaterials = nanofactory.findRequiredMaterials(setOf("FAKE"), listOf(MaterialAmount("VPVL", 1L)))
+        requiredMaterials =
+            nanofactory.findRequiredMaterials(setOf("FAKE"), listOf(MaterialAmount("VPVL", 1L)))
         assertNull(requiredMaterials)
 
-        requiredMaterials = nanofactory.findRequiredMaterials(emptySet(), listOf(MaterialAmount("VPVL", 1L)))
+        requiredMaterials =
+            nanofactory.findRequiredMaterials(emptySet(), listOf(MaterialAmount("VPVL", 1L)))
         assertNull(requiredMaterials)
 
-        requiredMaterials = nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("VPVL", -1L)))
+        requiredMaterials =
+            nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("VPVL", -1L)))
         assertNull(requiredMaterials)
 
-        requiredMaterials = nanofactory.findRequiredMaterials(setOf("ORE", "JNWZP"), listOf(MaterialAmount("VPVL", 8L)))
+        requiredMaterials = nanofactory.findRequiredMaterials(
+            setOf("ORE", "JNWZP"),
+            listOf(MaterialAmount("VPVL", 8L))
+        )
         assertNotNull(requiredMaterials)
-        assertContainsExactly(listOf(MaterialAmount("ORE", 695L), MaterialAmount("JNWZP", 3L)), requiredMaterials)
+        assertContainsExactly(
+            listOf(MaterialAmount("ORE", 695L), MaterialAmount("JNWZP", 3L)),
+            requiredMaterials
+        )
 
         requiredMaterials = nanofactory.findRequiredMaterials(
             setOf("ORE"),
@@ -74,7 +85,8 @@ class NanofactoryTest {
             requiredMaterials
         )
 
-        requiredMaterials = nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("FUEL", 1L)))
+        requiredMaterials =
+            nanofactory.findRequiredMaterials(setOf("ORE"), listOf(MaterialAmount("FUEL", 1L)))
         assertNotNull(requiredMaterials)
         assertContainsExactly(listOf(MaterialAmount("ORE", 180697L)), requiredMaterials)
     }

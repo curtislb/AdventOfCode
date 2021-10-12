@@ -4,7 +4,7 @@ import java.util.Objects
 import kotlin.math.abs
 
 /**
- * A unique representation of a rational number, with [numerator] and [denominator] reduced to lowest terms.
+ * A unique representation of a rational number, with reduced [numerator] and [denominator].
  *
  * @throws IllegalArgumentException If [denominator] is 0.
  */
@@ -37,18 +37,24 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
     }
 
     /**
-     * A unique representation of a rational number, with [numerator] and [denominator] reduced to lowest terms.
+     * A unique representation of a rational number, with reduced [numerator] and [denominator].
      *
      * @throws IllegalArgumentException If [denominator] is 0.
      */
-    constructor(numerator: Int, denominator: Int = 1) : this(numerator.toLong(), denominator.toLong())
+    constructor(numerator: Int, denominator: Int = 1) : this(
+        numerator.toLong(),
+        denominator.toLong()
+    )
 
     /**
      * Returns the sum of this and [other] as a fraction.
      */
     operator fun plus(other: Fraction): Fraction {
         val lcm = leastCommonMultiple(denominator, other.denominator)
-        return Fraction(numerator * (lcm / denominator) + other.numerator * (lcm / other.denominator), lcm)
+        return Fraction(
+            numerator * (lcm / denominator) + other.numerator * (lcm / other.denominator),
+            lcm
+        )
     }
 
     /**
@@ -71,7 +77,8 @@ class Fraction(numerator: Long, denominator: Long = 1L) {
     /**
      * Returns the quotient of this and [other] as a fraction.
      */
-    operator fun div(other: Fraction): Fraction = Fraction(numerator * other.denominator, denominator * other.numerator)
+    operator fun div(other: Fraction): Fraction =
+        Fraction(numerator * other.denominator, denominator * other.numerator)
 
     /**
      * Returns the least integer value that is greater than or equal to the value of this fraction.

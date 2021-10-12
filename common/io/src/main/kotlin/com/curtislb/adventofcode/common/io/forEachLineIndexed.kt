@@ -5,7 +5,8 @@ import java.nio.charset.Charset
 import lombok.Generated
 
 /**
- * Reads and applies [action] to each line in this file, along with a sequential index, using the specified [charset].
+ * Reads and applies [action] to each line in this file, along with a sequential index, using the
+ * specified [charset].
  */
 @Generated
 inline fun File.forEachLineIndexed(

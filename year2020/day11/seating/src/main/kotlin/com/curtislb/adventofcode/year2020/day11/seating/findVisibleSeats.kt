@@ -5,10 +5,11 @@ import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.Ray
 
 /**
- * Returns the positions of all seats that are visible from a given [position] in a [grid] of spaces.
+ * Returns the positions of all seats that are visible from a given [position] in a [grid] of
+ * spaces.
  *
- * A seat is visible from a point if it is the closest (empty or occupied) seat to that point in one of the eight
- * cardinal or diagonal directions.
+ * A seat is visible from a point if it is the closest (empty or occupied) seat to that point in one
+ * of the eight cardinal or diagonal directions.
  */
 fun findVisibleSeats(grid: Grid<Space>, position: Point): List<Point> {
     // Look for seats in each of eight possible directions.

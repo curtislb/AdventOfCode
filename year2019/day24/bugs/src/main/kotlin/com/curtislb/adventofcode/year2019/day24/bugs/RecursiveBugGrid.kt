@@ -5,8 +5,9 @@ import java.io.File
 /**
  * An infinite recursive grid in which each level is represented by a [BugGrid].
  *
- * @param file A file containing the layout for the initial grid level. Each line should contain a row of characters,
- *  with `'.'` representing an empty space and `'#'` representing a space that contains a bug.
+ * @param file A file containing the layout for the initial grid level. Each line should contain a
+ *  row of characters, with `'.'` representing an empty space and `'#'` representing a space that
+ *  contains a bug.
  */
 class RecursiveBugGrid(file: File) {
     /**
@@ -27,7 +28,8 @@ class RecursiveBugGrid(file: File) {
     /**
      * Updates the state of the recursive grid to a given number of [minutes] in the future.
      *
-     * Each space at each layer of the grid is updated according to the rules given by [BugGrid.next] for each minute.
+     * Each space at each layer of the grid is updated according to the rules given by
+     * [BugGrid.next] for each minute.
      */
     fun update(minutes: Int = 1) {
         repeat(minutes) {
@@ -78,6 +80,7 @@ class RecursiveBugGrid(file: File) {
      * Returns the total number of bugs in all levels of the recursive grid.
      */
     fun countBugs(): Int {
-        return baseGrid.countBugs() + upperLevels.sumOf { it.countBugs() } + lowerLevels.sumOf { it.countBugs() }
+        return baseGrid.countBugs() + upperLevels.sumOf { it.countBugs() } +
+            lowerLevels.sumOf { it.countBugs() }
     }
 }

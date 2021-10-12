@@ -15,7 +15,8 @@ class Year2019Day24Part2Test {
 
     @Test
     fun testSolutionWithTestInput() {
-        val solution = solve(inputPath = Paths.get("..", "input", "test_input.txt"), durationMinutes = 10)
+        val solution =
+            solve(inputPath = Paths.get("..", "input", "test_input.txt"), durationMinutes = 10)
         assertEquals(99, solution)
     }
 }

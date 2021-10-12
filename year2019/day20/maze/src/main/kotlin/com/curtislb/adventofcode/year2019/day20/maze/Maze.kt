@@ -13,10 +13,12 @@ import com.curtislb.adventofcode.year2019.day20.maze.space.Space
 import java.io.File
 
 /**
- * A maze containing labeled spaces that lead to other locations within or to additional recursive copies of the maze.
+ * A maze containing labeled spaces that lead to other locations within or to additional recursive
+ * copies of the maze.
  *
- * @param file A file containing the layout for the maze. Each line should contain a row of characters, with each
- *  representing a [Space] in the maze, or part of a two-letter label to be associated with an adjacent non-empty space.
+ * @param file A file containing the layout for the maze. Each line should contain a row of
+ *  characters, with each representing a [Space] in the maze, or part of a two-letter label to be
+ *  associated with an adjacent non-empty space.
  */
 class Maze(file: File) {
     /**
@@ -36,17 +38,23 @@ class Maze(file: File) {
     private val labeledSpaces: Map<String, List<Point>> = findLabeledSpaces(grid)
 
     /**
-     * Returns the shortest distance through the maze from the space labeled [entranceLabel] to one labeled [exitLabel].
+     * Returns the shortest distance through the maze from the space labeled [entranceLabel] to one
+     * labeled [exitLabel].
      *
-     * If [isRecursive] is `false`, labeled spaces are treated as portals, which are adjacent to all other spaces in the
-     * maze that share the same label.
+     * If [isRecursive] is `false`, labeled spaces are treated as portals, which are adjacent to all
+     * other spaces in the maze that share the same label.
      *
-     * If [isRecursive] is `true`, labeled spaces are treated as entrances to or exits from recursive copies of the
-     * maze. Labeled spaces in the interior (not outer edges) of the maze are adjacent to other similarly labeled spaces
-     * in a copy of the maze one level deeper, and vice versa. In this case, the function returns the shortest distance
-     * between the spaces labeled [entranceLabel] and [exitLabel] within the original, outermost copy of the maze.
+     * If [isRecursive] is `true`, labeled spaces are treated as entrances to or exits from
+     * recursive copies of the maze. Labeled spaces in the interior (not outer edges) of the maze
+     * are adjacent to other similarly labeled spaces in a copy of the maze one level deeper, and
+     * vice versa. In this case, the function returns the shortest distance between the spaces
+     * labeled [entranceLabel] and [exitLabel] within the original, outermost copy of the maze.
      */
-    fun findShortestDistance(entranceLabel: String, exitLabel: String, isRecursive: Boolean = false): Long? {
+    fun findShortestDistance(
+        entranceLabel: String,
+        exitLabel: String,
+        isRecursive: Boolean = false
+    ): Long? {
         return bfsDistance(
             source = Location(labeledSpaces[entranceLabel]?.first() ?: return null),
             isGoal = { location ->
@@ -72,13 +80,17 @@ class Maze(file: File) {
     /**
      * Returns all locations within the maze that are adjacent to [location].
      *
-     * The parameter [isRecursive] indicates whether the maze is recursive, and causes the points and depths of adjacent
-     * locations to be determined accordingly.
+     * The parameter [isRecursive] indicates whether the maze is recursive, and causes the points
+     * and depths of adjacent locations to be determined accordingly.
      *
      * @see [findShortestDistance]
      */
     private fun getPortalLocations(location: Location, isRecursive: Boolean): List<Location> {
-        return if (isRecursive) getRecursivePortalLocations(location) else getNonRecursivePortalLocations(location)
+        return if (isRecursive) {
+            getRecursivePortalLocations(location)
+        } else {
+            getNonRecursivePortalLocations(location)
+        }
     }
 
     /**
@@ -94,7 +106,8 @@ class Maze(file: File) {
             space !is LabeledSpace || (isOuterPortal && location.depth == 0) -> emptyList()
 
             else -> {
-                val newPoints = labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
+                val newPoints =
+                    labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
                 val newDepth = if (isOuterPortal) location.depth - 1 else location.depth + 1
                 newPoints.map { Location(it, newDepth) }
             }
@@ -110,7 +123,8 @@ class Maze(file: File) {
     private fun getNonRecursivePortalLocations(location: Location): List<Location> {
         return when (val space = grid.getOrNull(location.point)) {
             is LabeledSpace -> {
-                val newPoints = labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
+                val newPoints =
+                    labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
                 newPoints.map { Location(it) }
             }
 
@@ -119,17 +133,18 @@ class Maze(file: File) {
     }
 
     /**
-     * Returns `true` if a given [point] in the maze is on one of the outer edges, or `false` otherwise.
+     * Returns `true` if a given [point] in the maze is on an outer edge, or `false` otherwise.
      */
     private fun isOuterPoint(point: Point): Boolean {
         val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return rowIndex == 0 || rowIndex == grid.lastRowIndex || colIndex == 0 || colIndex == grid.lastColumnIndex
+        return rowIndex == 0 || rowIndex == grid.lastRowIndex ||
+            colIndex == 0 || colIndex == grid.lastColumnIndex
     }
 
     companion object {
         /**
-         * Processes the given [charRows] (representing a maze) by removing all label characters, and returns a map from
-         * each labeled point in the grid to its associated label.
+         * Processes the given [charRows] (representing a maze) by removing all label characters,
+         * and returns a map from each labeled point in the grid to its associated label.
          */
         private fun processLabels(charRows: List<MutableList<Char>>): Map<Point, String> {
             val spaceLabels = mutableMapOf<Point, String>()
@@ -142,7 +157,8 @@ class Maze(file: File) {
                         var position: Point? = null
                         if (charRows.getOrNull(rowIndex + 1, colIndex)?.isLetter() == true) {
                             // Read this vertical label from top to bottom.
-                            label = "${charRows[rowIndex][colIndex]}${charRows[rowIndex + 1][colIndex]}"
+                            label =
+                                "${charRows[rowIndex][colIndex]}${charRows[rowIndex + 1][colIndex]}"
 
                             // Check above and below the label for a non-empty space.
                             val charAbove = charRows.getOrNull(rowIndex - 1, colIndex)
@@ -157,7 +173,8 @@ class Maze(file: File) {
                             charRows[rowIndex + 1][colIndex] = EmptySpace.symbol
                         } else if (charRows.getOrNull(rowIndex, colIndex + 1)?.isLetter() == true) {
                             // Read this horizontal label from left to right.
-                            label = "${charRows[rowIndex][colIndex]}${charRows[rowIndex][colIndex + 1]}"
+                            label =
+                                "${charRows[rowIndex][colIndex]}${charRows[rowIndex][colIndex + 1]}"
 
                             // Check left and right of the label for a non-empty space
                             val charLeft = charRows.getOrNull(rowIndex, colIndex - 1)
@@ -184,12 +201,16 @@ class Maze(file: File) {
         }
 
         /**
-         * Returns a grid of spaces within a maze from the given [charRows] containing space symbols and the map
-         * [spaceLabels], which maps points in [charRows] to their associated labels.
+         * Returns a grid of spaces within a maze from the given [charRows] containing space symbols
+         * and the map [spaceLabels], which maps points in [charRows] to their associated labels.
          *
-         * The resulting grid is made as compact as possible, with empty spaces on the exterior of the maze excluded.
+         * The resulting grid is made as compact as possible, with empty spaces on the exterior of
+         * the maze excluded.
          */
-        private fun createSpaceGrid(charRows: List<List<Char>>, spaceLabels: Map<Point, String>): Grid<Space> {
+        private fun createSpaceGrid(
+            charRows: List<List<Char>>,
+            spaceLabels: Map<Point, String>
+        ): Grid<Space> {
             val fullGrid = charRows.mapIndexed { rowIndex, row ->
                 row.mapIndexed { colIndex, char ->
                     val space = Space.from(char)
@@ -201,14 +222,16 @@ class Maze(file: File) {
             return mutableGridOf<Space>().apply {
                 for (rowIndex in 2..(fullGrid.lastIndex - 2)) {
                     val fullRow = fullGrid[rowIndex]
-                    val compactRow = fullRow.subList(2, fullRow.size).dropLastWhile { it == EmptySpace }
+                    val compactRow =
+                        fullRow.subList(2, fullRow.size).dropLastWhile { it == EmptySpace }
                     addRow(compactRow)
                 }
             }
         }
 
         /**
-         * Returns a map from each unique label in [grid] to the positions of all corresponding labeled spaces.
+         * Returns a map from each unique label in [grid] to the positions of all corresponding
+         * labeled spaces.
          */
         private fun findLabeledSpaces(grid: Grid<Space>): Map<String, List<Point>> {
             return mutableMapOf<String, MutableList<Point>>().apply {

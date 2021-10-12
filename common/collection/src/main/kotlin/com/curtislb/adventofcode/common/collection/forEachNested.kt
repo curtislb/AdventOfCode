@@ -3,33 +3,33 @@ package com.curtislb.adventofcode.common.collection
 /**
  * Simulates a [levelCount] nested loop over the items in this list.
  *
- * For each innermost loop iteration, the [process] function is applied to a list of pairs representing the current
- * index and corresponding item for each loop level (from outermost to innermost). This continues until the outermost
- * loop is exhausted or until [process] returns `true`, indicating that the function should terminate early.
+ * For each innermost loop iteration, the [process] function is applied to a list of pairs
+ * representing the current index and corresponding item for each loop level (from outermost to
+ * innermost). This continues until the outermost loop is exhausted or until [process] returns
+ * `true`, indicating that the function should terminate early.
  *
  * If [overlapIndices] is `true`, each level will loop over the full range of valid indices:
+ *
  * ```
- * for (i[0] in indices) {
- *     for (i[1] in indices) {
- *         ...
- *         for (i[n] in indices) {
- *             if (process(listOf(Pair(i[0], this[i[0]]), Pair(i[1], this[i[1]]), ..., Pair(i[n], this[i[n]])))) {
- *                 return
- *             }
+ * for (i_0 in indices) {
+ *     ...
+ *     for (i_n in indices) {
+ *         if (process(listOf(Pair(i_0, this[i_0]), ..., Pair(i_n, this[i_n])))) {
+ *             return
  *         }
  *     }
  * }
  * ```
  *
- * Otherwise, if [overlapIndices] is `false`, the indices at each loop level will be strictly increasing:
+ * Otherwise, if [overlapIndices] is `false`, the indices at each loop level will be strictly
+ * increasing:
+ *
  * ```
- * for (i[0] in 0..(lastIndex - n)) {
- *     for (i[1] in (i[0] + 1)..(lastIndex - n + 1)) {
- *         ...
- *         for (i[n] in (i[n-1] + 1)..lastIndex) {
- *             if (process(listOf(Pair(i[0], this[i[0]]), Pair(i[1], this[i[1]]), ..., Pair(i[n], this[i[n]])))) {
- *                 return
- *             }
+ * for (i_0 in 0..(lastIndex - n)) {
+ *     ...
+ *     for (i_n in (i_n_minus_1 + 1)..lastIndex) {
+ *         if (process(listOf(Pair(i_0, this[i_0]), ..., Pair(i_n, this[i_n])))) {
+ *             return
  *         }
  *     }
  * }
@@ -57,8 +57,8 @@ fun <T> List<T>.forEachNested(
 }
 
 /**
- * Checks if this index array is valid for the given [listSize], according to the parameters of the [forEachNested]
- * function.
+ * Checks if this index array is valid for the given [listSize], according to the parameters of the
+ * [forEachNested] function.
  */
 private fun IntArray.isValid(listSize: Int, levelCount: Int, overlapIndices: Boolean): Boolean {
     for (i in 0..lastIndex) {
@@ -68,7 +68,7 @@ private fun IntArray.isValid(listSize: Int, levelCount: Int, overlapIndices: Boo
         }
 
         // Indices must be non-overlapping if specified.
-        if (i > 0 && !overlapIndices && this[i - 1] >= this[i]){
+        if (i > 0 && !overlapIndices && this[i - 1] >= this[i]) {
             return false
         }
     }
@@ -100,7 +100,8 @@ private fun IntArray.increment(listSize: Int, levelCount: Int, overlapIndices: B
 }
 
 /**
- * Returns the maximum index for a given loop [level], according to the parameters of the [forEachNested] function.
+ * Returns the maximum index for a given loop [level], according to the parameters of the
+ * [forEachNested] function.
  */
 private fun maxIndexAt(level: Int, listSize: Int, levelCount: Int, overlapIndices: Boolean): Int {
     return if (overlapIndices) listSize - 1 else listSize - levelCount + level

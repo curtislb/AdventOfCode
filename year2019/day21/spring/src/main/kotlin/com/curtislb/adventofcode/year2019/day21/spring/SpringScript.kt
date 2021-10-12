@@ -12,11 +12,14 @@ class SpringScript private constructor(val instructions: List<String>) {
 
     companion object {
         /**
-         * Returns a springscript program with the given [extendedMode] setting and a [prepare] function that provides
-         * instructions to the program [Builder].
+         * Returns a springscript program with the given [extendedMode] setting and a [prepare]
+         * function that provides instructions to the program [Builder].
          */
         @Generated
-        inline fun create(extendedMode: Boolean = false, prepare: Builder.() -> Unit): SpringScript {
+        inline fun create(
+            extendedMode: Boolean = false,
+            prepare: Builder.() -> Unit
+        ): SpringScript {
             return Builder(extendedMode).apply(prepare).build()
         }
     }
@@ -33,10 +36,10 @@ class SpringScript private constructor(val instructions: List<String>) {
         private val instructions: MutableList<String> = mutableListOf()
 
         /**
-         * Appends an AND instruction to the resulting springscript program and returns this builder.
+         * Appends an AND instruction to the springscript program and returns this builder.
          *
-         * This instruction sets [register2] to `true` if both [register1] and [register2] are `true`; otherwise, it
-         * sets [register2] to `false`.
+         * This instruction sets [register2] to `true` if both [register1] and [register2] are
+         * `true`; otherwise, it sets [register2] to `false`.
          */
         fun and(register1: Register, register2: Register): Builder {
             checkSensorRange(register1, register2)
@@ -46,10 +49,10 @@ class SpringScript private constructor(val instructions: List<String>) {
         }
 
         /**
-         * Appends an OR instruction to the resulting springscript program and returns this builder.
+         * Appends an OR instruction to the springscript program and returns this builder.
          *
-         * This instruction sets [register2] to `true` if at least one of [register1] and [register2] is `true`;
-         * otherwise, it sets [register2] to `false`.
+         * This instruction sets [register2] to `true` if at least one of [register1] and
+         * [register2] is `true`; otherwise, it sets [register2] to `false`.
          */
         fun or(register1: Register, register2: Register): Builder {
             checkSensorRange(register1, register2)
@@ -59,10 +62,10 @@ class SpringScript private constructor(val instructions: List<String>) {
         }
 
         /**
-         * Appends a NOT instruction to the resulting springscript program and returns this builder.
+         * Appends a NOT instruction to the springscript program and returns this builder.
          *
-         * This instruction sets [register2] to `true` if [register1] is `false`; otherwise, it sets [register2] to
-         * `false`.
+         * This instruction sets [register2] to `true` if [register1] is `false`; otherwise, it sets
+         * [register2] to `false`.
          */
         fun not(register1: Register, register2: Register): Builder {
             checkSensorRange(register1, register2)
@@ -72,7 +75,8 @@ class SpringScript private constructor(val instructions: List<String>) {
         }
 
         /**
-         * Throws an [IllegalArgumentException] if not all [registers] are accessible in the current sensor mode.
+         * Throws an [IllegalArgumentException] if not all [registers] are accessible in the current
+         * sensor mode.
          */
         private fun checkSensorRange(vararg registers: Register) {
             if (!isExtendedMode) {
@@ -85,8 +89,8 @@ class SpringScript private constructor(val instructions: List<String>) {
         }
 
         /**
-         * Returns a springscript program with either WALK or RUN appended to the current list of instructions,
-         * according to the [isExtendedMode] flag.
+         * Returns a springscript program with either WALK or RUN appended to the current list of
+         * instructions, according to the [isExtendedMode] flag.
          */
         fun build(): SpringScript {
             instructions.add(if (isExtendedMode) "RUN" else "WALK")
@@ -95,7 +99,8 @@ class SpringScript private constructor(val instructions: List<String>) {
 
         companion object {
             /**
-             * Throws an [IllegalArgumentException] if a springscript program can't write to the given [register].
+             * Throws an [IllegalArgumentException] if a springscript program can't write to the
+             * given [register].
              */
             private fun checkIsWritable(register: Register) {
                 require(register.isWritable) { "Can't write to read-only register: $register" }

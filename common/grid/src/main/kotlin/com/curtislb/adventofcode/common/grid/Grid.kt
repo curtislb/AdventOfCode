@@ -60,7 +60,9 @@ interface Grid<out T> {
     /**
      * Checks if the given [point] corresponds to an element in this grid.
      */
-    operator fun contains(point: Point): Boolean = point.x in columnIndices && -point.y in rowIndices
+    operator fun contains(point: Point): Boolean {
+        return point.x in columnIndices && -point.y in rowIndices
+    }
 
     /**
      * Returns the element at the given [rowIndex] and [colIndex] in this grid.
@@ -76,14 +78,20 @@ interface Grid<out T> {
     }
 
     /**
-     * Returns the element at the given [rowIndex] and [colIndex] in this grid, or `null` if there is no such element.
+     * Returns the element at the given [rowIndex] and [colIndex] in this grid, or `null` if there
+     * is no such element.
      */
     fun getOrNull(rowIndex: Int, colIndex: Int): T? {
-        return if (rowIndex in rowIndices && colIndex in columnIndices) this[rowIndex, colIndex] else null
+        return if (rowIndex in rowIndices && colIndex in columnIndices) {
+            this[rowIndex, colIndex]
+        } else {
+            null
+        }
     }
 
     /**
-     * Returns the element at the given [point] position in this grid, or `null` if there is no such element.
+     * Returns the element at the given [point] position in this grid, or `null` if there is no such
+     * element.
      */
     fun getOrNull(point: Point): T? = if (point in this) this[point] else null
 
@@ -118,16 +126,17 @@ interface Grid<out T> {
     fun lastColumn(): List<T> = column(lastColumnIndex)
 
     /**
-     * Returns a read-only copy of the row corresponding to the given [rowIndex] in this grid, or `null` if there is no
-     * such row.
+     * Returns a read-only copy of the row corresponding to the given [rowIndex] in this grid, or
+     * `null` if there is no such row.
      */
     fun rowOrNull(rowIndex: Int): List<T>? = if (rowIndex in rowIndices) row(rowIndex) else null
 
     /**
-     * Returns a read-only copy of the column corresponding to the given [colIndex] in this grid, or `null` if there is
-     * no such column.
+     * Returns a read-only copy of the column corresponding to the given [colIndex] in this grid, or
+     * `null` if there is no such column.
      */
-    fun columnOrNull(colIndex: Int): List<T>? = if (colIndex in columnIndices) column(colIndex) else null
+    fun columnOrNull(colIndex: Int): List<T>? =
+        if (colIndex in columnIndices) column(colIndex) else null
 
     /**
      * Returns a read-only copy of each of the rows in this grid.
@@ -140,41 +149,46 @@ interface Grid<out T> {
     fun columns(): List<List<T>> = List(width, ::column)
 
     /**
-     * Returns the row at the given [rowIndex] in this grid. The contents of this row may change over time.
+     * Returns the row at the given [rowIndex] in this grid. The contents of this row may change
+     * over time.
      *
-     * Implementors may override this function to provide a more efficient version of [row] without needing to guarantee
-     * immutability for the returned list.
+     * Implementors may override this function to provide a more efficient version of [row]
+     * without needing to guarantee immutability for the returned list.
      */
     fun volatileRow(rowIndex: Int): List<T> = row(rowIndex)
 
     /**
-     * Returns the column at the given [colIndex] in this grid. The contents of this column may change over time.
+     * Returns the column at the given [colIndex] in this grid. The contents of this column may
+     * change over time.
      *
-     * Implementors may override this function to provide a more efficient version of [column] without needing to
-     * guarantee immutability for the returned list.
+     * Implementors may override this function to provide a more efficient version of [column]
+     * without needing to guarantee immutability for the returned list.
      */
     fun volatileColumn(colIndex: Int): List<T> = column(colIndex)
 
     /**
-     * Returns a list containing each of the rows in this grid. The contents of this list may change over time.
+     * Returns a list containing each of the rows in this grid. The contents of this list may change
+     * over time.
      *
-     * Implementors may override this function to provide a more efficient version of [rows] without needing to
-     * guarantee immutability for the returned list.
+     * Implementors may override this function to provide a more efficient version of [rows] without
+     * needing to guarantee immutability for the returned list.
      */
     fun volatileRows(): List<List<T>> = rows()
 
     /**
-     * Returns a list containing each of the columns in this grid. The contents of this list may change over time.
+     * Returns a list containing each of the columns in this grid. The contents of this list may
+     * change over time.
      *
-     * Implementors may override this function to provide a more efficient version of [columns] without needing to
-     * guarantee immutability for the returned list.
+     * Implementors may override this function to provide a more efficient version of [columns]
+     * without needing to guarantee immutability for the returned list.
      */
     fun volatileColumns(): List<List<T>> = columns()
 
     /**
      * Returns a read-only copy of this grid that has been flipped horizontally.
      */
-    fun flippedHorizontal(): Grid<T> = transformed(height, width) { Point(lastColumnIndex - it.x, it.y) }
+    fun flippedHorizontal(): Grid<T> =
+        transformed(height, width) { Point(lastColumnIndex - it.x, it.y) }
 
     /**
      * Returns a read-only copy of this grid that has been rotated counterclockwise by 90 degrees.
@@ -182,18 +196,25 @@ interface Grid<out T> {
     fun rotatedLeft(): Grid<T> = transformed(width, height) { Point(-it.y, it.x - lastColumnIndex) }
 
     /**
-     * Returns a new grid with the given [newHeight] and [newWidth]. The element at each point in the current grid is
-     * copied to the point in the new grid given by the [mapPoint] function.
+     * Returns a new grid with the given [newHeight] and [newWidth]. The element at each point in
+     * the current grid is copied to the point in the new grid given by the [mapPoint] function.
      *
-     * Any points in the new grid that are not explicitly mapped to by the [mapPoint] function will get a copy of the
-     * element in the top-left corner of the current grid.
+     * Any points in the new grid that are not explicitly mapped to by the [mapPoint] function will
+     * get a copy of the element in the top-left corner of the current grid.
      *
-     * @throws IllegalArgumentException If the current grid is empty and either [newHeight] or [newWidth] is nonzero.
+     * @throws IllegalArgumentException If the current grid is empty and either [newHeight] or
+     *  [newWidth] is nonzero.
      */
     @Generated
-    private inline fun transformed(newHeight: Int, newWidth: Int, mapPoint: (point: Point) -> Point): Grid<T> {
+    private inline fun transformed(
+        newHeight: Int,
+        newWidth: Int,
+        mapPoint: (point: Point) -> Point
+    ): Grid<T> {
         if (isEmpty()) {
-            require(newHeight == 0 && newWidth == 0) { "Empty grid can't be transformed into a non-empty grid." }
+            require(newHeight == 0 && newWidth == 0) {
+                "Empty grid can't be transformed into a non-empty grid."
+            }
             return this
         }
 
@@ -205,7 +226,8 @@ interface Grid<out T> {
 }
 
 /**
- * Returns a read-only grid with the given [height] and [width], with each element set by the given [init] function.
+ * Returns a read-only grid with the given [height] and [width], with each element set by the given
+ * [init] function.
  */
 @Generated
 @Suppress("FunctionName")
