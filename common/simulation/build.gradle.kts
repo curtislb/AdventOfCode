@@ -2,7 +2,7 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-val lombokVersion = "1.18.22"
+val lombokVersion: String by extra
 
 dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")

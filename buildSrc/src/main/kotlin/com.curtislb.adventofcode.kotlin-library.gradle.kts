@@ -3,10 +3,13 @@ plugins {
     kotlin("jvm")
 }
 
-val jacocoVersion = "0.8.7"
-val jdkVersion = "11"
-val junitVersion = "5.8.0"
-val kotlinVersion = "1.5.31"
+// Define extra properties for version strings
+val hamcrestVersion by extra("2.2")
+val jacocoVersion by extra("0.8.7")
+val jdkVersion by extra("11")
+val junitVersion by extra("5.8.0")
+val kotlinVersion by extra("1.5.31")
+val lombokVersion by extra("1.18.22")
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
@@ -48,9 +51,7 @@ configurations.create("transitiveSourcesElements") {
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("source-folders"))
     }
 
-    sourceSets.main.get().java.srcDirs.forEach {
-        outgoing.artifact(it)
-    }
+    sourceSets.main.get().java.srcDirs.forEach { outgoing.artifact(it) }
 }
 
 // Share the coverage data to be aggregated for the whole product

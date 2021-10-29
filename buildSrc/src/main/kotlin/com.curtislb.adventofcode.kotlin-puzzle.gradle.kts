@@ -1,11 +1,13 @@
 plugins {
-    id("application")
+    application
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-// Extract year, day, and part strings from the project path.
-val regex = Regex("""\d+""")
+@Suppress("HasPlatformType")
 val path = projectDir.toPath().toAbsolutePath()
+
+// Extract year, day, and part strings from the project path
+val regex = Regex("""\d+""")
 val year = regex.find(path.parent.parent.fileName.toString())?.value
 val day = regex.find(path.parent.fileName.toString())?.value
 val part = regex.find(path.fileName.toString())?.value

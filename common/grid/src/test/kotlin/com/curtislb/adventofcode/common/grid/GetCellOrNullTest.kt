@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class GetCellOrNullTest {
     @Test
     fun testWithEmptyGrid() {
-        assertNull(emptyGrid<Nothing>().getOrNull(0, 0))
+        assertNull(emptyGrid<Any>().getOrNull(0, 0))
     }
 
     @Test
