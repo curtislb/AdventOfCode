@@ -1,0 +1,5 @@
+# Turn off default status checks
+coverage:
+  status:
+    project: off
+    patch: off
