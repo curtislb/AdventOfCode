@@ -35,7 +35,7 @@ class JoltageAdapters(ratings: Set<Int>) {
         val counter = Counter<Int>()
         for (index in 1..sortedRatings.lastIndex) {
             val difference = sortedRatings[index] - sortedRatings[index - 1]
-            counter.add(difference)
+            counter[difference]++
         }
         return counter
     }

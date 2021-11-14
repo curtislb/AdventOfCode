@@ -61,6 +61,10 @@ fun <T> List<T>.forEachNested(
  * [forEachNested] function.
  */
 private fun IntArray.isValid(listSize: Int, levelCount: Int, overlapIndices: Boolean): Boolean {
+    if (isEmpty()) {
+        return false
+    }
+
     for (i in 0..lastIndex) {
         // Each index must be in a valid range.
         if (this[i] !in 0..maxIndexAt(i, listSize, levelCount, overlapIndices)) {

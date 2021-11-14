@@ -28,7 +28,7 @@ class Body(
     /**
      * The current total energy (potential and kinetic) of this body.
      */
-    val totalEnergy: Int get() = position.sumBy { abs(it) } * velocity.sumBy { abs(it) }
+    val totalEnergy: Int get() = position.sumOf { abs(it) } * velocity.sumOf { abs(it) }
 
     /**
      * A celestial body, with a [position] and [velocity] in 3D space.

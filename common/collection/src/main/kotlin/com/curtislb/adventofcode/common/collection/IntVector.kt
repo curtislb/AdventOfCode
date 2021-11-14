@@ -9,20 +9,6 @@ open class IntVector(protected open vararg val components: Int) {
     val size: Int get() = components.size
 
     /**
-     * TODO
-     */
-    val neighbors: List<IntVector>
-        get() = mutableListOf<IntVector>().apply {
-            (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
-                val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
-                if (offsets.any { it != 0 }) {
-                    add(this@IntVector + IntVector(*offsets))
-                }
-                false // Don't stop iterating.
-            }
-        }
-
-    /**
      * Returns the component at the given [index] in this vector.
      */
     operator fun get(index: Int): Int = components[index]
@@ -36,6 +22,7 @@ open class IntVector(protected open vararg val components: Int) {
         require(size == other.size) {
             "The sizes of this vector ($size) and other (${other.size}) must match."
         }
+
         val componentSums = IntArray(size) { this[it] + other[it] }
         return IntVector(*componentSums)
     }
@@ -44,12 +31,27 @@ open class IntVector(protected open vararg val components: Int) {
      * Returns the sum of [transform] applied to each component of this vector.
      */
     @Generated
-    inline fun sumBy(transform: (component: Int) -> Int): Int {
+    inline fun sumOf(transform: (component: Int) -> Int): Int {
         var sum = 0
         for (i in 0 until size) {
             sum += transform(this[i])
         }
         return sum
+    }
+
+    /**
+     * All other same-[size] vectors whose component values differ from this one by at most 1.
+     */
+    fun neighbors(): List<IntVector> {
+        return mutableListOf<IntVector>().apply {
+            (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
+                val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
+                if (offsets.any { it != 0 }) {
+                    add(this@IntVector + IntVector(*offsets))
+                }
+                false // Don't stop iterating.
+            }
+        }
     }
 
     /**
@@ -66,9 +68,9 @@ open class IntVector(protected open vararg val components: Int) {
     override fun toString(): String = "<${components.joinToString()}>"
 
     /**
-     * TODO
+     * Returns a mutable copy of this vector.
      */
-    fun toMutableVector(): MutableIntVector = MutableIntVector(*components)
+    fun toMutableIntVector(): MutableIntVector = MutableIntVector(*components)
 
     companion object {
         /**

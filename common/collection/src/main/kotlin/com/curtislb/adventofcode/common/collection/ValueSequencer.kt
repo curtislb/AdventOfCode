@@ -6,16 +6,16 @@ import java.util.Deque
 /**
  * Produces values from one or more sequences in the order they were provided.
  */
-class ValueSequencer<T> {
+class ValueSequencer<E> {
     /**
      * All currently queued sequences of values.
      */
-    private var sequences: Deque<Iterator<T>> = ArrayDeque()
+    private var sequences: Deque<Iterator<E>> = ArrayDeque()
 
     /**
      * Queues an additional [valueSequence] after all previous values.
      */
-    fun queue(valueSequence: Sequence<T>) {
+    fun queue(valueSequence: Sequence<E>) {
         sequences.addLast(valueSequence.iterator())
     }
 
@@ -39,7 +39,7 @@ class ValueSequencer<T> {
      *
      * @throws NoSuchElementException If there is no queued value to return.
      */
-    fun next(): T {
+    fun next(): E {
         dropEmptySequences()
         if (sequences.isEmpty()) {
             throw NoSuchElementException("Can't get next value. All queued values are exhausted.")

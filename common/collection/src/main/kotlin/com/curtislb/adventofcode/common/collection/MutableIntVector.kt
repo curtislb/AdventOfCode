@@ -77,9 +77,9 @@ class MutableIntVector(override vararg val components: Int) : IntVector(*compone
     override fun copy(): MutableIntVector = MutableIntVector(*components.clone())
 
     /**
-     * TODO
+     * Returns an immutable copy of this vector.
      */
-    fun toVector(): IntVector = copy()
+    fun toIntVector(): IntVector = copy()
 
     companion object {
         /**

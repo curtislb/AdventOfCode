@@ -5,43 +5,42 @@ package com.curtislb.adventofcode.common.collection
  *
  * @param capacity The maximum number of elements that this collection can contain.
  *
- * @throws IllegalArgumentException If [capacity] is negative.
+ * @throws IllegalArgumentException If [capacity] is negative or 0.
  */
-class FifoCache<T>(val capacity: Int) : Collection<T> {
+class FifoCache<E>(val capacity: Int) : Collection<E> {
     init {
-        require(capacity >= 0) { "Capacity must be non-negative: $capacity" }
+        require(capacity > 0) { "Capacity must be positive: $capacity" }
     }
 
     /**
      * An internal deque used to store the cached elements.
      */
-    private val deque: ArrayDeque<T> = ArrayDeque(capacity)
+    private val deque: ArrayDeque<E> = ArrayDeque(capacity)
 
     override val size: Int get() = deque.size
 
-    override fun contains(element: T): Boolean = element in deque
+    override fun contains(element: E): Boolean = element in deque
 
-    override fun containsAll(elements: Collection<T>): Boolean = deque.containsAll(elements)
+    override fun containsAll(elements: Collection<E>): Boolean = deque.containsAll(elements)
 
     override fun isEmpty(): Boolean = deque.isEmpty()
 
-    override fun iterator(): Iterator<T> = deque.iterator()
+    override fun iterator(): Iterator<E> = deque.iterator()
 
     /**
-     * Returns the element at a given [index] in this collection.
+     * Returns the element at the given [index] in this cache.
      */
-    operator fun get(index: Int): T = deque[index]
+    operator fun get(index: Int): E = deque[index]
 
     /**
-     * TODO
+     * Checks if this cache contains the maximum allowed number of elements.
      */
     fun isFull(): Boolean = deque.size == capacity
 
     /**
-     * Appends a new [element] to this collection, removing the least recently added element if
-     * necessary.
+     * Appends a new [element] to the cache, removing the least recently added element if needed.
      */
-    fun add(element: T) {
+    fun add(element: E) {
         if (isFull()) {
             deque.removeFirst()
         }

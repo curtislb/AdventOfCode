@@ -21,6 +21,7 @@ class CounterTest {
         assertFalse("bar" in counter)
         assertEquals(0L, counter["bar"])
         assertEquals(0L, counter["baz"])
+        assertEquals("{}", counter.toString())
     }
 
     @Test
@@ -87,6 +88,86 @@ class CounterTest {
         assertEquals(23L, counter["badger"])
         assertEquals(0L, counter["mushroom"])
         assertEquals(-5L, counter["snake"])
+    }
+
+    @Test
+    fun testConstructFromItems() {
+        val counter = Counter("the spark that will light the fire that will burn the".split(' '))
+        assertEquals(
+            mapOf(
+                "the" to 3L,
+                "spark" to 1L,
+                "that" to 2L,
+                "will" to 2L,
+                "light" to 1L,
+                "fire" to 1L,
+                "burn" to 1L
+            ).entries,
+            counter.entriesWithNonzeroCount
+        )
+    }
+
+    @Test
+    fun testContainsCounter() {
+        val counterA = Counter<String>()
+        val counterB = Counter<String>()
+        assertTrue(counterA in counterB)
+        assertTrue(counterB in counterA)
+
+        counterA["red"] = 1L
+        assertFalse(counterA in counterB)
+        assertTrue(counterB in counterA)
+
+        counterB["red"] = 1L
+        assertTrue(counterA in counterB)
+        assertTrue(counterB in counterA)
+
+        counterB["red"] = 2L
+        assertTrue(counterA in counterB)
+        assertFalse(counterB in counterA)
+
+        counterA["blue"] = 3L
+        assertFalse(counterA in counterB)
+        assertFalse(counterB in counterA)
+
+        counterA["red"] = 2L
+        assertFalse(counterA in counterB)
+        assertTrue(counterB in counterA)
+
+        counterB["blue"] = 4L
+        assertTrue(counterA in counterB)
+        assertFalse(counterB in counterA)
+
+        counterA["green"] = -1L
+        assertTrue(counterA in counterB)
+        assertFalse(counterB in counterA)
+
+        counterB["green"] = -2L
+        assertFalse(counterA in counterB)
+        assertFalse(counterB in counterA)
+
+        counterA["green"] = -3L
+        assertTrue(counterA in counterB)
+        assertFalse(counterB in counterA)
+    }
+
+    @Test
+    fun testAddAll() {
+        val counter = Counter<String>()
+        counter.addAll(listOf("banana", "apple", "banana", "orange", "orange", "banana"))
+        assertEquals(1L, counter["apple"])
+        assertEquals(3L, counter["banana"])
+        assertEquals(2L, counter["orange"])
+        assertEquals(0L, counter["kiwi"])
+        assertEquals(0L, counter["kumquat"])
+
+        counter["kiwi"] = -1L
+        counter.addAll(listOf("orange", "banana", "kiwi", "orange", "orange", "kiwi", "apple"))
+        assertEquals(2L, counter["apple"])
+        assertEquals(4L, counter["banana"])
+        assertEquals(5L, counter["orange"])
+        assertEquals(1L, counter["kiwi"])
+        assertEquals(0L, counter["kumquat"])
     }
 
     @Test

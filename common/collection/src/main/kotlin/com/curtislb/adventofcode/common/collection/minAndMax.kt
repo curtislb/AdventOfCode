@@ -20,19 +20,25 @@ inline fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(
         val value = transform(element)
 
         // Update minimum element and value if necessary.
-        minValue?.let {
-            if (value < it) {
+        minValue?.let { currentMinValue ->
+            if (value < currentMinValue) {
                 minElement = element
                 minValue = value
             }
+        } ?: run {
+            minElement = element
+            minValue = value
         }
 
         // Update maximum element and value if necessary.
-        maxValue?.let {
-            if (value > it) {
+        maxValue?.let { currentMaxValue ->
+            if (value > currentMaxValue) {
                 maxElement = element
                 maxValue = value
             }
+        } ?: run {
+            maxElement = element
+            maxValue = value
         }
     }
 
