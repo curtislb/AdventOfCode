@@ -6,7 +6,7 @@ plugins {
 // Define extra properties for version strings
 val hamcrestVersion by extra("2.2")
 val jacocoVersion by extra("0.8.7")
-val jdkVersion by extra("11")
+val javaVersion by extra("11")
 val junitVersion by extra("5.8.0")
 val kotlinVersion by extra("1.5.31")
 val lombokVersion by extra("1.18.22")
@@ -26,7 +26,7 @@ repositories {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = jdkVersion
+    kotlinOptions.jvmTarget = javaVersion
 }
 
 tasks.test {
