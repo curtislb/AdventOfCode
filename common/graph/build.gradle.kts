@@ -2,7 +2,7 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-val lombokVersion: String by extra
+val lombokVersion: String by project
 
 dependencies {
     implementation(project(":common:heap"))

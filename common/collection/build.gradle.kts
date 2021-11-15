@@ -2,8 +2,8 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-val hamcrestVersion: String by extra
-val lombokVersion: String by extra
+val hamcrestVersion: String by project
+val lombokVersion: String by project
 
 dependencies {
     testImplementation(project(":common:testing"))

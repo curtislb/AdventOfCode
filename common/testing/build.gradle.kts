@@ -2,8 +2,8 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-val hamcrestVersion: String by extra
-val kotlinVersion: String by extra
+val hamcrestVersion: String by project
+val kotlinVersion: String by project
 
 dependencies {
     implementation("org.hamcrest:hamcrest:$hamcrestVersion")

@@ -3,22 +3,15 @@ plugins {
     kotlin("jvm")
 }
 
-// Define extra properties for version strings
-val hamcrestVersion by extra("2.2")
-val jacocoVersion by extra("0.8.7")
-val javaVersion by extra("11")
-val junitVersion by extra("5.8.0")
-val kotlinVersion by extra("1.5.31")
-val lombokVersion by extra("1.18.22")
+val kotlinVersion: String by project
+val jacocoVersion: String by project
+val javaVersion: String by project
+val junitVersion: String by project
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-}
-
-jacoco {
-    toolVersion = jacocoVersion
 }
 
 repositories {
@@ -31,6 +24,10 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = jacocoVersion
 }
 
 // Do not generate reports for individual projects
