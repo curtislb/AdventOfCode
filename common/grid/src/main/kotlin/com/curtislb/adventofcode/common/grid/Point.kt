@@ -10,12 +10,12 @@ import kotlin.math.atan2
  */
 data class Point(val x: Int, val y: Int) {
     /**
-     * TODO
+     * Returns a new point by summing the corresponding coordinates of this point and [other].
      */
     operator fun plus(other: Point): Point = Point(x + other.x, y + other.y)
 
     /**
-     * TODO
+     * Returns a new point by subtracting the corresponding coordinates of [other] from this point.
      */
     operator fun minus(other: Point): Point = Point(x - other.x, y - other.y)
 
@@ -23,35 +23,29 @@ data class Point(val x: Int, val y: Int) {
      * Returns all points on the grid that are horizontally, vertically, or diagonally adjacent to
      * this one.
      */
-    fun allNeighbors(): List<Point> = ArrayList<Point>(8).apply {
-        for (dx in -1..1) {
-            for (dy in -1..1) {
-                if (dx != 0 || dy != 0) {
-                    add(Point(x + dx, y + dy))
-                }
-            }
-        }
-    }
+    fun allNeighbors(): List<Point> =
+        listOf(
+            Point(x - 1, y - 1),
+            Point(x - 1, y),
+            Point(x - 1, y + 1),
+            Point(x, y - 1),
+            Point(x, y + 1),
+            Point(x + 1, y - 1),
+            Point(x + 1, y),
+            Point(x + 1, y + 1)
+        )
 
     /**
      * Returns all points on the grid that are horizontally or vertically adjacent to this one.
      */
-    fun cardinalNeighbors(): List<Point> = listOf(
-        Point(x - 1, y),
-        Point(x, y - 1),
-        Point(x, y + 1),
-        Point(x + 1, y)
-    )
+    fun cardinalNeighbors(): List<Point> =
+        listOf(Point(x - 1, y), Point(x, y - 1), Point(x, y + 1), Point(x + 1, y))
 
     /**
      * Returns all points on the grid that are diagonally adjacent to this one.
      */
-    fun diagonalNeighbors(): List<Point> = listOf(
-        Point(x - 1, y - 1),
-        Point(x - 1, y + 1),
-        Point(x + 1, y - 1),
-        Point(x + 1, y + 1)
-    )
+    fun diagonalNeighbors(): List<Point> =
+        listOf(Point(x - 1, y - 1), Point(x - 1, y + 1), Point(x + 1, y - 1), Point(x + 1, y + 1))
 
     /**
      * Returns the point that is [distance] grid units in a given [direction] from this one.

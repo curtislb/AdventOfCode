@@ -25,9 +25,15 @@ internal object EmptyGrid : Grid<Nothing> {
     override fun rows(): List<List<Nothing>> = emptyList()
 
     override fun columns(): List<List<Nothing>> = emptyList()
+
+    override fun equals(other: Any?): Boolean = other is Grid<*> && other.isEmpty()
+
+    override fun hashCode(): Int = 1
+
+    override fun toString(): String = "[]"
 }
 
 /**
  * Returns an empty read-only grid.
  */
-fun <T> emptyGrid(): Grid<T> = EmptyGrid
+fun <E> emptyGrid(): Grid<E> = EmptyGrid

@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
-import com.curtislb.adventofcode.common.range.rangeSize
+import com.curtislb.adventofcode.common.range.sizeInclusive
 import lombok.Generated
 
 /**
@@ -18,16 +18,11 @@ inline fun <T> constructPointGrid(points: Iterable<Point>, valueAt: (point: Poin
     }
 
     // Populate all grid cells in the visible bounds.
-    val height = yRange.rangeSize
-    val width = xRange.rangeSize
+    val height = yRange.sizeInclusive
+    val width = xRange.sizeInclusive
     val minX = xRange.start
     val maxY = yRange.endInclusive
     return Grid(height, width) { rowIndex, colIndex ->
-        valueAt(
-            Point(
-                minX + colIndex,
-                maxY - rowIndex
-            )
-        )
+        valueAt(Point(minX + colIndex, maxY - rowIndex))
     }
 }

@@ -3,8 +3,7 @@ package com.curtislb.adventofcode.year2019.day18.vault
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.addRowWith
-import com.curtislb.adventofcode.common.grid.forEachPoint
-import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.year2019.day18.vault.space.EntranceSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
@@ -32,7 +31,7 @@ class Vault(file: File) {
      */
     val entranceLocations: Set<Point> by lazy {
         mutableSetOf<Point>().apply {
-            grid.forEachPoint { point, space ->
+            grid.forEachPointValue { point, space ->
                 if (space == EntranceSpace) {
                     add(point)
                 }
@@ -45,7 +44,7 @@ class Vault(file: File) {
      */
     val keyLocations: Map<Char, Point> by lazy {
         mutableMapOf<Char, Point>().apply {
-            grid.forEachPoint { point, space ->
+            grid.forEachPointValue { point, space ->
                 if (space is KeySpace) {
                     this[space.symbol] = point
                 }

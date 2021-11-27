@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.collection.getOrNull
 import com.curtislb.adventofcode.common.graph.bfsDistance
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.io.mapLines
 import com.curtislb.adventofcode.year2019.day20.maze.space.EmptySpace
@@ -235,7 +235,7 @@ class Maze(file: File) {
          */
         private fun findLabeledSpaces(grid: Grid<Space>): Map<String, List<Point>> {
             return mutableMapOf<String, MutableList<Point>>().apply {
-                grid.forEachPoint { point, space ->
+                grid.forEachPointValue { point, space ->
                     if (space is LabeledSpace) {
                         getOrPut(space.label) { mutableListOf() }.add(point)
                     }

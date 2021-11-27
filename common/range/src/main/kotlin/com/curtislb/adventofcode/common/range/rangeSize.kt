@@ -5,14 +5,15 @@ import java.math.BigInteger
 /**
  * Returns the number of distinct [Int] values in this range.
  */
-val ClosedRange<Int>.rangeSize: Int get() = endInclusive - start + 1
+val ClosedRange<Int>.sizeInclusive: Int get() = if (isEmpty()) 0 else endInclusive - start + 1
 
 /**
  * Returns the number of distinct [Long] values in this range.
  */
-val ClosedRange<Long>.rangeSize: Long get() = endInclusive - start + 1L
+val ClosedRange<Long>.sizeInclusive: Long get() = if (isEmpty()) 0 else endInclusive - start + 1L
 
 /**
  * Returns the number of distinct [BigInteger] values in this range.
  */
-val ClosedRange<BigInteger>.rangeSize: BigInteger get() = endInclusive - start + BigInteger.ONE
+val ClosedRange<BigInteger>.sizeInclusive: BigInteger
+    get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE

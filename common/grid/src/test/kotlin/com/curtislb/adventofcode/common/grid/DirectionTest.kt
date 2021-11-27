@@ -30,6 +30,26 @@ class DirectionTest {
     }
 
     @Test
+    fun testCountRightTurns() {
+        assertEquals(0, Direction.UP.countRightTurns(Direction.UP))
+        assertEquals(1, Direction.UP.countRightTurns(Direction.RIGHT))
+        assertEquals(2, Direction.UP.countRightTurns(Direction.DOWN))
+        assertEquals(3, Direction.UP.countRightTurns(Direction.LEFT))
+        assertEquals(3, Direction.RIGHT.countRightTurns(Direction.UP))
+        assertEquals(0, Direction.RIGHT.countRightTurns(Direction.RIGHT))
+        assertEquals(1, Direction.RIGHT.countRightTurns(Direction.DOWN))
+        assertEquals(2, Direction.RIGHT.countRightTurns(Direction.LEFT))
+        assertEquals(2, Direction.DOWN.countRightTurns(Direction.UP))
+        assertEquals(3, Direction.DOWN.countRightTurns(Direction.RIGHT))
+        assertEquals(0, Direction.DOWN.countRightTurns(Direction.DOWN))
+        assertEquals(1, Direction.DOWN.countRightTurns(Direction.LEFT))
+        assertEquals(1, Direction.LEFT.countRightTurns(Direction.UP))
+        assertEquals(2, Direction.LEFT.countRightTurns(Direction.RIGHT))
+        assertEquals(3, Direction.LEFT.countRightTurns(Direction.DOWN))
+        assertEquals(0, Direction.LEFT.countRightTurns(Direction.LEFT))
+    }
+
+    @Test
     fun testFromValidChar() {
         assertEquals(Direction.UP, Direction.from('U'))
         assertEquals(Direction.UP, Direction.from('u'))

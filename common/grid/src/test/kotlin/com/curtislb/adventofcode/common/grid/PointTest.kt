@@ -12,6 +12,90 @@ import org.junit.jupiter.api.assertThrows
  */
 class PointTest {
     @Test
+    fun testPlus() {
+        assertEquals(Point.ORIGIN, Point.ORIGIN + Point.ORIGIN)
+        assertEquals(Point(1, -2), Point.ORIGIN + Point(1, -2))
+        assertEquals(Point(-3, 4), Point(-3, 4) + Point.ORIGIN)
+        assertEquals(Point(-57, 3), Point(-44, 16) + Point(-13, -13))
+        assertEquals(Point(-67, -73), Point(-22, -42) + Point(-45, -31))
+        assertEquals(Point(5, -15), Point(23, 10) + Point(-18, -25))
+        assertEquals(Point(-44, 17), Point(-10, -5) + Point(-34, 22))
+        assertEquals(Point(65, 20), Point(24, 8) + Point(41, 12))
+        assertEquals(Point(15, -31), Point(37, -6) + Point(-22, -25))
+        assertEquals(Point(49, -7), Point(33, 23) + Point(16, -30))
+    }
+
+    @Test
+    fun testMinus() {
+        assertEquals(Point.ORIGIN, Point.ORIGIN - Point.ORIGIN)
+        assertEquals(Point(-1, 2), Point.ORIGIN - Point(1, -2))
+        assertEquals(Point(3, -4), Point(3, -4) - Point.ORIGIN)
+        assertEquals(Point(53, 52), Point(15, 43) - Point(-38, -9))
+        assertEquals(Point(0, -17), Point(-41, 4) - Point(-41, 21))
+        assertEquals(Point(8, -12), Point(36, -9) - Point(28, 3))
+        assertEquals(Point(-75, -15), Point(-28, 24) - Point(47, 39))
+        assertEquals(Point(30, -77), Point(9, -31) - Point(-21, 46))
+        assertEquals(Point(6, -15), Point(-30, 33) - Point(-36, 48))
+        assertEquals(Point(-67, 23), Point(-35, -12) - Point(32, -35))
+    }
+
+    @Test
+    fun testAllNeighbors() {
+        assertContainsExactly(
+            listOf(
+                Point(0, 1),
+                Point(1, 0),
+                Point(0, -1),
+                Point(-1, 0),
+                Point(1, 1),
+                Point(1, -1),
+                Point(-1, 1),
+                Point(-1, -1)
+            ),
+            Point(0, 0).allNeighbors()
+        )
+        assertContainsExactly(
+            listOf(
+                Point(10, 1),
+                Point(11, 0),
+                Point(10, -1),
+                Point(9, 0),
+                Point(11, 1),
+                Point(11, -1),
+                Point(9, 1),
+                Point(9, -1)
+            ),
+            Point(10, 0).allNeighbors()
+        )
+        assertContainsExactly(
+            listOf(
+                Point(18, 10),
+                Point(19, 9),
+                Point(18, 8),
+                Point(17, 9),
+                Point(19, 10),
+                Point(19, 8),
+                Point(17, 10),
+                Point(17, 8)
+            ),
+            Point(18, 9).allNeighbors()
+        )
+        assertContainsExactly(
+            listOf(
+                Point(-18, -18),
+                Point(-17, -19),
+                Point(-18, -20),
+                Point(-19, -19),
+                Point(-17, -18),
+                Point(-17, -20),
+                Point(-19, -18),
+                Point(-19, -20)
+            ),
+            Point(-18, -19).allNeighbors()
+        )
+    }
+
+    @Test
     fun testCardinalNeighbors() {
         assertContainsExactly(
             listOf(Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0)),
@@ -28,6 +112,26 @@ class PointTest {
         assertContainsExactly(
             listOf(Point(-18, -18), Point(-17, -19), Point(-18, -20), Point(-19, -19)),
             Point(-18, -19).cardinalNeighbors()
+        )
+    }
+
+    @Test
+    fun testDiagonalNeighbors() {
+        assertContainsExactly(
+            listOf(Point(1, 1), Point(1, -1), Point(-1, 1), Point(-1, -1)),
+            Point(0, 0).diagonalNeighbors()
+        )
+        assertContainsExactly(
+            listOf(Point(11, 1), Point(11, -1), Point(9, 1), Point(9, -1)),
+            Point(10, 0).diagonalNeighbors()
+        )
+        assertContainsExactly(
+            listOf(Point(19, 10), Point(19, 8), Point(17, 10), Point(17, 8)),
+            Point(18, 9).diagonalNeighbors()
+        )
+        assertContainsExactly(
+            listOf(Point(-17, -18), Point(-17, -20), Point(-19, -18), Point(-19, -20)),
+            Point(-18, -19).diagonalNeighbors()
         )
     }
 
@@ -49,6 +153,69 @@ class PointTest {
         assertEquals(Point(2, -10), Point(-8, -10).move(Direction.RIGHT, 10))
         assertEquals(Point(0, 10), Point(0, -8).move(Direction.DOWN, -18))
         assertEquals(Point(6, -6), Point(11, -6).move(Direction.LEFT, 5))
+    }
+
+    @Test
+    fun testRotateClockwise() {
+        assertEquals(Point.ORIGIN, Point.ORIGIN.rotateClockwise())
+        assertEquals(Point(0, -1), Point(1, 0).rotateClockwise())
+        assertEquals(Point(-1, 0), Point(0, -1).rotateClockwise())
+        assertEquals(Point(0, 1), Point(-1, 0).rotateClockwise())
+        assertEquals(Point(1, 0), Point(0, 1).rotateClockwise())
+        assertEquals(Point(3, -47), Point(47, 3).rotateClockwise())
+        assertEquals(Point(-41, 2), Point(-2, -41).rotateClockwise())
+        assertEquals(Point(-30, -31), Point(31, -30).rotateClockwise())
+        assertEquals(Point(10, 37), Point(-37, 10).rotateClockwise())
+        assertEquals(Point(-35, 13), Point(-9, 49).rotateClockwise(Point(-40, 44)))
+        assertEquals(Point(-7, -17), Point(1, 27).rotateClockwise(Point(-25, 9)))
+        assertEquals(Point(-6, -43), Point(38, 11).rotateClockwise(Point(-11, 6)))
+        assertEquals(Point(-28, 32), Point(17, 23).rotateClockwise(Point(-1, 50)))
+        assertEquals(Point(55, -46), Point(-36, 37).rotateClockwise(Point(-32, -50)))
+        assertEquals(Point(70, -13), Point(-47, 40).rotateClockwise(Point(-15, -45)))
+        assertEquals(Point(67, -22), Point(-5, 40).rotateClockwise(Point(0, -27)))
+        assertEquals(Point(51, 46), Point(2, 39).rotateClockwise(Point(30, 18)))
+    }
+
+    @Test
+    fun testRotateCounterclockwise() {
+        assertEquals(Point.ORIGIN, Point.ORIGIN.rotateCounterclockwise())
+        assertEquals(Point(0, 1), Point(1, 0).rotateCounterclockwise())
+        assertEquals(Point(-1, 0), Point(0, 1).rotateCounterclockwise())
+        assertEquals(Point(0, -1), Point(-1, 0).rotateCounterclockwise())
+        assertEquals(Point(1, 0), Point(0, -1).rotateCounterclockwise())
+        assertEquals(Point(-3, 47), Point(47, 3).rotateCounterclockwise())
+        assertEquals(Point(41, -2), Point(-2, -41).rotateCounterclockwise())
+        assertEquals(Point(30, 31), Point(31, -30).rotateCounterclockwise())
+        assertEquals(Point(-10, -37), Point(-37, 10).rotateCounterclockwise())
+        assertEquals(Point(-45, 75), Point(-9, 49).rotateCounterclockwise(Point(-40, 44)))
+        assertEquals(Point(-43, 35), Point(1, 27).rotateCounterclockwise(Point(-25, 9)))
+        assertEquals(Point(-16, 55), Point(38, 11).rotateCounterclockwise(Point(-11, 6)))
+        assertEquals(Point(26, 68), Point(17, 23).rotateCounterclockwise(Point(-1, 50)))
+        assertEquals(Point(-119, -54), Point(-36, 37).rotateCounterclockwise(Point(-32, -50)))
+        assertEquals(Point(-100, -77), Point(-47, 40).rotateCounterclockwise(Point(-15, -45)))
+        assertEquals(Point(-67, -32), Point(-5, 40).rotateCounterclockwise(Point(0, -27)))
+        assertEquals(Point(9, -10), Point(2, 39).rotateCounterclockwise(Point(30, 18)))
+    }
+
+    @Test
+    fun testRotate180Degrees() {
+        assertEquals(Point.ORIGIN, Point.ORIGIN.rotate180Degrees())
+        assertEquals(Point(-1, 0), Point(1, 0).rotate180Degrees())
+        assertEquals(Point(1, 0), Point(-1, 0).rotate180Degrees())
+        assertEquals(Point(0, -1), Point(0, 1).rotate180Degrees())
+        assertEquals(Point(0, 1), Point(0, -1).rotate180Degrees())
+        assertEquals(Point(-47, -3), Point(47, 3).rotate180Degrees())
+        assertEquals(Point(2, 41), Point(-2, -41).rotate180Degrees())
+        assertEquals(Point(-31, 30), Point(31, -30).rotate180Degrees())
+        assertEquals(Point(37, -10), Point(-37, 10).rotate180Degrees())
+        assertEquals(Point(-71, 39), Point(-9, 49).rotate180Degrees(Point(-40, 44)))
+        assertEquals(Point(-51, -9), Point(1, 27).rotate180Degrees(Point(-25, 9)))
+        assertEquals(Point(-60, 1), Point(38, 11).rotate180Degrees(Point(-11, 6)))
+        assertEquals(Point(-19, 77), Point(17, 23).rotate180Degrees(Point(-1, 50)))
+        assertEquals(Point(-28, -137), Point(-36, 37).rotate180Degrees(Point(-32, -50)))
+        assertEquals(Point(17, -130), Point(-47, 40).rotate180Degrees(Point(-15, -45)))
+        assertEquals(Point(5, -94), Point(-5, 40).rotate180Degrees(Point(0, -27)))
+        assertEquals(Point(58, -3), Point(2, 39).rotate180Degrees(Point(30, 18)))
     }
 
     @Test
@@ -74,12 +241,7 @@ class PointTest {
     @Test
     fun testAngleClockwiseFromPositiveYWithSamePoint() {
         assertThrows<IllegalArgumentException> {
-            Point(6, 3).angleClockwiseFromPositiveY(
-                Point(
-                    6,
-                    3
-                )
-            )
+            Point(6, 3).angleClockwiseFromPositiveY(Point(6, 3))
         }
     }
 

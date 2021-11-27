@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.common.grid
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
-class ConstructGridTest {
+class ConstructPointGridTest {
     @Test
     fun testWithNoPoints() {
         assertEquals(emptyGrid(), constructPointGrid(emptyList()) { it })

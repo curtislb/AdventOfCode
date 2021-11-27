@@ -4,7 +4,6 @@ import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.MutableGrid
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.addRowWith
-import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.grid.sumRowsBy
 import com.curtislb.adventofcode.common.grid.toMutableGrid

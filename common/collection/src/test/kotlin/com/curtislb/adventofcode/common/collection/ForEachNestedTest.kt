@@ -25,7 +25,7 @@ class ForEachNestedTest {
     @Test
     fun testWithInvalidLevelCount() {
         assertThrows<IllegalArgumentException> {
-            emptyList<Any>().forEachNested(levelCount = 1, overlapIndices = false) { false }
+            emptyList<Nothing>().forEachNested(levelCount = 1, overlapIndices = false) { false }
         }
         assertThrows<IllegalArgumentException> {
             listOf("foo").forEachNested(levelCount = 2, overlapIndices = false) { false }

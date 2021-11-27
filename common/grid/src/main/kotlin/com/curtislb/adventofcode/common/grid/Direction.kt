@@ -37,7 +37,7 @@ enum class Direction {
     }
 
     /**
-     * TODO
+     * Returns the minimum number of 90-degree clockwise turns from this direction to face [other].
      */
     fun countRightTurns(other: Direction) = when (this) {
         UP -> when (other) {

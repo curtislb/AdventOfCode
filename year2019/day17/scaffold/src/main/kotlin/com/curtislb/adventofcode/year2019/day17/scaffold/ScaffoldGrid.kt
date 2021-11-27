@@ -4,8 +4,7 @@ import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.forEachPoint
-import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
@@ -39,7 +38,7 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
      */
     fun findIntersections(): List<Point> {
         return mutableListOf<Point>().apply {
-            grid.forEachPoint { point, space ->
+            grid.forEachPointValue { point, space ->
                 if (space == Space.SCAFFOLD) {
                     val isIntersection = point.cardinalNeighbors().all { neighbor ->
                         grid.getOrNull(neighbor) == Space.SCAFFOLD

@@ -110,7 +110,7 @@ import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.PointMask
 import com.curtislb.adventofcode.common.grid.constructPointGrid
-import com.curtislb.adventofcode.common.grid.forEachPoint
+import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.sumRowsBy
 import com.curtislb.adventofcode.common.grid.toMutableGrid
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
@@ -156,7 +156,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val pointMasks = mutableListOf<PointMask>().apply {
         maskGrids.forEach { maskGrid ->
             val points = mutableSetOf<Point>().apply {
-                maskGrid.forEachPoint { point, isIncluded ->
+                maskGrid.forEachPointValue { point, isIncluded ->
                     if (isIncluded) {
                         add(point)
                     }
@@ -174,9 +174,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
         val maxColIndex = imageData.sideLength - pointMask.width
         for (rowIndex in 0..maxRowIndex) {
             for (colIndex in 0..maxColIndex) {
-                val isMonster = pointMask.applyMask(imageGrid).all { (_, isFilled) -> isFilled }
+                val isMonster = pointMask.applyToGrid(imageGrid).all { (_, isFilled) -> isFilled }
                 if (isMonster) {
-                    monsterPoints.addAll(pointMask.includedPoints)
+                    monsterPoints.addAll(pointMask.points)
                 }
                 pointMask = pointMask.translated(Direction.RIGHT)
             }
