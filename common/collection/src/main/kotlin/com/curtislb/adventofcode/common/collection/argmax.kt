@@ -8,6 +8,5 @@ import lombok.Generated
  * If the iterable is empty, this method instead returns `null`.
  */
 @Generated
-inline fun <T, R : Comparable<R>> Iterable<T>.argmaxByOrNull(transform: (element: T) -> R): Int? {
-    return withIndex().maxByOrNull { transform(it.value) }?.index
-}
+inline fun <T, R : Comparable<R>> Iterable<T>.argmaxByOrNull(transform: (element: T) -> R): Int? =
+    withIndex().maxByOrNull { transform(it.value) }?.index

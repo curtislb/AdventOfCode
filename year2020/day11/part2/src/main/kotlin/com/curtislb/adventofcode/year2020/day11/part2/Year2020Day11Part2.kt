@@ -133,6 +133,7 @@ import com.curtislb.adventofcode.year2020.day11.seating.SeatLayout
 import com.curtislb.adventofcode.year2020.day11.seating.findVisibleSeats
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2020, day 11, part 2.

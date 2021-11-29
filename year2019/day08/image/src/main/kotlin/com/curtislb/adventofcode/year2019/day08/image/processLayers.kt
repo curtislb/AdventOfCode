@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.year2019.day08.image
 import com.curtislb.adventofcode.common.io.forEachChar
 import com.curtislb.adventofcode.common.math.toDigit
 import java.io.File
-import lombok.Generated
 
 /**
  * Processes digits from a [file] representing pixels in a multi-layer image with a given
@@ -12,8 +11,7 @@ import lombok.Generated
  * @param onDigit An optional callback to be run each time a digit is encountered.
  * @param onLayerFinished An optional callback to run each time all digits in a layer are read.
  */
-@Generated
-inline fun processLayers(
+fun processLayers(
     file: File,
     imageArea: Int,
     onDigit: (indexInLayer: Int, digit: Int) -> Unit = { _, _ -> },

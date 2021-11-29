@@ -118,6 +118,7 @@ import com.curtislb.adventofcode.year2019.day18.vault.Vault
 import com.curtislb.adventofcode.year2019.day18.vault.search.KeySearch
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 18, part 1.

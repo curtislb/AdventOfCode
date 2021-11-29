@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.common.simulation
 
-import lombok.Generated
-
 /**
  * Returns the resulting state after running a "game of life" simulation with the given parameters.
  *
@@ -19,13 +17,12 @@ import lombok.Generated
  * @param applyUpdateRules Returns the result of applying any relevant update rules to the given
  *  value along with its given neighbors.
  */
-@Generated
-inline fun <S, K, V> runGameOfLife(
+fun <S, K, V> runGameOfLife(
     initialState: S,
     maxIterations: Int? = null,
     shouldTerminate: (prevState: S, state: S) -> Boolean = { _, _ -> false },
     copyState: (state: S) -> S = { it },
-    crossinline getValue: (state: S, key: K) -> V,
+    getValue: (state: S, key: K) -> V,
     setValue: (state: S, key: K, value: V) -> S,
     getUpdatableKeys: (state: S) -> Sequence<K>,
     getNeighborKeys: (state: S, key: K) -> Sequence<K>,

@@ -1,14 +1,11 @@
 package com.curtislb.adventofcode.common.collection
 
-import lombok.Generated
-
 /**
  * Returns a pair of the elements that produce the minimum and maximum value, respectively, after
  * applying the [transform] function to each element in this iterable, or the pair `(null, null)` if
  * there are no elements.
  */
-@Generated
-inline fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(
+fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(
     transform: (element: T) -> R
 ): Pair<T?, T?> {
     var minElement: T? = null
@@ -49,8 +46,7 @@ inline fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(
  * Returns a pair of the minimum and maximum value, respectively, after applying the [transform]
  * function to each element in this iterable, or the pair `(null, null)` if there are no elements.
  */
-@Generated
-inline fun <T, R : Comparable<R>> Iterable<T>.minAndMaxOfOrNull(
+fun <T, R : Comparable<R>> Iterable<T>.minAndMaxOfOrNull(
     transform: (element: T) -> R
 ): Pair<R?, R?> {
     var minValue: R? = null

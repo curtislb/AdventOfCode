@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.common.graph
 
 import com.curtislb.adventofcode.common.heap.MinimumHeap
-import lombok.Generated
 
 /**
  * Applies Dijkstra's shortest path algorithm from [source] and returns the shortest weighted
@@ -11,8 +10,7 @@ import lombok.Generated
  * If there is no node reachable from [source] for which [isGoal] is `true`, this function instead
  * returns `null`.
  */
-@Generated
-inline fun <T> dijkstraShortestDistance(
+fun <T> dijkstraShortestDistance(
     source: T,
     isGoal: (node: T) -> Boolean,
     getEdges: (node: T) -> Sequence<DirectedEdge<T>>

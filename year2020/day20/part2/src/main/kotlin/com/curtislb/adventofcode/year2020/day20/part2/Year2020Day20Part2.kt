@@ -116,6 +116,7 @@ import com.curtislb.adventofcode.common.grid.toMutableGrid
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2020, day 20, part 2.

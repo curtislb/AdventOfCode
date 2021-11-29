@@ -252,8 +252,7 @@ interface Grid<out E> {
      * @throws IllegalArgumentException If the current grid is empty and either [newHeight] or
      *  [newWidth] is nonzero.
      */
-    @Generated
-    private inline fun transformed(
+    private fun transformed(
         newHeight: Int,
         newWidth: Int,
         mapPoint: (point: Point) -> Point
