@@ -364,6 +364,8 @@ class FractionTest {
         assertEquals(Fraction(-3, 5), Fraction(3, -5))
         assertEquals(Fraction(3, 5), Fraction(-3, -5))
 
+        val nullFraction: Fraction? = null
+        assertNotEquals(nullFraction, Fraction(0))
         assertNotEquals(Fraction(0), Fraction(1))
         assertNotEquals(Fraction(1), Fraction(-1))
         assertNotEquals(Fraction(1, 2), Fraction(2, 1))

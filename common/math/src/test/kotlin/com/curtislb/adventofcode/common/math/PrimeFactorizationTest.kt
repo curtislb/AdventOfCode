@@ -2,13 +2,14 @@ package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [primeFactorization].
  */
 class PrimeFactorizationTest {
     @Test
-    fun testPrimeFactorization() {
+    fun testPrimeFactorizationOfLong() {
         assertEquals(emptyMap(), 1L.primeFactorization())
         assertEquals(mapOf(2L to 1), 2L.primeFactorization())
         assertEquals(mapOf(3L to 1), 3L.primeFactorization())
@@ -27,5 +28,13 @@ class PrimeFactorizationTest {
             mapOf(2L to 1, 3L to 3, 29L to 1, 3049L to 2, 5113L to 1),
             74435892358158L.primeFactorization()
         )
+    }
+
+    @Test
+    fun testPrimeFactorizationOfInvalidLong() {
+        assertThrows<IllegalArgumentException> { 0L.primeFactorization() }
+        assertThrows<IllegalArgumentException> { (-1L).primeFactorization() }
+        assertThrows<IllegalArgumentException> { (-2L).primeFactorization() }
+        assertThrows<IllegalArgumentException> { (-3L).primeFactorization() }
     }
 }

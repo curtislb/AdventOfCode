@@ -8,9 +8,9 @@ import kotlin.math.max
  *
  * @throws IllegalArgumentException If either [m] or [n] is negative or 0.
  */
-fun leastCommonMultiple(m: Long, n: Long): Long {
-    require(m > 0L) { "First argument must be positive: $m" }
-    require(n > 0L) { "Second argument must be positive: $n" }
+fun leastCommonMultiple(m: Int, n: Int): Int {
+    require(m > 0) { "First argument must be positive: $m" }
+    require(n > 0) { "Second argument must be positive: $n" }
     return m / greatestCommonDivisor(m, n) * n
 }
 
@@ -19,7 +19,11 @@ fun leastCommonMultiple(m: Long, n: Long): Long {
  *
  * @throws IllegalArgumentException If either [m] or [n] is negative or 0.
  */
-fun leastCommonMultiple(m: Int, n: Int): Int = leastCommonMultiple(m.toLong(), n.toLong()).toInt()
+fun leastCommonMultiple(m: Long, n: Long): Long {
+    require(m > 0L) { "First argument must be positive: $m" }
+    require(n > 0L) { "Second argument must be positive: $n" }
+    return m / greatestCommonDivisor(m, n) * n
+}
 
 /**
  * Returns the smallest whole number that can be evenly divided by [m], [n], and all of [nums].
@@ -45,8 +49,7 @@ fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
 private fun takeLargestPowers(
     factorization1: Map<Long, Int>,
     factorization2: Map<Long, Int>
-): Map<Long, Int> {
-    return (factorization1.keys + factorization2.keys).mapToMap { factor ->
+): Map<Long, Int> =
+    (factorization1.keys + factorization2.keys).mapToMap { factor ->
         factor to max(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
     }
-}

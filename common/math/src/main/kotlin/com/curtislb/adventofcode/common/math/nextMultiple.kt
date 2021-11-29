@@ -7,9 +7,9 @@ import java.math.BigInteger
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
-fun BigInteger.nextMultipleAbove(n: BigInteger): BigInteger {
-    require(this > BigInteger.ZERO) { "Number must be positive: $this" }
-    require(n >= BigInteger.ZERO) { "Argument must be non-negative: $n" }
+fun Int.nextMultipleAbove(n: Int): Int {
+    require(this > 0) { "Number must be positive: $this" }
+    require(n >= 0) { "Argument must be non-negative: $n" }
     return n + (this - (n % this))
 }
 
@@ -29,7 +29,11 @@ fun Long.nextMultipleAbove(n: Long): Long {
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
-fun Int.nextMultipleAbove(n: Int): Int = toLong().nextMultipleAbove(n.toLong()).toInt()
+fun BigInteger.nextMultipleAbove(n: BigInteger): BigInteger {
+    require(this > BigInteger.ZERO) { "Number must be positive: $this" }
+    require(n >= BigInteger.ZERO) { "Argument must be non-negative: $n" }
+    return n + (this - (n % this))
+}
 
 /**
  * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
@@ -37,10 +41,10 @@ fun Int.nextMultipleAbove(n: Int): Int = toLong().nextMultipleAbove(n.toLong()).
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
-fun BigInteger.nextMultipleAtLeast(n: BigInteger): BigInteger {
-    require(this > BigInteger.ZERO) { "Number must be positive: $this" }
-    require(n >= BigInteger.ZERO) { "Number n must be non-negative: $n" }
-    return if (n % this == BigInteger.ZERO) n else nextMultipleAbove(n)
+fun Int.nextMultipleAtLeast(n: Int): Int {
+    require(this > 0) { "Number must be positive: $this" }
+    require(n >= 0) { "Argument must be non-negative: $n" }
+    return if (n % this == 0) n else nextMultipleAbove(n)
 }
 
 /**
@@ -51,7 +55,7 @@ fun BigInteger.nextMultipleAtLeast(n: BigInteger): BigInteger {
  */
 fun Long.nextMultipleAtLeast(n: Long): Long {
     require(this > 0L) { "Number must be positive: $this" }
-    require(n >= 0L) { "Number n must be non-negative: $n" }
+    require(n >= 0L) { "Argument must be non-negative: $n" }
     return if (n % this == 0L) n else nextMultipleAbove(n)
 }
 
@@ -61,4 +65,8 @@ fun Long.nextMultipleAtLeast(n: Long): Long {
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
-fun Int.nextMultipleAtLeast(n: Int): Int = toLong().nextMultipleAtLeast(n.toLong()).toInt()
+fun BigInteger.nextMultipleAtLeast(n: BigInteger): BigInteger {
+    require(this > BigInteger.ZERO) { "Number must be positive: $this" }
+    require(n >= BigInteger.ZERO) { "Argument must be non-negative: $n" }
+    return if (n % this == BigInteger.ZERO) n else nextMultipleAbove(n)
+}

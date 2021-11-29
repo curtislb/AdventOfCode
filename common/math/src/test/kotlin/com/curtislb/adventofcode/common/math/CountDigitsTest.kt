@@ -2,13 +2,14 @@ package com.curtislb.adventofcode.common.math
 
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 /**
  * Tests [countDigits].
  */
 class CountDigitsTest {
     @Test
-    fun testWithInt() {
+    fun testCountDigitsOfInt() {
         assertEquals(1, 0.countDigits())
         assertEquals(1, 0.countDigits(base = 2))
         assertEquals(1, 1.countDigits())
@@ -48,7 +49,27 @@ class CountDigitsTest {
     }
 
     @Test
-    fun testWithLong() {
+    fun testCountDigitsOfInvalidInt() {
+        assertThrows<IllegalArgumentException> { (-1).countDigits() }
+        assertThrows<IllegalArgumentException> { (-2).countDigits() }
+        assertThrows<IllegalArgumentException> { (-3).countDigits() }
+        assertThrows<IllegalArgumentException> { (-1).countDigits(base = 2) }
+        assertThrows<IllegalArgumentException> { (-2).countDigits(base = 8) }
+        assertThrows<IllegalArgumentException> { (-3).countDigits(base = 16) }
+    }
+
+    @Test
+    fun testCountDigitsOfIntWithInvalidBase() {
+        assertThrows<IllegalArgumentException> { 2.countDigits(base = -1) }
+        assertThrows<IllegalArgumentException> { 2.countDigits(base = 0) }
+        assertThrows<IllegalArgumentException> { 2.countDigits(base = 1) }
+        assertThrows<IllegalArgumentException> { 10.countDigits(base = -1) }
+        assertThrows<IllegalArgumentException> { 10.countDigits(base = 0) }
+        assertThrows<IllegalArgumentException> { 10.countDigits(base = 1) }
+    }
+
+    @Test
+    fun testCountDigitsOfLong() {
         assertEquals(1, 0L.countDigits())
         assertEquals(1, 0L.countDigits(base = 2))
         assertEquals(1, 1L.countDigits())
@@ -88,5 +109,25 @@ class CountDigitsTest {
         assertEquals(18, 408614916977095463L.countDigits())
         assertEquals(59, 408614916977095463L.countDigits(base = 2))
         assertEquals(15, 408614916977095463L.countDigits(base = 16))
+    }
+
+    @Test
+    fun testCountDigitsOfInvalidLong() {
+        assertThrows<IllegalArgumentException> { (-1L).countDigits() }
+        assertThrows<IllegalArgumentException> { (-2L).countDigits() }
+        assertThrows<IllegalArgumentException> { (-3L).countDigits() }
+        assertThrows<IllegalArgumentException> { (-1L).countDigits(base = 2) }
+        assertThrows<IllegalArgumentException> { (-2L).countDigits(base = 8) }
+        assertThrows<IllegalArgumentException> { (-3L).countDigits(base = 16) }
+    }
+
+    @Test
+    fun testCountDigitsOfLongWithInvalidBase() {
+        assertThrows<IllegalArgumentException> { 2L.countDigits(base = -1) }
+        assertThrows<IllegalArgumentException> { 2L.countDigits(base = 0) }
+        assertThrows<IllegalArgumentException> { 2L.countDigits(base = 1) }
+        assertThrows<IllegalArgumentException> { 10L.countDigits(base = -1) }
+        assertThrows<IllegalArgumentException> { 10L.countDigits(base = 0) }
+        assertThrows<IllegalArgumentException> { 10L.countDigits(base = 1) }
     }
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    // Add all leaf subprojects as dependencies.
+    // Add all leaf subprojects as dependencies
     subprojects.filter { it.subprojects.isEmpty() }.forEach { implementation(it) }
 }
 
@@ -48,6 +48,8 @@ val coverageDataPath: Configuration by configurations.creating {
 
 // Task to gather code coverage from multiple subprojects
 val codeCoverageReport by tasks.registering(JacocoReport::class) {
+    group = "verification"
+
     additionalClassDirs(configurations.runtimeClasspath.get().filter { it.isInProject() })
     additionalSourceDirs(sourcesPath.incoming.artifactView { lenient(true) }.files.filter { file ->
         file.isInProject()

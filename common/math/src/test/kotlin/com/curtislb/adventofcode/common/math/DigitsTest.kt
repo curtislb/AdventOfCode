@@ -1,13 +1,19 @@
 package com.curtislb.adventofcode.common.math
 
+import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [Char.toDigit].
+ * Tests common digit-related functions and utilities.
  */
-class ToDigitTest {
+class DigitsTest {
+    @Test
+    fun testDecimalDigits() {
+        assertContainsExactly(listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), DECIMAL_DIGITS)
+    }
+
     @Test
     fun testNumeralToDigit() {
         assertEquals(0, '0'.toDigit())
@@ -56,6 +62,21 @@ class ToDigitTest {
 
     @Test
     fun testInvalidCharToDigit() {
+        assertThrows<IllegalArgumentException> { '/'.toDigit() }
+        assertThrows<IllegalArgumentException> { ':'.toDigit() }
+        assertThrows<IllegalArgumentException> { '@'.toDigit() }
+        assertThrows<IllegalArgumentException> { '['.toDigit() }
+        assertThrows<IllegalArgumentException> { '`'.toDigit() }
+        assertThrows<IllegalArgumentException> { '{'.toDigit() }
         assertThrows<IllegalArgumentException> { '!'.toDigit() }
+        assertThrows<IllegalArgumentException> { '?'.toDigit() }
+        assertThrows<IllegalArgumentException> { '$'.toDigit() }
+        assertThrows<IllegalArgumentException> { '#'.toDigit() }
+        assertThrows<IllegalArgumentException> { '.'.toDigit() }
+        assertThrows<IllegalArgumentException> { ','.toDigit() }
+        assertThrows<IllegalArgumentException> { ' '.toDigit() }
+        assertThrows<IllegalArgumentException> { '\t'.toDigit() }
+        assertThrows<IllegalArgumentException> { '\r'.toDigit() }
+        assertThrows<IllegalArgumentException> { '\n'.toDigit() }
     }
 }
