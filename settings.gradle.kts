@@ -171,3 +171,9 @@ include(":year2020:day24:hexagon", ":year2020:day24:part1", ":year2020:day24:par
 
 // Day 25: Combo Breaker
 include(":year2020:day25:part1")
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Advent of Code 2021
+
+// Day 1: TODO
+include(":year2021:day01:part1", ":year2021:day01:part2")

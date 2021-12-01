@@ -13,6 +13,7 @@ includes:
 
 * [Advent of Code 2019][aoc-2019-link] (Days 1-25)
 * [Advent of Code 2020][aoc-2020-link] (Days 1-25)
+* [Advent of Code 2021][aoc-2021-link] (Day 1)
 
 ## Getting Started
 
@@ -60,6 +61,7 @@ Alternatively, the following commands can be run from the project root directory
 <!-- Images and links -->
 [aoc-2019-link]: https://adventofcode.com/2019
 [aoc-2020-link]: https://adventofcode.com/2020
+[aoc-2021-link]: https://adventofcode.com/2021
 [aoc-link]: https://adventofcode.com/
 [build-badge]: https://img.shields.io/github/workflow/status/curtislb/AdventOfCode/build?logo=Gradle
 [build-link]: https://github.com/curtislb/AdventOfCode/actions/workflows/build.yml
