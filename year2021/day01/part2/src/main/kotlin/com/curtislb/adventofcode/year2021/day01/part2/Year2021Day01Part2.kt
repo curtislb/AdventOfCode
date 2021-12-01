@@ -44,7 +44,9 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 
 package com.curtislb.adventofcode.year2021.day01.part2
 
-import com.curtislb.adventofcode.common.collection.FifoCache
+import com.curtislb.adventofcode.common.collection.countPairwise
+import com.curtislb.adventofcode.common.collection.windowSums
+import com.curtislb.adventofcode.common.io.readInts
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -52,34 +54,10 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 01, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
- * @param windowSize The size of the measurement windows to use when comparing sums.
+ * @param windowSize The size of the measurement window to use when comparing sums.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), windowSize: Int = 3): Int {
-    var count = 0
-
-    val window = FifoCache<Int>(windowSize)
-    var windowSum = 0
-    inputPath.toFile().forEachLine { line ->
-        val depth = line.toInt()
-
-        if (window.isFull()) {
-            // Check if the new window sum is greater than the previous one
-            val nextSum = windowSum - window.first() + depth
-            if (nextSum > windowSum) {
-                count++
-            }
-            windowSum = nextSum
-        } else {
-            // The sliding window is still being initialized
-            windowSum += depth
-        }
-
-        // Add the latest depth measurement to the sliding window
-        window.add(depth)
-    }
-
-    return count
-}
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), windowSize: Int = 3): Int =
+    inputPath.toFile().readInts().windowSums(windowSize).countPairwise { sum1, sum2 -> sum1 < sum2 }
 
 fun main() {
     println(solve())
