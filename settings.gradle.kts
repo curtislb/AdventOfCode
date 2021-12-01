@@ -175,5 +175,5 @@ include(":year2020:day25:part1")
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Advent of Code 2021
 
-// Day 1: TODO
+// Day 1: Sonar Sweep
 include(":year2021:day01:part1", ":year2021:day01:part2")
