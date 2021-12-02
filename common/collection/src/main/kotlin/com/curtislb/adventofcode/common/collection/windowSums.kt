@@ -10,11 +10,13 @@ fun List<Int>.windowSums(windowSize: Int): List<Int> {
 
     val sums = mutableListOf<Int>()
 
-    // Calculate the sum for each window
+    // Calculate sums using a sliding window
     val window = FifoCache<Int>(windowSize)
     var windowSum = 0
     forEach { value ->
+        // If the window is already full, subtract out the value to be dropped
         windowSum += if (window.isFull()) value - window.first() else value
+
         window.add(value)
         if (window.isFull()) {
             sums.add(windowSum)

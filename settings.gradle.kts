@@ -177,3 +177,6 @@ include(":year2020:day25:part1")
 
 // Day 1: Sonar Sweep
 include(":year2021:day01:part1", ":year2021:day01:part2")
+
+// Day 2: Dive!
+include(":year2021:day02:part1", ":year2021:day02:part2", ":year2021:day02:submarine")
