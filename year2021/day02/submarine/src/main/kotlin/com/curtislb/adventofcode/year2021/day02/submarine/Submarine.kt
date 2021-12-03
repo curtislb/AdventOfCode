@@ -33,7 +33,7 @@ abstract class Submarine(initialPosition: Point) {
 
     /**
      * Runs the command represented by the given [command] string. This command may (but need not)
-     * update the position of the submarine.
+     * update the [position] of the submarine.
      *
      * The supported commands are as follows:
      *

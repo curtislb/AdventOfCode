@@ -3,9 +3,7 @@ package com.curtislb.adventofcode.year2019.day04.password
 /**
  * A generator for producing numeric passwords that satisfy given requirements.
  */
-abstract class
-
-PasswordGenerator {
+abstract class PasswordGenerator {
     /**
      * Whether the currently constructed prefix is a valid password.
      */
@@ -57,5 +55,13 @@ PasswordGenerator {
                 queue.addLast(Pair(generator.addDigit(digit), suffix + digit))
             }
         }
+    }
+
+    companion object {
+        /**
+         * A set containing all decimal digit values.
+         */
+        @JvmStatic
+        protected val ALL_DIGITS = (0..9).toSet()
     }
 }

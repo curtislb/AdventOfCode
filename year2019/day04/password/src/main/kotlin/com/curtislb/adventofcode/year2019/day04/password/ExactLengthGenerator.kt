@@ -1,8 +1,5 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
-
-
 /**
  * A generator that produces numeric passwords with a given number of digits.
  *
@@ -15,7 +12,7 @@ class ExactLengthGenerator private constructor(
 ) : PasswordGenerator() {
     override val isValid: Boolean = currentLength == length
 
-    override val nextDigits: Set<Int> = if (currentLength >= length) emptySet() else DECIMAL_DIGITS
+    override val nextDigits: Set<Int> = if (currentLength >= length) emptySet() else ALL_DIGITS
 
     /**
      * A generator that produces numeric passwords with a given number of digits.

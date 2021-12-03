@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
-
 /**
  * A generator that produces numeric passwords in which at least one digit appears an exact number
  * of times in sequence.
@@ -20,7 +18,7 @@ class ExactRepeatCountDigitGenerator private constructor(
 ) : PasswordGenerator() {
     override val isValid: Boolean = foundRepeatCountDigit || currentCount == repeatCount
 
-    override val nextDigits: Set<Int> = DECIMAL_DIGITS
+    override val nextDigits: Set<Int> = ALL_DIGITS
 
     /**
      * A generator that produces numeric passwords in which at least one digit is repeated a

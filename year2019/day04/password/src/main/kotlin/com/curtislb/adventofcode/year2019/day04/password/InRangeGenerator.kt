@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.year2019.day04.password
 
-import com.curtislb.adventofcode.common.math.DECIMAL_DIGITS
-
 /**
  * A generator that produces numeric passwords whose corresponding base-10 integer values are within
  * a given range.
@@ -27,7 +25,7 @@ class InRangeGenerator private constructor(
     override val nextDigits: Set<Int> = if (minValue > maxValue) {
         emptySet()
     } else {
-        DECIMAL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
+        ALL_DIGITS.filter { prefix * 10 + it <= maxValue }.toSet()
     }
 
     /**
