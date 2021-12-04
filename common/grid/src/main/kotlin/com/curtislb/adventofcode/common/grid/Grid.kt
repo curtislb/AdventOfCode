@@ -193,7 +193,7 @@ interface Grid<out E> {
      *
      * @throws IndexOutOfBoundsException If [rowIndex] is not in [rowIndices].
      */
-    fun volatileRow(rowIndex: Int): List<E> = row(rowIndex)
+    fun shallowRow(rowIndex: Int): List<E> = row(rowIndex)
 
     /**
      * Returns the column at the given [colIndex] in this grid. The contents of this column may
@@ -204,7 +204,7 @@ interface Grid<out E> {
      *
      * @throws IndexOutOfBoundsException If [colIndex] is not in [columnIndices].
      */
-    fun volatileColumn(colIndex: Int): List<E> = column(colIndex)
+    fun shallowColumn(colIndex: Int): List<E> = column(colIndex)
 
     /**
      * Returns a list containing each of the rows in this grid. The contents of this list may change
@@ -213,7 +213,7 @@ interface Grid<out E> {
      * Implementors may override this function to provide a more efficient version of [rows] without
      * needing to guarantee immutability for the returned list.
      */
-    fun volatileRows(): List<List<E>> = rows()
+    fun shallowRows(): List<List<E>> = rows()
 
     /**
      * Returns a list containing each of the columns in this grid. The contents of this list may
@@ -222,14 +222,14 @@ interface Grid<out E> {
      * Implementors may override this function to provide a more efficient version of [columns]
      * without needing to guarantee immutability for the returned list.
      */
-    fun volatileColumns(): List<List<E>> = columns()
+    fun shallowColumns(): List<List<E>> = columns()
 
     /**
      * Returns a string by transforming each row in this grid with the [transform] function and
      * combining them with the given [separator].
      */
     fun joinRowsToString(separator: String = ", ", transform: (row: List<E>) -> String): String =
-        volatileRows().joinToString(separator = separator, transform = transform)
+        shallowRows().joinToString(separator = separator, transform = transform)
 
     /**
      * Returns a read-only copy of this grid that has been flipped horizontally.

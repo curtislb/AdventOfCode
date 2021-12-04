@@ -15,7 +15,7 @@ import org.junit.jupiter.api.assertThrows
 class RowArrayGridTest {
     @Test
     fun testWhenEmpty() {
-        val grid = RowArrayGrid<Nothing>()
+        val grid = RowArrayGrid<Int>()
 
         assertEquals(0, grid.width)
         assertEquals(0, grid.height)
@@ -51,11 +51,11 @@ class RowArrayGridTest {
         assertEquals(emptyList(), grid.rows())
         assertEquals(emptyList(), grid.columns())
 
-        assertThrows<IndexOutOfBoundsException> { grid.volatileRow(0) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileColumn(0) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(0) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(0) }
 
-        assertEquals(emptyList(), grid.volatileRows())
-        assertEquals(emptyList(), grid.volatileColumns())
+        assertEquals(emptyList(), grid.shallowRows())
+        assertEquals(emptyList(), grid.shallowColumns())
 
         assertEquals("", grid.joinRowsToString { it.toString() })
 
@@ -118,15 +118,15 @@ class RowArrayGridTest {
         assertEquals(listOf(listOf(42)), grid.rows())
         assertEquals(listOf(listOf(42)), grid.columns())
 
-        assertEquals(listOf(42), grid.volatileRow(0))
-        assertEquals(listOf(42), grid.volatileColumn(0))
-        assertThrows<IndexOutOfBoundsException> { grid.volatileRow(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileColumn(-1) }
+        assertEquals(listOf(42), grid.shallowRow(0))
+        assertEquals(listOf(42), grid.shallowColumn(0))
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(1) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(1) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(-1) }
 
-        assertEquals(listOf(listOf(42)), grid.volatileRows())
-        assertEquals(listOf(listOf(42)), grid.volatileColumns())
+        assertEquals(listOf(listOf(42)), grid.shallowRows())
+        assertEquals(listOf(listOf(42)), grid.shallowColumns())
 
         assertEquals("<[42]>", grid.joinRowsToString { "<$it>" })
 
@@ -249,17 +249,17 @@ class RowArrayGridTest {
             grid.columns()
         )
 
-        assertEquals(listOf(10, 20, 28, -48), grid.volatileRow(0))
-        assertEquals(listOf(73, 34, -63, -67), grid.volatileRow(1))
-        assertEquals(listOf(-79, -60, 13, -55), grid.volatileRow(2))
-        assertEquals(listOf(10, 73, -79), grid.volatileColumn(0))
-        assertEquals(listOf(20, 34, -60), grid.volatileColumn(1))
-        assertEquals(listOf(28, -63, 13), grid.volatileColumn(2))
-        assertEquals(listOf(-48, -67, -55), grid.volatileColumn(3))
-        assertThrows<IndexOutOfBoundsException> { grid.volatileRow(3) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileColumn(4) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { grid.volatileColumn(-1) }
+        assertEquals(listOf(10, 20, 28, -48), grid.shallowRow(0))
+        assertEquals(listOf(73, 34, -63, -67), grid.shallowRow(1))
+        assertEquals(listOf(-79, -60, 13, -55), grid.shallowRow(2))
+        assertEquals(listOf(10, 73, -79), grid.shallowColumn(0))
+        assertEquals(listOf(20, 34, -60), grid.shallowColumn(1))
+        assertEquals(listOf(28, -63, 13), grid.shallowColumn(2))
+        assertEquals(listOf(-48, -67, -55), grid.shallowColumn(3))
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(3) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(4) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
+        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(-1) }
 
         assertEquals(
             listOf(
@@ -267,7 +267,7 @@ class RowArrayGridTest {
                 listOf(73, 34, -63, -67),
                 listOf(-79, -60, 13, -55)
             ),
-            grid.volatileRows()
+            grid.shallowRows()
         )
         assertEquals(
             listOf(
@@ -276,7 +276,7 @@ class RowArrayGridTest {
                 listOf(28, -63, 13),
                 listOf(-48, -67, -55)
             ),
-            grid.volatileColumns()
+            grid.shallowColumns()
         )
 
         assertEquals(
@@ -694,7 +694,7 @@ class RowArrayGridTest {
             val rows = ArrayList<ArrayList<Nothing>>().apply { add(ArrayList()) }
             RowArrayGrid(rows)
         }
-        assertThrows<IllegalArgumentException> { 
+        assertThrows<IllegalArgumentException> {
             val rows = ArrayList<ArrayList<String>>().apply {
                 add(ArrayList<String>().apply { add("a") })
                 add(ArrayList())

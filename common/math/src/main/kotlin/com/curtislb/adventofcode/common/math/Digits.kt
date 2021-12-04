@@ -13,15 +13,15 @@ fun Char.toDigit(): Int = when (this) {
 }
 
 /**
- * Returns the integer given by concatenating the digits in this iterable in the given [base].
+ * Returns the integer given by concatenating the digits in this iterable with the given [radix].
  *
  * @throws IllegalArgumentException If any number in this iterable is not a digit in the given
- *  [base].
+ *  [radix].
  */
-fun Iterable<Int>.digitsToInt(base: Int = 10): Int {
-    val digitRange = 0 until base
+fun Iterable<Int>.digitsToInt(radix: Int = 10): Int {
+    val digitRange = 0 until radix
     return fold(0) { prefix, digit ->
-        require(digit in digitRange) { "Invalid digit for base $base: $digit" }
-        prefix * base + digit
+        require(digit in digitRange) { "Invalid digit for base $radix: $digit" }
+        prefix * radix + digit
     }
 }

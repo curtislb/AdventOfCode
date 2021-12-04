@@ -15,7 +15,7 @@ import org.junit.jupiter.api.assertThrows
 class MutableGridTest {
     @Test
     fun testWhenEmpty() {
-        val mutableGrid = mutableGridOf<Nothing>()
+        val mutableGrid = mutableGridOf<Int>()
 
         assertEquals(0, mutableGrid.width)
         assertEquals(0, mutableGrid.height)
@@ -51,11 +51,11 @@ class MutableGridTest {
         assertEquals(emptyList(), mutableGrid.rows())
         assertEquals(emptyList(), mutableGrid.columns())
 
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileRow(0) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileColumn(0) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(0) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(0) }
 
-        assertEquals(emptyList(), mutableGrid.volatileRows())
-        assertEquals(emptyList(), mutableGrid.volatileColumns())
+        assertEquals(emptyList(), mutableGrid.shallowRows())
+        assertEquals(emptyList(), mutableGrid.shallowColumns())
 
         assertEquals("", mutableGrid.joinRowsToString { it.toString() })
 
@@ -115,15 +115,15 @@ class MutableGridTest {
         assertEquals(listOf(listOf(42)), mutableGrid.rows())
         assertEquals(listOf(listOf(42)), mutableGrid.columns())
 
-        assertEquals(listOf(42), mutableGrid.volatileRow(0))
-        assertEquals(listOf(42), mutableGrid.volatileColumn(0))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileRow(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileColumn(-1) }
+        assertEquals(listOf(42), mutableGrid.shallowRow(0))
+        assertEquals(listOf(42), mutableGrid.shallowColumn(0))
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(1) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(1) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(-1) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(-1) }
 
-        assertEquals(listOf(listOf(42)), mutableGrid.volatileRows())
-        assertEquals(listOf(listOf(42)), mutableGrid.volatileColumns())
+        assertEquals(listOf(listOf(42)), mutableGrid.shallowRows())
+        assertEquals(listOf(listOf(42)), mutableGrid.shallowColumns())
 
         assertEquals("<[42]>", mutableGrid.joinRowsToString { "<$it>" })
 
@@ -245,17 +245,17 @@ class MutableGridTest {
             mutableGrid.columns()
         )
 
-        assertEquals(listOf(10, 20, 28, -48), mutableGrid.volatileRow(0))
-        assertEquals(listOf(73, 34, -63, -67), mutableGrid.volatileRow(1))
-        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.volatileRow(2))
-        assertEquals(listOf(10, 73, -79), mutableGrid.volatileColumn(0))
-        assertEquals(listOf(20, 34, -60), mutableGrid.volatileColumn(1))
-        assertEquals(listOf(28, -63, 13), mutableGrid.volatileColumn(2))
-        assertEquals(listOf(-48, -67, -55), mutableGrid.volatileColumn(3))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileRow(3) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileColumn(4) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.volatileColumn(-1) }
+        assertEquals(listOf(10, 20, 28, -48), mutableGrid.shallowRow(0))
+        assertEquals(listOf(73, 34, -63, -67), mutableGrid.shallowRow(1))
+        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.shallowRow(2))
+        assertEquals(listOf(10, 73, -79), mutableGrid.shallowColumn(0))
+        assertEquals(listOf(20, 34, -60), mutableGrid.shallowColumn(1))
+        assertEquals(listOf(28, -63, 13), mutableGrid.shallowColumn(2))
+        assertEquals(listOf(-48, -67, -55), mutableGrid.shallowColumn(3))
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(3) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(4) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(-1) }
+        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(-1) }
 
         assertEquals(
             listOf(
@@ -263,7 +263,7 @@ class MutableGridTest {
                 listOf(73, 34, -63, -67),
                 listOf(-79, -60, 13, -55)
             ),
-            mutableGrid.volatileRows()
+            mutableGrid.shallowRows()
         )
         assertEquals(
             listOf(
@@ -272,7 +272,7 @@ class MutableGridTest {
                 listOf(28, -63, 13),
                 listOf(-48, -67, -55)
             ),
-            mutableGrid.volatileColumns()
+            mutableGrid.shallowColumns()
         )
 
         assertEquals(

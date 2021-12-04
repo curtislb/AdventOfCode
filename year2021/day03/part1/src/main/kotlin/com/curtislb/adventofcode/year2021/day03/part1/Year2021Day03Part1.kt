@@ -53,8 +53,7 @@ answer in decimal, not binary.)
 
 package com.curtislb.adventofcode.year2021.day03.part1
 
-import com.curtislb.adventofcode.common.math.digitsToInt
-import com.curtislb.adventofcode.common.math.toDigit
+import com.curtislb.adventofcode.year2021.day03.diagnostic.DiagnosticReport
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -64,22 +63,8 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val lines = inputPath.toFile().readLines()
-
-    val bitCount = lines.first().length
-    val bitSums = IntArray(bitCount)
-    lines.forEach { line ->
-        line.forEachIndexed { bitIndex, bitChar ->
-            bitSums[bitIndex] += bitChar.toDigit()
-        }
-    }
-
-    val commonBits = bitSums.map { if (it * 2 < lines.size) 0 else 1 }
-    val uncommonBits = commonBits.map { if (it == 1) 0 else 1 }
-
-    val gamma = commonBits.digitsToInt(base = 2)
-    val epsilon = uncommonBits.digitsToInt(base = 2)
-    return gamma * epsilon
+    val report = DiagnosticReport(inputPath.toFile().readLines())
+    return report.powerConsumption
 }
 
 fun main() {

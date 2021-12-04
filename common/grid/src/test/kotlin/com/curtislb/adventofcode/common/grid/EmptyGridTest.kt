@@ -1,11 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
-import kotlin.test.assertNotSame
-import kotlin.test.assertSame
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -64,25 +60,25 @@ class EmptyGridTest {
     }
 
     @Test
-    fun testVolatileRow() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileRow(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileRow(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileRow(2) }
+    fun testShallowRow() {
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(0) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(1) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(-1) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(2) }
     }
 
     @Test
-    fun testVolatileColumn() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileColumn(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileColumn(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.volatileColumn(2) }
+    fun testShallowColumn() {
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(0) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(1) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(-1) }
+        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(2) }
     }
 
     @Test
-    fun testVolatileRowsAndColumns() {
-        assertEquals(emptyList(), EmptyGrid.volatileRows())
-        assertEquals(emptyList(), EmptyGrid.volatileColumns())
+    fun testShallowRowsAndColumns() {
+        assertEquals(emptyList(), EmptyGrid.shallowRows())
+        assertEquals(emptyList(), EmptyGrid.shallowColumns())
     }
 
     @Test

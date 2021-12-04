@@ -12,7 +12,6 @@ class AimingSubmarine(
     initialDepth: Int,
     initialAim: Int = 0
 ) : Submarine(initialPosition, initialDepth) {
-
     /**
      * The current vertical "aim" of the submarine.
      */

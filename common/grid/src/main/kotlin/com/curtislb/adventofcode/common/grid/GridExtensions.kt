@@ -55,8 +55,16 @@ inline fun <E, R> Grid<E>.mapPointValues(transform: (point: Point, value: E) -> 
     }
 
 /**
+ * Returns the results of applying the given [transform] function to each element of the row with
+ * the given [rowIndex] in the grid.
+ */
+@Generated
+inline fun <E, R> Grid<E>.mapRow(rowIndex: Int, transform: (value: E) -> R): List<R> =
+    shallowRow(rowIndex).map(transform)
+
+/**
  * Returns the sum of the values given by applying the [transform] function to each row in the grid.
  */
 @Generated
 inline fun <E> Grid<E>.sumRowsBy(transform: (row: List<E>) -> Int): Int =
-    volatileRows().sumOf(transform)
+    shallowRows().sumOf(transform)

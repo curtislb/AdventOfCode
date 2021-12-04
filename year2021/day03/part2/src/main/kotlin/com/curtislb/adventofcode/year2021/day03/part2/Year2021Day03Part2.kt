@@ -60,7 +60,7 @@ sure to represent your answer in decimal, not binary.)
 
 package com.curtislb.adventofcode.year2021.day03.part2
 
-import com.curtislb.adventofcode.common.math.toDigit
+import com.curtislb.adventofcode.year2021.day03.diagnostic.DiagnosticReport
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -70,32 +70,8 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val lines = inputPath.toFile().readLines().map { it.trim() }
-    val bitIndices = lines.first().indices
-
-    val oxygenIndex = bitIndices.fold(lines.indices.toList()) { lineIndices, bitIndex ->
-        if (lineIndices.size == 1) {
-            lineIndices
-        } else {
-            val bitSum = lineIndices.sumOf { lines[it][bitIndex].toDigit() }
-            val bitChar = if (bitSum * 2 >= lineIndices.size) '1' else '0'
-            lineIndices.filter { lines[it][bitIndex] == bitChar }
-        }
-    }.first()
-
-    val co2Index = bitIndices.fold(lines.indices.toList()) { lineIndices, bitIndex ->
-        if (lineIndices.size == 1) {
-            lineIndices
-        } else {
-            val bitSum = lineIndices.sumOf { lines[it][bitIndex].toDigit() }
-            val bitChar = if (bitSum * 2 >= lineIndices.size) '0' else '1'
-            lineIndices.filter { lines[it][bitIndex] == bitChar }
-        }
-    }.first()
-
-    val oxygenRating = lines[oxygenIndex].toInt(radix = 2)
-    val co2Rating = lines[co2Index].toInt(radix = 2)
-    return oxygenRating * co2Rating
+    val report = DiagnosticReport(inputPath.toFile().readLines())
+    return report.lifeSupportRating
 }
 
 fun main() {

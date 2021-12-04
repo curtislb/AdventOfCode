@@ -182,4 +182,4 @@ include(":year2021:day01:part1", ":year2021:day01:part2")
 include(":year2021:day02:part1", ":year2021:day02:part2", ":year2021:day02:submarine")
 
 // Day 3: Binary Diagnostic
-include(":year2021:day03:part1", ":year2021:day03:part2")
+include(":year2021:day03:diagnostic", ":year2021:day03:part1", ":year2021:day03:part2")

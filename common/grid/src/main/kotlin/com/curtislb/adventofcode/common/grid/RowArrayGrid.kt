@@ -32,9 +32,9 @@ class RowArrayGrid<E>(private val rowList: ArrayList<ArrayList<E>> = ArrayList()
         return rowList.map { it[colIndex] }
     }
 
-    override fun volatileRow(rowIndex: Int): List<E> = rowList[rowIndex]
+    override fun shallowRow(rowIndex: Int): List<E> = rowList[rowIndex]
 
-    override fun volatileRows(): List<List<E>> = rowList
+    override fun shallowRows(): List<List<E>> = rowList
 
     override fun set(rowIndex: Int, colIndex: Int, value: E) {
         rowList[rowIndex][colIndex] = value
@@ -88,7 +88,7 @@ class RowArrayGrid<E>(private val rowList: ArrayList<ArrayList<E>> = ArrayList()
         rowList.forEach { it.removeLast() }
     }
 
-    override fun equals(other: Any?): Boolean = other is Grid<*> && rowList == other.volatileRows()
+    override fun equals(other: Any?): Boolean = other is Grid<*> && rowList == other.shallowRows()
 
     override fun hashCode(): Int = if (isEmpty()) emptyList<E>().hashCode() else rowList.hashCode()
 
