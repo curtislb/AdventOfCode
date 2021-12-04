@@ -1,45 +1,48 @@
 package com.curtislb.adventofcode.year2021.day02.submarine
 
-import com.curtislb.adventofcode.common.grid.Point
-
 /**
  * A submarine with a horizontal and vertical position that is capable of processing commands.
  *
- * @param initialPosition The starting position of the submarine, before running any commands.
+ * @param initialPosition The horizontal position of the submarine before running any commands.
+ * @param initialDepth The depth of the submarine before running any commands.
  */
-abstract class Submarine(initialPosition: Point) {
+abstract class Submarine(initialPosition: Int, initialDepth: Int) {
     /**
-     * The current position of the submarine.
-     *
-     * Note that a negative value of [Point.y] corresponds to a positive depth for the submarine.
+     * The current horizontal position of the submarine.
      */
-    var position: Point = initialPosition
+    var horizontalPosition: Int = initialPosition
         protected set
 
     /**
-     * Runs the "forward" command with the given [value] as an argument.
+     * The current depth of the submarine.
+     */
+    var depth: Int = initialDepth
+        protected set
+
+    /**
+     * Runs the `forward` command with the given [value] as an argument.
      */
     abstract fun forward(value: Int)
 
     /**
-     * Runs the "down" command with the given [value] as an argument.
+     * Runs the `down` command with the given [value] as an argument.
      */
     abstract fun down(value: Int)
 
     /**
-     * Runs the "up" command with the given [value] as an argument.
+     * Runs the `up` command with the given [value] as an argument.
      */
     abstract fun up(value: Int)
 
     /**
      * Runs the command represented by the given [command] string. This command may (but need not)
-     * update the [position] of the submarine.
+     * update the [horizontalPosition] and [depth] of the submarine.
      *
      * The supported commands are as follows:
      *
      * - `"forward $argument"`: Runs the [forward] command with the given integer `argument`.
      * - `"down $argument"`: Runs the [down] command with the given integer `argument`.
-     * - `"up $argument"`: Runs the [forward] command, with the given integer `argument`.
+     * - `"up $argument"`: Runs the [up] command, with the given integer `argument`.
      *
      * @throws IllegalArgumentException If [command] does not represent a valid command.
      */

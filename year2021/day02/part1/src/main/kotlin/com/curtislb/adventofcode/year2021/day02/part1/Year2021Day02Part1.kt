@@ -43,7 +43,6 @@ do you get if you multiply your final horizontal position by your final depth?
 
 package com.curtislb.adventofcode.year2021.day02.part1
 
-import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.year2021.day02.submarine.SimpleSubmarine
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -52,15 +51,17 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 02, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
- * @param initialPosition The starting position of the submarine.
+ * @param initialPosition The horizontal position of the submarine before running any commands.
+ * @param initialDepth The depth of the submarine before running any commands.
  */
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
-    initialPosition: Point = Point.ORIGIN
+    initialPosition: Int = 0,
+    initialDepth: Int = 0
 ): Int {
-    val submarine = SimpleSubmarine(initialPosition)
+    val submarine = SimpleSubmarine(initialPosition, initialDepth)
     inputPath.toFile().forEachLine { submarine.runCommand(it) }
-    return submarine.position.x * -submarine.position.y
+    return submarine.horizontalPosition * submarine.depth
 }
 
 fun main() {

@@ -38,7 +38,6 @@ position by your final depth?
 
 package com.curtislb.adventofcode.year2021.day02.part2
 
-import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.year2021.day02.submarine.AimingSubmarine
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -47,15 +46,17 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 02, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
- * @param initialPosition The starting position of the submarine.
+ * @param initialPosition The horizontal position of the submarine before running any commands.
+ * @param initialDepth The depth of the submarine before running any commands.
  */
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
-    initialPosition: Point = Point.ORIGIN
+    initialPosition: Int = 0,
+    initialDepth: Int = 0
 ): Int {
-    val submarine = AimingSubmarine(initialPosition)
+    val submarine = AimingSubmarine(initialPosition, initialDepth)
     inputPath.toFile().forEachLine { submarine.runCommand(it) }
-    return submarine.position.x * -submarine.position.y
+    return submarine.horizontalPosition * submarine.depth
 }
 
 fun main() {

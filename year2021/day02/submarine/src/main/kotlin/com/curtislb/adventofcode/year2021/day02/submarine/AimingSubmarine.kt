@@ -1,14 +1,18 @@
 package com.curtislb.adventofcode.year2021.day02.submarine
 
-import com.curtislb.adventofcode.common.grid.Point
-
 /**
  * A submarine that keeps track of a vertical "aim" value, which influences its forward movement.
  *
- * @param initialPosition The starting position of the submarine, before running any commands.
- * @param initialAim The initial "aim" value of the submarine, before running any commands.
+ * @param initialPosition The horizontal position of the submarine before running any commands.
+ * @param initialDepth The depth of the submarine before running any commands.
+ * @param initialAim The vertical "aim" value of the submarine before running any commands.
  */
-class AimingSubmarine(initialPosition: Point, initialAim: Int = 0) : Submarine(initialPosition) {
+class AimingSubmarine(
+    initialPosition: Int,
+    initialDepth: Int,
+    initialAim: Int = 0
+) : Submarine(initialPosition, initialDepth) {
+
     /**
      * The current vertical "aim" of the submarine.
      */
@@ -19,10 +23,11 @@ class AimingSubmarine(initialPosition: Point, initialAim: Int = 0) : Submarine(i
      * Moves the submarine according to the following rules:
      *
      * - Increases its horizontal position by [value] units.
-     * - Decreases its vertical position (i.e. increases its depth) by [aim] * [value] units.
+     * - Increases its depth by [aim] * [value] units.
      */
     override fun forward(value: Int) {
-        position = Point(position.x + value, position.y - (aim * value))
+        horizontalPosition += value
+        depth += aim * value
     }
 
     /**
