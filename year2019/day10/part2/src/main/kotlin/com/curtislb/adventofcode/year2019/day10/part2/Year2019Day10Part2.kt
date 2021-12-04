@@ -62,17 +62,17 @@ and vaporizes the last asteroid (9) partway through its third rotation:
 
 In the large example above (the one with the best monitoring station location at 11,13):
 
-  - The 1st asteroid to be vaporized is at 11,12.
-  - The 2nd asteroid to be vaporized is at 12,1.
-  - The 3rd asteroid to be vaporized is at 12,2.
-  - The 10th asteroid to be vaporized is at 12,8.
-  - The 20th asteroid to be vaporized is at 16,0.
-  - The 50th asteroid to be vaporized is at 16,9.
-  - The 100th asteroid to be vaporized is at 10,16.
-  - The 199th asteroid to be vaporized is at 9,6.
-  - The 200th asteroid to be vaporized is at 8,2.
-  - The 201st asteroid to be vaporized is at 10,9.
-  - The 299th and final asteroid to be vaporized is at 11,1.
+- The 1st asteroid to be vaporized is at 11,12.
+- The 2nd asteroid to be vaporized is at 12,1.
+- The 3rd asteroid to be vaporized is at 12,2.
+- The 10th asteroid to be vaporized is at 12,8.
+- The 20th asteroid to be vaporized is at 16,0.
+- The 50th asteroid to be vaporized is at 16,9.
+- The 100th asteroid to be vaporized is at 10,16.
+- The 199th asteroid to be vaporized is at 9,6.
+- The 200th asteroid to be vaporized is at 8,2.
+- The 201st asteroid to be vaporized is at 10,9.
+- The 299th and final asteroid to be vaporized is at 11,1.
 
 The Elves are placing bets on which will be the 200th asteroid to be vaporized. Win the bet by
 determining which asteroid that will be; what do you get if you multiply its X coordinate by 100 and

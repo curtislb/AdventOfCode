@@ -6,6 +6,7 @@ the data.
 
 Instead, consider sums of a three-measurement sliding window. Again considering the above example:
 
+```
 199  A
 200  A B
 208  A B C
@@ -16,6 +17,7 @@ Instead, consider sums of a three-measurement sliding window. Again considering 
 269    F G H
 260      G H
 263        H
+```
 
 Start by comparing the first and second three-measurement windows. The measurements in the first
 window are marked A (199, 200, 208); their sum is 199 + 200 + 208 = 607. The second window is marked
@@ -28,6 +30,7 @@ on. Stop when there aren't enough measurements left to create a new three-measur
 
 In the above example, the sum of each three-measurement window is as follows:
 
+```
 A: 607 (N/A - no previous sum)
 B: 618 (increased)
 C: 618 (no change)
@@ -36,6 +39,7 @@ E: 647 (increased)
 F: 716 (increased)
 G: 769 (increased)
 H: 792 (increased)
+```
 
 In this example, there are 5 sums that are larger than the previous sum.
 
