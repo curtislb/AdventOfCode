@@ -4,6 +4,8 @@ import lombok.Generated
 
 /**
  * Adds a new row to this grid, constructed by applying the [initRow] function to an empty list.
+ *
+ * @throws IllegalArgumentException If this grid is non-empty and the new row is of the wrong size.
  */
 @Generated
 inline fun <E> MutableGrid<E>.addRowWith(initRow: MutableList<E>.() -> Unit) {

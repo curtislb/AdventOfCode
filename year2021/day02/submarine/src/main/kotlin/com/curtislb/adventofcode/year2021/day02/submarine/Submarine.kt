@@ -63,6 +63,6 @@ abstract class Submarine(initialPosition: Int, initialDepth: Int) {
         /**
          * The regex to be matched against command strings for [runCommand].
          */
-        private val COMMAND_REGEX = """\s*([a-z]+)\s+(\d+)\s*""".toRegex()
+        private val COMMAND_REGEX = Regex("""\s*([a-z]+)\s+(\d+)\s*""")
     }
 }

@@ -183,3 +183,6 @@ include(":year2021:day02:part1", ":year2021:day02:part2", ":year2021:day02:subma
 
 // Day 3: Binary Diagnostic
 include(":year2021:day03:diagnostic", ":year2021:day03:part1", ":year2021:day03:part2")
+
+// Day 4: Giant Squid
+include(":year2021:day04:bingo", ":year2021:day04:part1", ":year2021:day04:part2")
