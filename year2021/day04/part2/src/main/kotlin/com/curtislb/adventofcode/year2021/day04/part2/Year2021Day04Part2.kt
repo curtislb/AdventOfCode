@@ -29,7 +29,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     var numbers: List<Int> = emptyList()
-    val boards = mutableListOf<BingoBoard>()
+    val boards = mutableSetOf<BingoBoard>()
     inputPath.toFile().forEachSection { lines ->
         if (numbers.isEmpty()) {
             numbers = lines.first().toInts()
