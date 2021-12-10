@@ -186,3 +186,6 @@ include(":year2021:day03:diagnostic", ":year2021:day03:part1", ":year2021:day03:
 
 // Day 4: Giant Squid
 include(":year2021:day04:bingo", ":year2021:day04:part1", ":year2021:day04:part2")
+
+// Day 5: Hydrothermal Venture
+include(":year2021:day05:part1", ":year2021:day05:part2")

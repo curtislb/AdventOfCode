@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
 /**
- * Returns the x and y coordinate ranges, respectively, of this iterable collection of points.
+ * Returns the x- and y-coordinate ranges, respectively, of this iterable collection of points.
  */
 fun Iterable<Point>.coordinateRanges(): Pair<ClosedRange<Int>, ClosedRange<Int>> {
     var minX = Int.MAX_VALUE

@@ -54,7 +54,7 @@ class Routine(private val callOrder: List<Int>, private val functions: List<List
          * - Has at most [maxCharCount] characters in the ASCII representation of [callOrder] and of
          *   each function.
          *
-         * If no such routine exists, instead returns `null`.
+         * If no such routine exists, this function instead returns `null`.
          */
         fun compressInstructions(
             instructions: List<Instruction>,

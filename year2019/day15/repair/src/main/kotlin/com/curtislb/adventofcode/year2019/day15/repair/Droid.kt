@@ -1,10 +1,8 @@
 package com.curtislb.adventofcode.year2019.day15.repair
 
 import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.constructPointGrid
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
@@ -26,11 +24,6 @@ class Droid(file: File) {
      */
     var goalPosition: Point? = null
         private set
-
-    /**
-     * Whether the repair droid's current position is the location of the oxygen system.
-     */
-    val isAtGoal: Boolean get() = orientation.position == goalPosition
 
     /**
      * The most recent space identified by the repair droid.
@@ -65,21 +58,6 @@ class Droid(file: File) {
     }
 
     /**
-     * Returns a matrix representing the portion of the grid that the repair droid has explored.
-     */
-    fun constructKnownGrid(): Grid<Space> = constructPointGrid(knownSpaces.keys) { spaceAt(it) }
-
-    /**
-     * Returns a matrix representing the portion of the grid that the repair droid has explored,
-     * including the droid's current position, represented by [Space.DROID].
-     */
-    fun constructKnownGridWithDroid(): Grid<Space> {
-        return constructPointGrid(knownSpaces.keys) { point ->
-            if (point == orientation.position) Space.DROID else spaceAt(point)
-        }
-    }
-
-    /**
      * Attempts to move the repair droid one unit in [direction] from its current grid position.
      *
      * The repair droid first turns to face [direction] and then identifies the space one unit
@@ -96,6 +74,7 @@ class Droid(file: File) {
             Direction.DOWN -> BigInteger.TWO
             Direction.LEFT -> BigInteger("3")
             Direction.RIGHT -> BigInteger("4")
+            else -> throw IllegalArgumentException("No move instruction for direction: $direction")
         }
         intcode.sendInput(input)
         intcode.run()
@@ -121,7 +100,7 @@ class Droid(file: File) {
      */
     private fun exploreInternal(visited: MutableSet<Point>) {
         visited.add(orientation.position)
-        for (direction in Direction.values()) {
+        for (direction in Direction.cardinalValues()) {
             val newPosition = orientation.position.move(direction)
             if (newPosition !in visited && spaceAt(newPosition).isOccupiable != false) {
                 move(direction)

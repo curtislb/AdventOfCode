@@ -3,6 +3,8 @@ plugins {
     kotlin("jvm")
 }
 
+val javaVersion: String by project
+
 dependencies {
     // Add all leaf subprojects as dependencies
     subprojects.filter { it.subprojects.isEmpty() }.forEach { implementation(it) }
@@ -64,7 +66,13 @@ val codeCoverageReport by tasks.registering(JacocoReport::class) {
     }
 }
 
-// Make JaCoCo report generation part of the 'check' lifecycle phase
-tasks.check {
-    dependsOn(codeCoverageReport)
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = javaVersion
+    }
+
+    // Make JaCoCo report generation part of the 'check' lifecycle phase
+    check {
+        dependsOn(codeCoverageReport)
+    }
 }

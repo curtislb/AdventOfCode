@@ -3,6 +3,7 @@ package com.curtislb.adventofcode.year2020.day12.navigation
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Orientation
 import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.grid.RotationAngle
 
 /**
  * A ship in a 2D grid that can be directly moved and turned via navigation commands.
@@ -29,11 +30,8 @@ class SimpleNavigationShip(
     /**
      * Turns this ship counterclockwise by the given [angle] without changing its position.
      */
-    override fun turnLeft(angle: RotationAngle) = when (angle) {
-        RotationAngle.DEGREES_0 -> Unit
-        RotationAngle.DEGREES_90 -> orientation = orientation.turnLeft()
-        RotationAngle.DEGREES_180 -> orientation = orientation.turnAround()
-        RotationAngle.DEGREES_270 -> orientation = orientation.turnRight()
+    override fun turnLeft(angle: RotationAngle) {
+        orientation = orientation.turnLeft(angle)
     }
 
     /**

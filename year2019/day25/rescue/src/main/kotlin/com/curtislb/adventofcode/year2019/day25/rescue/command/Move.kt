@@ -7,6 +7,8 @@ import com.curtislb.adventofcode.common.grid.Direction
  *
  * Note that [direction] is translated to an equivalent compass direction, with [Direction.UP]
  * corresponding to north.
+ *
+ * @throws IllegalArgumentException If [direction] does not match a cardinal compass direction.
  */
 class Move(private val direction: Direction) : Command {
     override fun toString(): String = when (direction) {
@@ -14,5 +16,6 @@ class Move(private val direction: Direction) : Command {
         Direction.RIGHT -> "east"
         Direction.DOWN -> "south"
         Direction.LEFT -> "west"
+        else -> throw IllegalArgumentException("Direction not supported: $direction")
     }
 }

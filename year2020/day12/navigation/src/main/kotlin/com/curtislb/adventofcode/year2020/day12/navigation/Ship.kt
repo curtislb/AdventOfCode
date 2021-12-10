@@ -1,6 +1,7 @@
 package com.curtislb.adventofcode.year2020.day12.navigation
 
 import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.grid.RotationAngle
 
 /**
  * A ship in a 2D grid that is capable of processing navigation instructions.
@@ -20,13 +21,7 @@ interface Ship {
      * Processes the instruction to turn right (clockwise) by the given [angle].
      */
     fun turnRight(angle: RotationAngle = RotationAngle.DEGREES_90) {
-        // Call turnLeft with the equivalent counterclockwise angle.
-        val leftAngle = when (angle) {
-            RotationAngle.DEGREES_90 -> RotationAngle.DEGREES_270
-            RotationAngle.DEGREES_270 -> RotationAngle.DEGREES_90
-            else -> angle
-        }
-        turnLeft(leftAngle)
+        turnLeft(-angle)
     }
 
     /**
@@ -78,15 +73,12 @@ interface Ship {
          */
         private fun parseInstruction(instruction: String): Pair<Char, Int> {
             // Use a regex to match against the instruction string.
-            val matchGroups = INSTRUCTION_REGEX.matchEntire(instruction)?.groupValues
-            require(matchGroups != null && matchGroups.size == 3) {
-                "Malformed instruction: $instruction"
-            }
+            val matchResult = INSTRUCTION_REGEX.matchEntire(instruction)
+            require(matchResult != null) { "Malformed instruction: $instruction" }
 
             // Extract and parse matched group values.
-            val action = matchGroups[1][0]
-            val value = matchGroups[2].toInt()
-            return Pair(action, value)
+            val (actionString, valueString) = matchResult.destructured
+            return Pair(actionString.first(), valueString.toInt())
         }
     }
 }

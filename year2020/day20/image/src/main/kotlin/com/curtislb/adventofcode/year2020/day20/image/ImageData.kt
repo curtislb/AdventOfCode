@@ -31,7 +31,7 @@ class ImageData(file: File) {
 
         val adjacencyMap = mutableMapOf<Int, MutableMap<Direction, Int>>().apply {
             tileMap.values.forEach { tile ->
-                for (tileDirection in Direction.values()) {
+                for (tileDirection in Direction.cardinalValues()) {
                     var isMatchFound = false
                     for (otherTile in tileMap.values) {
                         if (isMatchFound) {
@@ -42,7 +42,7 @@ class ImageData(file: File) {
                             continue
                         }
 
-                        for (otherDirection in Direction.values()) {
+                        for (otherDirection in Direction.cardinalValues()) {
                             val tileBorder = tile.border(tileDirection)
                             val otherBorder = otherTile.border(otherDirection)
                             if (tileBorder == otherBorder || tileBorder == otherBorder.reversed()) {

@@ -19,14 +19,16 @@ data class Orientation(val position: Point, val direction: Direction) {
     fun turnAround(): Orientation = turnToward(direction.reverse())
 
     /**
-     * Returns the orientation given by turning 90 degrees counterclockwise from this one.
+     * Returns the orientation given by turning a given [angle] counterclockwise from this one.
      */
-    fun turnLeft(): Orientation = turnToward(direction.turnLeft())
+    fun turnLeft(angle: RotationAngle = RotationAngle.DEGREES_90): Orientation =
+        turnToward(direction.turnLeft(angle))
 
     /**
-     * Returns the orientation given by turning 90 degrees clockwise from this one.
+     * Returns the orientation given by turning a given [angle] clockwise from this one.
      */
-    fun turnRight(): Orientation = turnToward(direction.turnRight())
+    fun turnRight(angle: RotationAngle = RotationAngle.DEGREES_90): Orientation =
+        turnToward(direction.turnRight(angle))
 
     /**
      * Returns the orientation given by turning from this one to face [direction].

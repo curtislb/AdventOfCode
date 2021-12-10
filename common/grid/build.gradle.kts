@@ -5,10 +5,10 @@ plugins {
 val lombokVersion: String by project
 
 dependencies {
+    implementation(project(":common:collection"))
     implementation(project(":common:math"))
     implementation(project(":common:range"))
 
-    testImplementation(project(":common:collection"))
     testImplementation(project(":common:testing"))
 
     compileOnly("org.projectlombok:lombok:$lombokVersion")

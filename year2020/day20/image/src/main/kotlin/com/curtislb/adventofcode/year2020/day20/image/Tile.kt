@@ -48,6 +48,7 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
         Direction.RIGHT -> dataGrid.lastColumn()
         Direction.DOWN -> dataGrid.lastRow()
         Direction.LEFT -> dataGrid.firstColumn()
+        else -> throw IllegalArgumentException("No border for direction: $direction")
     }
 
     /**

@@ -22,14 +22,14 @@ class Wire(wireString: String) {
         val segmentArrayList = ArrayList<Segment>(segmentStrings.size)
         var start = Point.ORIGIN
         segmentStrings.forEach { segmentString ->
-            // Construct each segment and add it to the list in order.
-            val direction = Direction.from(segmentString[0])
+            // Construct each segment and add it to the list in order
+            val direction = Direction.fromChar(segmentString[0])
             val length = segmentString.substring(1).toInt()
-            val segment = Segment(start, direction, length)
+            val segment = Segment.from(start, direction, length)
             segmentArrayList.add(segment)
 
-            // The start of the next segment is the end of the current one.
-            start = segment.end
+            // The next segment starts from the opposite end of the current one
+            start = segment.otherEndpoint(start)
         }
         segments = segmentArrayList
     }
@@ -50,10 +50,10 @@ class Wire(wireString: String) {
         var nearestDistance = Int.MAX_VALUE
         segments.forEachIndexed { i, segment ->
             other.segments.forEachIndexed { j, otherSegment ->
-                // Ignore the "intersection" of the first two segments at the origin.
+                // Ignore the "intersection" of the first two segments at the origin
                 if (i != 0 || j != 0) {
-                    // Check for a new nearest intersection point.
-                    val intersection = segment.intersection(otherSegment)
+                    // Check for a new nearest intersection point
+                    val intersection = segment.intersectionWith(otherSegment)
                     val distance = intersection?.manhattanDistance(Point.ORIGIN) ?: Int.MAX_VALUE
                     if (distance < nearestDistance) {
                         nearestIntersection = intersection
@@ -83,25 +83,32 @@ class Wire(wireString: String) {
         var shortestPathIntersection: Point? = null
         var shortestPathLength = Int.MAX_VALUE
         var thisPathLength = 0
-        segments.forEach { thisSegment ->
+        var thisSegmentStart = Point.ORIGIN
+        segments.forEachIndexed { i, thisSegment ->
             var otherPathLength = 0
-            other.segments.forEach { otherSegment ->
-                val intersection = thisSegment.intersection(otherSegment)
-                if (intersection != null) {
-                    // Calculate the total path length to this intersection point.
-                    val totalPathLength = thisPathLength + otherPathLength +
-                        thisSegment.start.manhattanDistance(intersection) +
-                        otherSegment.start.manhattanDistance(intersection)
+            var otherSegmentStart = Point.ORIGIN
+            other.segments.forEachIndexed { j, otherSegment ->
+                // Ignore the "intersection" of the first two segments at the origin
+                if (i != 0 || j != 0) {
+                    val intersection = thisSegment.intersectionWith(otherSegment)
+                    if (intersection != null) {
+                        // Calculate the total path length to this intersection point
+                        val totalPathLength = thisPathLength + otherPathLength +
+                            thisSegmentStart.manhattanDistance(intersection) +
+                            otherSegmentStart.manhattanDistance(intersection)
 
-                    // Check if we've found a new shortest (nonzero length) path intersection.
-                    if (totalPathLength in 1 until shortestPathLength) {
-                        shortestPathIntersection = intersection
-                        shortestPathLength = totalPathLength
+                        // Check if we've found a new shortest (nonzero length) path intersection
+                        if (totalPathLength in 1 until shortestPathLength) {
+                            shortestPathIntersection = intersection
+                            shortestPathLength = totalPathLength
+                        }
                     }
                 }
-                otherPathLength += otherSegment.length
+                otherPathLength += otherSegment.distance
+                otherSegmentStart = otherSegment.otherEndpoint(otherSegmentStart)
             }
-            thisPathLength += thisSegment.length
+            thisPathLength += thisSegment.distance
+            thisSegmentStart = thisSegment.otherEndpoint(thisSegmentStart)
         }
         return Pair(shortestPathIntersection, shortestPathLength)
     }

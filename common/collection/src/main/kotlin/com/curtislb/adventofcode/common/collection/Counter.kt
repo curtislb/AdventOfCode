@@ -1,19 +1,20 @@
 package com.curtislb.adventofcode.common.collection
 
+import java.math.BigInteger
+
 /**
- * A map-like object that keeps track of the integer quantity (either positive or negative) of
- * various items.
+ * A map that can be used to track the counts (either positive or negative) of various items.
  *
  * @param initialCounts A map of initial item counts with which to populate the counter.
  */
 class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
     /**
-     * A map that holds the nonzero item counts for this counter.
+     * A map that holds the nonzero key counts for this counter.
      */
     private val counts: MutableMap<E, Long> = initialCounts.toMutableMap()
 
     init {
-        // Remove all items with a count of 0. Subsequent method calls maintain this invariant.
+        // Remove all keys with a count of 0. Subsequent method calls maintain this invariant.
         counts.entries.filter { it.value == 0L }.forEach { counts.remove(it.key) }
     }
 
@@ -40,8 +41,7 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
         get() = counts.entries.filter { it.value > 0L }.map { it.key }.toSet()
 
     /**
-     * A map-like object that keeps track of the integer quantity (either positive or negative) of
-     * various items.
+     * A map that can be used to track the counts (either positive or negative) of various items.
      *
      * @param items A list of initial items with which to populate the counter.
      */
@@ -57,9 +57,8 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
     /**
      * Checks if this counter has a greater or equal count for each key in [other].
      */
-    operator fun contains(other: Counter<E>): Boolean {
-        return other.entriesWithNonzeroCount.all { (key, count) -> this[key] >= count }
-    }
+    operator fun contains(other: Counter<E>): Boolean =
+        other.entriesWithNonzeroCount.all { (key, count) -> this[key] >= count }
 
     /**
      * Returns the count stored for [key] in this counter. Defaults to 0 if [key] is not stored in
@@ -87,11 +86,27 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
     }
 
     /**
-     * Removes all items with negative counts from this counter, resetting their counts to 0.
+     * Removes all keys with negative counts from this counter, resetting their counts to 0.
      */
     fun clearNegativeCounts() {
         counts.entries.filter { it.value < 0L }.forEach { counts.remove(it.key) }
     }
+
+    /**
+     * Returns the sum of the counts for all keys in this counter.
+     *
+     * If this sum may be outside the range [Long.MIN_VALUE]..[Long.MAX_VALUE], use
+     * [sumCountsAsBigInteger] instead.
+     */
+    fun sumCounts(): Long = counts.values.sum()
+
+    /**
+     * Returns the sum of the counts for all keys in this counter as a [BigInteger].
+     *
+     * If this sum is guaranteed to be in the range [Long.MIN_VALUE]..[Long.MAX_VALUE], [sumCounts]
+     * may be used instead.
+     */
+    fun sumCountsAsBigInteger(): BigInteger = counts.values.sumOf { it.toBigInteger() }
 
     /**
      * Returns a map containing all `(key, count)` entries in this counter for which `count` is

@@ -2,6 +2,7 @@ package com.curtislb.adventofcode.year2020.day12.navigation
 
 import com.curtislb.adventofcode.common.grid.Direction
 import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.grid.RotationAngle
 
 /**
  * A ship in a 2D grid that can be navigated by manipulating a waypoint.
@@ -40,6 +41,7 @@ class WaypointNavigationShip(
         RotationAngle.DEGREES_90 -> waypoint = waypoint.rotateCounterclockwise()
         RotationAngle.DEGREES_180 -> waypoint = waypoint.rotate180Degrees()
         RotationAngle.DEGREES_270 -> waypoint = waypoint.rotateClockwise()
+        else -> throw IllegalArgumentException("Rotation angle not supported: $angle")
     }
 
     /**

@@ -13,7 +13,7 @@ includes:
 
 * [Advent of Code 2019][aoc-2019-link] (Days 1-25)
 * [Advent of Code 2020][aoc-2020-link] (Days 1-25)
-* [Advent of Code 2021][aoc-2021-link] (Days 1-4)
+* [Advent of Code 2021][aoc-2021-link] (Days 1-5)
 
 ## Getting Started
 
