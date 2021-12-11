@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests common binary-related functions and utilities.
+ * Tests common functions and utilities related to binary numbers.
  */
 class BinaryTest {
     @Test

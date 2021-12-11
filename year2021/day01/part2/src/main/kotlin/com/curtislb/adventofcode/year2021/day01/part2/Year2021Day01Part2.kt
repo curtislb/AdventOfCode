@@ -53,7 +53,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * Returns the solution to the puzzle for 2021, day 01, part 2.
+ * Returns the solution to the puzzle for 2021, day 1, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param windowSize The size of the measurement window to use when comparing sums.

@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
 /**
- * Tests the solution to the puzzle for 2021, day 04, part 1.
+ * Tests the solution to the puzzle for 2021, day 4, part 1.
  */
 class Year2021Day04Part1Test {
     @Test

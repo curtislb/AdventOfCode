@@ -65,7 +65,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * Returns the solution to the puzzle for 2021, day 03, part 2.
+ * Returns the solution to the puzzle for 2021, day 3, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  */

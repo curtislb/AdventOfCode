@@ -17,7 +17,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * Returns the solution to the puzzle for 2021, day 06, part 2.
+ * Returns the solution to the puzzle for 2021, day 6, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
  * @param cycleDays The number of days required for a mature lanternfish to create a new fish.
