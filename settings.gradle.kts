@@ -189,3 +189,6 @@ include(":year2021:day04:bingo", ":year2021:day04:part1", ":year2021:day04:part2
 
 // Day 5: Hydrothermal Venture
 include(":year2021:day05:part1", ":year2021:day05:part2", ":year2021:day05:vents")
+
+// Day 6: Lanternfish
+include(":year2021:day06:fish", ":year2021:day06:part1", ":year2021:day06:part2")
