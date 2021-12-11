@@ -7,8 +7,8 @@ need to also consider diagonal lines.
 Because of the limits of the hydrothermal vent mapping system, the lines in your list will only ever
 be horizontal, vertical, or a diagonal line at exactly 45 degrees. In other words:
 
-- An entry like 1,1 -> 3,3 covers points 1,1, 2,2, and 3,3.
-- An entry like 9,7 -> 7,9 covers points 9,7, 8,8, and 7,9.
+- An entry like `1,1 -> 3,3` covers points `1,1`, `2,2`, and `3,3`.
+- An entry like `9,7 -> 7,9` covers points `9,7`, `8,8`, and `7,9`.
 
 Considering all lines from the above example would now produce the following diagram:
 
@@ -33,10 +33,7 @@ Consider all of the lines. At how many points do at least two lines overlap?
 
 package com.curtislb.adventofcode.year2021.day05.part2
 
-import com.curtislb.adventofcode.common.collection.uniquePairs
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.Segment
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.year2021.day05.vents.VentField
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -46,22 +43,8 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    // Construct all segments from the input
-    val segments = mutableListOf<Segment>()
-    inputPath.toFile().forEachLine { line ->
-        val (x1, y1, x2, y2) = line.toInts()
-        segments.add(Segment.between(Point(x1, y1), Point(x2, y2)))
-    }
-
-    // Find the overlapping points for each pair of segments
-    val overlapPoints = mutableSetOf<Point>()
-    segments.uniquePairs().forEach { (segmentA, segmentB) ->
-        segmentA.overlapWith(segmentB)?.let { overlap ->
-            overlapPoints.addAll(overlap.points())
-        }
-    }
-
-    return overlapPoints.size
+    val vents = VentField(inputPath.toFile().readLines())
+    return vents.overlapPoints().size
 }
 
 fun main() {

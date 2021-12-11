@@ -58,6 +58,13 @@ class Segment private constructor(
     val isVertical: Boolean get() = !isPoint && slope == Slope.VERTICAL
 
     /**
+     * Whether this segment is up-right or down-right diagonal.
+     *
+     * A segment consisting of a single point is not considered diagonal.
+     */
+    val isDiagonal: Boolean get() = !isPoint && slope == Slope.UP_RIGHT || slope == Slope.DOWN_RIGHT
+
+    /**
      * Checks if this segment and [other] are parallel.
      *
      * A segment consisting of a single point is not considered parallel to any other segment.

@@ -3,7 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:collection"))
-    implementation(project(":common:grid"))
-    implementation(project(":common:parse"))
+    implementation(project(":year2021:day05:vents"))
 }
