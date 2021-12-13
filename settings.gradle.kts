@@ -195,3 +195,6 @@ include(":year2021:day06:fish", ":year2021:day06:part1", ":year2021:day06:part2"
 
 // Day 7: The Treachery of Whales
 include(":year2021:day07:part1", ":year2021:day07:part2")
+
+// Day 8: Seven Segment Search
+include(":year2021:day08:display", ":year2021:day08:part1", ":year2021:day08:part2")

@@ -1,6 +1,11 @@
 package com.curtislb.adventofcode.common.math
 
 /**
+ * Checks if the little-endian binary digit at [bitIndex] in this integer is 1.
+ */
+fun Int.isOneBit(bitIndex: Int): Boolean = this and (1 shl bitIndex) != 0
+
+/**
  * Returns a copy of this integer with the little-endian binary digit at [bitIndex] set to 1.
  *
  * @throws IllegalArgumentException If [bitIndex] is outside the range `0..31`.
