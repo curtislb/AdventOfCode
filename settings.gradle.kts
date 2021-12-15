@@ -204,3 +204,18 @@ include(":year2021:day09:basin", ":year2021:day09:part1", ":year2021:day09:part2
 
 // Day 10: Syntax Scoring
 include(":year2021:day10:part1", ":year2021:day10:part2", ":year2021:day10:syntax")
+
+// Day 11: Dumbo Octopus
+include(":year2021:day11:part1", ":year2021:day11:part2")
+
+// Day 12: Passage Pathing
+include(":year2021:day12:part1", ":year2021:day12:part2")
+
+// Day 13: Transparent Origami
+include(":year2021:day13:part1", ":year2021:day13:part2")
+
+// Day 14: Extended Polymerization
+include(":year2021:day14:part1", ":year2021:day14:part2")
+
+// Day 15: Chiton
+include(":year2021:day15:part1", ":year2021:day15:part2")
