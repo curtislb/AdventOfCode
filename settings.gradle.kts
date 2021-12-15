@@ -198,3 +198,6 @@ include(":year2021:day07:part1", ":year2021:day07:part2")
 
 // Day 8: Seven Segment Search
 include(":year2021:day08:display", ":year2021:day08:part1", ":year2021:day08:part2")
+
+// Day 9: Smoke Basin
+include(":year2021:day09:basin", ":year2021:day09:part1", ":year2021:day09:part2")
