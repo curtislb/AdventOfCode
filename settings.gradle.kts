@@ -201,3 +201,6 @@ include(":year2021:day08:display", ":year2021:day08:part1", ":year2021:day08:par
 
 // Day 9: Smoke Basin
 include(":year2021:day09:basin", ":year2021:day09:part1", ":year2021:day09:part2")
+
+// Day 10: Syntax Scoring
+include(":year2021:day10:part1", ":year2021:day10:part2", ":year2021:day10:syntax")
