@@ -11,5 +11,4 @@ dependencies {
     implementation(project(":common:range"))
     implementation(project(":common:search"))
     implementation(project(":common:simulation"))
-//    implementation(project(":year2021:day00:example"))
 }

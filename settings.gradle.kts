@@ -191,7 +191,7 @@ include(":year2021:day04:bingo", ":year2021:day04:part1", ":year2021:day04:part2
 include(":year2021:day05:part1", ":year2021:day05:part2", ":year2021:day05:vents")
 
 // Day 6: Lanternfish
-include(":year2021:day06:fish", ":year2021:day06:part1", ":year2021:day06:part2")
+include(":year2021:day06:lanternfish", ":year2021:day06:part1", ":year2021:day06:part2")
 
 // Day 7: The Treachery of Whales
 include(":year2021:day07:part1", ":year2021:day07:part2")
@@ -206,7 +206,7 @@ include(":year2021:day09:basin", ":year2021:day09:part1", ":year2021:day09:part2
 include(":year2021:day10:part1", ":year2021:day10:part2", ":year2021:day10:syntax")
 
 // Day 11: Dumbo Octopus
-include(":year2021:day11:part1", ":year2021:day11:part2")
+include(":year2021:day11:octopus", ":year2021:day11:part1", ":year2021:day11:part2")
 
 // Day 12: Passage Pathing
 include(":year2021:day12:part1", ":year2021:day12:part2")
@@ -219,3 +219,18 @@ include(":year2021:day14:part1", ":year2021:day14:part2")
 
 // Day 15: Chiton
 include(":year2021:day15:part1", ":year2021:day15:part2")
+
+// Day 16: Packet Decoder
+include(":year2021:day16:bits", ":year2021:day16:part1", ":year2021:day16:part2")
+
+// Day 17: Trick Shot
+include(":year2021:day17:part1", ":year2021:day17:part2")
+
+// Day 18: Snailfish
+include(":year2021:day18:part1", ":year2021:day18:part2", ":year2021:day18:snailfish")
+
+// Day 20: Trench Map
+include(":year2021:day20:part1", ":year2021:day20:part2")
+
+// Day 21: Dirac Dice
+include(":year2021:day21:part1", ":year2021:day21:part2")

@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.year2020.day23.cups
 
 import com.curtislb.adventofcode.common.collection.mapToMap
-import com.curtislb.adventofcode.common.math.toDigit
 
 class CupCircle(labeling: String, fillUpTo: Int? = null) {
     val cups: Map<Int, Cup>
@@ -9,11 +8,11 @@ class CupCircle(labeling: String, fillUpTo: Int? = null) {
     private var currentCup: Cup
 
     init {
-        val cupList = labeling.trim().map { Cup(it.toDigit()) }.toMutableList()
+        val cupList = labeling.trim().map { Cup(it.digitToInt()) }.toMutableList()
         var maxInitialLabel = Int.MIN_VALUE
         cupList.forEachIndexed { index, cup ->
             cup.next = cupList[(index + 1) % cupList.size]
-            maxInitialLabel = maxInitialLabel.coerceAtLeast(cup.label)
+            maxInitialLabel = maxOf(maxInitialLabel, cup.label)
         }
 
         if (fillUpTo != null) {

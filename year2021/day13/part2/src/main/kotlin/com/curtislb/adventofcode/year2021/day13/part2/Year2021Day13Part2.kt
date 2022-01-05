@@ -21,7 +21,7 @@ import java.nio.file.Paths
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     var points = mutableSetOf<Point>()
     val instructions = mutableListOf<String>()
     inputPath.toFile().forEachSection { section ->
@@ -53,12 +53,8 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
         points = foldedPoints
     }
 
-    println(
-        constructPointGrid(points) { if (it in points) '#' else ' ' }
-            .joinRowsToString(separator = "\n") { it.joinToString(separator = "") }
-    )
-
-    return 0
+    return constructPointGrid(points) { if (it in points) '#' else ' ' }
+        .joinRowsToString(separator = "\n") { it.joinToString(separator = "") }
 }
 
 fun Point.foldLeft(axis: Int): Point = if (x > axis) copy(x = axis - (x - axis)) else this

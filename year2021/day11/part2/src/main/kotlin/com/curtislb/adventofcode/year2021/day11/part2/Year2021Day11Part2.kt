@@ -50,11 +50,7 @@ be able to navigate through the cavern. What is the first step during which all 
 
 package com.curtislb.adventofcode.year2021.day11.part2
 
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.forEachIndexed
-import com.curtislb.adventofcode.common.grid.forEachPointValue
-import com.curtislb.adventofcode.common.grid.toMutableGrid
-import com.curtislb.adventofcode.common.math.toDigit
+import com.curtislb.adventofcode.year2021.day11.octopus.OctopusGrid
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -64,41 +60,11 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val grid = inputPath.toFile().readLines().map { line ->
-        line.map { it.toDigit() }
-    }.toMutableGrid()
-
-    var step = 1
-    while (true) {
-        grid.forEachIndexed { rowIndex, colIndex, _ -> grid[rowIndex, colIndex]++ }
-
-        val flashed = mutableSetOf<Point>()
-        while (
-            grid.shallowRows().withIndex().any { (rowIndex, row) ->
-                row.withIndex().any { (colIndex, value) ->
-                    Point.fromMatrixCoordinates(rowIndex, colIndex) !in flashed && value > 9
-                }
-            }
-        ) {
-            grid.forEachPointValue { point, value ->
-                if (point !in flashed && value > 9) {
-                    flashed.add(point)
-                    point.allNeighbors().forEach { neighbor ->
-                        if (neighbor in grid) {
-                            grid[neighbor]++
-                        }
-                    }
-                }
-            }
-        }
-
-        if (flashed.size == grid.size) {
-            return step
-        }
-
-        flashed.forEach { grid[it] = 0 }
-        step++
+    val octopusGrid = OctopusGrid(inputPath.toFile().readText())
+    octopusGrid.updateUntil {
+        values().all { it == 0 }
     }
+    return octopusGrid.totalSteps
 }
 
 fun main() {

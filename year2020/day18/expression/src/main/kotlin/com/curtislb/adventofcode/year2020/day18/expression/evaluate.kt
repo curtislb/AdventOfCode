@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.year2020.day18.expression
 
 import com.curtislb.adventofcode.common.math.product
-import com.curtislb.adventofcode.common.math.toDigit
 
 /**
  * TODO
@@ -12,7 +11,7 @@ fun evaluate(expression: String): Long {
     expression.forEach { token ->
         when (token) {
             in '0'..'9' -> {
-                val number = token.toDigit().toLong()
+                val number = token.digitToInt().toLong()
                 val lastOperator = operators.removeLast()
                 if (lastOperator == '(') {
                     results.add(number)

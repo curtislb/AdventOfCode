@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.year2019.day08.image
 
 import com.curtislb.adventofcode.common.io.forEachChar
-import com.curtislb.adventofcode.common.math.toDigit
 import java.io.File
 
 /**
@@ -20,8 +19,8 @@ fun processLayers(
     var indexInLayer = 0
     file.forEachChar { char ->
         // Process the next digit for this layer.
-        if (char in '0'..'9') {
-            onDigit(indexInLayer, char.toDigit())
+        if (char.isDigit()) {
+            onDigit(indexInLayer, char.digitToInt())
             indexInLayer++
         }
 

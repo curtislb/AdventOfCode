@@ -323,11 +323,7 @@ total flashes are there after 100 steps?
 
 package com.curtislb.adventofcode.year2021.day11.part1
 
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.forEachIndexed
-import com.curtislb.adventofcode.common.grid.forEachPointValue
-import com.curtislb.adventofcode.common.grid.toMutableGrid
-import com.curtislb.adventofcode.common.math.toDigit
+import com.curtislb.adventofcode.year2021.day11.octopus.OctopusGrid
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -335,41 +331,11 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 11, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param stepCount The number of steps to simulate.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val grid = inputPath.toFile().readLines().map { line ->
-        line.map { it.toDigit() }
-    }.toMutableGrid()
-
-    var flashCount = 0
-    repeat(100) {
-        grid.forEachIndexed { rowIndex, colIndex, _ -> grid[rowIndex, colIndex]++ }
-
-        val flashed = mutableSetOf<Point>()
-        while (
-            grid.shallowRows().withIndex().any { (rowIndex, row) ->
-                row.withIndex().any { (colIndex, value) ->
-                    Point.fromMatrixCoordinates(rowIndex, colIndex) !in flashed && value > 9
-                }
-            }
-        ) {
-            grid.forEachPointValue { point, value ->
-                if (point !in flashed && value > 9) {
-                    flashed.add(point)
-                    point.allNeighbors().forEach { neighbor ->
-                        if (neighbor in grid) {
-                            grid[neighbor]++
-                        }
-                    }
-                }
-            }
-        }
-
-        flashed.forEach { grid[it] = 0 }
-        flashCount += flashed.size
-    }
-
-    return flashCount
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), stepCount: Int = 100): Int {
+    val octopusGrid = OctopusGrid(inputPath.toFile().readText()).apply { update(stepCount) }
+    return octopusGrid.totalFlashes
 }
 
 fun main() {

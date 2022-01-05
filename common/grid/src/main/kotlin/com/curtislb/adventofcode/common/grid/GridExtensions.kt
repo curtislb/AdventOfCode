@@ -70,3 +70,10 @@ inline fun <E, R> Grid<E>.mapRow(rowIndex: Int, transform: (value: E) -> R): Lis
 @Generated
 inline fun <E> Grid<E>.sumRowsBy(transform: (row: List<E>) -> Int): Int =
     shallowRows().sumOf(transform)
+
+/**
+ * Replaces each element in the grid with the result of the [update] function applied to that value.
+ */
+@Generated
+inline fun <E> MutableGrid<E>.replaceAll(update: (value: E) -> E) =
+    forEachIndexed { rowIndex, colIndex, value -> this[rowIndex, colIndex] = update(value) }

@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
-import com.curtislb.adventofcode.common.math.withOneBit
-import com.curtislb.adventofcode.common.math.withZeroBit
+import com.curtislb.adventofcode.common.math.setBit
+import com.curtislb.adventofcode.common.math.clearBit
 
 /**
  * A bitmask program that uses the current bitmask to modify the values stored to memory addresses.
@@ -29,8 +29,8 @@ class BitmaskProgramV1(programString: String) : BitmaskProgram(programString) {
         var maskedValue = value
         maskBits.forEach { (bit, indices) ->
             when (bit) {
-                Bit.ZERO -> indices.forEach { maskedValue = maskedValue.withZeroBit(it) }
-                Bit.ONE -> indices.forEach { maskedValue = maskedValue.withOneBit(it) }
+                Bit.ZERO -> indices.forEach { maskedValue = maskedValue.clearBit(it) }
+                Bit.ONE -> indices.forEach { maskedValue = maskedValue.setBit(it) }
                 else -> Unit
             }
         }

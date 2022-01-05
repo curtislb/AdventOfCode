@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
 import com.curtislb.adventofcode.common.collection.forEachNested
-import com.curtislb.adventofcode.common.math.withOneBit
-import com.curtislb.adventofcode.common.math.withZeroBit
+import com.curtislb.adventofcode.common.math.setBit
+import com.curtislb.adventofcode.common.math.clearBit
 
 /**
  * A bitmask program that uses the current bitmask to modify the memory address(es) in which values
@@ -31,7 +31,7 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
         var baseAddress = address
         maskBits.forEach { (bit, indices) ->
             if (bit == Bit.ONE) {
-                indices.forEach { baseAddress = baseAddress.withOneBit(it) }
+                indices.forEach { baseAddress = baseAddress.setBit(it) }
             }
         }
 
@@ -42,9 +42,9 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
             indexedBitFlags.forEachIndexed { index, (_, isOneBit) ->
                 val floatingIndex = floatingIndices[index]
                 maskedAddress = if (isOneBit) {
-                    maskedAddress.withOneBit(floatingIndex)
+                    maskedAddress.setBit(floatingIndex)
                 } else {
-                    maskedAddress.withZeroBit(floatingIndex)
+                    maskedAddress.clearBit(floatingIndex)
                 }
             }
             maskedAddresses.add(maskedAddress)

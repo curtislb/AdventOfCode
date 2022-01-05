@@ -3,6 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:grid"))
-    implementation(project(":common:math"))
+    implementation(project(":year2021:day11:octopus"))
 }

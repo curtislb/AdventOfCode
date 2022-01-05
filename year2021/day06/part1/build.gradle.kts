@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":common:io"))
-    implementation(project(":year2021:day06:fish"))
+    implementation(project(":year2021:day06:lanternfish"))
 }

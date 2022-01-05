@@ -49,14 +49,24 @@ interface Grid<out E> {
     /**
      * Returns a sequence of all point positions in this grid.
      */
-    fun points(): Sequence<Point> =
-        sequence {
+    fun points(): Sequence<Point> = sequence {
+        for (negativeY in rowIndices) {
             for (x in columnIndices) {
-                for (negativeY in rowIndices) {
-                    yield(Point(x, -negativeY))
-                }
+                yield(Point(x, -negativeY))
             }
         }
+    }
+
+    /**
+     * Returns a sequence of all element values in this grid.
+     */
+    fun values(): Sequence<E> = sequence {
+        for (rowIndex in rowIndices) {
+            for (colIndex in columnIndices) {
+                yield(this@Grid[rowIndex, colIndex])
+            }
+        }
+    }
 
     /**
      * Checks if the given [point] corresponds to an element in this grid.

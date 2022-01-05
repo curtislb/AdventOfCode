@@ -6,18 +6,6 @@ import kotlin.math.log10
 import kotlin.math.log2
 
 /**
- * Returns the hexadecimal digit value corresponding to this character.
- *
- * @throws IllegalArgumentException If this character has no corresponding digit.
- */
-fun Char.toDigit(): Int = when (this) {
-    in '0'..'9' -> this - '0'
-    in 'A'..'Z' -> this - 'A' + 10
-    in 'a'..'z' -> this - 'a' + 10
-    else -> throw IllegalArgumentException("Invalid digit character: $this")
-}
-
-/**
  * Returns the integer given by concatenating the digits in this iterable with the given [radix].
  *
  * @throws IllegalArgumentException If any number in this iterable is not a digit with the given

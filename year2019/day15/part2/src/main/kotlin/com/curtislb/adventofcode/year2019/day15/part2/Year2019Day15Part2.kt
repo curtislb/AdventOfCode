@@ -81,7 +81,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     bfsApply(
         oxygenStartPosition,
         getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }) { _, distance ->
-        maxDistance = maxDistance.coerceAtLeast(distance)
+        maxDistance = maxOf(maxDistance, distance)
         false // Not done searching.
     }
     return maxDistance

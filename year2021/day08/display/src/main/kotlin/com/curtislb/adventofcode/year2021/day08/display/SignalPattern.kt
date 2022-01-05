@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day08.display
 
-import com.curtislb.adventofcode.common.math.isOneBit
+import com.curtislb.adventofcode.common.math.testBit
 
 /**
  * A pattern corresponding to signal wires on a seven-segment display.
@@ -32,7 +32,7 @@ value class SignalPattern(private val wires: Int) {
 
     override fun toString(): String = buildString {
         for (char in WIRE_CHARS) {
-            if (wires.isOneBit(char - WIRE_CHARS.first)) {
+            if (wires.testBit(char - WIRE_CHARS.first)) {
                 append(char)
             }
         }

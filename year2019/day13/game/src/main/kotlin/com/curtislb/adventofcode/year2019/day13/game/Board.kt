@@ -49,8 +49,8 @@ class Board {
         require(position.x >= 0) { "Position must have a non-negative x-coordinate: $position" }
         require(position.y <= 0) { "Position must have a non-positive y-coordinate: $position" }
         tiles[position] = type
-        height = height.coerceAtLeast(-position.y + 1)
-        width = width.coerceAtLeast(position.x + 1)
+        height = maxOf(height, -position.y + 1)
+        width = maxOf(width, position.x + 1)
     }
 
     /**

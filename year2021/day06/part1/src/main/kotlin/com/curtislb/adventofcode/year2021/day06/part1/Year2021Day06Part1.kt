@@ -77,7 +77,7 @@ Find a way to simulate lanternfish. How many lanternfish would there be after 80
 package com.curtislb.adventofcode.year2021.day06.part1
 
 import com.curtislb.adventofcode.common.io.readInts
-import com.curtislb.adventofcode.year2021.day06.fish.School
+import com.curtislb.adventofcode.year2021.day06.lanternfish.School
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -96,7 +96,7 @@ fun solve(
     simulationDays: Int = 80
 ): Long {
     val initialTimers = inputPath.toFile().readInts()
-    val school = School(initialTimers, cycleDays, maturationDays).apply { simulate(simulationDays) }
+    val school = School(initialTimers, cycleDays, maturationDays).apply { update(simulationDays) }
     return school.countFish()
 }
 

@@ -4,7 +4,6 @@ import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
-import com.curtislb.adventofcode.common.math.toDigit
 
 /**
  * A map of heights at various positions on an undersea cave floor.
@@ -22,7 +21,7 @@ class HeightMap(mapString: String) {
     private val heightGrid: Grid<Int> = mutableGridOf<Int>().apply {
         mapString.lines().forEach { line ->
             if (line.isNotBlank()) {
-                val heights = line.trim().toCharArray().map { it.toDigit() }
+                val heights = line.trim().toCharArray().map { it.digitToInt() }
                 addShallowRow(heights)
             }
         }

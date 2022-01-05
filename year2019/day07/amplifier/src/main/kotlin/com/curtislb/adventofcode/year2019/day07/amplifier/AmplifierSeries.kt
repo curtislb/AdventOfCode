@@ -42,7 +42,7 @@ class AmplifierSeries(file: File, count: Int) {
 
         // Keep track of maximum output from the last amplifier.
         var maxSignal = BigInteger.ZERO
-        amplifiers.last().onOutput = { maxSignal = maxSignal.coerceAtLeast(it) }
+        amplifiers.last().onOutput = { maxSignal = maxOf(maxSignal, it) }
 
         try {
             // Try all permutations of phase settings.
@@ -77,7 +77,7 @@ class AmplifierSeries(file: File, count: Int) {
         var maxSignal = BigInteger.ZERO
         amplifiers.last().onOutput = { output ->
             if (amplifiers[0].isDone) {
-                maxSignal = maxSignal.coerceAtLeast(output)
+                maxSignal = maxOf(maxSignal, output)
             } else {
                 amplifiers[0].sendInput(output)
             }

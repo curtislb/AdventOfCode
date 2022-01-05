@@ -5,7 +5,7 @@ import java.math.BigInteger
 /**
  * TODO
  */
-private val INTEGER_REGEX = Regex("""\b([+\-]?\d+)\b""")
+private val INTEGER_REGEX = Regex("""[+-]?\d+(?:[eE][+-]?\d+)?""")
 
 /**
  * Returns a list of all decimal integers in this string.
