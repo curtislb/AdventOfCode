@@ -18,23 +18,22 @@ repositories {
     mavenCentral()
 }
 
+jacoco {
+    toolVersion = jacocoVersion
+}
+
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = javaVersion
+    jacocoTestReport {
+        enabled = false
     }
 
     test {
         useJUnitPlatform()
     }
-}
 
-jacoco {
-    toolVersion = jacocoVersion
-}
-
-// Do not generate reports for individual projects
-tasks.jacocoTestReport {
-    enabled = false
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = javaVersion
+    }
 }
 
 // Share sources folder with other projects for aggregated JaCoCo reports
