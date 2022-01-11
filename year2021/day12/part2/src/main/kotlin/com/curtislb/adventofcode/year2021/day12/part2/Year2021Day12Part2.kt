@@ -4,8 +4,8 @@
 After reviewing the available paths, you realize you might have time to visit a single small cave
 twice. Specifically, big caves can be visited any number of times, a single small cave can be
 visited at most twice, and the remaining small caves can be visited at most once. However, the caves
-named start and end can only be visited exactly once each: once you leave the start cave, you may
-not return to it, and once you reach the end cave, the path must end immediately.
+named `start` and `end` can only be visited exactly once each: once you leave the `start` cave, you
+may not return to it, and once you reach the `end` cave, the path must end immediately.
 
 Now, the 36 possible paths through the first example above are:
 
@@ -56,6 +56,7 @@ Given these new rules, how many paths through this cave system are there?
 
 package com.curtislb.adventofcode.year2021.day12.part2
 
+import com.curtislb.adventofcode.year2021.day12.caves.CaveSystem
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -63,42 +64,16 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 12, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param startCave The name of the cave from which all paths should start.
+ * @param endCave The name of the cave at which all paths should end.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val edgeMap = mutableMapOf<String, MutableSet<String>>()
-    inputPath.toFile().forEachLine { line ->
-        val (a, b) = line.trim().split("-")
-        edgeMap.getOrPut(a) { mutableSetOf() }.add(b)
-        edgeMap.getOrPut(b) { mutableSetOf() }.add(a)
-    }
-
-    val visitedSmallCaves = mutableSetOf<String>()
-
-    fun countPaths(cave: String, repeatedSmallCave: String?): Int =
-        if (cave == "end") {
-            1
-        } else {
-            if (cave.first().isLowerCase()) {
-                visitedSmallCaves.add(cave)
-            }
-
-            val count = edgeMap.getOrDefault(cave, emptySet()).sumOf { next ->
-                when {
-                    next == "start" -> 0
-                    next !in visitedSmallCaves -> countPaths(next, repeatedSmallCave)
-                    next in visitedSmallCaves && repeatedSmallCave == null -> countPaths(next, next)
-                    else -> 0
-                }
-            }
-
-            if (cave != repeatedSmallCave) {
-                visitedSmallCaves.remove(cave)
-            }
-
-            count
-        }
-
-    return countPaths("start", null)
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    startCave: String = "start",
+    endCave: String = "end"
+): Int {
+    val caveSystem = CaveSystem(inputPath.toFile().readText())
+    return caveSystem.countPaths(startCave, endCave, maxSmallRepeatCount = 1)
 }
 
 fun main() {

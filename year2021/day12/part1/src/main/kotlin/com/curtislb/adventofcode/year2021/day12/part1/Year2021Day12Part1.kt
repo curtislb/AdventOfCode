@@ -18,9 +18,9 @@ A-end
 b-end
 ```
 
-This is a list of how all of the caves are connected. You start in the cave named start, and your
-destination is the cave named end. An entry like `b-d` means that cave `b` is connected to cave `d`
-- that is, you can move between them.
+This is a list of how all of the caves are connected. You start in the cave named `start`, and your
+destination is the cave named `end`. An entry like `b-d` means that cave `b` is connected to cave
+`d` - that is, you can move between them.
 
 So, the above cave system looks roughly like this:
 
@@ -32,12 +32,12 @@ c--A-----b--d
      end
 ```
 
-Your goal is to find the number of distinct paths that start at start, end at end, and don't visit
-small caves more than once. There are two types of caves: big caves (written in uppercase, like `A`)
-and small caves (written in lowercase, like `b`). It would be a waste of time to visit any small
-cave more than once, but big caves are large enough that it might be worth visiting them multiple
-times. So, all paths you find should visit small caves at most once, and can visit big caves any
-number of times.
+Your goal is to find the number of distinct paths that start at `start`, end at `end`, and don't
+visit small caves more than once. There are two types of caves: big caves (written in uppercase,
+like `A`) and small caves (written in lowercase, like `b`). It would be a waste of time to visit any
+small cave more than once, but big caves are large enough that it might be worth visiting them
+multiple times. So, all paths you find should visit small caves at most once, and can visit big
+caves any number of times.
 
 Given these rules, there are 10 paths through this example cave system:
 
@@ -57,9 +57,9 @@ start,b,end
 (Each line in the above list corresponds to a single path; the caves visited by that path are listed
 in the order they are visited and separated by commas.)
 
-Note that in this cave system, cave d is never visited by any path: to do so, cave b would need to
-be visited twice (once on the way to cave d and a second time when returning from cave d), and since
-cave b is small, this is not allowed.
+Note that in this cave system, cave `d` is never visited by any path: to do so, cave `b` would need
+to be visited twice (once on the way to cave `d` and a second time when returning from cave `d`),
+and since cave `b` is small, this is not allowed.
 
 Here is a slightly larger example:
 
@@ -128,6 +128,7 @@ How many paths through this cave system are there that visit small caves at most
 
 package com.curtislb.adventofcode.year2021.day12.part1
 
+import com.curtislb.adventofcode.year2021.day12.caves.CaveSystem
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -135,35 +136,16 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 12, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param startCave The name of the cave from which all paths should start.
+ * @param endCave The name of the cave at which all paths should end.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val edgeMap = mutableMapOf<String, MutableSet<String>>()
-    inputPath.toFile().forEachLine { line ->
-        val (caveA, caveB) = line.trim().split("-")
-        edgeMap.getOrPut(caveA) { mutableSetOf() }.add(caveB)
-        edgeMap.getOrPut(caveB) { mutableSetOf() }.add(caveA)
-    }
-
-    val visitedSmallCaves = mutableSetOf<String>()
-
-    fun countPaths(cave: String): Int =
-        if (cave == "end") {
-            1
-        } else {
-            if (cave.first().isLowerCase()) {
-                visitedSmallCaves.add(cave)
-            }
-
-            val count = edgeMap.getOrDefault(cave, emptySet()).sumOf { next ->
-                if (next !in visitedSmallCaves) countPaths(next) else 0
-            }
-
-            visitedSmallCaves.remove(cave)
-
-            count
-        }
-
-    return countPaths("start")
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    startCave: String = "start",
+    endCave: String = "end"
+): Int {
+    val caveSystem = CaveSystem(inputPath.toFile().readText())
+    return caveSystem.countPaths(startCave, endCave)
 }
 
 fun main() {

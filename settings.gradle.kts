@@ -209,7 +209,7 @@ include(":year2021:day10:part1", ":year2021:day10:part2", ":year2021:day10:synta
 include(":year2021:day11:part1", ":year2021:day11:part2", ":year2021:day11:octopus")
 
 // Day 12: Passage Pathing
-include(":year2021:day12:part1", ":year2021:day12:part2")
+include(":year2021:day12:part1", ":year2021:day12:part2", ":year2021:day12:caves")
 
 // Day 13: Transparent Origami
 include(":year2021:day13:part1", ":year2021:day13:part2")

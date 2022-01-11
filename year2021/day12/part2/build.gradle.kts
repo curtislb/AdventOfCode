@@ -3,6 +3,5 @@ plugins {
 }
 
 dependencies {
-//    implementation(project(":common:example"))
-//    implementation(project(":year2021:day00:example"))
+    implementation(project(":year2021:day12:caves"))
 }
