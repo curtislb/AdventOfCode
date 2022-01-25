@@ -34,11 +34,14 @@ class NBodySystem(file: File) {
      */
     fun simulate(steps: Int = 1) {
         for (step in 1..steps) {
-            bodies.uniquePairs().forEach { (body1, body2) ->
-                body1.applyGravity(body2)
-                body2.applyGravity(body1)
+            for ((bodyA, bodyB) in bodies.uniquePairs()) {
+                bodyA.applyGravity(bodyB)
+                bodyB.applyGravity(bodyA)
             }
-            bodies.forEach { it.applyVelocity() }
+
+            for (body in bodies) {
+                body.applyVelocity()
+            }
         }
     }
 

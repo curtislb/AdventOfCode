@@ -9,7 +9,9 @@ import lombok.Generated
 @Generated
 inline fun <E, K, V> Collection<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> =
     mutableMapOf<K, V>().apply {
-        this@mapToMap.forEach { this += transform(it) }
+        for (item in this@mapToMap) {
+            this += transform(item)
+        }
     }
 
 /**

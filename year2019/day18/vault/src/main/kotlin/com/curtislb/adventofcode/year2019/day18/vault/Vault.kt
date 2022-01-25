@@ -23,7 +23,9 @@ class Vault(file: File) {
     private val grid: Grid<Space> = mutableGridOf<Space>().apply {
         file.forEachLine { line ->
             addRowWith {
-                line.trim().forEach { add(Space.from(it)) }
+                for (char in line.trim()) {
+                    add(Space.from(char))
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ class School(initialTimers: List<Int>, cycleDays: Int, maturationDays: Int) {
     private val fishCounts: Counter<Int> = Counter()
 
     init {
-        initialTimers.forEach { timer ->
+        for (timer in initialTimers) {
             require(timer >= 0) { "Timer starting value must be non-negative: $timer" }
             timerMax = maxOf(timerMax, timer)
             fishCounts[timer]++

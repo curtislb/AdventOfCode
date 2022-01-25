@@ -27,10 +27,20 @@ class BitmaskProgramV1(programString: String) : BitmaskProgram(programString) {
      */
     private fun applyBitmask(value: Long): Long {
         var maskedValue = value
-        maskBits.forEach { (bit, indices) ->
+        for ((bit, bitIndices) in maskBits) {
             when (bit) {
-                Bit.ZERO -> indices.forEach { maskedValue = maskedValue.clearBit(it) }
-                Bit.ONE -> indices.forEach { maskedValue = maskedValue.setBit(it) }
+                Bit.ZERO -> {
+                    for (bitIndex in bitIndices) {
+                        maskedValue = maskedValue.clearBit(bitIndex)
+                    }
+                }
+
+                Bit.ONE -> {
+                    for (bitIndex in bitIndices) {
+                        maskedValue = maskedValue.setBit(bitIndex)
+                    }
+                }
+
                 else -> Unit
             }
         }

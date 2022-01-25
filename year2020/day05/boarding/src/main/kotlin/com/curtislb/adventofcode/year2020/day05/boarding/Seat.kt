@@ -81,9 +81,9 @@ data class Seat(val id: Int) {
         private fun List<Boolean>.toPartitionIndex(): Int {
             var minIndexInclusive = 0
             var maxIndexExclusive = 2.pow(size)
-            forEach { isRightPartition ->
+            for (keepUpperIndices in this) {
                 val midIndex = minIndexInclusive + (maxIndexExclusive - minIndexInclusive) / 2
-                if (isRightPartition) {
+                if (keepUpperIndices) {
                     minIndexInclusive = midIndex
                 } else {
                     maxIndexExclusive = midIndex

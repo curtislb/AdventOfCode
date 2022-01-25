@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.range.sizeInclusive
 
 /**
@@ -33,11 +34,7 @@ class PointMask(val points: Set<Point>) {
      * Returns a map from points in the mask to the values at those points in the given [grid].
      */
     fun <T> applyToGrid(grid: Grid<T>): Map<Point, T> =
-        mutableMapOf<Point, T>().apply {
-            points.forEach { point ->
-                grid.getOrNull(point)?.let { this[point] = it }
-            }
-        }
+        points.filter { it in grid }.mapToMap { Pair(it, grid[it]!!) }
 
     /**
      * Returns a copy of this mask with all points moved [distance] units in the given [direction].

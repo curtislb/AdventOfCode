@@ -23,9 +23,11 @@ class OctopusGrid(gridString: String) {
      * A grid containing the current energy levels of all octopuses.
      */
     private val energyGrid: MutableGrid<Int> = mutableGridOf<Int>().apply {
-        gridString.trim().lines().forEach { line ->
+        for (line in gridString.trim().lines()) {
             addRowWith {
-                line.trim().forEach { add(it.digitToInt()) }
+                for (char in line.trim()) {
+                    add(char.digitToInt())
+                }
             }
         }
     }
@@ -106,7 +108,9 @@ class OctopusGrid(gridString: String) {
             } while (isUpdated)
 
             // Rule 3: Reset the energy of (and count) each flashing octopus
-            flashedPoints.forEach { energyGrid[it] = 0 }
+            for (point in flashedPoints) {
+                energyGrid[point] = 0
+            }
             totalFlashes += flashedPoints.size
         }
     }

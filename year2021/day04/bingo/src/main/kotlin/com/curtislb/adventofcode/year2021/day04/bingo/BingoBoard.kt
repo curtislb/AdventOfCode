@@ -59,9 +59,11 @@ class BingoBoard private constructor(private val spaceGrid: Grid<BingoSpace>) {
      */
     constructor(rowStrings: List<String>) : this(
         mutableGridOf<BingoSpace>().apply {
-            rowStrings.forEach { rowString ->
+            for (rowString in rowStrings) {
                 addRowWith {
-                    rowString.toInts().forEach { add(BingoSpace(it)) }
+                    for (number in rowString.toInts()) {
+                        add(BingoSpace(number))
+                    }
                 }
             }
         }

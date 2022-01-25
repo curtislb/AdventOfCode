@@ -127,7 +127,7 @@ import kotlin.system.measureTimeMillis
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "part1", "input.txt")): Long? {
     val vault = Vault(inputPath.toFile())
-    return KeySearch(vault).searchDistance
+    return KeySearch(vault).minSearchDistance()
 }
 
 fun main() = when (val solution = solve()) {

@@ -91,8 +91,8 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     }
 
     var total = 0
-    nearbyTickets.forEach { ticket ->
-        ticket.fieldValues.forEach { value ->
+    for (ticket in nearbyTickets) {
+        for (value in ticket.fieldValues) {
             var isValid = false
             for (range in fieldRanges) {
                 if (value in range) {

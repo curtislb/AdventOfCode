@@ -39,9 +39,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     }
 
     // Remove boards as they win, returning the score of the last winning board
-    numbers.forEach { number ->
+    for (number in numbers) {
         val boardsToRemove = mutableSetOf<BingoBoard>()
-        boards.forEach { board ->
+        for (board in boards) {
             board.mark(number)
             if (board.isWinning) {
                 if (boards.size == 1) {

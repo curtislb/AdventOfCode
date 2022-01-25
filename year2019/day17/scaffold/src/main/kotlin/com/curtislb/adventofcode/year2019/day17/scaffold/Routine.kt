@@ -13,7 +13,7 @@ import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move
  */
 class Routine(private val callOrder: List<Int>, private val functions: List<List<Instruction>>) {
     init {
-        callOrder.forEach { index ->
+        for (index in callOrder) {
             require(index in functions.indices) { "No matching function for index: $index" }
         }
     }

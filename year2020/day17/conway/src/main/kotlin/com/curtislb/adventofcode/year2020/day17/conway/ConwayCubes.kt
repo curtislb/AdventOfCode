@@ -36,9 +36,9 @@ class ConwayCubes(initialState: String, dimensionCount: Int = 3) {
             val newActiveCubes = mutableSetOf<IntVector>()
             val inactiveCubes = mutableSetOf<IntVector>()
 
-            activeCubes.forEach { cube ->
+            for (cube in activeCubes) {
                 var activeNeighborCount = 0
-                cube.neighbors().forEach { neighbor ->
+                for (neighbor in cube.neighbors()) {
                     if (neighbor in activeCubes) {
                         activeNeighborCount++
                     } else {
@@ -50,7 +50,7 @@ class ConwayCubes(initialState: String, dimensionCount: Int = 3) {
                 }
             }
 
-            inactiveCubes.forEach { cube ->
+            for (cube in inactiveCubes) {
                 if (cube.neighbors().count { it in activeCubes } == 3) {
                     newActiveCubes.add(cube)
                 }

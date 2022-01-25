@@ -30,7 +30,7 @@ class ImageData(file: File) {
         }
 
         val adjacencyMap = mutableMapOf<Int, MutableMap<Direction, Int>>().apply {
-            tileMap.values.forEach { tile ->
+            for (tile in tileMap.values) {
                 for (tileDirection in Direction.cardinalValues()) {
                     var isMatchFound = false
                     for (otherTile in tileMap.values) {

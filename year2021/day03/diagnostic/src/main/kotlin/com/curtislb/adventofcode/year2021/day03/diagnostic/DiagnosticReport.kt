@@ -20,7 +20,7 @@ class DiagnosticReport(lines: List<String>) {
      * A boolean grid representing the binary digit values of the report.
      */
     private val boolGrid: Grid<Boolean> = mutableGridOf<Boolean>().apply {
-        lines.forEach { line ->
+        for (line in lines) {
             addRowWith {
                 line.trim().map { bitChar ->
                     when (bitChar) {

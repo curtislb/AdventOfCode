@@ -26,12 +26,12 @@ class FoodList(foodListString: String) {
             }
 
             val ingredients = matchResult.groupValues[1].split(' ')
-            ingredients.forEach { ingredient ->
+            for (ingredient in ingredients) {
                 ingredientIndicesMap.getOrPut(ingredient) { mutableSetOf() }.add(index)
             }
 
             val allergens = matchResult.groupValues[2].split(',').map { it.trim() }
-            allergens.forEach { allergen ->
+            for (allergen in allergens) {
                 if (allergen !in allergenIngredientsMap) {
                     allergenIngredientsMap[allergen] = ingredients.toMutableSet()
                 } else {
@@ -51,7 +51,9 @@ class FoodList(foodListString: String) {
                         val ingredient = ingredients.first()
                         ingredientAllergenMap[ingredient] = allergen
                         allergenIngredientsMap.remove(allergen)
-                        allergenIngredientsMap.values.forEach { it.remove(ingredient) }
+                        for (allergenIngredients in allergenIngredientsMap.values) {
+                            allergenIngredients.remove(ingredient)
+                        }
                     }
                 }
             }

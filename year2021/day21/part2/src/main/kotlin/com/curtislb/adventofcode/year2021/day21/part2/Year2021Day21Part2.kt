@@ -53,9 +53,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val stateCounts = Counter(mapOf(GameState(players) to 1L))
     var ongoingEntries = stateCounts.findOngoing()
     while (ongoingEntries.isNotEmpty()) {
-        ongoingEntries.forEach { (state, count) ->
+        for ((state, count) in ongoingEntries) {
             stateCounts[state] -= count
-            rollFrequencies.forEach { (roll, frequency) ->
+            for ((roll, frequency) in rollFrequencies) {
                 val updatedState = state.update(roll)
                 stateCounts[updatedState] += count * frequency
             }
@@ -64,7 +64,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     }
 
     val winCounts = LongArray(players.size)
-    stateCounts.entriesWithPositiveCount.forEach { (state, count) ->
+    for ((state, count) in stateCounts.entriesWithPositiveCount) {
         winCounts[state.winningPlayer()] += count
     }
 

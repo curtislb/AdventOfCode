@@ -84,17 +84,19 @@ class Network(
      * return, until [reset] is invoked.
      */
     fun run() {
-        // Check if the network has already finished running.
+        // Check if the network has already finished running
         if (isDone) {
             return
         }
 
-        // Initialize output handling for each computer.
+        // Initialize output handling for each computer
         val onOutput = createOutputHandler()
-        computers.forEach { it.onOutput = onOutput }
+        for (computer in computers) {
+            computer.onOutput = onOutput
+        }
 
         try {
-            // Run all computers in order until finished.
+            // Run all computers in order until finished
             var address = 0
             while (!isDone) {
                 runComputer(address)
@@ -104,8 +106,10 @@ class Network(
                 address = (address + 1) % computers.size
             }
         } finally {
-            // Clean up references to output handler.
-            computers.forEach { it.resetOutput() }
+            // Clean up references to output handler
+            for (computer in computers) {
+                computer.resetOutput()
+            }
         }
     }
 

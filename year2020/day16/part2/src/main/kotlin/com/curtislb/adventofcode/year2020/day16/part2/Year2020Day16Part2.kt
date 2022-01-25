@@ -54,20 +54,28 @@ fun solve(
     val nearbyTickets = mutableListOf<List<Int>>()
     file.forEachSection { lines ->
         when (sectionIndex) {
-            0 -> parseFieldsSection(lines).forEach { (field, ranges) ->
-                fieldNames.add(field)
-                fieldRanges.add(ranges)
+            0 -> {
+                for ((field, ranges) in parseFieldsSection(lines)) {
+                    fieldNames.add(field)
+                    fieldRanges.add(ranges)
+                }
             }
 
-            1 -> validTickets.add(parseYourTicketSection(lines))
+            1 -> {
+                validTickets.add(parseYourTicketSection(lines))
+            }
 
-            2 -> nearbyTickets.addAll(parseNearbyTicketsSection(lines))
+            2 -> {
+                nearbyTickets.addAll(parseNearbyTicketsSection(lines))
+            }
+
+            else -> Unit
         }
         sectionIndex++
     }
 
     val validRanges = fieldRanges.flatten()
-    nearbyTickets.forEach { ticketValues ->
+    for (ticketValues in nearbyTickets) {
         var isValidTicket = true
         for (value in ticketValues) {
             var isValidValue = false
@@ -88,7 +96,7 @@ fun solve(
     }
 
     val initialIndices = List(fieldNames.size) { fieldNames.indices.toSet() }
-    val possibleFields = validTickets.fold(initialIndices) { possibleIndices, ticketValues ->
+    val possibleFieldsByIndex = validTickets.fold(initialIndices) { possibleIndices, ticketValues ->
         val currentPossibleIndices = ticketValues.map { value ->
             fieldNames.indices.filter { fieldIndex ->
                 fieldRanges[fieldIndex].any { range -> value in range }
@@ -101,11 +109,13 @@ fun solve(
 
     val fieldAssignments = mutableMapOf<String, Int>()
     while (fieldAssignments.size < fieldNames.size) {
-        for (index in possibleFields.indices) {
-            if (possibleFields[index].size == 1) {
-                val field = possibleFields[index].first()
+        for (index in possibleFieldsByIndex.indices) {
+            if (possibleFieldsByIndex[index].size == 1) {
+                val field = possibleFieldsByIndex[index].first()
                 fieldAssignments[field] = index
-                possibleFields.forEach { it.remove(field) }
+                for (possibleFields in possibleFieldsByIndex) {
+                    possibleFields.remove(field)
+                }
             }
         }
     }

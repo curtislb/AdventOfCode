@@ -94,7 +94,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
         if (template == null) {
             template = section.first().trim()
         } else {
-            section.forEach { line ->
+            for (line in section) {
                 val (pattern, insertion) = line.trim().split(" -> ")
                 rules[pattern] = insertion
             }
@@ -116,7 +116,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     }
 
     val counter = Counter<Char>()
-    polymer.forEach { counter[it]++ }
+    for (char in polymer) {
+        counter[char]++
+    }
     val maxValue = counter.entriesWithPositiveCount.maxOfOrNull { it.value }!!
     val minValue = counter.entriesWithPositiveCount.minOfOrNull { it.value }!!
 

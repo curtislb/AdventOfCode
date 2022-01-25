@@ -9,7 +9,7 @@ fun Iterable<Point>.coordinateRanges(): Pair<ClosedRange<Int>, ClosedRange<Int>>
     var minY = Int.MAX_VALUE
     var maxY = Int.MIN_VALUE
 
-    forEach { point ->
+    for (point in this) {
         minX = minOf(minX, point.x)
         maxX = maxOf(maxX, point.x)
         minY = minOf(minY, point.y)

@@ -107,7 +107,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val messages = mutableListOf<String>()
     file.forEachSection { lines ->
         if (ruleStrings.isEmpty()) {
-            lines.forEach { line ->
+            for (line in lines) {
                 val (ruleKeyString, ruleString) = line.split(':').map { it.trim() }
                 ruleStrings[ruleKeyString.toInt()] = ruleString
             }

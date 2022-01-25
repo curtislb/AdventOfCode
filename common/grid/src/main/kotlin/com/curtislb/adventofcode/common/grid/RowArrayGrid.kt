@@ -85,7 +85,9 @@ class RowArrayGrid<E>(private val rowList: ArrayList<ArrayList<E>> = ArrayList()
         if (isEmpty()) {
             throw NoSuchElementException("Can't remove last column from an empty grid.")
         }
-        rowList.forEach { it.removeLast() }
+        for (row in rowList) {
+            row.removeLast()
+        }
     }
 
     override fun equals(other: Any?): Boolean = other is Grid<*> && rowList == other.shallowRows()

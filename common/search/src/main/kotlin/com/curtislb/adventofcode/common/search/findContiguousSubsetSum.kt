@@ -13,7 +13,7 @@ fun Iterable<Long>.findContiguousSubsetSum(targetSum: Long, minSize: Int = 0): L
     // Use a resizing window to scan for a subset that matches the target.
     val deque = ArrayDeque<Long>()
     var total = 0L
-    forEach { value ->
+    for (value in this) {
         require(value >= 0L) { "Each value must be non-negative: $value" }
 
         // Shrink the window from the left while it exceeds the target.

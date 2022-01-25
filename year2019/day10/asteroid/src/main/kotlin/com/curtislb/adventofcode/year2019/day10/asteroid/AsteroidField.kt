@@ -109,7 +109,7 @@ class AsteroidField(file: File) {
      */
     private fun countVisibleAsteroids(source: Point): Int {
         val asteroidRays = mutableSetOf<Ray>().apply {
-            asteroids.forEach { asteroid ->
+            for (asteroid in asteroids) {
                 if (asteroid != source) {
                     add(Ray(source, asteroid))
                 }
@@ -127,7 +127,7 @@ class AsteroidField(file: File) {
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
         val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>().apply {
-            asteroids.forEach { asteroid ->
+            for (asteroid in asteroids) {
                 if (asteroid != source) {
                     val ray = Ray(source, asteroid)
                     val oldSquaredDistance = this[ray]?.second ?: Int.MAX_VALUE

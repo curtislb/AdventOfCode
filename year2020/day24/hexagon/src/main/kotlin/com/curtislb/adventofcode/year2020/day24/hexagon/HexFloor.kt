@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.grid.Point
 
 class HexFloor(floorString: String) {
     var blackTiles: Set<Point> = mutableSetOf<Point>().apply {
-        floorString.trim().lines().forEach { tileString ->
+        for (tileString in floorString.trim().lines()) {
             val point = tileString.trim().toHexPoint()
             if (point in this) {
                 remove(point)
@@ -17,7 +17,7 @@ class HexFloor(floorString: String) {
 
     fun update() {
         val newBlackTiles = blackTiles.toMutableSet()
-        blackTiles.forEach { tile ->
+        for (tile in blackTiles) {
             val neighborCount = tile.hexNeighbors.count { it in blackTiles }
             if (neighborCount !in 1..2) {
                 newBlackTiles.remove(tile)
@@ -25,15 +25,15 @@ class HexFloor(floorString: String) {
         }
 
         val adjacentTiles = mutableSetOf<Point>().apply {
-            blackTiles.forEach { blackTile ->
-                blackTile.hexNeighbors.forEach { neighbor ->
+            for (tile in blackTiles) {
+                for (neighbor in tile.hexNeighbors) {
                     if (neighbor !in blackTiles) {
                         add(neighbor)
                     }
                 }
             }
         }
-        adjacentTiles.forEach { tile ->
+        for (tile in adjacentTiles) {
             val neighborCount = tile.hexNeighbors.count { it in blackTiles }
             if (neighborCount == 2) {
                 newBlackTiles.add(tile)

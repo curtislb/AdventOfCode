@@ -21,7 +21,9 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
     override fun writeMemory(addressString: String, valueString: String) {
         val addresses = applyBitmask(addressString.toLong())
         val value = valueString.toLong()
-        addresses.forEach { this[it] = value }
+        for (address in addresses) {
+            this[address] = value
+        }
     }
 
     /**
@@ -29,9 +31,11 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
      */
     private fun applyBitmask(address: Long): List<Long> {
         var baseAddress = address
-        maskBits.forEach { (bit, indices) ->
+        for ((bit, bitIndices) in maskBits) {
             if (bit == Bit.ONE) {
-                indices.forEach { baseAddress = baseAddress.setBit(it) }
+                for (bitIndex in bitIndices) {
+                    baseAddress = baseAddress.setBit(bitIndex)
+                }
             }
         }
 
@@ -48,7 +52,7 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
                 }
             }
             maskedAddresses.add(maskedAddress)
-            false // Don't stop iterating.
+            false // Don't stop iterating
         }
 
         return maskedAddresses

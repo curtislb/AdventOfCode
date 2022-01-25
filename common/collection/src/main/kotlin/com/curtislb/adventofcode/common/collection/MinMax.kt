@@ -23,7 +23,7 @@ data class MinMax<T>(val min: T, val max: T) {
 fun <T : Comparable<T>> Iterable<T>.minAndMaxOrNull(): MinMax<T>? {
     var minElement: T? = null
     var maxElement: T? = null
-    forEach { element ->
+    for (element in this) {
         minElement = minElement?.coerceAtMost(element) ?: element
         maxElement = maxElement?.coerceAtLeast(element) ?: element
     }
@@ -40,7 +40,7 @@ fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(transform: (element: T)
     var minValue: R? = null
     var maxValue: R? = null
 
-    forEach { element ->
+    for (element in this) {
         val value = transform(element)
 
         // Update minimum element and value if necessary.
@@ -76,7 +76,7 @@ fun <T, R : Comparable<R>> Iterable<T>.minAndMaxByOrNull(transform: (element: T)
 fun <T, R : Comparable<R>> Iterable<T>.minAndMaxOfOrNull(transform: (element: T) -> R): MinMax<R>? {
     var minValue: R? = null
     var maxValue: R? = null
-    forEach { element ->
+    for (element in this) {
         val value = transform(element)
         minValue = minValue?.coerceAtMost(value) ?: value
         maxValue = maxValue?.coerceAtLeast(value) ?: value

@@ -36,7 +36,7 @@ class MutableIntVector(override vararg val components: Int) : IntVector(*compone
      * index for this vector.
      */
     fun update(componentValues: Map<Int, Int>) {
-        componentValues.forEach { (index, value) ->
+        for ((index, value) in componentValues) {
             require(index in 0 until size) { "Index not in range 0..${size - 1}: $index" }
             components[index] = value
         }

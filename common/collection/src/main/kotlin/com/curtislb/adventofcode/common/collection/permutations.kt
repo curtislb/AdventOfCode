@@ -17,7 +17,7 @@ private fun <T> Collection<T>.permutationsInternal(
     if (prefix.size == size) {
         yield(prefix.toList())
     } else {
-        forEach { item ->
+        for (item in this@permutationsInternal) {
             if (item !in used) {
                 used.add(item)
                 prefix.add(item)

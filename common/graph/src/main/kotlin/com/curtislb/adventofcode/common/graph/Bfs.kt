@@ -31,7 +31,7 @@ fun <T> bfsApply(
 
         // Enqueue all unvisited neighboring nodes with distances.
         visited.add(node)
-        getNeighbors(node).forEach { neighbor ->
+        for (neighbor in getNeighbors(node)) {
             if (neighbor !in visited) {
                 searchQueue.offer(Pair(neighbor, distance + 1L))
             }

@@ -76,7 +76,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String? {
         Move(Direction.LEFT),
         Move(Direction.UP)
     )
-    commands.forEach { droid.sendCommand(it) }
+    for (command in commands) {
+        droid.sendCommand(command)
+    }
 
     // Extract the password from the last line of program output.
     val line = droid.lastLine

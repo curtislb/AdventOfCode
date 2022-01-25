@@ -12,12 +12,12 @@ value class KeyCollection(private val keyFlags: Int = 0) {
     /**
      * Returns `true` if [key] is in this collection, or `false` otherwise.
      */
-    operator fun contains(key: Char): Boolean = keyFlags or flag(key) == keyFlags
+    operator fun contains(key: Char): Boolean = keyFlags or key.toFlag() == keyFlags
 
     /**
      * Returns a copy of this collection with [key] included.
      */
-    fun withKey(key: Char): KeyCollection = KeyCollection(keyFlags or flag(key))
+    fun withKey(key: Char): KeyCollection = KeyCollection(keyFlags or key.toFlag())
 
     companion object {
         /**
@@ -25,13 +25,15 @@ value class KeyCollection(private val keyFlags: Int = 0) {
          */
         fun from(keys: Iterable<Char>): KeyCollection {
             var keyFlags = 0
-            keys.forEach { keyFlags = keyFlags or flag(it) }
+            for (key in keys) {
+                keyFlags = keyFlags or key.toFlag()
+            }
             return KeyCollection(keyFlags)
         }
 
         /**
-         * Returns the integer flag corresponding to [key].
+         * Returns the integer flag corresponding to this key [Char].
          */
-        private fun flag(key: Char): Int = 1 shl (key.code - 96)
+        private fun Char.toFlag(): Int = 1 shl (code - 96)
     }
 }

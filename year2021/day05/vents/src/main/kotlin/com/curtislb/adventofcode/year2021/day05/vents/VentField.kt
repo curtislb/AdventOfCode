@@ -18,7 +18,7 @@ class VentField(ventStrings: List<String>, filterPredicate: (vent: Segment) -> B
      * A list of segments, representing all vents in this field.
      */
     private val vents: List<Segment> = mutableListOf<Segment>().apply {
-        ventStrings.forEach { ventString ->
+        for (ventString in ventStrings) {
             val (x1, y1, x2, y2) = ventString.toInts()
             val segment = Segment.between(Point(x1, y1), Point(x2, y2))
             if (filterPredicate(segment)) {
@@ -32,10 +32,8 @@ class VentField(ventStrings: List<String>, filterPredicate: (vent: Segment) -> B
      */
     fun overlapPoints(): Set<Point> {
         val points = mutableSetOf<Point>()
-        vents.uniquePairs().forEach { (ventA, ventB) ->
-            ventA.overlapWith(ventB)?.let { overlap ->
-                points.addAll(overlap.points())
-            }
+        for ((ventA, ventB) in vents.uniquePairs()) {
+            ventA.overlapWith(ventB)?.let { points.addAll(it.points()) }
         }
         return points
     }

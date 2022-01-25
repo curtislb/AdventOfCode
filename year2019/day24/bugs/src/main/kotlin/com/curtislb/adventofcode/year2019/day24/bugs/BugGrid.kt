@@ -190,7 +190,7 @@ value class BugGrid(val biodiversity: Int) {
             var biodiversity = 0
             var spaceFlag = 1
             file.forEachLine { line ->
-                line.forEach { char ->
+                for (char in line.trim()) {
                     if (char == '#') {
                         biodiversity = biodiversity or spaceFlag
                     }

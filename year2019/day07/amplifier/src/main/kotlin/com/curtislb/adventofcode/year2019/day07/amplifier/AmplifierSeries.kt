@@ -40,18 +40,20 @@ class AmplifierSeries(file: File, count: Int) {
     fun findMaxSignal(phaseSettings: Collection<BigInteger>): BigInteger {
         checkPhaseSettings(phaseSettings)
 
-        // Keep track of maximum output from the last amplifier.
+        // Keep track of maximum output from the last amplifier
         var maxSignal = BigInteger.ZERO
         amplifiers.last().onOutput = { maxSignal = maxOf(maxSignal, it) }
 
         try {
-            // Try all permutations of phase settings.
-            phaseSettings.permutations().forEach { settings ->
+            for (settings in phaseSettings.permutations()) {
+                // Send phase settings and initial input
                 amplifiers.forEachIndexed { index, amplifier ->
                     amplifier.sendInput(settings[index])
                 }
                 amplifiers[0].sendInput(BigInteger.ZERO)
-                amplifiers.forEach { amplifier ->
+
+                // Run each amplifier program in sequence
+                for (amplifier in amplifiers) {
                     amplifier.run()
                     amplifier.resetState()
                 }
@@ -73,7 +75,7 @@ class AmplifierSeries(file: File, count: Int) {
     fun findMaxSignalWithFeedback(phaseSettings: Collection<BigInteger>): BigInteger {
         checkPhaseSettings(phaseSettings)
 
-        // Feed output from the last amplifier into the first, tracking the maximum final output.
+        // Send output from the last amplifier to the first, keeping track of the max final output
         var maxSignal = BigInteger.ZERO
         amplifiers.last().onOutput = { output ->
             if (amplifiers[0].isDone) {
@@ -84,18 +86,17 @@ class AmplifierSeries(file: File, count: Int) {
         }
 
         try {
-            // Try all permutations of phase settings.
-            phaseSettings.permutations().forEach { settings ->
-                // Send phase settings and initial input.
+            for (settings in phaseSettings.permutations()) {
+                // Send phase settings and initial input
                 amplifiers.forEachIndexed { index, amplifier ->
                     amplifier.resetState()
                     amplifier.sendInput(settings[index])
                 }
                 amplifiers[0].sendInput(BigInteger.ZERO)
 
-                // Continue running amplifier programs until all have halted.
+                // Continue running amplifier programs until all have halted
                 while (!amplifiers.all { it.isDone }) {
-                    amplifiers.forEach { amplifier ->
+                    for (amplifier in amplifiers) {
                         if (!amplifier.isDone) {
                             amplifier.run()
                         }
@@ -126,7 +127,9 @@ class AmplifierSeries(file: File, count: Int) {
      * initialization.
      */
     private fun resetAmplifiers() {
-        amplifiers.forEach { it.resetState() }
+        for (amplifier in amplifiers) {
+            amplifier.resetState()
+        }
         amplifiers.last().resetOutput()
     }
 }

@@ -13,7 +13,7 @@ class CaveSystem(cavesString: String) {
      * A map from each cave to all caves that are connected to it by an edge.
      */
     private val edges: Map<String, Set<String>> = mutableMapOf<String, MutableSet<String>>().apply {
-        cavesString.trim().lines().forEach { line ->
+        for (line in cavesString.trim().lines()) {
             val matchResult = EDGE_REGEX.matchEntire(line.trim())
             require(matchResult != null) { "Malformed edge string: $line" }
 

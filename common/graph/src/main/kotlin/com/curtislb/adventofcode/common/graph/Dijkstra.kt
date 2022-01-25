@@ -26,13 +26,14 @@ fun <T> dijkstraShortestDistance(
 
         // Update distances to all neighboring nodes.
         visited.add(node)
-        getEdges(node).forEach { (neighbor, edgeWeight) ->
+        for ((neighbor, edgeWeight) in getEdges(node)) {
             if (neighbor !in visited) {
                 val oldDistance = nodeHeap[neighbor]
                 val newDistance = distance + edgeWeight
-                when {
-                    oldDistance == null -> nodeHeap.add(neighbor, newDistance)
-                    newDistance < oldDistance -> nodeHeap.decreaseKey(neighbor, newDistance)
+                if (oldDistance == null) {
+                    nodeHeap.add(neighbor, newDistance)
+                } else if (newDistance < oldDistance) {
+                    nodeHeap.decreaseKey(neighbor, newDistance)
                 }
             }
         }

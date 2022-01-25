@@ -167,9 +167,9 @@ data class Passport(
             var passportId: String? = null
             var countryId: String? = null
 
-            // Map values to the corresponding passport fields.
+            // Map values to the corresponding passport fields
             val fieldValues = string.trim().split(' ').map { it.split(':') }
-            fieldValues.forEach { tokens ->
+            for (tokens in fieldValues) {
                 require(tokens.size == 2) {
                     "Malformed field value string: ${
                         tokens.joinToString(
@@ -191,15 +191,15 @@ data class Passport(
                 }
             }
 
-            // Check that all required fields are present.
+            // Check that all required fields are present
             require(
                 birthYear != null &&
-                    issueYear != null &&
-                    expirationYear != null &&
-                    height != null &&
-                    hairColor != null &&
-                    eyeColor != null &&
-                    passportId != null
+                issueYear != null &&
+                expirationYear != null &&
+                height != null &&
+                hairColor != null &&
+                eyeColor != null &&
+                passportId != null
             ) {
                 """
                     Missing one or more required fields:
@@ -214,13 +214,13 @@ data class Passport(
             }
 
             return Passport(
-                birthYear!!,
-                issueYear!!,
-                expirationYear!!,
-                height!!,
-                hairColor!!,
-                eyeColor!!,
-                passportId!!,
+                birthYear,
+                issueYear,
+                expirationYear,
+                height,
+                hairColor,
+                eyeColor,
+                passportId,
                 countryId
             )
         }

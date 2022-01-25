@@ -21,7 +21,7 @@ class Wire(wireString: String) {
         val segmentStrings = wireString.split(',')
         val segmentArrayList = ArrayList<Segment>(segmentStrings.size)
         var start = Point.ORIGIN
-        segmentStrings.forEach { segmentString ->
+        for (segmentString in segmentStrings) {
             // Construct each segment and add it to the list in order
             val direction = Direction.fromChar(segmentString[0])
             val length = segmentString.substring(1).toInt()

@@ -26,23 +26,23 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     val instructions = mutableListOf<String>()
     inputPath.toFile().forEachSection { section ->
         if (points.isEmpty()) {
-            section.forEach { line ->
+            for (line in section) {
                 val (x, y) = line.toInts()
                 points.add(Point(x, -y))
             }
         } else {
-            section.forEach { line ->
+            for (line in section) {
                 instructions.add(line.trim())
             }
         }
     }
 
-    instructions.forEach { instruction ->
+    for (instruction in instructions) {
         val (axisName, axisValueString) = instruction.split(" ").last().split("=")
         val isXFold = axisName == "x"
         val axisValue = axisValueString.toInt()
         val foldedPoints = mutableSetOf<Point>()
-        points.forEach { point ->
+        for (point in points) {
             val foldedPoint = if (isXFold) {
                 point.foldLeft(axisValue)
             } else {

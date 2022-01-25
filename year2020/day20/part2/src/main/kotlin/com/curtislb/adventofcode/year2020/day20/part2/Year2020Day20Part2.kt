@@ -155,7 +155,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     }
 
     val pointMasks = mutableListOf<PointMask>().apply {
-        maskGrids.forEach { maskGrid ->
+        for (maskGrid in maskGrids) {
             val points = mutableSetOf<Point>().apply {
                 maskGrid.forEachPointValue { point, isIncluded ->
                     if (isIncluded) {
@@ -169,7 +169,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
 
     val imageGrid = imageData.constructImageGrid()
     val monsterPoints = mutableSetOf<Point>()
-    pointMasks.forEach { initialMask ->
+    for (initialMask in pointMasks) {
         var pointMask = initialMask
         val maxRowIndex = imageData.sideLength - pointMask.height
         val maxColIndex = imageData.sideLength - pointMask.width

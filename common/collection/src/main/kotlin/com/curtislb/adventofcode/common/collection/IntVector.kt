@@ -42,26 +42,24 @@ open class IntVector(protected open vararg val components: Int) {
     /**
      * All other same-[size] vectors whose component values differ from this one by at most 1.
      */
-    fun neighbors(): List<IntVector> {
-        return mutableListOf<IntVector>().apply {
-            (-1..1).toList().forEachNested(this@IntVector.size) { indexedOffsets ->
+    fun neighbors(): List<IntVector> =
+        mutableListOf<IntVector>().apply {
+            listOf(-1, 0, 1).forEachNested(this@IntVector.size) { indexedOffsets ->
                 val offsets = indexedOffsets.map { (_, offset) -> offset }.toIntArray()
                 if (offsets.any { it != 0 }) {
                     add(this@IntVector + IntVector(*offsets))
                 }
-                false // Don't stop iterating.
+                false // Don't stop iterating
             }
         }
-    }
 
     /**
      * Returns a distinct copy of this vector, with the same component values.
      */
     open fun copy(): IntVector = IntVector(*components)
 
-    override fun equals(other: Any?): Boolean {
-        return other is IntVector && components.contentEquals(other.components)
-    }
+    override fun equals(other: Any?): Boolean =
+        other is IntVector && components.contentEquals(other.components)
 
     override fun hashCode(): Int = components.contentHashCode()
 

@@ -31,7 +31,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
         if (template == null) {
             template = section.first().trim()
         } else {
-            section.forEach { line ->
+            for (line in section) {
                 val (pattern, insertion) = line.trim().split(" -> ")
                 rules[pattern] = insertion
             }
@@ -46,7 +46,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
 
     repeat(40) {
         val newPatternCounts = Counter<String>()
-        patternCounts.entriesWithPositiveCount.forEach { (pattern, count) ->
+        for ((pattern, count) in patternCounts.entriesWithPositiveCount) {
             val insertion = rules[pattern]
             if (insertion != null) {
                 newPatternCounts["${pattern.first()}$insertion"] += count
@@ -59,7 +59,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     }
 
     val letterCounts = Counter<Char>()
-    patternCounts.entriesWithPositiveCount.forEach { (pattern, count) ->
+    for ((pattern, count) in patternCounts.entriesWithPositiveCount) {
         letterCounts[pattern.first()] += count
     }
 

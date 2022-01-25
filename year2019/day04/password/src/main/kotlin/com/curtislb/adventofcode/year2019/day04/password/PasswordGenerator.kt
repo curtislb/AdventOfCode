@@ -51,7 +51,7 @@ abstract class PasswordGenerator {
             }
 
             // Enqueue generators with next digits appended.
-            generator.nextDigits.forEach { digit ->
+            for (digit in generator.nextDigits) {
                 queue.addLast(Pair(generator.addDigit(digit), suffix + digit))
             }
         }

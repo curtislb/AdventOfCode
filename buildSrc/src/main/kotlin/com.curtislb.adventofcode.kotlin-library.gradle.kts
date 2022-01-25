@@ -49,7 +49,9 @@ configurations.create("transitiveSourcesElements") {
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("source-folders"))
     }
 
-    sourceSets.main.get().java.srcDirs.forEach { outgoing.artifact(it) }
+    for (srcDir in sourceSets.main.get().java.srcDirs) {
+        outgoing.artifact(srcDir)
+    }
 }
 
 // Share the coverage data to be aggregated for the whole product

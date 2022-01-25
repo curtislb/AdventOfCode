@@ -16,7 +16,7 @@ class JoltageAdapters(ratings: Set<Int>) {
      * A sorted list of joltage ratings, including a rating of 0 jolts for the outlet.
      */
     private val sortedRatings: List<Int> = mutableListOf(0).apply {
-        ratings.forEach { rating ->
+        for (rating in ratings) {
             require(rating > 0) { "Adapter rating must be positive: $rating" }
             add(rating)
         }

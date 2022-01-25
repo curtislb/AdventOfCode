@@ -82,7 +82,9 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
      * Counts the given [keys] and adds the resulting counts to this counter.
      */
     fun addAll(keys: Iterable<E>) {
-        keys.forEach { this[it]++ }
+        for (key in keys) {
+            this[key]++
+        }
     }
 
     /**

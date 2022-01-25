@@ -105,8 +105,8 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     }
 
     // Mark numbers on each board until the first board wins, then return its score
-    numbers.forEach { number ->
-        boards.forEach { board ->
+    for (number in numbers) {
+        for (board in boards) {
             board.mark(number)
             if (board.isWinning) {
                 return board.winningScore

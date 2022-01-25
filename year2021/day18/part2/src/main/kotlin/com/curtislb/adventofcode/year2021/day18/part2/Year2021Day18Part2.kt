@@ -48,7 +48,7 @@ import kotlin.system.measureTimeMillis
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     var maxMagnitude = 0
     val numbers = inputPath.toFile().readLines().map { SnailfishNumber.fromString(it) }
-    numbers.uniquePairs().forEach { (numberA, numberB) ->
+    for ((numberA, numberB) in numbers.uniquePairs()) {
         val abMagnitude = (numberA + numberB).magnitude()
         val baMagnitude = (numberB + numberA).magnitude()
         maxMagnitude = maxOf(maxMagnitude, abMagnitude, baMagnitude)

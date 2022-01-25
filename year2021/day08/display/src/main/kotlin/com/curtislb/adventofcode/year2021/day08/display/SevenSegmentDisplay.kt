@@ -43,7 +43,7 @@ class SevenSegmentDisplay(displayString: String) {
         val patternsByWireCount = digitPatterns.groupBy { it.countWires() }
 
         // Identify digits with unique segment counts (1, 4, 7, and 8)
-        UNIQUE_COUNTS_MAP.forEach { (wireCount, digit) ->
+        for ((wireCount, digit) in UNIQUE_COUNTS_MAP) {
             // Check that pattern exists and is unique
             val patterns = patternsByWireCount[wireCount]
                 ?: throw IllegalStateException("No pattern for digit: $digit")
@@ -58,7 +58,7 @@ class SevenSegmentDisplay(displayString: String) {
         // Identify digits with five segments (2, 3, and 5)
         patternsByWireCount[5]?.let { patterns ->
             val fourOneDiff = knownPatterns[4] - knownPatterns[1]
-            patterns.forEach { pattern ->
+            for (pattern in patterns) {
                 val digit = when {
                     knownPatterns[1] in pattern -> 3
                     fourOneDiff in pattern -> 5
@@ -70,7 +70,7 @@ class SevenSegmentDisplay(displayString: String) {
 
         // Identify digits with six segments (0, 6, and 9)
         patternsByWireCount[6]?.let { patterns ->
-            patterns.forEach { pattern ->
+            for (pattern in patterns) {
                 val digit = when {
                     knownPatterns[4] in pattern -> 9
                     knownPatterns[1] in pattern -> 0

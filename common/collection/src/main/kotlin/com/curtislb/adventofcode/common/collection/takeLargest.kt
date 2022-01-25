@@ -8,6 +8,8 @@ import java.util.PriorityQueue
  */
 fun <T : Comparable<T>> Iterable<T>.takeLargest(count: Int): List<T> {
     val priorityQueue = PriorityQueue<T>(Comparator.reverseOrder())
-    forEach { priorityQueue.offer(it) }
+    for (item in this) {
+        priorityQueue.offer(item)
+    }
     return List(count) { priorityQueue.poll() }
 }

@@ -17,7 +17,7 @@ class Xmas(private val values: List<Long>, private val preambleSize: Int) {
     val firstInvalidNumber: Long? by lazy {
         // Search for a value (after the preamble) that meets the criteria.
         val prevValues = FifoCache<Long>(preambleSize)
-        values.forEach { value ->
+        for (value in values) {
             if (prevValues.isFull() && prevValues.findPairSum(value) == null) {
                 return@lazy value
             }

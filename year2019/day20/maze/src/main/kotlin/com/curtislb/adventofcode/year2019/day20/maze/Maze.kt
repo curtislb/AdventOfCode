@@ -66,7 +66,7 @@ class Maze(file: File) {
             },
             getNeighbors = { location ->
                 sequence {
-                    location.point.cardinalNeighbors().forEach { neighbor ->
+                    for (neighbor in location.point.cardinalNeighbors()) {
                         if (grid.getOrNull(neighbor)?.isOccupiable == true) {
                             yield(Location(neighbor, location.depth))
                         }

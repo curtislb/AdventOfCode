@@ -29,8 +29,12 @@ class SeatLayout(
      * A grid of spaces representing the current seat layout.
      */
     private var spaceGrid: Grid<Space> = mutableGridOf<Space>().apply {
-        initialLayout.trim().lines().forEach { line ->
-            addRowWith { line.forEach { char -> add(Space.from(char)) } }
+        for (line in initialLayout.trim().lines()) {
+            addRowWith {
+                for (char in line.trim()) {
+                    add(Space.from(char))
+                }
+            }
         }
     }
 
@@ -38,7 +42,9 @@ class SeatLayout(
      * Returns the number of occupied seats in the current layout.
      */
     fun countOccupied(): Int =
-        spaceGrid.sumRowsBy { row -> row.count { space -> space == Space.OCCUPIED } }
+        spaceGrid.sumRowsBy { row ->
+            row.count { it == Space.OCCUPIED }
+        }
 
     /**
      * Updates the current layout by applying update rules to all spaces simultaneously until the

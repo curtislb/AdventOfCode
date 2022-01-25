@@ -55,7 +55,9 @@ abstract class BitmaskProgram(private val programString: String) {
      */
     fun run() {
         if (!isDone) {
-            programString.trim().lines().forEach(::processStatement)
+            for (line in programString.trim().lines()) {
+                processStatement(line.trim())
+            }
             isDone = true
         }
     }

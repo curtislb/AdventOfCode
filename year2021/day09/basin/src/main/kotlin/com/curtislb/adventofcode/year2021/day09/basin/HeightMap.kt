@@ -19,11 +19,9 @@ class HeightMap(mapString: String) {
      * A grid containing the heights of all floor positions.
      */
     private val heightGrid: Grid<Int> = mutableGridOf<Int>().apply {
-        mapString.lines().forEach { line ->
-            if (line.isNotBlank()) {
-                val heights = line.trim().toCharArray().map { it.digitToInt() }
-                addShallowRow(heights)
-            }
+        for (line in mapString.trim().lines()) {
+            val heights = line.trim().map { it.digitToInt() }
+            addShallowRow(heights)
         }
     }
 

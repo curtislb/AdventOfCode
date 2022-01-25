@@ -14,7 +14,7 @@ import com.curtislb.adventofcode.common.grid.Ray
 fun findVisibleSeats(grid: Grid<Space>, position: Point): List<Point> {
     // Look for seats in each of eight possible directions.
     return mutableListOf<Point>().apply {
-        position.allNeighbors().forEach { neighbor ->
+        for (neighbor in position.allNeighbors()) {
             // Look for a seat at each point along a directional ray.
             val ray = Ray(position, neighbor)
             for (point in ray.points().drop(1)) {

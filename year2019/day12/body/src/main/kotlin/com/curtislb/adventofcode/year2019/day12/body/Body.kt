@@ -38,7 +38,7 @@ class Body(
      */
     constructor(positionString: String) : this() {
         val fieldStrings = positionString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
-        fieldStrings.forEach { fieldString ->
+        for (fieldString in fieldStrings) {
             val (field, value) = fieldString.trim().split('=')
             when (field) {
                 "x" -> position[0] = value.toInt()

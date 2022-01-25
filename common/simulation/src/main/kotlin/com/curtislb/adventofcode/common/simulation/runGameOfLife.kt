@@ -37,7 +37,7 @@ fun <S, K, V> runGameOfLife(
         var newState = copyState(state)
 
         // Update each (key, value) pair in new state simultaneously, based on the previous state.
-        getUpdatableKeys(state).forEach { key ->
+        for (key in getUpdatableKeys(state)) {
             val value = getValue(state, key)
             val neighbors = getNeighborKeys(state, key).map { getValue(state, it) }
             val newValue = applyUpdateRules(value, neighbors)

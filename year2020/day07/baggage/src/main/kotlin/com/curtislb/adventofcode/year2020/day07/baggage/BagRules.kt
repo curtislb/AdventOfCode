@@ -22,13 +22,17 @@ class BagRules(rulesString: String) {
     init {
         val bagContentsMap = mutableMapOf<String, List<BagCount>>()
         val bagContainersMap = mutableMapOf<String, MutableList<String>>()
-        rulesString.trim().lines().forEach { ruleString ->
-            // Parse the relevant tokens from each rule string.
-            val tokens = ruleString.trimEnd('.').replace(REMOVAL_REGEX, "").split("contain")
+        for (ruleString in rulesString.trim().lines()) {
+            // Parse the relevant tokens from each rule string
+            val tokens = ruleString
+                .trimEnd('.')
+                .replace(REMOVAL_REGEX, "")
+                .split("contain")
                 .map { it.trim() }
+
             require(tokens.size == 2) { "Malformed rule string: $ruleString" }
 
-            // Convert tokens into the containing bag type and contained bag counts.
+            // Convert tokens into the containing bag type and contained bag counts
             val (container, contentsString) = tokens
             val contents = if (contentsString.isBlank()) {
                 emptyList()
@@ -36,9 +40,9 @@ class BagRules(rulesString: String) {
                 contentsString.split(',').map { BagCount.from(it) }
             }
 
-            // Add the container and contents to the relevant maps.
+            // Add the container and contents to the relevant maps
             bagContentsMap[container] = contents
-            contents.forEach { bagCount ->
+            for (bagCount in contents) {
                 bagContainersMap.getOrPut(bagCount.bagType) { mutableListOf() }.add(container)
             }
         }

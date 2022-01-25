@@ -14,11 +14,11 @@ import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
  */
 class KeySearch(private val vault: Vault) {
     /**
-     * The fewest steps that a group of searchers (starting from each [EntranceSpace]) can travel
-     * in order to collect all keys, or `null` if not all keys can be collected from the searchers'
-     * starting positions.
+     * The minimum search distance while collecting all keys.
+     *
+     * See [minSearchDistance] for more details.
      */
-    val searchDistance: Long? by lazy {
+    private val searchDistance: Long? by lazy {
         val searchEdges = findSearchEdges()
         val allKeys = KeyCollection.from(vault.keyLocations.keys)
         dijkstraShortestDistance(
@@ -34,9 +34,9 @@ class KeySearch(private val vault: Vault) {
                                     positions.toMutableList().apply { set(index, neighbor) }
                                 val newKeys = heldKeys.withKey(key)
                                 val newState = SearchState(newPositions, newKeys)
-                                edges.forEach { searchEdge ->
-                                    if (searchEdge.isTraversable(heldKeys)) {
-                                        yield(DirectedEdge(newState, searchEdge.distance.toLong()))
+                                for (edge in edges) {
+                                    if (edge.isTraversable(heldKeys)) {
+                                        yield(DirectedEdge(newState, edge.distance.toLong()))
                                     }
                                 }
                             }
@@ -48,13 +48,19 @@ class KeySearch(private val vault: Vault) {
     }
 
     /**
+     * Returns the minimum number of steps a group of searchers (starting from each [EntranceSpace])
+     * can travel while collecting all keys, or `null` if not all keys can be collected from the
+     * searchers' starting positions.
+     */
+    fun minSearchDistance(): Long? = searchDistance
+
+    /**
      * Returns a map from each possible starting position ([EntranceSpace] or [KeySpace]) to a map
      * from each reachable key position to the [SearchEdge] representation of the path to that key.
      */
     private fun findSearchEdges(): Map<Point, Map<Point, List<SearchEdge>>> {
         val keyPositions = vault.keyLocations.values.toSet()
-        val startPositions: Set<Point> =
-            vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) }
+        val startPositions = vault.entranceLocations.toMutableSet().apply { addAll(keyPositions) }
         return startPositions.mapToMap { startPosition ->
             // Use DFS to find all paths to keys from startPosition.
             val pathsFromStart = dfsPaths(

@@ -8,7 +8,7 @@ import com.curtislb.adventofcode.common.math.product
 fun evaluate(expression: String): Long {
     val results = mutableListOf<Long>()
     val operators = mutableListOf('(')
-    expression.forEach { token ->
+    for (token in expression) {
         when (token) {
             in '0'..'9' -> {
                 val number = token.digitToInt().toLong()
