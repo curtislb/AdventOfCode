@@ -212,7 +212,7 @@ include(":year2021:day11:part1", ":year2021:day11:part2", ":year2021:day11:octop
 include(":year2021:day12:part1", ":year2021:day12:part2", ":year2021:day12:caves")
 
 // Day 13: Transparent Origami
-include(":year2021:day13:part1", ":year2021:day13:part2")
+include(":year2021:day13:part1", ":year2021:day13:part2", ":year2021:day13:origami")
 
 // Day 14: Extended Polymerization
 include(":year2021:day14:part1", ":year2021:day14:part2")

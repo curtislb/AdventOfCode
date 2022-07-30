@@ -134,8 +134,31 @@ data class Point(val x: Int, val y: Int) {
         val ORIGIN = Point(0, 0)
 
         /**
-         * Returns the point corresponding to the given ([rowIndex], [colIndex]) matrix coordinates.
+         * TODO
+         */
+        private val POINT_REGEX = Regex("""\s*\(?\s*(\d+)\s*,\s*(\d+)\s*\)?\s*""")
+
+        /**
+         * Returns the [Point] corresponding to the given ([rowIndex], [colIndex]) matrix
+         * coordinates.
          */
         fun fromMatrixCoordinates(rowIndex: Int, colIndex: Int): Point = Point(colIndex, -rowIndex)
+
+        /**
+         * Returns a [Point] from a [string] of the form `"$x,$y"` or `"($x,$y)"`.
+         *
+         * If [invertY] is `true`, the resulting [Point] will have a y-coordinate of `-y`.
+         *
+         * @throws IllegalArgumentException If [string] is not of the required form.
+         */
+        fun fromString(string: String, invertY: Boolean = false): Point {
+            val matchResult = POINT_REGEX.matchEntire(string)
+            require(matchResult != null) { "Malformed point string: $string" }
+
+            val (xString, yString) = matchResult.destructured
+            val x = xString.toInt()
+            val y = if (invertY) -yString.toInt() else yString.toInt()
+            return Point(x, y)
+        }
     }
 }

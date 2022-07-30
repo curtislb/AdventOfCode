@@ -9,10 +9,9 @@ What code do you use to activate the infrared thermal imaging camera system?
 
 package com.curtislb.adventofcode.year2021.day13.part2
 
-import com.curtislb.adventofcode.common.grid.Point
 import com.curtislb.adventofcode.common.grid.constructPointGrid
-import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.io.readSections
+import com.curtislb.adventofcode.year2021.day13.origami.OrigamiSheet
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -22,44 +21,11 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
-    var points = mutableSetOf<Point>()
-    val instructions = mutableListOf<String>()
-    inputPath.toFile().forEachSection { section ->
-        if (points.isEmpty()) {
-            for (line in section) {
-                val (x, y) = line.toInts()
-                points.add(Point(x, -y))
-            }
-        } else {
-            for (line in section) {
-                instructions.add(line.trim())
-            }
-        }
-    }
-
-    for (instruction in instructions) {
-        val (axisName, axisValueString) = instruction.split(" ").last().split("=")
-        val isXFold = axisName == "x"
-        val axisValue = axisValueString.toInt()
-        val foldedPoints = mutableSetOf<Point>()
-        for (point in points) {
-            val foldedPoint = if (isXFold) {
-                point.foldLeft(axisValue)
-            } else {
-                point.foldUp(-axisValue)
-            }
-            foldedPoints.add(foldedPoint)
-        }
-        points = foldedPoints
-    }
-
-    return constructPointGrid(points) { if (it in points) '#' else ' ' }
-        .joinRowsToString(separator = "\n") { it.joinToString(separator = "") }
+    val (pointStrings, instructionStrings) = inputPath.toFile().readSections()
+    val sheet = OrigamiSheet(pointStrings, instructionStrings).apply { fold() }
+    val pointGrid = constructPointGrid(sheet.points) { if (it in sheet.points) '#' else ' ' }
+    return pointGrid.joinRowsToString(separator = "\n") { it.joinToString(separator = "") }
 }
-
-fun Point.foldLeft(axis: Int): Point = if (x > axis) copy(x = axis - (x - axis)) else this
-
-fun Point.foldUp(axis: Int): Point = if (y < axis) copy(y = axis - (y - axis)) else this
 
 fun main() {
     println(solve())
