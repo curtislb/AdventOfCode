@@ -2,7 +2,7 @@ plugins {
     id("com.curtislb.adventofcode.kotlin-library")
 }
 
-val coroutinesVersion = "1.5.2"
+val coroutinesVersion: String by project
 
 dependencies {
     api(project(":common:range"))
