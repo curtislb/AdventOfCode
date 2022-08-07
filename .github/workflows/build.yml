@@ -4,10 +4,10 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
   # Allow this workflow to be run manually from the Actions tab
   workflow_dispatch:
