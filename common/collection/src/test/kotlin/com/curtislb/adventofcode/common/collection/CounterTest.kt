@@ -172,16 +172,15 @@ class CounterTest {
 
     @Test
     fun testClearNegativeCounts() {
-        val counter = Counter(
-            mapOf(
-                "alpha" to 560209110L,
-                "bravo" to -693733719L,
-                "charlie" to -466329041L,
-                "delta" to 927075951L,
-                "echo" to -13083113L,
-                "foxtrot" to 272479767L
-            )
+        val counts = mapOf(
+            "alpha" to 560209110L,
+            "bravo" to -693733719L,
+            "charlie" to -466329041L,
+            "delta" to 927075951L,
+            "echo" to -13083113L,
+            "foxtrot" to 272479767L
         )
+        val counter = Counter(counts)
         counter.clearNegativeCounts()
         assertEquals(
             mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L),

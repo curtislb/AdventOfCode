@@ -2,16 +2,12 @@ package com.curtislb.adventofcode.common.collection
 
 import java.math.BigInteger
 
-/**
- * A map that can be used to track the counts (either positive or negative) of various items.
- *
- * @param initialCounts A map of initial item counts with which to populate the counter.
- */
-class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
+/** A map that can be used to track the counts (either positive or negative) of various items. */
+class Counter<E>() {
     /**
      * A map that holds the nonzero key counts for this counter.
      */
-    private val counts: MutableMap<E, Long> = initialCounts.toMutableMap()
+    private val counts: MutableMap<E, Long> = mutableMapOf()
 
     init {
         // Remove all keys with a count of 0. Subsequent method calls maintain this invariant.
@@ -43,7 +39,18 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
     /**
      * A map that can be used to track the counts (either positive or negative) of various items.
      *
-     * @param items A list of initial items with which to populate the counter.
+     * @param initialCounts A map of initial item counts with which to populate the counter.
+     */
+    constructor(initialCounts: Map<E, Long>) : this() {
+        for ((item, count) in initialCounts) {
+            this[item] = count
+        }
+    }
+
+    /**
+     * A map that can be used to track the counts (either positive or negative) of various items.
+     *
+     * @param items A collection of initial items with which to populate the counter.
      */
     constructor(items: Iterable<E>) : this() {
         addAll(items)
@@ -85,6 +92,13 @@ class Counter<E>(initialCounts: Map<E, Long> = mutableMapOf()) {
         for (key in keys) {
             this[key]++
         }
+    }
+
+    /**
+     * Removes all keys with nonzero counts from this counter, resetting their counts to 0.
+     */
+    fun clearNonzeroCounts() {
+        counts.clear()
     }
 
     /**

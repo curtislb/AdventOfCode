@@ -215,7 +215,7 @@ include(":year2021:day12:part1", ":year2021:day12:part2", ":year2021:day12:caves
 include(":year2021:day13:part1", ":year2021:day13:part2", ":year2021:day13:origami")
 
 // Day 14: Extended Polymerization
-include(":year2021:day14:part1", ":year2021:day14:part2")
+include(":year2021:day14:part1", ":year2021:day14:part2", ":year2021:day14:polymer")
 
 // Day 15: Chiton
 include(":year2021:day15:part1", ":year2021:day15:part2")

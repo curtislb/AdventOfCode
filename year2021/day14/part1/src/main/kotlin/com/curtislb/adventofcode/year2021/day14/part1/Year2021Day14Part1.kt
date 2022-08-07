@@ -77,8 +77,7 @@ quantity of the least common element?
 
 package com.curtislb.adventofcode.year2021.day14.part1
 
-import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.io.forEachSection
+import com.curtislb.adventofcode.year2021.day14.polymer.PolymerizationProcess
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -86,43 +85,12 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 14, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param stepCount The number of pair insertion steps to apply to the polymer template.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
-    var template: String? = null
-    val rules = mutableMapOf<String, String>()
-    inputPath.toFile().forEachSection { section ->
-        if (template == null) {
-            template = section.first().trim()
-        } else {
-            for (line in section) {
-                val (pattern, insertion) = line.trim().split(" -> ")
-                rules[pattern] = insertion
-            }
-        }
-    }
-
-    var polymer = template!!
-    repeat(10) {
-        polymer = buildString {
-            for (index in 0 until polymer.lastIndex) {
-                val substring = polymer.substring(index..(index + 1))
-                append(substring[0])
-                if (substring in rules) {
-                    append(rules[substring])
-                }
-            }
-            append(polymer.last())
-        }
-    }
-
-    val counter = Counter<Char>()
-    for (char in polymer) {
-        counter[char]++
-    }
-    val maxValue = counter.entriesWithPositiveCount.maxOfOrNull { it.value }!!
-    val minValue = counter.entriesWithPositiveCount.minOfOrNull { it.value }!!
-
-    return maxValue - minValue
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), stepCount: Int = 10): Long {
+    val polymerization = PolymerizationProcess.fromFile(inputPath.toFile())
+    polymerization.applyPairInsertions(stepCount)
+    return polymerization.maxElementCountDifference()
 }
 
 fun main() {

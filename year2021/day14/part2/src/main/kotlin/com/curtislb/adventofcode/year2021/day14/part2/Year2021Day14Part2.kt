@@ -14,8 +14,7 @@ quantity of the least common element?
 
 package com.curtislb.adventofcode.year2021.day14.part2
 
-import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.io.forEachSection
+import com.curtislb.adventofcode.year2021.day14.polymer.PolymerizationProcess
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -23,49 +22,12 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 14, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param stepCount The number pair insertion steps to apply to the polymer template.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
-    var template: String? = null
-    val rules = mutableMapOf<String, String>()
-    inputPath.toFile().forEachSection { section ->
-        if (template == null) {
-            template = section.first().trim()
-        } else {
-            for (line in section) {
-                val (pattern, insertion) = line.trim().split(" -> ")
-                rules[pattern] = insertion
-            }
-        }
-    }
-
-    val polymer = template!!
-    var patternCounts = Counter<String>()
-    for (i in 0 until polymer.lastIndex) {
-        patternCounts[polymer.substring(i..(i + 1))]++
-    }
-
-    repeat(40) {
-        val newPatternCounts = Counter<String>()
-        for ((pattern, count) in patternCounts.entriesWithPositiveCount) {
-            val insertion = rules[pattern]
-            if (insertion != null) {
-                newPatternCounts["${pattern.first()}$insertion"] += count
-                newPatternCounts["$insertion${pattern.last()}"] += count
-            } else {
-                newPatternCounts[pattern] += count
-            }
-        }
-        patternCounts = newPatternCounts
-    }
-
-    val letterCounts = Counter<Char>()
-    for ((pattern, count) in patternCounts.entriesWithPositiveCount) {
-        letterCounts[pattern.first()] += count
-    }
-
-    val maxValue = letterCounts.entriesWithPositiveCount.maxOfOrNull { it.value }!!
-    val minValue = letterCounts.entriesWithPositiveCount.minOfOrNull { it.value }!!
-    return maxValue - minValue + 1
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), stepCount: Int = 40): Long {
+    val polymerization = PolymerizationProcess.fromFile(inputPath.toFile())
+    polymerization.applyPairInsertions(stepCount)
+    return polymerization.maxElementCountDifference()
 }
 
 fun main() {

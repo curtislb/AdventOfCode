@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.year2019.day14.chemistry
 
 import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.math.Fraction
 import java.io.File
 
@@ -35,8 +34,12 @@ class Nanofactory(file: File) {
         rawMaterials: Set<String>,
         products: List<MaterialAmount>
     ): List<MaterialAmount>? {
+        val requiredMaterials = Counter<String>()
+        for ((material, amount) in products) {
+            requiredMaterials[material] = amount
+        }
+
         // Work backwards from the desired products to determine the amount of raw materials needed.
-        val requiredMaterials = Counter(products.mapToMap { it.material to it.amount })
         while (requiredMaterials.keysWithPositiveCount != rawMaterials) {
             val (requiredMaterial, requiredAmount) =
                 requiredMaterials.entriesWithPositiveCount.find { (material, _) ->
