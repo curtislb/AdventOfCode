@@ -218,7 +218,7 @@ include(":year2021:day13:part1", ":year2021:day13:part2", ":year2021:day13:origa
 include(":year2021:day14:part1", ":year2021:day14:part2", ":year2021:day14:polymer")
 
 // Day 15: Chiton
-include(":year2021:day15:part1", ":year2021:day15:part2")
+include(":year2021:day15:part1", ":year2021:day15:part2", ":year2021:day15:chiton")
 
 // Day 16: Packet Decoder
 include(":year2021:day16:part1", ":year2021:day16:part2", ":year2021:day16:bits")

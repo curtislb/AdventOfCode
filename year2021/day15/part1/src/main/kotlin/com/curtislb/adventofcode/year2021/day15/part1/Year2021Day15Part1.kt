@@ -31,16 +31,16 @@ Your goal is to find a path with the lowest total risk. In this example, a path 
 total risk is highlighted here:
 
 ```
-1163751742
-1381373672
-2136511328
-3694931569
-7463417111
-1319128137
-1359912421
-3125421639
-1293138521
-2311944581
+1
+1
+2136511
+      15
+       1
+       13
+        2
+        3
+        21
+         1
 ```
 
 The total risk of this path is 40 (the starting position is never entered, so its risk is not
@@ -51,10 +51,7 @@ What is the lowest total risk of any path from the top left to the bottom right?
 
 package com.curtislb.adventofcode.year2021.day15.part1
 
-import com.curtislb.adventofcode.common.graph.DirectedEdge
-import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.toGrid
+import com.curtislb.adventofcode.year2021.day15.chiton.RiskLevelMap
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -63,20 +60,9 @@ import java.nio.file.Paths
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
-    val grid = inputPath.toFile().readLines().map { line ->
-        line.toCharArray().map { it.digitToInt().toLong() }
-    }.toGrid()
-
-    return dijkstraShortestDistance(
-        Point.ORIGIN,
-        isGoal = { it == Point.fromMatrixCoordinates(grid.lastRowIndex, grid.lastColumnIndex) },
-        getEdges = { point ->
-            point.cardinalNeighbors().filter { it in grid }.map { neighbor ->
-                DirectedEdge(neighbor, grid[neighbor])
-            }.asSequence()
-        }
-    )
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
+    val riskLevelMap = RiskLevelMap.fromFile(inputPath.toFile())
+    return riskLevelMap.findMinimalPathRisk()
 }
 
 fun main() {
