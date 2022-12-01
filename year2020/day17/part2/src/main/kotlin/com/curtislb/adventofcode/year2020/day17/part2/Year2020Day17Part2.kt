@@ -264,7 +264,7 @@ many cubes are left in the active state after the sixth cycle?
 
 package com.curtislb.adventofcode.year2020.day17.part2
 
-import com.curtislb.adventofcode.year2020.day17.conway.ConwayCubes
+import com.curtislb.adventofcode.year2020.day17.conway.EnergySource
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -274,10 +274,10 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val file = inputPath.toFile()
-    val cubes = ConwayCubes(file.readText(), dimensionCount = 4)
-    cubes.update(cycleCount = 6)
-    return cubes.activityLevel
+    val energySource = EnergySource.fromFile(inputPath.toFile(), dimensionCount = 4).apply {
+        runBootProcess(cycleCount = 6)
+    }
+    return energySource.activityLevel
 }
 
 fun main() {

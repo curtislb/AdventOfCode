@@ -9,7 +9,7 @@ import java.io.File
  * A collection of asteroids, arranged in a 2D grid.
  *
  * @param file A file containing the grid layout for this asteroid field. Each line should contain a
- *  row of characters, with each representing an empty grid space (`'.'`) or an asteroid (`'#'`).
+ *  row of characters, with each representing an empty grid space (`.`) or an asteroid (`#`).
  */
 class AsteroidField(file: File) {
     /**

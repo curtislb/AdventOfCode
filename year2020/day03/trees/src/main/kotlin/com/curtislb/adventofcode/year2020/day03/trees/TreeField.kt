@@ -11,8 +11,7 @@ import com.curtislb.adventofcode.common.math.Fraction
  * the right.
  *
  * @param treePattern A string representing the base pattern for this tree field. Each line should
- *  contain a row of characters, with each representing an empty grid space (`'.'`) or a tree
- *  (`'#'`).
+ *  contain a row of characters, with each representing an empty grid space (`.`) or a tree (`#`).
  */
 class TreeField(treePattern: String) {
     /**

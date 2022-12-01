@@ -36,13 +36,13 @@ interface Ship {
      *
      * Recognized instructions are as follows:
      *
-     * - `'N'`: Move north by calling [move] with [Direction.UP] and a distance of `value`.
-     * - `'S'`: Move south by calling [move] with [Direction.DOWN] and a distance of `value`.
-     * - `'E'`: Move east by calling [move] with [Direction.RIGHT] and a distance of `value`.
-     * - `'W'`: Move west by calling [move] with [Direction.LEFT] and a distance of `value`.
-     * - `'L'`: Turn left by calling [turnLeft] with an angle of `value` degrees.
-     * - `'R'`: Turn right by calling [turnRight] with an angle of `value` degrees.
-     * - `'F'`: Go forward by calling [goForward] with a count of `value`.
+     * - `N`: Move north by calling [move] with [Direction.UP] and a distance of `value`.
+     * - `S`: Move south by calling [move] with [Direction.DOWN] and a distance of `value`.
+     * - `E`: Move east by calling [move] with [Direction.RIGHT] and a distance of `value`.
+     * - `W`: Move west by calling [move] with [Direction.LEFT] and a distance of `value`.
+     * - `L`: Turn left by calling [turnLeft] with an angle of `value` degrees.
+     * - `R`: Turn right by calling [turnRight] with an angle of `value` degrees.
+     * - `F`: Go forward by calling [goForward] with a count of `value`.
      */
     fun followInstruction(instruction: String) {
         val (action, value) = parseInstruction(instruction)

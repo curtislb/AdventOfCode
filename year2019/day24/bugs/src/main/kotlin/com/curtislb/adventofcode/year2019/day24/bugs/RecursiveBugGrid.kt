@@ -6,7 +6,7 @@ import java.io.File
  * An infinite recursive grid in which each level is represented by a [BugGrid].
  *
  * @param file A file containing the layout for the initial grid level. Each line should contain a
- *  row of characters, with `'.'` representing an empty space and `'#'` representing a space that
+ *  row of characters, with `.` representing an empty space and `#` representing a space that
  *  contains a bug.
  */
 class RecursiveBugGrid(file: File) {

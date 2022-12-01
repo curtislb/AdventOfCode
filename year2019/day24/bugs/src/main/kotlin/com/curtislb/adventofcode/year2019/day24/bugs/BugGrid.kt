@@ -183,8 +183,8 @@ value class BugGrid(val biodiversity: Int) {
         /**
          * Returns a grid matching the layout given by an input [file].
          *
-         * Each line of [file] should contain a row of characters, with `'.'` representing an empty
-         * space and `'#'` representing a space that contains a bug.
+         * Each line of [file] should contain a row of characters, with `.` representing an empty
+         * space and `#` representing a space that contains a bug.
          */
         fun from(file: File): BugGrid {
             var biodiversity = 0

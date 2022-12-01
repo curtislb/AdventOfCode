@@ -4,7 +4,7 @@ package com.curtislb.adventofcode.year2020.day07.baggage
  * A set of rules indicating the number and type of bags (see [BagCount]) that must be contained in
  * other bags.
  *
- * @param rulesString A string representing all bag rules. Each line may end with a `'.'` and must
+ * @param rulesString A string representing all bag rules. Each line may end with a `.` and must
  *  be a rule of the form `"$container bags contain $bagCount1, ..., $bagCountN"` or
  *  `"$container bags contain no other bags"`.
  */

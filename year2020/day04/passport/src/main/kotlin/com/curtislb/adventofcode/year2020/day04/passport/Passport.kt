@@ -34,7 +34,7 @@ data class Passport(
      * - [height] must be a number followed by either `cm` or `in`:
      *     - If `cm`, the number must be at least 150 and at most 193.
      *     - If `in`, the number must be at least 59 and at most 76.
-     * - [hairColor] must consist of a `'#'` followed by exactly six lowercase hexadecimal digits.
+     * - [hairColor] must consist of a `#` followed by exactly six lowercase hexadecimal digits.
      * - [eyeColor] must be one of `"amb"`, `"blu"`, `"brn"`, `"gry"`, `"grn"`, `"hzl"`, or `"oth"`.
      * - [passportID] must be a nine-digit number, including any leading zeroes.
      * - [countryID], if present, can be any value.

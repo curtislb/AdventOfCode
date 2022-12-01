@@ -64,9 +64,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val system = NBodySystem(inputPath.toFile())
     val periodicity = system.findAxialPeriodicity()
     return leastCommonMultiple(
-        periodicity[0].toLong(),
-        periodicity[1].toLong(),
-        periodicity[2].toLong()
+        periodicity.first.toLong(),
+        periodicity.second.toLong(),
+        periodicity.third.toLong()
     )
 }
 

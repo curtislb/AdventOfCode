@@ -224,7 +224,7 @@ include(":year2021:day15:part1", ":year2021:day15:part2", ":year2021:day15:chito
 include(":year2021:day16:part1", ":year2021:day16:part2", ":year2021:day16:bits")
 
 // Day 17: Trick Shot
-include(":year2021:day17:part1", ":year2021:day17:part2")
+include(":year2021:day17:part1", ":year2021:day17:part2", ":year2021:day17:probe")
 
 // Day 18: Snailfish
 include(":year2021:day18:part1", ":year2021:day18:part2", ":year2021:day18:snailfish")

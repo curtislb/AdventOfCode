@@ -1,25 +1,99 @@
 package com.curtislb.adventofcode.year2021.day16.bits
 
-import com.curtislb.adventofcode.common.math.digitsToInt
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.math.setBit
 import com.curtislb.adventofcode.common.math.testBit
 
 /**
- * TODO
+ * Interpreter that reads and evaluates a Buoyancy Interchange Transmission System (BITS) packet.
+ *
+ * A BITS packet contains a series of binary (or hexadecimal) values that are meant to be read in
+ * groups as unsigned big-endian integer values. A packet has the following standard format:
+ * - The first 3 bits represent the packet version.
+ * - The following 3 bits represent the [BitsPacketType] of the packet.
+ * - If the packet type is [BitsPacketType.LITERAL], the remaining bits are separated into 5-bit
+ *   groups. The first bit of each group is 0 for the last group, or 1 otherwise. The remaining
+ *   4 bits of each group are big-endian binary digits of the unsigned integer value of the packet.
+ * - If the packet is of any other type, the next bit represents the [BitsLengthType], the next
+ *   [BitsLengthType.bitCount] bits after that represent the length of all sub-packets, and the
+ *   remaining bits represent the sub-packets themselves.
+ *
+ * @param packetString A hexadecimal string representing a BITS packet.
  */
 class BitsReader(private val packetString: String) {
-    private val packetBitLength: Int = packetString.length * 4
+    /**
+     * The current offset from the start of the BITS packet, indicating the next bit to read.
+     */
+    var offset: Int = 0
+        private set
 
-    private var offset: Int = 0
+    /**
+     * The total number of bits in the binary representation of the BITS packet.
+     */
+    val packetBitLength: Int = packetString.length * 4
 
-    val remainingBitCount: Int get() = packetBitLength - offset
+    /**
+     * The number of unread bits remaining in the BITS packet.
+     */
+    private val remainingBitCount: Int
+        get() = packetBitLength - offset
 
-    fun nextBits(bitCount: Int): Int {
+    /**
+     * Returns the result of evaluating the BITS packet starting at the current [offset], and
+     * advances [offset] to the next bit after the current packet.
+     *
+     * The evaluation rules for a BITS packet are as follows:
+     * - A [BitsPacketType.LITERAL] packet evaluates to the literal value it represents.
+     * - Any other [BitsPacketType] packet evaluates to the result of applying its corresponding
+     *   operation (via [BitsPacketType.applyOperation]) to the result(s) of recursively evaluating
+     *   its direct sub-packet(s).
+     */
+    fun evaluatePacket(): Long {
+        skipBits(BIT_COUNT_VERSION)
+        val packetType = readPacketType()
+        return if (packetType == BitsPacketType.LITERAL) {
+            readLiteral()
+        } else {
+            val values = mutableListOf<Long>()
+            readAndProcessSubPackets(readLengthType()) { values.add(evaluatePacket()) }
+            packetType.applyOperation(values)
+        }
+    }
+
+    /**
+     * Returns the sum of the version of the BITS packet starting at the current [offset] and the
+     * version(s) of its sub-packet(s), and advances [offset] to the next bit after the current
+     * packet.
+     */
+    fun sumPacketVersions(): Int {
+        val version = readBits(BIT_COUNT_VERSION)
+        return if (readPacketType() == BitsPacketType.LITERAL) {
+            skipLiteral()
+            version
+        } else {
+            var subVersionSum = 0
+            readAndProcessSubPackets(readLengthType()) { subVersionSum += sumPacketVersions() }
+            version + subVersionSum
+        }
+    }
+
+    /**
+     * Restores this BITS reader to its original state, immediately after initialization.
+     */
+    fun reset() {
+        offset = 0
+    }
+
+    /**
+     * Returns the unsigned integer represented by the next [bitCount] bits starting at [offset],
+     * and advances [offset] by [bitCount] bits.
+     */
+    private fun readBits(bitCount: Int): Int {
         require(bitCount >= 0) { "Bit count must be non-negative: $bitCount" }
         check(bitCount <= remainingBitCount) {
-            "Bit count ($bitCount) can't be larger than remaining bit count ($remainingBitCount)."
+            "Bit count must not exceed remaining: $bitCount > $remainingBitCount."
         }
 
+        // Return immediately if reading no bits
         if (bitCount == 0) {
             return 0
         }
@@ -27,16 +101,19 @@ class BitsReader(private val packetString: String) {
         var result = 0
         var bitsToRead = bitCount
         while (bitsToRead > 0) {
-            val hexDigit = packetString[offset / 4].digitToInt(radix = 16)
-            val startIndex = offset % 4
-            val bitsToReadFromDigit = (4 - startIndex).coerceAtMost(bitsToRead)
+            // Read necessary bits from the current hex digit
+            val hexDigit = packetString[offset / BITS_PER_HEX_DIGIT].digitToInt(radix = 16)
+            val startIndex = offset % BITS_PER_HEX_DIGIT
+            val bitsToReadFromDigit = (BITS_PER_HEX_DIGIT - startIndex).coerceAtMost(bitsToRead)
             for (bitIndex in startIndex until (startIndex + bitsToReadFromDigit)) {
                 result = result shl 1
-                if (hexDigit.testBit(3 - bitIndex)) {
-                    result++
+                val testBitIndex = (BITS_PER_HEX_DIGIT - 1) - bitIndex
+                if (hexDigit.testBit(testBitIndex)) {
+                    result = result.setBit(0)
                 }
             }
 
+            // Advance to the next digit and decrement the number of read bits
             bitsToRead -= bitsToReadFromDigit
             offset += bitsToReadFromDigit
         }
@@ -44,111 +121,116 @@ class BitsReader(private val packetString: String) {
         return result
     }
 
-    fun skipBits(bitCount: Int) {
+    /**
+     * Advances [offset] by [bitCount] bits.
+     */
+    private fun skipBits(bitCount: Int) {
         offset = (offset + bitCount).coerceAtMost(packetBitLength)
     }
 
-    fun reset() {
-        offset = 0
-    }
+    /**
+     * Returns the packet type represented by bits starting at the current bit [offset], and
+     * advances [offset] to the next bit after the current packet type.
+     */
+    private fun readPacketType(): BitsPacketType =
+        BitsPacketType.fromID(readBits(BIT_COUNT_PACKET_TYPE))
 
-    fun sumPacketVersions(): Int {
-        val version = nextBits(3)
-        val packetType = nextBits(3)
-        return if (packetType == 4) {
+    /**
+     * Returns the length type represented by bits starting at the current bit [offset], and
+     * advances [offset] to the next bit after the current length type.
+     */
+    private fun readLengthType(): BitsLengthType =
+        BitsLengthType.fromID(readBits(BIT_COUNT_LENGTH_TYPE))
+
+    /**
+     * Returns the literal value (within a [BitsPacketType.LITERAL] packet) represented by the bits
+     * starting at the current bit [offset], and advances [offset] to the next bit after the current
+     * literal value.
+     */
+    private fun readLiteral(): Long {
+        val binaryLiteral = buildString {
             var isLastGroup = false
             while (!isLastGroup) {
-                isLastGroup = nextBits(1) == 0
-                skipBits(4)
+                isLastGroup = readBits(1) == 0
+                append(readBinaryLiteralGroup())
             }
-            version
-        } else {
-            var subVersionSum = 0
-            when (val lengthType = nextBits(1)) {
-                0 -> {
-                    val subPacketsBitCount = nextBits(15)
-                    val endOffset = offset + subPacketsBitCount
-                    while (offset < endOffset) {
-                        subVersionSum += sumPacketVersions()
-                    }
-                }
+        }
+        return binaryLiteral.toLong(radix = 2)
+    }
 
-                1 -> {
-                    val subPacketsCount = nextBits(11)
-                    repeat(subPacketsCount) {
-                        subVersionSum += sumPacketVersions()
-                    }
-                }
-
-                else -> throw IllegalStateException("Unrecognized length type ID: $lengthType")
-            }
-            version + subVersionSum
+    /**
+     * Advances the current bit [offset] to the next bit after the literal value (within a
+     * [BitsPacketType.LITERAL] packet) represented by the bits starting at [offset].
+     */
+    private fun skipLiteral() {
+        var isLastGroup = false
+        while (!isLastGroup) {
+            isLastGroup = readBits(1) == 0
+            skipBits(BIT_COUNT_LITERAL_GROUP)
         }
     }
 
-    fun evaluatePacket(): Long {
-        skipBits(3)
-        val packetType = nextBits(3)
-        return if (packetType == 4) {
-            buildString {
-                var isLastGroup = false
-                while (!isLastGroup) {
-                    isLastGroup = nextBits(1) == 0
-                    append(nextBits(4).toString(radix = 2).padStart(4, '0'))
-                }
-            }.toLong(radix = 2)
-        } else {
-            val subPacketValues = mutableListOf<Long>()
-            when (val lengthType = nextBits(1)) {
-                0 -> {
-                    val subPacketsBitCount = nextBits(15)
-                    val endOffset = offset + subPacketsBitCount
-                    while (offset < endOffset) {
-                        subPacketValues.add(evaluatePacket())
-                    }
-                }
+    /**
+     * Returns the binary string representation of the 4-bit literal group and leading bit (within a
+     * [BitsPacketType.LITERAL] packet) starting at the current bit [offset], and advances [offset]
+     * to the next bit after the current literal group.
+     */
+    private fun readBinaryLiteralGroup(): String {
+        val groupValue = readBits(BIT_COUNT_LITERAL_GROUP)
+        return groupValue.toString(radix = 2).padStart(BIT_COUNT_LITERAL_GROUP, '0')
+    }
 
-                1 -> {
-                    val subPacketsCount = nextBits(11)
-                    repeat(subPacketsCount) {
-                        subPacketValues.add(evaluatePacket())
-                    }
+    /**
+     * Calls the [processSubPacket] function for each sub-packet within the BITS packet starting
+     * at the current bit [offset], which has the given [lengthType], and advances [offset] to the
+     * next bit after the current packet.
+     *
+     * The [processSubPacket] function is called with [offset] set to the first bit of each
+     * sub-packet, and it must advance [offset] to the next bit after the current packet.
+     */
+    private fun readAndProcessSubPackets(lengthType: BitsLengthType, processSubPacket: () -> Unit) {
+        when (lengthType) {
+            BitsLengthType.BITS -> {
+                val subPacketsBitCount = readBits(lengthType.bitCount)
+                val endOffset = offset + subPacketsBitCount
+                while (offset < endOffset) {
+                    processSubPacket()
                 }
-
-                else -> throw IllegalStateException("Unrecognized length type ID: $lengthType")
             }
-            val operator = packetType.toOperator()
-            operator(subPacketValues)
+
+            BitsLengthType.SUB_PACKETS -> {
+                val subPacketCount = readBits(lengthType.bitCount)
+                repeat(subPacketCount) {
+                    processSubPacket()
+                }
+            }
         }
     }
 
     companion object {
-        private val SUM: (List<Long>) -> Long = { it.sum() }
-        private val PRODUCT: (List<Long>) -> Long = { it.product() }
-        private val MINIMUM: (List<Long>) -> Long = { it.minOrNull() ?: 0L }
-        private val MAXIMUM: (List<Long>) -> Long = { it.maxOrNull() ?: 0L }
-        private val GREATER_THAN: (List<Long>) -> Long = { arguments ->
-            val (valueA, valueB) = arguments
-            if (valueA > valueB) 1L else 0L
-        }
-        private val LESS_THAN: (List<Long>) -> Long = { arguments ->
-            val (valueA, valueB) = arguments
-            if (valueA < valueB) 1L else 0L
-        }
-        private val EQUAL_TO: (List<Long>) -> Long = { arguments ->
-            val (valueA, valueB) = arguments
-            if (valueA == valueB) 1L else 0L
-        }
+        /**
+         * The number of bits in the binary representation of a [BitsLengthType] ID.
+         */
+        private const val BIT_COUNT_LENGTH_TYPE = 1
 
-        private fun Int.toOperator(): (arguments: List<Long>) -> Long = when (this) {
-            0 -> SUM
-            1 -> PRODUCT
-            2 -> MINIMUM
-            3 -> MAXIMUM
-            5 -> GREATER_THAN
-            6 -> LESS_THAN
-            7 -> EQUAL_TO
-            else -> throw IllegalArgumentException("No operator for packet type ID: $this")
-        }
+        /**
+         * The number of bits in a single literal value group in a [BitsPacketType.LITERAL] packet.
+         */
+        private const val BIT_COUNT_LITERAL_GROUP = 4
+
+        /**
+         * The number of bits in the binary representation of a [BitsPacketType] ID.
+         */
+        private const val BIT_COUNT_PACKET_TYPE = 3
+
+        /**
+         * The number of bits in the binary representation of a BITS packet version.
+         */
+        private const val BIT_COUNT_VERSION = 3
+
+        /**
+         * The number of bits represented by a single hexadecimal digit.
+         */
+        private const val BITS_PER_HEX_DIGIT = 4
     }
 }
