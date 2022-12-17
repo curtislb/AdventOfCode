@@ -59,12 +59,11 @@ would be 250020.)
 
 package com.curtislb.adventofcode.year2019.day19.part2
 
-import com.curtislb.adventofcode.common.search.bisectIndex
+import com.curtislb.adventofcode.common.search.bisect
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.math.BigInteger
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 19, part 2.
@@ -81,8 +80,8 @@ fun solve(
     // Find the first row that allows the ship to fit in the beam.
     val droneSystem = DroneSystem(inputPath.toFile())
     val shipRowDelta = shipSize - BigInteger.ONE
-    val targetIndex = bisectIndex { index ->
-        val overlap = droneSystem.findBeamOverlap(index.toBigInteger(), shipRowDelta)
+    val targetIndex = bisect { value ->
+        val overlap = droneSystem.findBeamOverlap(value.toBigInteger(), shipRowDelta)
         overlap.size >= shipSize
     }
 

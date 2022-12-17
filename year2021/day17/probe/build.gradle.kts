@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     implementation(project(":common:collection"))
-    implementation(project(":common:grid"))
     implementation(project(":common:io"))
+    implementation(project(":common:math"))
     implementation(project(":common:search"))
 }

@@ -3,6 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:io"))
-    implementation(project(":common:search"))
+    implementation(project(":year2021:day17:probe"))
 }

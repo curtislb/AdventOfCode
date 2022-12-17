@@ -143,8 +143,7 @@ trajectory?
 
 package com.curtislb.adventofcode.year2021.day17.part1
 
-import com.curtislb.adventofcode.common.io.readLongs
-import com.curtislb.adventofcode.common.search.bisectIndex
+import com.curtislb.adventofcode.year2021.day17.probe.ProbeLauncher
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -154,28 +153,8 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
-    val (_, _, targetMinY, targetMaxY) = inputPath.toFile().readLongs()
-
-    val maxYVelocity = bisectIndex(knownFalse = targetMinY) { initialYVelocity ->
-        var yPosition = 0L
-        var yVelocity = initialYVelocity
-        do {
-            yPosition += yVelocity
-            yVelocity--
-        } while (yPosition > targetMaxY)
-        yPosition < targetMinY
-    }!! - 1L
-
-    var yPosition = 0L
-    var maxYPosition = 0L
-    var yVelocity = maxYVelocity
-    do {
-        yPosition += yVelocity
-        maxYPosition = maxOf(maxYPosition, yPosition)
-        yVelocity--
-    } while (yVelocity > 0L)
-
-    return maxYPosition
+    val probeLauncher = ProbeLauncher.fromFile(inputPath.toFile())
+    return probeLauncher.findMaxYPosition()
 }
 
 fun main() {

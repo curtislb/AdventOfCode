@@ -31,8 +31,7 @@ step?
 
 package com.curtislb.adventofcode.year2021.day17.part2
 
-import com.curtislb.adventofcode.common.io.readLongs
-import com.curtislb.adventofcode.common.search.bisectIndex
+import com.curtislb.adventofcode.year2021.day17.probe.ProbeLauncher
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -42,55 +41,8 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val (targetMinX, targetMaxX, targetMinY, targetMaxY) = inputPath.toFile().readLongs()
-    val targetXRange = targetMinX..targetMaxX
-    val targetYRange = targetMinY..targetMaxY
-
-    val maxYVelocity = bisectIndex(knownFalse = targetMinY) { initialYVelocity ->
-        var yPosition = 0L
-        var yVelocity = initialYVelocity
-        do {
-            yPosition += yVelocity
-            yVelocity--
-        } while (yPosition > targetMaxY)
-        yPosition < targetMinY
-    }!! - 1L
-
-    var count = 0
-    for (xVelocity in 0L..targetMaxX) {
-        for (yVelocity in targetMinY..maxYVelocity) {
-            if (isOnTarget(xVelocity, yVelocity, targetXRange, targetYRange)) {
-                count++
-            }
-        }
-    }
-
-    return count
-}
-
-fun isOnTarget(
-    initialXVelocity: Long,
-    initialYVelocity: Long,
-    targetXRange: LongRange,
-    targetYRange: LongRange
-): Boolean {
-    var xPosition = 0L
-    var yPosition = 0L
-    var xVelocity = initialXVelocity
-    var yVelocity = initialYVelocity
-    do {
-        xPosition += xVelocity
-        yPosition += yVelocity
-
-        if (xPosition in targetXRange && yPosition in targetYRange) {
-            return true
-        }
-
-        xVelocity = if (xVelocity > 0) xVelocity - 1 else xVelocity
-        yVelocity--
-    } while (xPosition < targetXRange.last && yPosition > targetYRange.first)
-
-    return false
+    val probeLauncher = ProbeLauncher.fromFile(inputPath.toFile())
+    return probeLauncher.countOnTargetVelocities()
 }
 
 fun main() {

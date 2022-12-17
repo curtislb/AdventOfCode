@@ -34,7 +34,7 @@ package com.curtislb.adventofcode.year2021.day07.part2
 import com.curtislb.adventofcode.common.collection.MinMax
 import com.curtislb.adventofcode.common.collection.minAndMaxOrNull
 import com.curtislb.adventofcode.common.io.readInts
-import com.curtislb.adventofcode.common.math.triangularNumber
+import com.curtislb.adventofcode.common.math.triangleNumber
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.abs
@@ -52,7 +52,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
 
     // Fuel usage over a distance of n units is the nth triangular number
     return (minMaxPositions.min..minMaxPositions.max).minOfOrNull { position ->
-        positions.sumOf { triangularNumber(abs(it - position)) }
+        positions.sumOf { triangleNumber(abs(it - position)) }
     }
 }
 

@@ -15,12 +15,11 @@ Given 1 trillion ORE, what is the maximum amount of FUEL you can produce?
 
 package com.curtislb.adventofcode.year2019.day14.part2
 
-import com.curtislb.adventofcode.common.search.bisectIndex
+import com.curtislb.adventofcode.common.search.bisect
 import com.curtislb.adventofcode.year2019.day14.chemistry.MaterialAmount
 import com.curtislb.adventofcode.year2019.day14.chemistry.Nanofactory
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 14, part 2.
@@ -40,7 +39,7 @@ fun solve(
 
     // Binary search for the first product amount requiring more raw material than available.
     val rawMaterials = setOf(rawMaterial)
-    val productAmountLimit = bisectIndex { amount ->
+    val productAmountLimit = bisect { amount ->
         val products = listOf(MaterialAmount(desiredMaterial, amount))
         val requiredMaterials = factory.findRequiredMaterials(rawMaterials, products)
         val rawMaterialNeeded =
