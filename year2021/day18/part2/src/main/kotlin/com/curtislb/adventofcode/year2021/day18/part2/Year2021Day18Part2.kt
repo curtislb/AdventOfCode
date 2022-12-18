@@ -38,7 +38,6 @@ import com.curtislb.adventofcode.common.collection.uniquePairs
 import com.curtislb.adventofcode.year2021.day18.snailfish.SnailfishNumber
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2021, day 18, part 2.
@@ -49,9 +48,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     var maxMagnitude = 0
     val numbers = inputPath.toFile().readLines().map { SnailfishNumber.fromString(it) }
     for ((numberA, numberB) in numbers.uniquePairs()) {
-        val abMagnitude = (numberA + numberB).magnitude()
-        val baMagnitude = (numberB + numberA).magnitude()
-        maxMagnitude = maxOf(maxMagnitude, abMagnitude, baMagnitude)
+        val magnitudeAB = (numberA + numberB).magnitude()
+        val magnitudeBA = (numberB + numberA).magnitude()
+        maxMagnitude = maxOf(maxMagnitude, magnitudeAB, magnitudeBA)
     }
     return maxMagnitude
 }

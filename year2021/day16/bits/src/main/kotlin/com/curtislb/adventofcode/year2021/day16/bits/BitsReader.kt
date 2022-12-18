@@ -42,6 +42,7 @@ class BitsReader(private val packetString: String) {
      * advances [offset] to the next bit after the current packet.
      *
      * The evaluation rules for a BITS packet are as follows:
+     *
      * - A [BitsPacketType.LITERAL] packet evaluates to the literal value it represents.
      * - Any other [BitsPacketType] packet evaluates to the result of applying its corresponding
      *   operation (via [BitsPacketType.applyOperation]) to the result(s) of recursively evaluating
