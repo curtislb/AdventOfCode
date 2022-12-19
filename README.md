@@ -20,7 +20,7 @@ includes:
 ### Dependencies
 
 * [Java 17][java-link]
-* [Kotlin 1.7 10][kotlin-link]
+* [Kotlin 1.7.10][kotlin-link]
 * [Gradle 7.6][gradle-link]
 
 ### Installation
@@ -63,7 +63,7 @@ Alternatively, the following commands can be run from the project root directory
 [aoc-2020-link]: https://adventofcode.com/2020
 [aoc-2021-link]: https://adventofcode.com/2021
 [aoc-link]: https://adventofcode.com/
-[build-badge]: https://img.shields.io/github/workflow/status/curtislb/AdventOfCode/build?logo=Gradle
+[build-badge]: https://img.shields.io/github/actions/workflow/status/curtislb/AdventOfCode/build.yml?branch=main&logo=Gradle
 [build-link]: https://github.com/curtislb/AdventOfCode/actions/workflows/build.yml
 [coverage-badge]: https://img.shields.io/codecov/c/gh/curtislb/AdventOfCode?logo=codecov&logoColor=white&token=6UEPEBOEO6
 [coverage-link]: https://codecov.io/gh/curtislb/AdventOfCode
