@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
 import java.util.Objects
-import lombok.Generated
 
 /**
  * A mutable rectangular grid of values, implemented as an [ArrayList] of [ArrayList] rows.
@@ -105,7 +104,6 @@ class RowArrayGrid<E>(private val rowList: ArrayList<ArrayList<E>> = ArrayList()
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-@Generated
 @Suppress("FunctionName")
 inline fun <T> RowArrayGrid(
     height: Int,

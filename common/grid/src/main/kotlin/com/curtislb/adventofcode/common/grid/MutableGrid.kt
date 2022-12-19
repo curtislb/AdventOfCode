@@ -1,7 +1,5 @@
 package com.curtislb.adventofcode.common.grid
 
-import lombok.Generated
-
 /**
  * A mutable rectangular grid of values.
  */
@@ -86,7 +84,6 @@ interface MutableGrid<E> : Grid<E> {
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-@Generated
 @Suppress("FunctionName")
 inline fun <E> MutableGrid(
     height: Int,

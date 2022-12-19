@@ -3,7 +3,7 @@ plugins {
 }
 
 val javaVersion = "17"
-val kotlinVersion = "1.6.21"
+val kotlinVersion = "1.7.10"
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")

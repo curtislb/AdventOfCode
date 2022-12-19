@@ -1,8 +1,7 @@
 plugins {
     id("com.curtislb.adventofcode.kotlin-library")
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
 }
-
-val lombokVersion: String by project
 
 dependencies {
     implementation(project(":common:collection"))
@@ -10,7 +9,4 @@ dependencies {
     implementation(project(":common:range"))
 
     testImplementation(project(":common:testing"))
-
-    compileOnly("org.projectlombok:lombok:$lombokVersion")
-    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
