@@ -84,7 +84,6 @@ interface MutableGrid<E> : Grid<E> {
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-@Suppress("FunctionName")
 inline fun <E> MutableGrid(
     height: Int,
     width: Int,

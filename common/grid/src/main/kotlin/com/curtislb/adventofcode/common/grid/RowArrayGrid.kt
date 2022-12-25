@@ -104,7 +104,6 @@ class RowArrayGrid<E>(private val rowList: ArrayList<ArrayList<E>> = ArrayList()
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-@Suppress("FunctionName")
 inline fun <T> RowArrayGrid(
     height: Int,
     width: Int,
@@ -132,7 +131,6 @@ inline fun <T> RowArrayGrid(
 /**
  * Returns a new [RowArrayGrid], constructed from the given [grid].
  */
-@Suppress("FunctionName")
 fun <T> RowArrayGrid(grid: Grid<T>): RowArrayGrid<T> =
     RowArrayGrid(grid.height, grid.width) { rowIndex, colIndex -> grid[rowIndex, colIndex] }
 
@@ -142,7 +140,6 @@ fun <T> RowArrayGrid(grid: Grid<T>): RowArrayGrid<T> =
  * @throws IllegalArgumentException If any row in [rows] is empty, or if not all rows have the same
  *  size.
  */
-@Suppress("FunctionName")
 fun <T> RowArrayGrid(rows: List<List<T>>): RowArrayGrid<T> {
     require(rows.none { it.isEmpty() }) { "Can't initialize grid with empty rows." }
     require(rows.all { it.size == rows.first().size }) { "All rows must have the same size." }
@@ -157,7 +154,6 @@ fun <T> RowArrayGrid(rows: List<List<T>>): RowArrayGrid<T> {
  * @throws IllegalArgumentException If any row in [rows] is empty, or if not all rows have the same
  *  size.
  */
-@Suppress("FunctionName")
 fun <T> RowArrayGrid(vararg rows: List<T>): RowArrayGrid<T> {
     require(rows.none { it.isEmpty() }) { "Can't initialize grid with empty rows." }
     require(rows.all { it.size == rows.first().size }) { "All rows must have the same size." }

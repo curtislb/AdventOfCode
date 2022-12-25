@@ -302,7 +302,6 @@ interface Grid<out E> {
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-@Suppress("FunctionName")
 inline fun <E> Grid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> E): Grid<E> =
     if (height == 0 && width == 0) emptyGrid() else RowArrayGrid(height, width, init)
 
