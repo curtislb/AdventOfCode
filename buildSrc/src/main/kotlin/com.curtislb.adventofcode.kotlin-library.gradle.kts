@@ -2,9 +2,9 @@ plugins {
     kotlin("jvm")
 }
 
-val kotlinVersion: String by project
 val javaVersion: String by project
 val junitVersion: String by project
+val kotlinVersion: String by project
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
