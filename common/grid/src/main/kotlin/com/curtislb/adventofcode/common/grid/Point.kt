@@ -101,7 +101,7 @@ data class Point(val x: Int, val y: Int) {
      * The Manhattan distance is the length (in grid units) of the shortest possible path between
      * this point and [other], while moving only up, down, left, or right.
      */
-    fun manhattanDistance(other: Point) = abs(x - other.x) + abs(y - other.y)
+    fun manhattanDistance(other: Point): Int = abs(x - other.x) + abs(y - other.y)
 
     /**
      * Returns the squared distance between this point and [other].
@@ -134,9 +134,9 @@ data class Point(val x: Int, val y: Int) {
         val ORIGIN = Point(0, 0)
 
         /**
-         * TODO
+         * A regex used to match a 2D point string.
          */
-        private val POINT_REGEX = Regex("""\s*\(?\s*(\d+)\s*,\s*(\d+)\s*\)?\s*""")
+        private val POINT_REGEX = Regex("""\s*\(?\s*(-?\d+)\s*,\s*(-?\d+)\s*\)?\s*""")
 
         /**
          * Returns the [Point] corresponding to the given ([rowIndex], [colIndex]) matrix

@@ -2,9 +2,9 @@ package com.curtislb.adventofcode.common.collection
 
 /**
  * Returns a map from the pairs given by applying the [transform] function to each element in the
- * original collection.
+ * original iterable.
  */
-inline fun <E, K, V> Collection<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> =
+inline fun <E, K, V> Iterable<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> =
     mutableMapOf<K, V>().apply {
         for (item in this@mapToMap) {
             this += transform(item)
