@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":year2021:day20:enhance"))
+    api(project(":common:grid"))
+    implementation(project(":common:io"))
+    implementation(project(":common:math"))
 }

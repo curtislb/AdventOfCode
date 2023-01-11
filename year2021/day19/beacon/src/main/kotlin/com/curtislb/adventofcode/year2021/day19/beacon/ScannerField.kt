@@ -95,8 +95,8 @@ class ScannerField(private val scanners: List<Scanner>) {
         /**
          * Returns a [ScannerField], with each scanner's beacon readings read from the given [file].
          *
-         * The given [file] must have the following format, where `$x01` represents the x-coordinate
-         * of the beacon at index 1 for the scanner at index 0, and so on:
+         * The [file] must have the following format, where `$x01` represents the x-coordinate of
+         * the beacon at index 1 for the scanner at index 0, and so on:
          *
          * ```
          * --- scanner 0 ---
