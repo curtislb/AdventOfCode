@@ -23,8 +23,9 @@ more universes; in how many universes does that player win?
 
 package com.curtislb.adventofcode.year2021.day21.part2
 
-import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.collection.argmaxByOrNull
+import com.curtislb.adventofcode.year2021.day21.dice.DiceGameState
+import com.curtislb.adventofcode.year2021.day21.dice.dirac.DiracDice
+import com.curtislb.adventofcode.year2021.day21.dice.dirac.DiracDiceGame
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -32,75 +33,30 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 21, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param diceCount The number of [DiracDice] a player must roll on their turn.
+ * @param dieSidesCount The number of sides on each of the [DiracDice].
+ * @param winningScore The minimum score a player needs to win the game.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
-    val players = mutableListOf<Player>()
-    inputPath.toFile().forEachLine { line ->
-        val space = line.substringAfter(':').trim().toInt() - 1
-        players.add(Player(space))
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    diceCount: Int = 3,
+    dieSidesCount: Int = 3,
+    winningScore: Int = 21
+): Long {
+    // Count all possible winning states of the game
+    val initialState = DiceGameState.fromFile(inputPath.toFile())
+    val dice = DiracDice(diceCount, dieSidesCount)
+    val game = DiracDiceGame(initialState, dice)
+    val stateCounts = game.countPossibleEndStates(winningScore)
+
+    // Count the universes in which each player wins
+    val playerWinCounts = LongArray(initialState.players.size)
+    for ((state, count) in stateCounts.entriesWithNonzeroCount) {
+        playerWinCounts[state.getWinner(winningScore)] += count
     }
 
-    val rollFrequencies = mapOf(
-        3 to 1L,
-        4 to 3L,
-        5 to 6L,
-        6 to 7L,
-        7 to 6L,
-        8 to 3L,
-        9 to 1L
-    )
-
-    val stateCounts = Counter(mapOf(GameState(players) to 1L))
-    var ongoingEntries = stateCounts.findOngoing()
-    while (ongoingEntries.isNotEmpty()) {
-        for ((state, count) in ongoingEntries) {
-            stateCounts[state] -= count
-            for ((roll, frequency) in rollFrequencies) {
-                val updatedState = state.update(roll)
-                stateCounts[updatedState] += count * frequency
-            }
-        }
-        ongoingEntries = stateCounts.findOngoing()
-    }
-
-    val winCounts = LongArray(players.size)
-    for ((state, count) in stateCounts.entriesWithPositiveCount) {
-        winCounts[state.winningPlayer()] += count
-    }
-
-    return winCounts.maxOrNull() ?: 0
+    return playerWinCounts.max()
 }
-
-data class GameState(val players: List<Player>, val nextPlayer: Int = 0) {
-    fun isFinished() = players.any { it.score >= WINNING_SCORE }
-
-    fun winningPlayer(): Int =
-        players.argmaxByOrNull { it.score } ?: throw IllegalStateException("Game has no players")
-
-    fun update(roll: Int): GameState {
-        val newPlayers = players.toMutableList().apply {
-            this[nextPlayer] = this[nextPlayer].move(roll)
-        }
-        val newNextPlayer = (nextPlayer + 1) % players.size
-        return GameState(newPlayers, newNextPlayer)
-    }
-
-    companion object {
-        private const val SPACE_COUNT = 10
-        private const val WINNING_SCORE = 21
-
-        private fun Player.move(distance: Int): Player {
-            val newSpace = (space + distance) % SPACE_COUNT
-            val newScore = score + newSpace + 1
-            return Player(newSpace, newScore)
-        }
-    }
-}
-
-data class Player(val space: Int, val score: Int = 0)
-
-fun Counter<GameState>.findOngoing(): List<Map.Entry<GameState, Long>> =
-    entriesWithPositiveCount.filter { (state, _) -> !state.isFinished() }
 
 fun main() {
     println(solve())

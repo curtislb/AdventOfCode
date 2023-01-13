@@ -58,7 +58,9 @@ during the game?
 
 package com.curtislb.adventofcode.year2021.day21.part1
 
-import com.curtislb.adventofcode.common.io.forEachLineIndexed
+import com.curtislb.adventofcode.year2021.day21.dice.DiceGameState
+import com.curtislb.adventofcode.year2021.day21.dice.deterministic.DeterministicDiceGame
+import com.curtislb.adventofcode.year2021.day21.dice.deterministic.DeterministicDie
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -66,35 +68,23 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2021, day 21, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param dieSidesCount The number of sides on the [DeterministicDie].
+ * @param rollsPerTurn The number of times a player must roll the die on their turn.
+ * @param winningScore The minimum score a player needs to win the game.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
-    val spaces = IntArray(2)
-    inputPath.toFile().forEachLineIndexed { index, line ->
-        spaces[index] = line.substringAfter(':').trim().toInt() - 1
-    }
-
-    val scores = IntArray(2)
-    var rollCount = 0
-    var player = 0
-    while (scores.all { it < 1000 }) {
-        val moveDistance = roll(rollCount + 1) + roll(rollCount + 2) + roll(rollCount + 3)
-
-        spaces[player] = (spaces[player] + moveDistance) % 10
-        scores[player] += spaces[player] + 1
-
-        rollCount += 3
-        player = (player + 1) % 2
-    }
-
-    return scores.minOrNull()?.let { it * rollCount }
+fun solve(
+    inputPath: Path = Paths.get("..", "input", "input.txt"),
+    dieSidesCount: Int = 100,
+    rollsPerTurn: Int = 3,
+    winningScore: Int = 1000
+): Int {
+    val initialState = DiceGameState.fromFile(inputPath.toFile())
+    val die = DeterministicDie(dieSidesCount)
+    val game = DeterministicDiceGame(initialState, die, rollsPerTurn)
+    val result = game.playToEnd(winningScore)
+    return result.gameState.players.minOf { it.score } * result.totalDieRolls
 }
 
-fun roll(rollCount: Int) = when (val modRoll = rollCount % 100) {
-    0 -> 100
-    else -> modRoll
-}
-
-fun main() = when (val solution = solve()) {
-    null -> println("No solution found")
-    else -> println(solution)
+fun main() {
+    println(solve())
 }

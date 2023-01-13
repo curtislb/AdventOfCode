@@ -4,5 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":year2021:day21:dice"))
+    api(project(":common:collection"))
+
+    implementation(project(":common:io"))
+    implementation(project(":common:math"))
 }
