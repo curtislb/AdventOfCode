@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
+import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -13,10 +14,10 @@ class CounterTest {
     fun testWhenEmpty() {
         val counter = Counter<String>()
         assertEquals(emptyMap(), counter.toMap())
-        assertEquals(emptySet(), counter.entriesWithNonzeroCount)
-        assertEquals(emptySet(), counter.entriesWithPositiveCount)
-        assertEquals(emptySet(), counter.keysWithNonzeroCount)
-        assertEquals(emptySet(), counter.keysWithPositiveCount)
+        assertEquals(emptySet(), counter.entries)
+        assertEquals(emptySet(), counter.keys)
+        assertEquals(emptyList(), counter.getPositiveCountEntries())
+        assertEquals(emptyList(), counter.getPositiveCountKeys())
         assertFalse("foo" in counter)
         assertFalse("bar" in counter)
         assertEquals(0L, counter["bar"])
@@ -31,14 +32,14 @@ class CounterTest {
         assertEquals(mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L), counter.toMap())
         assertEquals(
             mapOf("lorem" to 2L, "dolor" to -3L, "sit" to 2147483648L).entries,
-            counter.entriesWithNonzeroCount
+            counter.entries
         )
-        assertEquals(
+        assertContainsExactly(
             mapOf("lorem" to 2L, "sit" to 2147483648L).entries,
-            counter.entriesWithPositiveCount
+            counter.getPositiveCountEntries()
         )
-        assertEquals(setOf("lorem", "dolor", "sit"), counter.keysWithNonzeroCount)
-        assertEquals(setOf("lorem", "sit"), counter.keysWithPositiveCount)
+        assertEquals(setOf("lorem", "dolor", "sit"), counter.keys)
+        assertEquals(listOf("lorem", "sit"), counter.getPositiveCountKeys())
         assertTrue("lorem" in counter)
         assertFalse("ipsum" in counter)
         assertTrue("dolor" in counter)
@@ -58,13 +59,10 @@ class CounterTest {
         counter["badger"] += 12L
         counter["mushroom"] += 2L
         assertEquals(mapOf("badger" to 12L, "mushroom" to 2L), counter.toMap())
-        assertEquals(
+        assertEquals(mapOf("badger" to 12L, "mushroom" to 2L).entries, counter.entries)
+        assertContainsExactly(
             mapOf("badger" to 12L, "mushroom" to 2L).entries,
-            counter.entriesWithNonzeroCount
-        )
-        assertEquals(
-            mapOf("badger" to 12L, "mushroom" to 2L).entries,
-            counter.entriesWithPositiveCount
+            counter.getPositiveCountEntries()
         )
         assertTrue("badger" in counter)
         assertTrue("mushroom" in counter)
@@ -79,9 +77,9 @@ class CounterTest {
         assertEquals(mapOf("badger" to 23L, "snake" to -5L), counter.toMap())
         assertEquals(
             mapOf("badger" to 23L, "snake" to -5L).entries,
-            counter.entriesWithNonzeroCount
+            counter.entries
         )
-        assertEquals(mapOf("badger" to 23L).entries, counter.entriesWithPositiveCount)
+        assertContainsExactly(mapOf("badger" to 23L).entries, counter.getPositiveCountEntries())
         assertTrue("badger" in counter)
         assertFalse("mushroom" in counter)
         assertTrue("snake" in counter)
@@ -103,7 +101,7 @@ class CounterTest {
                 "fire" to 1L,
                 "burn" to 1L
             ).entries,
-            counter.entriesWithNonzeroCount
+            counter.entries
         )
     }
 
@@ -188,11 +186,11 @@ class CounterTest {
         )
         assertEquals(
             mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L).entries,
-            counter.entriesWithNonzeroCount
+            counter.entries
         )
-        assertEquals(
+        assertContainsExactly(
             mapOf("alpha" to 560209110L, "delta" to 927075951L, "foxtrot" to 272479767L).entries,
-            counter.entriesWithPositiveCount
+            counter.getPositiveCountEntries()
         )
         assertTrue("alpha" in counter)
         assertFalse("bravo" in counter)

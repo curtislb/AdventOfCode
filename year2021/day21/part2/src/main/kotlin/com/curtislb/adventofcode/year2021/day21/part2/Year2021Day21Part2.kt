@@ -51,7 +51,7 @@ fun solve(
 
     // Count the universes in which each player wins
     val playerWinCounts = LongArray(initialState.players.size)
-    for ((state, count) in stateCounts.entriesWithNonzeroCount) {
+    for ((state, count) in stateCounts.entries) {
         playerWinCounts[state.getWinner(winningScore)] += count
     }
 

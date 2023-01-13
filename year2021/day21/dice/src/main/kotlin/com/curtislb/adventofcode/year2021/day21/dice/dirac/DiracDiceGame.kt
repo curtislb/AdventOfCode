@@ -18,7 +18,7 @@ class DiracDiceGame(private val initialState: DiceGameState, private val dice: D
     fun countPossibleEndStates(winningScore: Int): Counter<DiceGameState> {
         // Populate a counter with possible game states
         val stateCounter = Counter(listOf(initialState))
-        var ongoingGameEntries = stateCounter.entriesWithNonzeroCount.toList()
+        var ongoingGameEntries = stateCounter.entries.toList()
         while (ongoingGameEntries.isNotEmpty()) {
             // Advance all ongoing games by one turn and adjust counts accordingly
             for ((state, stateCount) in ongoingGameEntries) {
@@ -31,7 +31,7 @@ class DiracDiceGame(private val initialState: DiceGameState, private val dice: D
             }
 
             // Remove games where a player has won from the set of ongoing games
-            ongoingGameEntries = stateCounter.entriesWithNonzeroCount.filter { (state, _) ->
+            ongoingGameEntries = stateCounter.entries.filter { (state, _) ->
                 state.getWinner(winningScore) == DiceGameState.NO_WINNER
             }
         }

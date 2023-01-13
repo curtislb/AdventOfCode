@@ -58,7 +58,7 @@ class PolymerizationProcess(val template: String, insertionRuleStrings: Collecti
     fun applyPairInsertions(stepCount: Int = 1) {
         repeat(stepCount) {
             val newPairCounts = Counter<Pair<Char, Char>>()
-            for ((pair, count) in pairCounts.entriesWithNonzeroCount) {
+            for ((pair, count) in pairCounts.entries) {
                 val element = insertionRules[pair]
                 if (element != null) {
                     newPairCounts[Pair(pair.first, element)] += count
@@ -71,7 +71,7 @@ class PolymerizationProcess(val template: String, insertionRuleStrings: Collecti
         }
 
         elementCounts.clearNonzeroCounts()
-        for ((pair, count) in pairCounts.entriesWithNonzeroCount) {
+        for ((pair, count) in pairCounts.entries) {
             elementCounts[pair.first] += count
         }
         elementCounts[template.last()]++
@@ -82,7 +82,7 @@ class PolymerizationProcess(val template: String, insertionRuleStrings: Collecti
      * in the current polymer.
      */
     fun maxElementCountDifference(): Long {
-        val minMaxEntries = elementCounts.entriesWithNonzeroCount.minAndMaxByOrNull { it.value }
+        val minMaxEntries = elementCounts.entries.minAndMaxByOrNull { it.value }
         val maxCount = minMaxEntries?.max?.value ?: 0L
         val minCount = minMaxEntries?.min?.value ?: 0L
         return maxCount - minCount

@@ -25,7 +25,7 @@ fun Iterable<Long>.findTupleSum(count: Int, targetSum: Long): List<Long>? {
         else -> {
             // Count and list all unique values.
             val counter = Counter(this)
-            val uniqueValues = counter.keysWithNonzeroCount.toList()
+            val uniqueValues = counter.keys.toList()
 
             var result: List<Long>? = null
             uniqueValues.forEachNested(count - 1, overlapIndices = false) { indexedValues ->
