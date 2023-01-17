@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.geometry.Point
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import org.junit.jupiter.api.Test

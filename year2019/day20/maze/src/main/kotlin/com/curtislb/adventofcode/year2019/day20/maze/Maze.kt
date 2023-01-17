@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.year2019.day20.maze
 import com.curtislb.adventofcode.common.collection.getOrNull
 import com.curtislb.adventofcode.common.graph.bfsDistance
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.io.mapLines

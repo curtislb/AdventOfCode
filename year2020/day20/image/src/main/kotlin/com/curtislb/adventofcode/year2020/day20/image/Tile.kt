@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2020.day20.image
 
-import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.toGrid
 
 /**

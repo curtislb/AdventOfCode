@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day13.game
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.year2019.day13.game.strategy.Strategy
 import java.io.File

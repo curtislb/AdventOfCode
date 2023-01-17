@@ -27,7 +27,7 @@ their labels together?
 
 package com.curtislb.adventofcode.year2020.day23.part2
 
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 import com.curtislb.adventofcode.year2020.day23.cups.CupCircle
 import java.nio.file.Path
 import java.nio.file.Paths

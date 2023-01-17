@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
+    api(project(":common:geometry"))
     api(project(":common:grid"))
     api(project(":common:intcode"))
-
     testImplementation(project(":common:testing"))
 }

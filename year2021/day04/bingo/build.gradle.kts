@@ -5,5 +5,6 @@ plugins {
 
 dependencies {
     api(project(":common:grid"))
-    api(project(":common:parse"))
+    implementation(project(":common:geometry"))
+    implementation(project(":common:parse"))
 }

@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2019.day15.repair
 
-import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.Orientation
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Direction
+import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
@@ -14,9 +14,9 @@ import java.math.BigInteger
  */
 class Droid(file: File) {
     /**
-     * The current orientation of the repair droid in the grid.
+     * The current spatial info of the repair droid in the grid.
      */
-    var orientation: Orientation = Orientation(Point.ORIGIN, Direction.UP)
+    var spatialInfo: SpatialInfo = SpatialInfo(Point.ORIGIN, Direction.UP)
         private set
 
     /**
@@ -40,7 +40,7 @@ class Droid(file: File) {
      */
     private val intcode: Intcode = Intcode(file) { output ->
         lastSpace = Space.from(output)
-        knownSpaces[orientation.move().position] = lastSpace
+        knownSpaces[spatialInfo.move().position] = lastSpace
     }
 
     /**
@@ -52,7 +52,7 @@ class Droid(file: File) {
     /**
      * Returns all identified spaces adjacent to [position] that the repair droid can occupy.
      */
-    fun adjacentOccupiableSpaces(position: Point = orientation.position): List<Point> {
+    fun adjacentOccupiableSpaces(position: Point = spatialInfo.position): List<Point> {
         return position.cardinalNeighbors()
             .filter { neighbor -> spaceAt(neighbor).isOccupiable == true }
     }
@@ -64,9 +64,9 @@ class Droid(file: File) {
      * forward from its current position. If that space is one that the droid can occupy, it then
      * moves forward into that position.
      */
-    fun move(direction: Direction = orientation.direction) {
+    fun move(direction: Direction = spatialInfo.direction) {
         // Update the direction the droid is facing.
-        orientation = orientation.turnToward(direction)
+        spatialInfo = spatialInfo.turnToward(direction)
 
         // Send move instruction as input to the program.
         val input = when (direction) {
@@ -81,11 +81,11 @@ class Droid(file: File) {
 
         if (lastSpace.isOccupiable == true) {
             // Update the droid's position to the new space.
-            orientation = orientation.move()
+            spatialInfo = spatialInfo.move()
 
             // Check if we've found the location of the oxygen system.
             if (lastSpace == Space.OXYGEN) {
-                goalPosition = orientation.position
+                goalPosition = spatialInfo.position
             }
         }
     }
@@ -99,12 +99,12 @@ class Droid(file: File) {
      * Recursive helper function for [explore].
      */
     private fun exploreInternal(visited: MutableSet<Point>) {
-        visited.add(orientation.position)
+        visited.add(spatialInfo.position)
         for (direction in Direction.cardinalValues()) {
-            val newPosition = orientation.position.move(direction)
+            val newPosition = spatialInfo.position.move(direction)
             if (newPosition !in visited && spaceAt(newPosition).isOccupiable != false) {
                 move(direction)
-                if (orientation.position == newPosition) {
+                if (spatialInfo.position == newPosition) {
                     exploreInternal(visited)
                     move(direction.reverse())
                 }

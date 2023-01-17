@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day13.game
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test

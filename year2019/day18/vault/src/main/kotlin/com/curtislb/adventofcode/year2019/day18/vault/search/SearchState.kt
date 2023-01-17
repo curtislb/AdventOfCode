@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day18.vault.search
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 
 /**
  * An intermediate state that may be reached while collecting keys from the vault.

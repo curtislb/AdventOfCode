@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:math"))
+    implementation(project(":common:number"))
 }

@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2019.day03.wire
 
-import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.Segment
+import com.curtislb.adventofcode.common.geometry.Direction
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.geometry.Segment
 
 /**
  * A wire consisting of a series of segments laid out in a 2D grid.

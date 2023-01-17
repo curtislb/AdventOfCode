@@ -51,7 +51,7 @@ much fuel must they spend to align to that position?
 package com.curtislb.adventofcode.year2021.day07.part1
 
 import com.curtislb.adventofcode.common.io.readInts
-import com.curtislb.adventofcode.common.math.medianOrNull
+import com.curtislb.adventofcode.common.number.medianOrNull
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.abs

@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.collection.getCyclic
 import com.curtislb.adventofcode.common.graph.DirectedEdge
 import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.toGrid
 import java.io.File
 

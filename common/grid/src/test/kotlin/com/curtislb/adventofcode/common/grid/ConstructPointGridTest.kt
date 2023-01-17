@@ -1,12 +1,13 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.geometry.Point
 import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
 class ConstructPointGridTest {
     @Test
     fun testWithNoPoints() {
-        assertEquals(emptyGrid(), constructPointGrid(emptyList()) { it })
+        assertEquals(emptyGrid(), createPointGrid(emptyList()) { it })
     }
 
     @Test
@@ -15,7 +16,7 @@ class ConstructPointGridTest {
             for (y in -2..2) {
                 val point = Point(x, y)
                 val expected: Grid<String> = gridOf(listOf(point.toString()))
-                assertEquals(expected, constructPointGrid(listOf(point)) { it.toString() })
+                assertEquals(expected, createPointGrid(listOf(point)) { it.toString() })
             }
         }
     }
@@ -39,6 +40,6 @@ class ConstructPointGridTest {
             listOf(0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
             listOf(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         )
-        assertEquals(expected, constructPointGrid(points) { if (it in points) 1 else 0 })
+        assertEquals(expected, createPointGrid(points) { if (it in points) 1 else 0 })
     }
 }

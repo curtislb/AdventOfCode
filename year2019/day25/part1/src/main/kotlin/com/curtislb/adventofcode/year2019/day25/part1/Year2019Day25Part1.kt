@@ -39,7 +39,7 @@ Look around the ship and see if you can find the password for the main airlock.
 
 package com.curtislb.adventofcode.year2019.day25.part1
 
-import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.year2019.day25.rescue.Droid
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Move
 import com.curtislb.adventofcode.year2019.day25.rescue.command.Take

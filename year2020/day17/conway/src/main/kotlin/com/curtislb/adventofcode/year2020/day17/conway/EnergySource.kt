@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day17.conway
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.io.forEachLineIndexed
 import com.curtislb.adventofcode.common.simulation.GameOfLife
 import java.io.File

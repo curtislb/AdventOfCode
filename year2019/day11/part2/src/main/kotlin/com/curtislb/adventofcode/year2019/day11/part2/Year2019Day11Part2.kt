@@ -33,7 +33,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     robot.executeProgram(Intcode(inputPath.toFile()))
 
     // Convert the painted portion of the grid to a string.
-    return robot.constructPaintedGrid().joinRowsToString(separator = "\n") { row ->
+    return robot.getPaintedGrid().joinRowsToString(separator = "\n") { row ->
         row.joinToString(separator = "") { color -> color.symbol.toString() }
     }
 }

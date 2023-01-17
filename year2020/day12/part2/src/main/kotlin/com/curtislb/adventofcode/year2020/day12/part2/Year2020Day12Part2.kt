@@ -42,7 +42,7 @@ that location and the ship's starting position?
 
 package com.curtislb.adventofcode.year2020.day12.part2
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2020.day12.navigation.WaypointNavigationShip
 import java.nio.file.Path
 import java.nio.file.Paths

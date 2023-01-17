@@ -1,5 +1,6 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.testing.assertContainsExactly
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

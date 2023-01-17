@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day16.bits
 
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 
 /**
  * A type of packet included as part of a BITS transmission.

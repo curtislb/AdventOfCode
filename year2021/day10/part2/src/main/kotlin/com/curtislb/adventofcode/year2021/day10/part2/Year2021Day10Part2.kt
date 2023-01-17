@@ -63,7 +63,7 @@ scores. What is the middle score?
 
 package com.curtislb.adventofcode.year2021.day10.part2
 
-import com.curtislb.adventofcode.common.math.medianOrNull
+import com.curtislb.adventofcode.common.number.medianOrNull
 import com.curtislb.adventofcode.year2021.day10.syntax.SyntaxScorer
 import java.nio.file.Path
 import java.nio.file.Paths

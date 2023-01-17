@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day08.display
 
-import com.curtislb.adventofcode.common.math.testBit
+import com.curtislb.adventofcode.common.number.testBit
 
 /**
  * A pattern corresponding to signal wires on a seven-segment display.

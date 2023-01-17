@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2021.day17.probe
 
 import com.curtislb.adventofcode.common.collection.addVector
 import com.curtislb.adventofcode.common.io.readLongs
-import com.curtislb.adventofcode.common.math.triangleNumber
+import com.curtislb.adventofcode.common.number.triangleNumber
 import com.curtislb.adventofcode.common.search.bisect
 import java.io.File
 

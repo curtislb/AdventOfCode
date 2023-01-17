@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2021.day11.octopus
 
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.MutableGrid
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.addRowWith
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf

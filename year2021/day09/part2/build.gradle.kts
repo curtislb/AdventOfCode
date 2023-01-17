@@ -5,6 +5,6 @@ plugins {
 
 dependencies {
     implementation(project(":common:collection"))
-    implementation(project(":common:math"))
+    implementation(project(":common:number"))
     implementation(project(":year2021:day09:basin"))
 }

@@ -184,7 +184,7 @@ corner tiles?
 
 package com.curtislb.adventofcode.year2020.day20.part1
 
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
 import java.nio.file.Paths

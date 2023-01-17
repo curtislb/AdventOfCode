@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day10.asteroid
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.testing.createTempFile
 import java.nio.file.Path
 import kotlin.test.assertEquals

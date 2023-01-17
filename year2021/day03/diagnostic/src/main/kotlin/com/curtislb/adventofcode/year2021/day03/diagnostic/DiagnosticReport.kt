@@ -5,7 +5,7 @@ import com.curtislb.adventofcode.common.grid.addRowWith
 import com.curtislb.adventofcode.common.grid.forEachIndexed
 import com.curtislb.adventofcode.common.grid.mapRow
 import com.curtislb.adventofcode.common.grid.mutableGridOf
-import com.curtislb.adventofcode.common.math.digitsToInt
+import com.curtislb.adventofcode.common.number.digitsToInt
 
 /**
  * A submarine diagnostic report, consisting of a series of equal-length binary values.

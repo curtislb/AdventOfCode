@@ -13,7 +13,7 @@ In your expense report, what is the product of the three entries that sum to 202
 
 package com.curtislb.adventofcode.year2020.day01.part2
 
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 import com.curtislb.adventofcode.common.search.findTupleSum
 import java.nio.file.Path
 import java.nio.file.Paths

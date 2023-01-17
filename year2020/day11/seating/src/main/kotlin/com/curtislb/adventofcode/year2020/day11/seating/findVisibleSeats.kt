@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2020.day11.seating
 
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.Ray
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.geometry.Ray
 
 /**
  * Returns the positions of all seats that are visible from a given [position] in a [grid] of

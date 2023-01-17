@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.geometry.Point
+
 /**
  * Adds a new row to this grid, constructed by applying the [initRow] function to an empty list.
  *

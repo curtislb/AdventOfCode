@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day05.boarding
 
-import com.curtislb.adventofcode.common.math.pow
+import com.curtislb.adventofcode.common.number.pow
 
 /**
  * An airplane seat with an associated ID and position in the plane.

@@ -9,7 +9,7 @@ What code do you use to activate the infrared thermal imaging camera system?
 
 package com.curtislb.adventofcode.year2021.day13.part2
 
-import com.curtislb.adventofcode.common.grid.constructPointGrid
+import com.curtislb.adventofcode.common.grid.createPointGrid
 import com.curtislb.adventofcode.common.io.readSections
 import com.curtislb.adventofcode.year2021.day13.origami.OrigamiSheet
 import java.nio.file.Path
@@ -23,7 +23,7 @@ import java.nio.file.Paths
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): String {
     val (pointStrings, instructionStrings) = inputPath.toFile().readSections()
     val sheet = OrigamiSheet(pointStrings, instructionStrings).apply { fold() }
-    val pointGrid = constructPointGrid(sheet.points) { if (it in sheet.points) '#' else ' ' }
+    val pointGrid = createPointGrid(sheet.points) { if (it in sheet.points) '#' else ' ' }
     return pointGrid.joinRowsToString(separator = "\n") { it.joinToString(separator = "") }
 }
 

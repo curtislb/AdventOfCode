@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day10.asteroid
 
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.Ray
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.geometry.Ray
 import com.curtislb.adventofcode.common.io.forEachLineIndexed
 import java.io.File
 
@@ -126,11 +126,11 @@ class AsteroidField(file: File) {
      * considered visible.
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
-        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Int>>().apply {
+        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Long>>().apply {
             for (asteroid in asteroids) {
                 if (asteroid != source) {
                     val ray = Ray(source, asteroid)
-                    val oldSquaredDistance = this[ray]?.second ?: Int.MAX_VALUE
+                    val oldSquaredDistance = this[ray]?.second ?: Long.MAX_VALUE
                     val newSquaredDistance = source.squaredDistance(asteroid)
                     if (newSquaredDistance < oldSquaredDistance) {
                         this[ray] = Pair(asteroid, newSquaredDistance)

@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day20.enhance
 
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.math.digitsToInt
+import com.curtislb.adventofcode.common.number.digitsToInt
 
 /**
  * An algorithm, consisting of a list of [Boolean] pixel values, that represents how the pixel

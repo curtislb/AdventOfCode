@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day18.expression
 
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 
 /**
  * TODO

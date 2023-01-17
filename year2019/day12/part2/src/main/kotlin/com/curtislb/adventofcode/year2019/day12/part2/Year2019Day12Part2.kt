@@ -50,7 +50,7 @@ How many steps does it take to reach the first state that exactly matches a prev
 
 package com.curtislb.adventofcode.year2019.day12.part2
 
-import com.curtislb.adventofcode.common.math.leastCommonMultiple
+import com.curtislb.adventofcode.common.number.leastCommonMultiple
 import com.curtislb.adventofcode.year2019.day12.body.NBodySystem
 import java.nio.file.Path
 import java.nio.file.Paths

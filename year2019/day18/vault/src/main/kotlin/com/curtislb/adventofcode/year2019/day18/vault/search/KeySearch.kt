@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.collection.mapToMap
 import com.curtislb.adventofcode.common.graph.DirectedEdge
 import com.curtislb.adventofcode.common.graph.dfsPaths
 import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2019.day18.vault.Vault
 import com.curtislb.adventofcode.year2019.day18.vault.space.EntranceSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace

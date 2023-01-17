@@ -12,12 +12,14 @@ class Counter<E>() {
     /**
      * All `(key, count)` entries in this counter for which `count != 0`.
      */
-    val entries: Set<Map.Entry<E, Long>> get() = counts.entries
+    val entries: Set<Map.Entry<E, Long>>
+        get() = counts.entries
 
     /**
      * All keys stored in this counter with a nonzero count.
      */
-    val keys: Set<E> get() = counts.keys
+    val keys: Set<E>
+        get() = counts.keys
 
     /**
      * A map-like object that tracks the counts (both positive and negative) of various items.
@@ -69,6 +71,24 @@ class Counter<E>() {
             counts.remove(key)
         } else {
             counts[key] = count
+        }
+    }
+
+    /**
+     * Adds each of the counts in [other] to this counter.
+     */
+    operator fun plusAssign(other: Counter<E>) {
+        for ((key, count) in other.entries) {
+            this[key] += count
+        }
+    }
+
+    /**
+     * Subtracts each of the counts in [other] from this counter.
+     */
+    operator fun minusAssign(other: Counter<E>) {
+        for ((key, count) in other.entries) {
+            this[key] -= count
         }
     }
 

@@ -98,7 +98,7 @@ position to the location of the oxygen system?
 package com.curtislb.adventofcode.year2019.day15.part1
 
 import com.curtislb.adventofcode.common.graph.bfsDistance
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
 import com.curtislb.adventofcode.year2019.day15.repair.Space
 import java.nio.file.Path

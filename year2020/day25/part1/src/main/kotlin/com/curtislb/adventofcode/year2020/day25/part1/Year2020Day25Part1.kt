@@ -73,7 +73,7 @@ What encryption key is the handshake trying to establish?
 
 package com.curtislb.adventofcode.year2020.day25.part1
 
-import com.curtislb.adventofcode.common.math.modMultiply
+import com.curtislb.adventofcode.common.number.modMultiply
 import java.nio.file.Path
 import java.nio.file.Paths
 

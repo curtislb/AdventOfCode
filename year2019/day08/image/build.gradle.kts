@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation(project(":common:io"))
-    implementation(project(":common:math"))
-
+    implementation(project(":common:number"))
     testImplementation(project(":common:testing"))
 }

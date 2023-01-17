@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2021.day20.enhance
 
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.constructPointGrid
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.grid.createPointGrid
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.grid.sumRowsBy
 import com.curtislb.adventofcode.common.io.forEachSection
@@ -76,7 +76,7 @@ class EnhancedImage(private val algorithm: EnhancementAlgorithm, originalImage: 
 
             // Update outer and inner pixel values for the current image
             outerPixelValue = newOuterPixelValue
-            innerPixelGrid = constructPointGrid(flippedPixels) { point ->
+            innerPixelGrid = createPointGrid(flippedPixels) { point ->
                 if (point in flippedPixels) !outerPixelValue else outerPixelValue
             }
         }

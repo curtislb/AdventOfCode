@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day24.hexagon
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 
 class HexFloor(floorString: String) {
     var blackTiles: Set<Point> = mutableSetOf<Point>().apply {

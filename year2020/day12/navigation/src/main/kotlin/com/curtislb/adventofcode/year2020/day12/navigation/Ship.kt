@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2020.day12.navigation
 
-import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.RotationAngle
+import com.curtislb.adventofcode.common.geometry.Direction
+import com.curtislb.adventofcode.common.geometry.RotationAngle
 
 /**
  * A ship in a 2D grid that is capable of processing navigation instructions.

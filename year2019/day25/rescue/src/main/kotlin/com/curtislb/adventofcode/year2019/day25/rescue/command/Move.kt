@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day25.rescue.command
 
-import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.geometry.Direction
 
 /**
  * A command that makes the rescue droid move in the given [direction] (if possible).

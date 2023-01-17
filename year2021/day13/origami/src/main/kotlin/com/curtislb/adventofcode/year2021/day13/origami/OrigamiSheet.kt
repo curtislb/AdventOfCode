@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day13.origami
 
 import com.curtislb.adventofcode.common.collection.mapToMutableSet
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 
 /**
  * A transparent 2D sheet of points, along with a list of instructions for how those points should

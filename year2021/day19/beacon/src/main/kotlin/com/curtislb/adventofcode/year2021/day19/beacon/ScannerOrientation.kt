@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day19.beacon
 
-import com.curtislb.adventofcode.common.grid.Point3D
+import com.curtislb.adventofcode.common.geometry.Point3D
 
 /**
  * A 3D spatial orientation representing the direction a [Scanner] is facing and the direction it

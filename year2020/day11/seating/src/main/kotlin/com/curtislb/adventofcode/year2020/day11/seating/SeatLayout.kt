@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2020.day11.seating
 
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.MutableGrid
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.addRowWith
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.grid.sumRowsBy

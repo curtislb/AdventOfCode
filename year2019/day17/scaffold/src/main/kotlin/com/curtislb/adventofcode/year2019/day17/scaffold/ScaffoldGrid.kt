@@ -1,9 +1,9 @@
 package com.curtislb.adventofcode.year2019.day17.scaffold
 
-import com.curtislb.adventofcode.common.grid.Direction
+import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Orientation
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
@@ -57,8 +57,8 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
     fun planRoute(): List<Instruction> {
         val instructions = mutableListOf<Instruction>()
 
-        // Find the vacuum robot's starting orientation in the grid.
-        var robotStart: Orientation? = null
+        // Find the vacuum robot's starting position and direction
+        var robotStart: SpatialInfo? = null
         for (rowIndex in grid.rowIndices) {
             if (robotStart != null) {
                 break
@@ -70,28 +70,28 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
 
                 when (grid[rowIndex, colIndex]) {
                     Space.ROBOT_UP -> {
-                        robotStart = Orientation(
+                        robotStart = SpatialInfo(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.UP
                         )
                     }
 
                     Space.ROBOT_RIGHT -> {
-                        robotStart = Orientation(
+                        robotStart = SpatialInfo(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.RIGHT
                         )
                     }
 
                     Space.ROBOT_DOWN -> {
-                        robotStart = Orientation(
+                        robotStart = SpatialInfo(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.DOWN
                         )
                     }
 
                     Space.ROBOT_LEFT -> {
-                        robotStart = Orientation(
+                        robotStart = SpatialInfo(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.LEFT
                         )
@@ -102,44 +102,44 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
             }
         }
 
-        // If no movable robot is found, provide empty instructions.
+        // If no movable robot is found, provide empty instructions
         if (robotStart == null) {
             return instructions
         }
 
-        // Simulate moving the robot from its current orientation (without actually doing so).
-        var orientation: Orientation = robotStart
+        // Simulate moving the robot from its current spatial info (without actually doing so)
+        var spatialInfo: SpatialInfo = robotStart
         var moveCount = 0
         while (true) {
             // Check if the robot can safely move forward.
-            val forwardOrientation = orientation.move()
+            val forwardOrientation = spatialInfo.move()
             if (isSafeSpace(forwardOrientation.position)) {
-                orientation = forwardOrientation
+                spatialInfo = forwardOrientation
                 moveCount++
             } else {
-                // If the robot can no longer move forward, add the move instruction to get here.
+                // If the robot can no longer move forward, add the move instruction to get here
                 if (moveCount != 0) {
                     instructions.add(Move(moveCount))
                     moveCount = 0
                 }
 
                 // Check if the robot can safely move forward after turning.
-                val rightOrientation = orientation.turnRight().move()
-                val leftOrientation = orientation.turnLeft().move()
+                val rightOrientation = spatialInfo.turnRight().move()
+                val leftOrientation = spatialInfo.turnLeft().move()
                 when {
                     isSafeSpace(rightOrientation.position) -> {
-                        orientation = rightOrientation
+                        spatialInfo = rightOrientation
                         instructions.add(TurnRight)
                         moveCount++
                     }
 
                     isSafeSpace(leftOrientation.position) -> {
-                        orientation = leftOrientation
+                        spatialInfo = leftOrientation
                         instructions.add(TurnLeft)
                         moveCount++
                     }
 
-                    // If the robot has to turn around, assume it has reached the end.
+                    // If the robot has to turn around, assume it has reached the end
                     else -> return instructions
                 }
             }

@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day14.chemistry
 
 import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.math.Fraction
+import com.curtislb.adventofcode.common.number.Fraction
 import java.io.File
 
 /**

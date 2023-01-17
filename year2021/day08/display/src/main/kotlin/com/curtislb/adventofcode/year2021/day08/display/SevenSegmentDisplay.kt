@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day08.display
 
-import com.curtislb.adventofcode.common.math.digitsToInt
+import com.curtislb.adventofcode.common.number.digitsToInt
 
 /**
  * A numerical seven-segment display whose signal wires have been mixed up.

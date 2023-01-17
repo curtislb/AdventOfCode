@@ -33,7 +33,7 @@ word departure. What do you get if you multiply those six values together?
 package com.curtislb.adventofcode.year2020.day16.part2
 
 import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.product
 import java.nio.file.Path
 import java.nio.file.Paths
 

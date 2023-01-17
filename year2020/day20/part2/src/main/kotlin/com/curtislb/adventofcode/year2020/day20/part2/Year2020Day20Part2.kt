@@ -106,17 +106,16 @@ How many # are not part of a sea monster?
 
 package com.curtislb.adventofcode.year2020.day20.part2
 
-import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.PointMask
-import com.curtislb.adventofcode.common.grid.constructPointGrid
+import com.curtislb.adventofcode.common.geometry.Direction
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.geometry.PointMask
+import com.curtislb.adventofcode.common.grid.createPointGrid
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.sumRowsBy
 import com.curtislb.adventofcode.common.grid.toMutableGrid
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2020, day 20, part 2.
@@ -145,7 +144,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
         Point(19, -1)
     )
 
-    val maskGrids = mutableListOf(constructPointGrid(maskPoints) { it in maskPoints })
+    val maskGrids = mutableListOf(createPointGrid(maskPoints) { it in maskPoints })
     for (rotationCount in 1..3) {
         maskGrids.add(maskGrids.last().rotatedLeft())
     }
@@ -175,7 +174,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
         val maxColIndex = imageData.sideLength - pointMask.width
         for (rowIndex in 0..maxRowIndex) {
             for (colIndex in 0..maxColIndex) {
-                val isMonster = pointMask.applyToGrid(imageGrid).all { (_, isFilled) -> isFilled }
+                val isMonster = pointMask
+                    .maskValues { imageGrid.getOrNull(it) }
+                    .all { (_, isFilled) -> isFilled }
                 if (isMonster) {
                     monsterPoints.addAll(pointMask.points)
                 }

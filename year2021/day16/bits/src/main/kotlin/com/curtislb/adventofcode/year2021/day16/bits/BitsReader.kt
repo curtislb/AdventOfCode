@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day16.bits
 
-import com.curtislb.adventofcode.common.math.setBit
-import com.curtislb.adventofcode.common.math.testBit
+import com.curtislb.adventofcode.common.number.setBit
+import com.curtislb.adventofcode.common.number.testBit
 
 /**
  * Interpreter that reads and evaluates a Buoyancy Interchange Transmission System (BITS) packet.

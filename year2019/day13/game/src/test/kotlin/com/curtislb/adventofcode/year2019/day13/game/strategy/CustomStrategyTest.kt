@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day13.game.strategy
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2019.day13.game.Board
 import com.curtislb.adventofcode.year2019.day13.game.Tile
 import java.math.BigInteger

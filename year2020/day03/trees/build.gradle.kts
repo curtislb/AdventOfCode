@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":common:grid"))
-    api(project(":common:math"))
+    api(project(":common:geometry"))
+    api(project(":common:number"))
+    implementation(project(":common:grid"))
 }

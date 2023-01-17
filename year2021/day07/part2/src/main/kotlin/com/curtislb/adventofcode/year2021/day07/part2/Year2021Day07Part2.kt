@@ -34,7 +34,7 @@ package com.curtislb.adventofcode.year2021.day07.part2
 import com.curtislb.adventofcode.common.collection.MinMax
 import com.curtislb.adventofcode.common.collection.minAndMaxOrNull
 import com.curtislb.adventofcode.common.io.readInts
-import com.curtislb.adventofcode.common.math.triangleNumber
+import com.curtislb.adventofcode.common.number.triangleNumber
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.abs

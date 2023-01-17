@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day13.game
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 
 /**
  * The current state of the game board and associated information.

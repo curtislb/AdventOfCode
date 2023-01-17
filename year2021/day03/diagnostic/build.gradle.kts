@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:math"))
     implementation(project(":common:grid"))
+    implementation(project(":common:number"))
 }

@@ -5,6 +5,5 @@ plugins {
 
 dependencies {
     implementation(project(":common:heap"))
-
     testImplementation(project(":common:testing"))
 }

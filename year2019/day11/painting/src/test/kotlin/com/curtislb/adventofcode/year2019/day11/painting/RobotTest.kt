@@ -1,8 +1,8 @@
 package com.curtislb.adventofcode.year2019.day11.painting
 
-import com.curtislb.adventofcode.common.grid.Direction
-import com.curtislb.adventofcode.common.grid.Orientation
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Direction
+import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.emptyGrid
 import com.curtislb.adventofcode.common.grid.gridOf
 import com.curtislb.adventofcode.common.intcode.Intcode
@@ -24,66 +24,66 @@ class RobotTest {
 
     @Test
     fun testMoveAndTurn() {
-        assertEquals(Orientation(Point(0, 0), Direction.UP), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, 0), Direction.UP), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(0, 1), Direction.UP), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, 1), Direction.UP), robot.spatialInfo)
 
         robot.turnRight()
-        assertEquals(Orientation(Point(0, 1), Direction.RIGHT), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, 1), Direction.RIGHT), robot.spatialInfo)
 
         robot.turnRight()
-        assertEquals(Orientation(Point(0, 1), Direction.DOWN), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, 1), Direction.DOWN), robot.spatialInfo)
 
         robot.turnLeft()
-        assertEquals(Orientation(Point(0, 1), Direction.RIGHT), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, 1), Direction.RIGHT), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(1, 1), Direction.RIGHT), robot.orientation)
+        assertEquals(SpatialInfo(Point(1, 1), Direction.RIGHT), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(2, 1), Direction.RIGHT), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, 1), Direction.RIGHT), robot.spatialInfo)
 
         robot.turnLeft()
-        assertEquals(Orientation(Point(2, 1), Direction.UP), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, 1), Direction.UP), robot.spatialInfo)
 
         robot.turnLeft()
-        assertEquals(Orientation(Point(2, 1), Direction.LEFT), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, 1), Direction.LEFT), robot.spatialInfo)
 
         robot.turnLeft()
-        assertEquals(Orientation(Point(2, 1), Direction.DOWN), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, 1), Direction.DOWN), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(2, 0), Direction.DOWN), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, 0), Direction.DOWN), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(2, -1), Direction.DOWN), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, -1), Direction.DOWN), robot.spatialInfo)
 
         robot.turnRight()
-        assertEquals(Orientation(Point(2, -1), Direction.LEFT), robot.orientation)
+        assertEquals(SpatialInfo(Point(2, -1), Direction.LEFT), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(1, -1), Direction.LEFT), robot.orientation)
+        assertEquals(SpatialInfo(Point(1, -1), Direction.LEFT), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(0, -1), Direction.LEFT), robot.orientation)
+        assertEquals(SpatialInfo(Point(0, -1), Direction.LEFT), robot.spatialInfo)
 
         robot.moveForward()
-        assertEquals(Orientation(Point(-1, -1), Direction.LEFT), robot.orientation)
+        assertEquals(SpatialInfo(Point(-1, -1), Direction.LEFT), robot.spatialInfo)
     }
 
     @Test
     fun testPaintAndConstructGrid() {
         assertEquals(0, robot.paintedArea)
-        assertEquals(emptyGrid(), robot.constructPaintedGrid())
+        assertEquals(emptyGrid(), robot.getPaintedGrid())
 
         robot.paint(Color.BLACK)
         assertEquals(1, robot.paintedArea)
-        assertEquals(gridOf(listOf(Color.BLACK)), robot.constructPaintedGrid())
+        assertEquals(gridOf(listOf(Color.BLACK)), robot.getPaintedGrid())
 
         robot.paint(Color.WHITE)
         assertEquals(1, robot.paintedArea)
-        assertEquals(gridOf(listOf(Color.WHITE)), robot.constructPaintedGrid())
+        assertEquals(gridOf(listOf(Color.WHITE)), robot.getPaintedGrid())
 
         robot.moveForward()
         robot.paint(Color.WHITE)
@@ -93,7 +93,7 @@ class RobotTest {
                 listOf(Color.WHITE),
                 listOf(Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.paint(Color.BLACK)
@@ -103,7 +103,7 @@ class RobotTest {
                 listOf(Color.BLACK),
                 listOf(Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.moveForward()
@@ -117,7 +117,7 @@ class RobotTest {
                 listOf(Color.BLACK),
                 listOf(Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.turnLeft()
@@ -131,7 +131,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.turnLeft()
@@ -146,7 +146,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.turnLeft()
@@ -161,7 +161,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK),
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.paint(Color.WHITE)
@@ -173,7 +173,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE),
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.turnRight()
@@ -189,7 +189,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
 
         robot.paint(Color.BLACK)
@@ -202,7 +202,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.BLACK, Color.BLACK)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
     }
 
@@ -231,7 +231,7 @@ class RobotTest {
                 listOf(Color.BLACK, Color.BLACK, Color.WHITE, Color.BLACK),
                 listOf(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK)
             ),
-            robot.constructPaintedGrid()
+            robot.getPaintedGrid()
         )
     }
 }

@@ -1,10 +1,10 @@
 package com.curtislb.adventofcode.year2020.day03.trees
 
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.Point
-import com.curtislb.adventofcode.common.grid.Ray
+import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.geometry.Ray
 import com.curtislb.adventofcode.common.grid.toGrid
-import com.curtislb.adventofcode.common.math.Fraction
+import com.curtislb.adventofcode.common.number.Fraction
 
 /**
  * A collection of trees arranged in a 2D grid, consisting of a base pattern repeated infinitely to

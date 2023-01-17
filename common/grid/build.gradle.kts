@@ -4,9 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:collection"))
-    implementation(project(":common:math"))
+    api(project(":common:geometry"))
     implementation(project(":common:range"))
-
     testImplementation(project(":common:testing"))
 }

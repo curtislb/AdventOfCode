@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
-import com.curtislb.adventofcode.common.math.setBit
-import com.curtislb.adventofcode.common.math.clearBit
+import com.curtislb.adventofcode.common.number.setBit
+import com.curtislb.adventofcode.common.number.clearBit
 
 /**
  * A bitmask program that uses the current bitmask to modify the values stored to memory addresses.

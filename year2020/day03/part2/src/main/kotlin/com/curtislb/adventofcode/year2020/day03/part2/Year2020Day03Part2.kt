@@ -19,8 +19,8 @@ together, these produce the answer 336.
 
 package com.curtislb.adventofcode.year2020.day03.part2
 
-import com.curtislb.adventofcode.common.math.Fraction
-import com.curtislb.adventofcode.common.math.product
+import com.curtislb.adventofcode.common.number.Fraction
+import com.curtislb.adventofcode.common.number.product
 import com.curtislb.adventofcode.year2020.day03.trees.TreeField
 import java.nio.file.Path
 import java.nio.file.Paths

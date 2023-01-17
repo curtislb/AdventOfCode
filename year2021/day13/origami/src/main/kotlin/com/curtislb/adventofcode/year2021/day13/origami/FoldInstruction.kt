@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day13.origami
 
-import com.curtislb.adventofcode.common.grid.Point
+import com.curtislb.adventofcode.common.geometry.Point
 
 /**
  * An instruction describing a single fold that should be applied to an [OrigamiSheet].

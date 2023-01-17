@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
+import com.curtislb.adventofcode.common.geometry.Point
+
 /**
  * A read-only rectangular grid of values.
  */
