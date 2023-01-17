@@ -367,3 +367,8 @@ include("year2021:day20:part2")
 include("year2021:day21:dice")
 include("year2021:day21:part1")
 include("year2021:day21:part2")
+
+// Day 22: Reactor Reboot
+include("year2021:day22:part1")
+include("year2021:day22:part2")
+include("year2021:day22:reactor")
