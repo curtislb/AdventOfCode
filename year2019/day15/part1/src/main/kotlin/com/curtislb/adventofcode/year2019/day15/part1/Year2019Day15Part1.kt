@@ -117,7 +117,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     return bfsDistance(
         source = Point.ORIGIN,
         isGoal = { droid.spaceAt(it) == Space.OXYGEN },
-        getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }
+        getNeighbors = { droid.adjacentOccupiableSpaces(it) }
     )
 }
 

@@ -13,32 +13,30 @@ import com.curtislb.adventofcode.common.heap.MinimumHeap
 fun <T> dijkstraShortestDistance(
     source: T,
     isGoal: (node: T) -> Boolean,
-    getEdges: (node: T) -> Sequence<DirectedEdge<T>>
+    getEdges: (node: T) -> Iterable<DirectedEdge<T>>
 ): Long? {
     val visited = mutableSetOf<T>()
-    val nodeHeap = MinimumHeap<T>().apply { add(source, 0L) }
+    val nodeHeap = MinimumHeap<T>().apply { addOrDecreaseKey(source, 0L) }
     while (!nodeHeap.isEmpty()) {
-        // Pop node with the shortest distance, and return if we've found the goal.
+        // Pop node with the shortest distance, and return if we've found the goal
         val (node, distance) = nodeHeap.popMinimum()
         if (isGoal(node)) {
             return distance
         }
 
-        // Update distances to all neighboring nodes.
+        // Update distances to all neighboring nodes
         visited.add(node)
-        for ((neighbor, edgeWeight) in getEdges(node)) {
-            if (neighbor !in visited) {
-                val oldDistance = nodeHeap[neighbor]
-                val newDistance = distance + edgeWeight
-                if (oldDistance == null) {
-                    nodeHeap.add(neighbor, newDistance)
-                } else if (newDistance < oldDistance) {
-                    nodeHeap.decreaseKey(neighbor, newDistance)
+        for (edge in getEdges(node)) {
+            if (edge.node !in visited) {
+                val oldDistance = nodeHeap[edge.node]
+                val newDistance = distance + edge.weight
+                if (oldDistance == null || oldDistance > newDistance) {
+                    nodeHeap.addOrDecreaseKey(edge.node, distance + edge.weight)
                 }
             }
         }
     }
 
-    // No goal node was found during the search.
+    // No goal node was found during the search
     return null
 }

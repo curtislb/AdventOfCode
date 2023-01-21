@@ -65,14 +65,14 @@ class Maze(file: File) {
                 space is LabeledSpace && space.label == exitLabel
             },
             getNeighbors = { location ->
-                sequence {
-                    for (neighbor in location.point.cardinalNeighbors()) {
-                        if (grid.getOrNull(neighbor)?.isOccupiable == true) {
-                            yield(Location(neighbor, location.depth))
-                        }
+                val neighbors = mutableListOf<Location>()
+                for (neighbor in location.point.cardinalNeighbors()) {
+                    if (grid.getOrNull(neighbor)?.isOccupiable == true) {
+                        neighbors.add(Location(neighbor, location.depth))
                     }
-                    yieldAll(getPortalLocations(location, isRecursive))
                 }
+                neighbors.addAll(getPortalLocations(location, isRecursive))
+                neighbors
             }
         )
     }

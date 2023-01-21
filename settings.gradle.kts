@@ -372,3 +372,8 @@ include("year2021:day21:part2")
 include("year2021:day22:part1")
 include("year2021:day22:part2")
 include("year2021:day22:reactor")
+
+// Day 23: Amphipod
+include("year2021:day23:amphipod")
+include("year2021:day23:part1")
+include("year2021:day23:part2")

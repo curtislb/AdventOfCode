@@ -69,15 +69,15 @@ class DijkstraTest {
     /**
      * Returns all finite, weighted edges from [node] as a finite sequence.
      */
-    private fun getEdges(node: Int): Sequence<DirectedEdge<Int>> = when (node) {
-        1 -> sequenceOf(DirectedEdge(2, 9L), DirectedEdge(6, 14L), DirectedEdge(7, 15L))
-        2 -> sequenceOf(DirectedEdge(3, 24L))
-        3 -> sequenceOf(DirectedEdge(5, 2L), DirectedEdge(8, 19L))
-        4 -> sequenceOf(DirectedEdge(3, 6L), DirectedEdge(8, 6L))
-        5 -> sequenceOf(DirectedEdge(4, 11L), DirectedEdge(8, 16L))
-        6 -> sequenceOf(DirectedEdge(3, 18L), DirectedEdge(5, 30L), DirectedEdge(7, 5L))
-        7 -> sequenceOf(DirectedEdge(5, 20L), DirectedEdge(8, 44L))
-        8 -> emptySequence()
+    private fun getEdges(node: Int): List<DirectedEdge<Int>> = when (node) {
+        1 -> listOf(DirectedEdge(2, 9L), DirectedEdge(6, 14L), DirectedEdge(7, 15L))
+        2 -> listOf(DirectedEdge(3, 24L))
+        3 -> listOf(DirectedEdge(5, 2L), DirectedEdge(8, 19L))
+        4 -> listOf(DirectedEdge(3, 6L), DirectedEdge(8, 6L))
+        5 -> listOf(DirectedEdge(4, 11L), DirectedEdge(8, 16L))
+        6 -> listOf(DirectedEdge(3, 18L), DirectedEdge(5, 30L), DirectedEdge(7, 5L))
+        7 -> listOf(DirectedEdge(5, 20L), DirectedEdge(8, 44L))
+        8 -> emptyList()
         else -> throw IllegalArgumentException("Unexpected node: $node")
     }
 }

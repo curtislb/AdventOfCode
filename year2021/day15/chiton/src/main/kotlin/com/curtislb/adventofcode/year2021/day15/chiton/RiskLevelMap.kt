@@ -1,10 +1,10 @@
 package com.curtislb.adventofcode.year2021.day15.chiton
 
 import com.curtislb.adventofcode.common.collection.getCyclic
+import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.graph.DirectedEdge
 import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.toGrid
 import java.io.File
 
@@ -108,13 +108,13 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
      * Returns a [DirectedEdge] to each cardinal neighbor of [point] that's within the bounds of the
      * full map.
      */
-    private fun getEdges(point: Point): Sequence<DirectedEdge<Point>> = sequence {
-        val neighbors = point.cardinalNeighbors().filter { it in this@RiskLevelMap }
-        for (neighbor in neighbors) {
-            val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
-            yield(DirectedEdge(neighbor, riskLevel(rowIndex, colIndex).toLong()))
-        }
-    }
+    private fun getEdges(point: Point): List<DirectedEdge<Point>> =
+        point.cardinalNeighbors()
+            .filter { it in this }
+            .map { neighbor ->
+                val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
+                DirectedEdge(neighbor, riskLevel(rowIndex, colIndex).toLong())
+            }
 
     companion object {
         /**

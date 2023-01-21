@@ -11,7 +11,7 @@ import java.util.ArrayDeque
  */
 fun <T> bfsApply(
     source: T,
-    getNeighbors: (node: T) -> Sequence<T>,
+    getNeighbors: (node: T) -> Iterable<T>,
     process: (node: T, distance: Long) -> Boolean
 ) {
     val searchQueue = ArrayDeque<Pair<T, Long>>().apply { offer(Pair(source, 0L)) }
@@ -19,17 +19,17 @@ fun <T> bfsApply(
     while (searchQueue.isNotEmpty()) {
         val (node, distance) = searchQueue.poll()
 
-        // Ignore this node if it was previously visited.
+        // Ignore this node if it was previously visited
         if (node in visited) {
             continue
         }
 
-        // Process this node, terminating the search if necessary.
+        // Process this node, terminating the search if necessary
         if (process(node, distance)) {
             return
         }
 
-        // Enqueue all unvisited neighboring nodes with distances.
+        // Enqueue all unvisited neighboring nodes with distances
         visited.add(node)
         for (neighbor in getNeighbors(node)) {
             if (neighbor !in visited) {
@@ -49,15 +49,15 @@ fun <T> bfsApply(
 fun <T> bfsDistance(
     source: T,
     isGoal: (node: T) -> Boolean,
-    getNeighbors: (node: T) -> Sequence<T>
+    getNeighbors: (node: T) -> Iterable<T>
 ): Long? {
     var result: Long? = null
     bfsApply(source, getNeighbors) { node, distance ->
         if (isGoal(node)) {
             result = distance
-            true // Done searching.
+            true // Done searching
         } else {
-            false // Not done searching.
+            false // Not done searching
         }
     }
     return result

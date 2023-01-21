@@ -25,24 +25,26 @@ class KeySearch(private val vault: Vault) {
             source = SearchState(vault.entranceLocations, KeyCollection()),
             isGoal = { (_, heldKeys) -> heldKeys == allKeys },
             getEdges = { (positions, heldKeys) ->
-                sequence {
-                    positions.forEachIndexed { index, position ->
-                        searchEdges[position]?.forEach { (neighbor, edges) ->
-                            val key = vault[neighbor]?.symbol
-                            if (key != null && key !in heldKeys) {
-                                val newPositions =
-                                    positions.toMutableList().apply { set(index, neighbor) }
-                                val newKeys = heldKeys.withKey(key)
-                                val newState = SearchState(newPositions, newKeys)
-                                for (edge in edges) {
-                                    if (edge.isTraversable(heldKeys)) {
-                                        yield(DirectedEdge(newState, edge.distance.toLong()))
-                                    }
+                val directedEdges = mutableListOf<DirectedEdge<SearchState>>()
+                positions.forEachIndexed { index, position ->
+                    searchEdges[position]?.forEach { (neighbor, searchEdges) ->
+                        val key = vault[neighbor]?.symbol
+                        if (key != null && key !in heldKeys) {
+                            val newPositions =
+                                positions.toMutableList().apply { set(index, neighbor) }
+                            val newKeys = heldKeys.withKey(key)
+                            val newState = SearchState(newPositions, newKeys)
+                            for (searchEdge in searchEdges) {
+                                if (searchEdge.isTraversable(heldKeys)) {
+                                    directedEdges.add(
+                                        DirectedEdge(newState, searchEdge.distance.toLong())
+                                    )
                                 }
                             }
                         }
                     }
                 }
+                directedEdges
             }
         )
     }

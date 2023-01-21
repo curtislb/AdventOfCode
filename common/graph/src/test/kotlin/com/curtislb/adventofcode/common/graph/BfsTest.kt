@@ -117,15 +117,15 @@ class BfsTest {
     /**
      * Returns all neighbors of [node] in the test graph as a finite sequence.
      */
-    private fun getNeighbors(node: Int): Sequence<Int> = when (node) {
-        0 -> sequenceOf(1)
-        1 -> sequenceOf(2, 4, 5)
-        2 -> sequenceOf(3, 6)
-        3 -> sequenceOf(2, 7)
-        4 -> sequenceOf(0, 5)
-        5 -> sequenceOf(6)
-        6 -> sequenceOf(5)
-        7 -> sequenceOf(3, 6)
+    private fun getNeighbors(node: Int): List<Int> = when (node) {
+        0 -> listOf(1)
+        1 -> listOf(2, 4, 5)
+        2 -> listOf(3, 6)
+        3 -> listOf(2, 7)
+        4 -> listOf(0, 5)
+        5 -> listOf(6)
+        6 -> listOf(5)
+        7 -> listOf(3, 6)
         else -> throw IllegalArgumentException("Unexpected node: $node")
     }
 }

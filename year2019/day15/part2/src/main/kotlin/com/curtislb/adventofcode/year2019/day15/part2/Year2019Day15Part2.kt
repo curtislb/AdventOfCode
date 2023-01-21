@@ -62,7 +62,6 @@ import com.curtislb.adventofcode.common.graph.bfsApply
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 15, part 2.
@@ -70,19 +69,20 @@ import kotlin.system.measureTimeMillis
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
-    // Have the droid fully explore the grid.
+    // Have the droid fully explore the grid
     val droid = Droid(inputPath.toFile()).apply { explore() }
 
-    // Get the position of the oxygen system.
+    // Get the position of the oxygen system
     val oxygenStartPosition = droid.goalPosition ?: return null
 
-    // Use BFS to find the furthest open space from the oxygen system.
+    // Use BFS to find the furthest open space from the oxygen system
     var maxDistance = 0L
     bfsApply(
-        oxygenStartPosition,
-        getNeighbors = { droid.adjacentOccupiableSpaces(it).asSequence() }) { _, distance ->
+        source = oxygenStartPosition,
+        getNeighbors = { droid.adjacentOccupiableSpaces(it) }
+    ) { _, distance ->
         maxDistance = maxOf(maxDistance, distance)
-        false // Not done searching.
+        false // Not done searching
     }
     return maxDistance
 }

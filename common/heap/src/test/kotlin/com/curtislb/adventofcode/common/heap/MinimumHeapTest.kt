@@ -28,13 +28,13 @@ class MinimumHeapTest {
 
     @Test
     fun testAddDecreaseAndPop() {
-        heap.add("lorem", 5L)
+        heap.addOrDecreaseKey("lorem", 5L)
         assertEquals(1, heap.size)
         assertFalse(heap.isEmpty())
         assertEquals(5L, heap["lorem"])
 
-        heap.add("ipsum", 22L)
-        heap.add("dolor", -93L)
+        heap.addOrDecreaseKey("ipsum", 22L)
+        heap.addOrDecreaseKey("dolor", -93L)
         assertEquals(3, heap.size)
         assertFalse(heap.isEmpty())
         assertEquals(5L, heap["lorem"])
@@ -48,10 +48,10 @@ class MinimumHeapTest {
         assertEquals(22L, heap["ipsum"])
         assertNull(heap["dolor"])
 
-        heap.decreaseKey("lorem", -24L)
-        heap.add("dolor", 5L)
-        heap.decreaseKey("ipsum", 20L)
-        heap.decreaseKey("ipsum", 17L)
+        heap.addOrDecreaseKey("lorem", -24L)
+        heap.addOrDecreaseKey("dolor", 5L)
+        heap.addOrDecreaseKey("ipsum", 20L)
+        heap.addOrDecreaseKey("ipsum", 17L)
         assertEquals(3, heap.size)
         assertFalse(heap.isEmpty())
         assertEquals(-24L, heap["lorem"])
@@ -69,27 +69,15 @@ class MinimumHeapTest {
     }
 
     @Test
-    fun testAddExistingValue() {
-        heap.add("foo", 2L)
-        assertThrows<IllegalArgumentException> { heap.add("foo", 3L) }
-    }
-
-    @Test
-    fun testDecreaseKeyWithUnknownValue() {
-        heap.add("foo", 2L)
-        assertThrows<IllegalArgumentException> { heap.decreaseKey("bar", 1L) }
-    }
-
-    @Test
     fun testDecreaseKeyToSameKey() {
-        heap.add("foo", 2L)
-        assertThrows<IllegalArgumentException> { heap.decreaseKey("foo", 2L) }
+        heap.addOrDecreaseKey("foo", 2L)
+        assertThrows<IllegalArgumentException> { heap.addOrDecreaseKey("foo", 2L) }
     }
 
     @Test
     fun testDecreaseKeyToGreaterKey() {
-        heap.add("foo", 2L)
-        assertThrows<IllegalArgumentException> { heap.decreaseKey("foo", 3L) }
+        heap.addOrDecreaseKey("foo", 2L)
+        assertThrows<IllegalArgumentException> { heap.addOrDecreaseKey("foo", 3L) }
     }
 
     @Test

@@ -3,63 +3,56 @@ package com.curtislb.adventofcode.common.heap
 import java.util.PriorityQueue
 
 /**
- * A minimum-order heap, which stores values with associated keys and produces them in increasing
+ * A minimum-order heap, which stores elements with associated keys and produces them in increasing
  * order by key.
  */
-class MinimumHeap<T> {
+class MinimumHeap<E> {
     /**
      * A map from each value in the heap to its current key.
      */
-    private val priorityKeys: MutableMap<T, Long> = mutableMapOf()
+    private val priorityKeys: MutableMap<E, Long> = mutableMapOf()
 
     /**
-     * A priority queue used internally to store and produce values.
+     * A priority queue used internally to store and produce elements.
      */
-    private val priorityQueue: PriorityQueue<HeapEntry<T>> = PriorityQueue { entry, other ->
+    private val priorityQueue: PriorityQueue<HeapEntry<E>> = PriorityQueue { entry, other ->
         entry.key.compareTo(other.key)
     }
 
     /**
      * The number of elements currently in the heap.
      */
-    val size: Int get() = priorityKeys.size
+    val size: Int
+        get() = priorityKeys.size
 
     /**
-     * Returns `true` if the heap is currently empty, or `false` otherwise.
+     * Returns `true` if the given [element] is in the heap.
+     */
+    operator fun contains(element: E) = element in priorityKeys
+
+    /**
+     * Returns the key in the heap currently associated with [element].
+     */
+    operator fun get(element: E): Long? = priorityKeys[element]
+
+    /**
+     * Returns `true` if the heap currently contains no elements.
      */
     fun isEmpty(): Boolean = priorityKeys.isEmpty()
 
     /**
-     * Returns the key in the heap currently associated with [value].
-     */
-    operator fun get(value: T): Long? = priorityKeys[value]
-
-    /**
-     * Adds a new [value] to the heap with the associated [key].
+     * Adds a new [element] to the heap with the associated [key], or decreases its key value in the
+     * heap to the given key if it's already present.
      *
-     * @throws IllegalArgumentException If [value] is already in the heap.
+     * @throws IllegalArgumentException If [element] is in the heap with an equal or lower [key].
      */
-    fun add(value: T, key: Long) {
-        require(value !in priorityKeys) { "Value is already in the heap: $value" }
-        priorityKeys[value] = key
-        priorityQueue.add(HeapEntry(value, key))
-    }
-
-    /**
-     * Decreases the key in the heap associated with [value] to [newKey].
-     *
-     * @throws IllegalArgumentException If [value] is not in the heap, or if its associated key is
-     *  at most [newKey].
-     */
-    fun decreaseKey(value: T, newKey: Long) {
-        val oldKey = priorityKeys[value]
-        require(oldKey != null) { "Value is not in the heap: $value" }
-        require(oldKey > newKey) {
-            "Value ($value) is in the heap with an equal or lower key: $oldKey <= $newKey"
+    fun addOrDecreaseKey(element: E, key: Long) {
+        val oldKey = priorityKeys[element]
+        require(oldKey == null || oldKey > key) {
+            "Element $element is in the heap with an equal or lower key: $oldKey <= $key"
         }
-
-        priorityKeys[value] = newKey
-        priorityQueue.add(HeapEntry(value, newKey))
+        priorityKeys[element] = key
+        priorityQueue.add(HeapEntry(element, key))
     }
 
     /**
@@ -67,20 +60,20 @@ class MinimumHeap<T> {
      *
      * @throws NoSuchElementException If the heap is currently empty.
      */
-    fun popMinimum(): HeapEntry<T> {
+    fun popMinimum(): HeapEntry<E> {
         if (priorityKeys.isEmpty()) {
             throw NoSuchElementException("Failed to pop minimum. Heap is empty.")
         }
 
-        // Pop outdated entries from the priority queue until a valid one is found.
-        var entry: HeapEntry<T>
+        // Pop outdated entries from the priority queue until a valid one is found
+        var entry: HeapEntry<E>
         var latestKey: Long?
         do {
             entry = priorityQueue.poll()
-            latestKey = priorityKeys[entry.value]
+            latestKey = priorityKeys[entry.element]
         } while (latestKey == null || entry.key > latestKey)
 
-        priorityKeys.remove(entry.value)
+        priorityKeys.remove(entry.element)
         return entry
     }
 }
