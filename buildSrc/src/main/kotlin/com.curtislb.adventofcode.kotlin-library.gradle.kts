@@ -8,16 +8,6 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT}")
 }
 
-repositories {
-    mavenCentral()
-}
-
-tasks {
-    test {
-        useJUnitPlatform()
-    }
-
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = Versions.JAVA
-    }
+tasks.test {
+    useJUnitPlatform()
 }
