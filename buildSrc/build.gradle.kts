@@ -2,11 +2,8 @@ plugins {
     `kotlin-dsl`
 }
 
-val javaVersion = "17"
-val kotlinVersion = "1.7.10"
-
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
 }
 
 repositories {
@@ -14,5 +11,5 @@ repositories {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = javaVersion
+    kotlinOptions.jvmTarget = "17"
 }

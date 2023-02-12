@@ -1,9 +1,7 @@
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.kotlinx.kover") version PluginVersions.KOVER
+    id("org.jetbrains.kotlinx.kover") version Versions.KOVER
 }
-
-val javaVersion: String by project
 
 koverMerged {
     enable()
@@ -14,5 +12,5 @@ repositories {
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = javaVersion
+    kotlinOptions.jvmTarget = Versions.JAVA
 }

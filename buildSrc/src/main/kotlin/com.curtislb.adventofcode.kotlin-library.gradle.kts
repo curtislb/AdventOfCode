@@ -2,14 +2,10 @@ plugins {
     kotlin("jvm")
 }
 
-val javaVersion: String by project
-val junitVersion: String by project
-val kotlinVersion: String by project
-
 dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:${Versions.KOTLIN}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${Versions.JUNIT}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT}")
 }
 
 repositories {
@@ -22,6 +18,6 @@ tasks {
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = javaVersion
+        kotlinOptions.jvmTarget = Versions.JAVA
     }
 }
