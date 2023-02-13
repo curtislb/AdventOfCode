@@ -166,11 +166,14 @@ import java.nio.file.Paths
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
     scaleFactor: Int = 5
-): Long {
+): Long? {
     val riskLevelMap = RiskLevelMap.fromFile(inputPath.toFile(), scaleFactor)
     return riskLevelMap.findMinimalPathRisk()
 }
 
 fun main() {
-    println(solve())
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }

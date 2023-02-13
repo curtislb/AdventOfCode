@@ -2,18 +2,19 @@ package com.curtislb.adventofcode.year2021.day15.chiton
 
 import com.curtislb.adventofcode.common.collection.getCyclic
 import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.graph.AStar
 import com.curtislb.adventofcode.common.graph.DirectedEdge
-import com.curtislb.adventofcode.common.graph.dijkstraShortestDistance
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.toGrid
 import java.io.File
+import kotlin.math.abs
 
 /**
  * A collection of risk levels associated with entering each space of a chiton-filled 2D grid.
  *
- * The full grid consists of a [scaleFactor]x[scaleFactor] tiling of [baseRiskGrid]. The risk level
- * for a given space equals that of the corresponding space in [baseRiskGrid], plus the Manhattan
- * distance from its tile to the top-left tile, calculated cyclically so the result is in `1..9`.
+ * The full grid consists of a [scaleFactor] x [scaleFactor] tiling of [baseRiskGrid]. The risk
+ * level for a given space equals that of the corresponding space in [baseRiskGrid], plus the
+ * Manhattan distance from its tile to the top-left, calculated cyclically in the range `1..9`.
  *
  * @param baseRiskGrid A 2D grid of risk levels for the top-left tile in the full map.
  * @param scaleFactor The number of times [baseRiskGrid] is tiled right and down in the full map.
@@ -40,6 +41,22 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
      */
     val width: Int
         get() = baseRiskGrid.width * scaleFactor
+
+    /**
+     * A* search config for finding the lowest-risk path through the map.
+     */
+    private val cavernSearch = object : AStar<Point>() {
+        /**
+         * Returns all positions adjacent to [node], along with their associated risk levels.
+         */
+        override fun getEdges(node: Point): List<DirectedEdge<Point>> =
+            node.cardinalNeighbors()
+                .filter { it in this@RiskLevelMap }
+                .map { neighbor ->
+                    val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
+                    DirectedEdge(neighbor, riskLevel(rowIndex, colIndex).toLong())
+                }
+    }
 
     /**
      * Returns if [point] is within the bounds of the full map.
@@ -84,16 +101,20 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
      * The total risk of a path is given by adding the risk level of each space that is *entered*
      * (not exited) while traveling along that path.
      */
-    fun findMinimalPathRisk(): Long = dijkstraShortestDistance(Point.ORIGIN, ::isGoal, ::getEdges)!!
+    fun findMinimalPathRisk(): Long? = cavernSearch.findShortestDistance(
+        source = Point.ORIGIN,
+        heuristic = ::manhattanDistanceToGoal,
+        isGoal = ::isGoal
+    )
 
     /**
-     * Returns the risk level at the given [rowIndex] and [colIndex], which is assumed to be within
-     * the bounds of the full map.
+     * Returns the Manhattan distance from the given [point] to the bottom-right corner of the map.
      */
-    private fun riskLevel(rowIndex: Int, colIndex: Int): Int {
-        val baseRisk = baseRiskGrid.shallowRows().getCyclic(rowIndex).getCyclic(colIndex)
-        val riskIncrease = rowIndex / baseRiskGrid.height + colIndex / baseRiskGrid.width
-        return ((baseRisk + riskIncrease - 1) % 9) + 1
+    private fun manhattanDistanceToGoal(point: Point): Long {
+        val (rowIndex, colIndex) = point.toMatrixCoordinates()
+        val rowDistance = abs(height - 1 - rowIndex)
+        val colDistance = abs(width - 1 - colIndex)
+        return rowDistance.toLong() + colDistance.toLong()
     }
 
     /**
@@ -105,16 +126,14 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
     }
 
     /**
-     * Returns a [DirectedEdge] to each cardinal neighbor of [point] that's within the bounds of the
-     * full map.
+     * Returns the risk level at the given [rowIndex] and [colIndex], which is assumed to be within
+     * the bounds of the full map.
      */
-    private fun getEdges(point: Point): List<DirectedEdge<Point>> =
-        point.cardinalNeighbors()
-            .filter { it in this }
-            .map { neighbor ->
-                val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
-                DirectedEdge(neighbor, riskLevel(rowIndex, colIndex).toLong())
-            }
+    private fun riskLevel(rowIndex: Int, colIndex: Int): Int {
+        val baseRisk = baseRiskGrid.shallowRows().getCyclic(rowIndex).getCyclic(colIndex)
+        val riskIncrease = rowIndex / baseRiskGrid.height + colIndex / baseRiskGrid.width
+        return ((baseRisk + riskIncrease - 1) % 9) + 1
+    }
 
     companion object {
         /**

@@ -58,10 +58,11 @@ oxygen?
 
 package com.curtislb.adventofcode.year2019.day15.part2
 
-import com.curtislb.adventofcode.common.graph.bfsApply
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
+import com.curtislb.adventofcode.year2019.day15.repair.DroidSearch
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.math.max
 
 /**
  * Returns the solution to the puzzle for 2019, day 15, part 2.
@@ -77,13 +78,12 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
 
     // Use BFS to find the furthest open space from the oxygen system
     var maxDistance = 0L
-    bfsApply(
-        source = oxygenStartPosition,
-        getNeighbors = { droid.adjacentOccupiableSpaces(it) }
-    ) { _, distance ->
-        maxDistance = maxOf(maxDistance, distance)
+    val search = DroidSearch(droid)
+    search.forEachNode(source = oxygenStartPosition) { _, distance ->
+        maxDistance = max(maxDistance, distance)
         false // Not done searching
     }
+
     return maxDistance
 }
 

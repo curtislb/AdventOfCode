@@ -5,14 +5,13 @@ import kotlin.test.assertNull
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [dijkstraShortestDistance].
+ * Tests [Dijkstra].
  */
 class DijkstraTest {
     @Test
     fun testShortestDistanceToSource() {
         for (source in 1..8) {
-            val distance =
-                dijkstraShortestDistance(source, isGoal = { it == source }, getEdges = ::getEdges)
+            val distance = SampleDijkstra.findShortestDistance(source) { it == source }
             assertEquals(0L, distance)
         }
     }
@@ -20,64 +19,43 @@ class DijkstraTest {
     @Test
     fun testShortestDistanceToNonexistentNode() {
         for (source in 1..8) {
-            val distance =
-                dijkstraShortestDistance(source, isGoal = { it == 9 }, getEdges = ::getEdges)
+            val distance = SampleDijkstra.findShortestDistance(source) { it == 9 }
             assertNull(distance)
         }
     }
 
     @Test
     fun testShortestDistanceToUnreachableNode() {
-        val distance =
-            dijkstraShortestDistance(source = 5, isGoal = { it == 7 }, getEdges = ::getEdges)
+        val distance = SampleDijkstra.findShortestDistance(source = 5) { it == 7 }
         assertNull(distance)
     }
 
     @Test
     fun testShortestDistanceToReachableNodes() {
         val source = 1
-        assertEquals(
-            9L,
-            dijkstraShortestDistance(source, isGoal = { it == 2 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            32L,
-            dijkstraShortestDistance(source, isGoal = { it == 3 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            45L,
-            dijkstraShortestDistance(source, isGoal = { it == 4 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            34L,
-            dijkstraShortestDistance(source, isGoal = { it == 5 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            14L,
-            dijkstraShortestDistance(source, isGoal = { it == 6 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            15L,
-            dijkstraShortestDistance(source, isGoal = { it == 7 }, getEdges = ::getEdges)
-        )
-        assertEquals(
-            50L,
-            dijkstraShortestDistance(source, isGoal = { it == 8 }, getEdges = ::getEdges)
-        )
+        assertEquals(9L, SampleDijkstra.findShortestDistance(source) { it == 2 })
+        assertEquals(32L, SampleDijkstra.findShortestDistance(source) { it == 3 })
+        assertEquals(45L, SampleDijkstra.findShortestDistance(source) { it == 4 })
+        assertEquals(34L, SampleDijkstra.findShortestDistance(source) { it == 5 })
+        assertEquals(14L, SampleDijkstra.findShortestDistance(source) { it == 6 })
+        assertEquals(15L, SampleDijkstra.findShortestDistance(source) { it == 7 })
+        assertEquals(50L, SampleDijkstra.findShortestDistance(source) { it == 8 })
     }
 
     /**
-     * Returns all finite, weighted edges from [node] as a finite sequence.
+     * Implementation using a sample graph with weighted edges for testing.
      */
-    private fun getEdges(node: Int): List<DirectedEdge<Int>> = when (node) {
-        1 -> listOf(DirectedEdge(2, 9L), DirectedEdge(6, 14L), DirectedEdge(7, 15L))
-        2 -> listOf(DirectedEdge(3, 24L))
-        3 -> listOf(DirectedEdge(5, 2L), DirectedEdge(8, 19L))
-        4 -> listOf(DirectedEdge(3, 6L), DirectedEdge(8, 6L))
-        5 -> listOf(DirectedEdge(4, 11L), DirectedEdge(8, 16L))
-        6 -> listOf(DirectedEdge(3, 18L), DirectedEdge(5, 30L), DirectedEdge(7, 5L))
-        7 -> listOf(DirectedEdge(5, 20L), DirectedEdge(8, 44L))
-        8 -> emptyList()
-        else -> throw IllegalArgumentException("Unexpected node: $node")
+    private object SampleDijkstra : Dijkstra<Int>() {
+        override fun getEdges(node: Int): Iterable<DirectedEdge<Int>> = when (node) {
+            1 -> listOf(DirectedEdge(2, 9L), DirectedEdge(6, 14L), DirectedEdge(7, 15L))
+            2 -> listOf(DirectedEdge(3, 24L))
+            3 -> listOf(DirectedEdge(5, 2L), DirectedEdge(8, 19L))
+            4 -> listOf(DirectedEdge(3, 6L), DirectedEdge(8, 6L))
+            5 -> listOf(DirectedEdge(4, 11L), DirectedEdge(8, 16L))
+            6 -> listOf(DirectedEdge(3, 18L), DirectedEdge(5, 30L), DirectedEdge(7, 5L))
+            7 -> listOf(DirectedEdge(5, 20L), DirectedEdge(8, 44L))
+            8 -> emptyList()
+            else -> throw IllegalArgumentException("Unexpected node: $node")
+        }
     }
 }

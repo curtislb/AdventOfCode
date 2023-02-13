@@ -1,5 +1,8 @@
 package com.curtislb.adventofcode.year2021.day23.amphipod
 
+import com.curtislb.adventofcode.common.number.triangleNumber
+import kotlin.math.abs
+
 /**
  * A burrow that contains [Amphipod]s and consists of a single hallway connecting one or more rooms.
  *
@@ -61,7 +64,82 @@ data class Burrow(
      * - Once an amphipod stops moving in the hallway, it will stay in that spot until it can move
      *   into a room.
      */
-    fun energyRequiredToOrganize(): Long? = OrganizedBurrowSearch.findShortestDistance(this)
+    fun energyRequiredToOrganize(): Long? = BurrowSearch.findShortestDistance(
+        source = this,
+        heuristic = { it.manhattanEnergyCost() },
+        isGoal = { it.isOrganized() }
+    )
+
+    /**
+     * Returns `true` if all [Amphipod]s in the burrow are in their assigned rooms.
+     */
+    private fun isOrganized(): Boolean {
+        // Check if any amphipods are in the hallway
+        if (hallway.any { it != null }) {
+            return false
+        }
+
+        // Check if any room space is empty or contains the wrong type of amphipod
+        rooms.forEachIndexed { index, amphipods ->
+            if (amphipods.size < roomCapacity || amphipods.any { it.roomIndex != index }) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    /**
+     * Returns the Manhattan distance from each [Amphipod] in the burrow to its final destination
+     * space, multiplied by its [Amphipod.energyPerStep] value.
+     */
+    private fun manhattanEnergyCost(): Long {
+        // Calculate energy for each amphipod to move to the innermost space of its room
+        val hallwayEnergy = hallway.indices.sumOf { hallwayManhattanEnergyCost(it) }
+        val roomEnergy = rooms.indices.sumOf { roomManhattanEnergyCost(it) }
+
+        // Subtract the over-counted energy cost for each room
+        val excessDistancePerRoom = triangleNumber(roomCapacity - 1)
+        val excessEnergy = Amphipod.values().sumOf { it.energyPerStep } * excessDistancePerRoom
+        return hallwayEnergy + roomEnergy - excessEnergy
+    }
+
+    /**
+     * Returns the Manhattan distance from the [Amphipod] located at the given [hallwayIndex] to the
+     * innermost space of its destination room, multiplied by its [Amphipod.energyPerStep] value.
+     *
+     * If there is no amphipod located at the given [hallwayIndex], this function instead returns 0.
+     */
+    private fun hallwayManhattanEnergyCost(hallwayIndex: Int): Long {
+        val amphipod = hallway[hallwayIndex] ?: return 0L
+        val targetHallwayIndex = roomToHallwayIndex(amphipod.roomIndex)
+        val hallwayDistance = abs(targetHallwayIndex - hallwayIndex)
+        val manhattanDistance = hallwayDistance + roomCapacity
+        return manhattanDistance.toLong() * amphipod.energyPerStep
+    }
+
+    /**
+     * Returns the sum of Manhattan distances multiplied by [Amphipod.energyPerStep] values for each
+     * [Amphipod] at the given [roomIndex] to move to the innermost space of its destination room.
+     */
+    private fun roomManhattanEnergyCost(roomIndex: Int): Long {
+        var totalEnergy = 0L
+        rooms[roomIndex].forEachIndexed { indexInRoom, amphipod ->
+            totalEnergy += if (amphipod.roomIndex == roomIndex) {
+                // The amphipod is already in its destination room
+                indexInRoom * amphipod.energyPerStep
+            } else {
+                // The amphipod must move out of this room and into its destination room
+                val distanceOutOfRoom = roomCapacity - indexInRoom
+                val startHallwayIndex = roomToHallwayIndex(roomIndex)
+                val targetHallwayIndex = roomToHallwayIndex(amphipod.roomIndex)
+                val hallwayDistance = abs(targetHallwayIndex - startHallwayIndex)
+                val manhattanDistance = distanceOutOfRoom + hallwayDistance + roomCapacity
+                manhattanDistance.toLong() * amphipod.energyPerStep
+            }
+        }
+        return totalEnergy
+    }
 
     companion object {
         /**
@@ -103,5 +181,10 @@ data class Burrow(
             val roomCapacity = lines.size - 3
             return Burrow(hallway, rooms, roomCapacity)
         }
+
+        /**
+         * Returns the hallway index of the space immediately outside the given [roomIndex].
+         */
+        internal fun roomToHallwayIndex(roomIndex: Int): Int = (roomIndex + 1) * 2
     }
 }

@@ -6,30 +6,30 @@ import kotlin.test.assertNull
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [bfsApply] and [bfsDistance].
+ * Tests [Bfs].
  */
 class BfsTest {
     @Test
-    fun testApplyToSourceOnly() {
+    fun testForEachNodeWithSourceOnly() {
         for (source in 0..7) {
             val appliedList = mutableListOf<Pair<Int, Long>>()
-            bfsApply(source, ::getNeighbors) { node, distance ->
+            SampleBfs.forEachNode(source) { node, distance ->
                 appliedList.add(Pair(node, distance))
-                true // Stop searching.
+                true // Stop searching
             }
             assertEquals(listOf(Pair(source, 0L)), appliedList)
         }
     }
 
     @Test
-    fun testApplyToSourceAndNeighbors() {
+    fun testForEachNodeWithSourceAndNeighbors() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(2, ::getNeighbors) { node, distance ->
+        SampleBfs.forEachNode(source = 2) { node, distance ->
             if (distance <= 1L) {
                 appliedList.add(Pair(node, distance))
-                false // Don't stop searching.
+                false // Don't stop searching
             } else {
-                true // Stop searching.
+                true // Stop searching
             }
         }
 
@@ -38,11 +38,11 @@ class BfsTest {
     }
 
     @Test
-    fun testApplyToAllInSubgraph() {
+    fun testForEachNodeWithAllNodesInSubgraph() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(2, ::getNeighbors) { node, distance ->
+        SampleBfs.forEachNode(source = 2) { node, distance ->
             appliedList.add(Pair(node, distance))
-            false // Don't stop searching.
+            false // Don't stop searching
         }
 
         val expected = listOf(Pair(2, 0L), Pair(3, 1L), Pair(5, 2L), Pair(6, 1L), Pair(7, 2L))
@@ -50,11 +50,11 @@ class BfsTest {
     }
 
     @Test
-    fun testApplyToAllNodes() {
+    fun testForEachNodeWithAllNodes() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        bfsApply(0, ::getNeighbors) { node, distance ->
+        SampleBfs.forEachNode(source = 0) { node, distance ->
             appliedList.add(Pair(node, distance))
-            false // Don't stop searching.
+            false // Don't stop searching
         }
 
         val expected = listOf(
@@ -71,61 +71,47 @@ class BfsTest {
     }
 
     @Test
-    fun testDistanceToSource() {
+    fun testFindShortestDistanceToSource() {
         for (source in 0..7) {
-            val distance = bfsDistance(
-                source,
-                isGoal = { it == source },
-                getNeighbors = ::getNeighbors
-            )
+            val distance = SampleBfs.findShortestDistance(source) { it == source }
             assertEquals(0L, distance)
         }
     }
 
     @Test
-    fun testDistanceToNonexistentNode() {
+    fun testFindShortestDistanceToNonexistentNode() {
         for (source in 0..7) {
-            val distance = bfsDistance(
-                source,
-                isGoal = { it == 8 },
-                getNeighbors = ::getNeighbors
-            )
+            val distance = SampleBfs.findShortestDistance(source) { it == 8 }
             assertNull(distance)
         }
     }
 
     @Test
-    fun testDistanceToUnreachableNode() {
-        val distance = bfsDistance(
-            source = 2,
-            isGoal = { it == 1 },
-            getNeighbors = ::getNeighbors
-        )
+    fun testFindShortestDistanceToUnreachableNode() {
+        val distance = SampleBfs.findShortestDistance(source = 2) { it == 1 }
         assertNull(distance)
     }
 
     @Test
     fun testDistanceToReachableNode() {
-        val distance = bfsDistance(
-            source = 0,
-            isGoal = { it == 6 },
-            getNeighbors = ::getNeighbors
-        )
+        val distance = SampleBfs.findShortestDistance(source = 0) { it == 6 }
         assertEquals(3L, distance)
     }
 
     /**
-     * Returns all neighbors of [node] in the test graph as a finite sequence.
+     * Implementation using a sample graph with directed edges for testing.
      */
-    private fun getNeighbors(node: Int): List<Int> = when (node) {
-        0 -> listOf(1)
-        1 -> listOf(2, 4, 5)
-        2 -> listOf(3, 6)
-        3 -> listOf(2, 7)
-        4 -> listOf(0, 5)
-        5 -> listOf(6)
-        6 -> listOf(5)
-        7 -> listOf(3, 6)
-        else -> throw IllegalArgumentException("Unexpected node: $node")
+    private object SampleBfs : Bfs<Int>() {
+        override fun getNeighbors(node: Int): List<Int> = when (node) {
+            0 -> listOf(1)
+            1 -> listOf(2, 4, 5)
+            2 -> listOf(3, 6)
+            3 -> listOf(2, 7)
+            4 -> listOf(0, 5)
+            5 -> listOf(6)
+            6 -> listOf(5)
+            7 -> listOf(3, 6)
+            else -> throw IllegalArgumentException("Unexpected node: $node")
+        }
     }
 }

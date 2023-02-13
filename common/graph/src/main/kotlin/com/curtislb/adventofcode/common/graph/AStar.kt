@@ -7,32 +7,26 @@ import com.curtislb.adventofcode.common.heap.MinimumHeap
  */
 abstract class AStar<T> {
     /**
-     * Returns the heuristic value for the given [node].
-     *
-     * This value is an estimate of the minimal path cost from [node] to a node for which [isGoal]
-     * returns `true`. This function must *not* return a negative value or a value that is greater
-     * than the minimal path cost to any goal node.
-     */
-    protected abstract fun heuristic(node: T): Long
-
-    /**
-     * Returns `true` if the given [node] is a goal node.
-     */
-    protected abstract fun isGoal(node: T): Boolean
-
-    /**
      * Returns all weighted edges from [node] to adjacent nodes in the graph.
      */
     protected abstract fun getEdges(node: T): Iterable<DirectedEdge<T>>
 
     /**
      * Returns the minimal path cost from [source] to any node in the graph for which [isGoal]
-     * returns `true`.
+     * returns `true`, using the given admissible [heuristic] function.
      *
      * If there is no path from [source] to a goal node via edges given by the [getEdges] function,
      * this function instead returns `null`.
+     *
+     * The [heuristic] function should return an estimate of the minimal path cost from a node to
+     * any goal node. It must *not* return a negative value or a value that is greater than the
+     * minimal path cost from a node. If it does, the behavior of this function becomes undefined.
      */
-    fun findShortestDistance(source: T): Long? {
+    fun findShortestDistance(
+        source: T,
+        heuristic: (node: T) -> Long,
+        isGoal: (node: T) -> Boolean
+    ): Long? {
         // Add the source node to the search set
         val distanceMap = mutableMapOf(source to 0L)
         val nodeHeap = MinimumHeap<T>().apply { addOrDecreaseKey(source, heuristic(source)) }

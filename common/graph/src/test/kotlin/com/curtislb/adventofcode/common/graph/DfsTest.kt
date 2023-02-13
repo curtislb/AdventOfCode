@@ -5,36 +5,33 @@ import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [dfsPaths].
+ * Tests [Dfs].
  */
 class DfsTest {
     @Test
-    fun testPathsWithNoGoals() {
+    fun testFindAllPathsWithNoGoals() {
         for (source in 0..3) {
-            assertEquals(
-                emptyMap(),
-                dfsPaths(source, isGoal = { false }, getNeighbors = ::getNeighbors)
-            )
+            assertEquals(emptyMap(), SampleDfs.findAllPaths(source) { false })
         }
     }
 
     @Test
-    fun testPathsWithSourceAsGoal() {
+    fun testFindAllPathsWithSourceAsGoal() {
         for (source in 0..3) {
-            val paths = dfsPaths(source, isGoal = { it == source }, getNeighbors = ::getNeighbors)
+            val paths = SampleDfs.findAllPaths(source) { it == source }
             assertEquals(mapOf(source to listOf(emptyList())), paths)
         }
     }
 
     @Test
-    fun testPathsInSubgraph() {
-        val paths = dfsPaths(1, isGoal = { true }, getNeighbors = ::getNeighbors)
+    fun testFindAllPathsInSubgraph() {
+        val paths = SampleDfs.findAllPaths(1) { true }
         assertEquals(mapOf(1 to listOf(emptyList()), 3 to listOf(listOf(3))), paths)
     }
 
     @Test
-    fun testPathsInFullGraph() {
-        val paths = dfsPaths(2, isGoal = { it == 3 }, getNeighbors = ::getNeighbors)
+    fun testFindAllPathsInFullGraph() {
+        val paths = SampleDfs.findAllPaths(2) { it == 3 }
         assertEquals(1, paths.size)
 
         val expectedPaths = listOf(listOf(0, 3), listOf(0, 1, 3), listOf(1, 3))
@@ -44,13 +41,15 @@ class DfsTest {
     }
 
     /**
-     * Returns all neighbors of [node] in the test graph as a finite sequence.
+     * Implementation using a sample graph with directed edges for testing.
      */
-    private fun getNeighbors(node: Int): Sequence<Int> = when (node) {
-        0 -> sequenceOf(1, 2, 3)
-        1 -> sequenceOf(3)
-        2 -> sequenceOf(0, 1)
-        3 -> emptySequence()
-        else -> throw IllegalArgumentException("Unexpected node: $node")
+    private object SampleDfs : Dfs<Int>() {
+        override fun getNeighbors(node: Int): Sequence<Int> = when (node) {
+            0 -> sequenceOf(1, 2, 3)
+            1 -> sequenceOf(3)
+            2 -> sequenceOf(0, 1)
+            3 -> emptySequence()
+            else -> throw IllegalArgumentException("Unexpected node: $node")
+        }
     }
 }

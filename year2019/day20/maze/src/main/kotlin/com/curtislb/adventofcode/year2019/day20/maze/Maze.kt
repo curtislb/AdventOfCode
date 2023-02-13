@@ -1,9 +1,9 @@
 package com.curtislb.adventofcode.year2019.day20.maze
 
 import com.curtislb.adventofcode.common.collection.getOrNull
-import com.curtislb.adventofcode.common.graph.bfsDistance
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.graph.Bfs
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.io.mapLines
@@ -55,26 +55,21 @@ class Maze(file: File) {
         exitLabel: String,
         isRecursive: Boolean = false
     ): Long? {
-        return bfsDistance(
-            source = Location(labeledSpaces[entranceLabel]?.first() ?: return null),
-            isGoal = { location ->
-                if (location.depth != 0) {
-                    return@bfsDistance false
-                }
-                val space = grid.getOrNull(location.point)
-                space is LabeledSpace && space.label == exitLabel
-            },
-            getNeighbors = { location ->
-                val neighbors = mutableListOf<Location>()
-                for (neighbor in location.point.cardinalNeighbors()) {
-                    if (grid.getOrNull(neighbor)?.isOccupiable == true) {
-                        neighbors.add(Location(neighbor, location.depth))
-                    }
-                }
-                neighbors.addAll(getPortalLocations(location, isRecursive))
-                neighbors
-            }
-        )
+        val search = Search(isRecursive)
+        val source = Location(labeledSpaces[entranceLabel]?.first() ?: return null)
+        return search.findShortestDistance(source) { isLabeledExit(it, exitLabel) }
+    }
+
+    /**
+     * Returns `true` if the given [location] is an exit with the given [exitLabel].
+     */
+    private fun isLabeledExit(location: Location, exitLabel: String): Boolean {
+        if (location.depth != 0) {
+            return false
+        }
+
+        val space = grid.getOrNull(location.point)
+        return space is LabeledSpace && space.label == exitLabel
     }
 
     /**
@@ -241,6 +236,27 @@ class Maze(file: File) {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Breadth-first search config for locating the shortest path out of the maze.
+     *
+     * @param isRecursive Whether the maze is defined recursively across multiple levels.
+     */
+    private inner class Search(private val isRecursive: Boolean) : Bfs<Location>() {
+        /**
+         * Returns all [Location]s that are adjacent to the given location [node] in the maze.
+         */
+        override fun getNeighbors(node: Location): Iterable<Location> {
+            val neighbors = mutableListOf<Location>()
+            for (neighbor in node.point.cardinalNeighbors()) {
+                if (grid.getOrNull(neighbor)?.isOccupiable == true) {
+                    neighbors.add(Location(neighbor, node.depth))
+                }
+            }
+            neighbors.addAll(getPortalLocations(node, isRecursive))
+            return neighbors
         }
     }
 }

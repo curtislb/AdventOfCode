@@ -7,7 +7,7 @@ abstract class GameOfLife<S, K, V> {
     /**
      * Returns the value associated with the given [key] in the current game [state].
      */
-    abstract fun getValue(state: S, key: K): V
+    protected abstract fun getValue(state: S, key: K): V
 
     /**
      * Returns a copy of [state] with the given [key] mapped to the given [value].
@@ -15,7 +15,7 @@ abstract class GameOfLife<S, K, V> {
      * If [state] is mutable, this method may update it in-place. An implementation that does this
      * *must* also provide a defensive copy function by overriding [copyState].
      */
-    abstract fun setValue(state: S, key: K, value: V): S
+    protected abstract fun setValue(state: S, key: K, value: V): S
 
     /**
      * Returns a (finite) sequence containing all keys in the current game [state] that may be
@@ -25,19 +25,19 @@ abstract class GameOfLife<S, K, V> {
      * iteration. However, returning a larger sequence will increase the time needed to process
      * updates for the iteration.
      */
-    abstract fun getUpdatableKeys(state: S): Sequence<K>
+    protected abstract fun getUpdatableKeys(state: S): Sequence<K>
 
     /**
      * Returns a (finite) sequence of all keys "neighboring" a given [key] in the current game
      * [state].
      */
-    abstract fun getNeighboringKeys(state: S, key: K): Sequence<K>
+    protected abstract fun getNeighboringKeys(state: S, key: K): Sequence<K>
 
     /**
      * Returns the result of applying update rules to a given [value] for one iteration, given the
      * current values of all its [neighbors].
      */
-    abstract fun applyUpdateRules(value: V, neighbors: Sequence<V>): V
+    protected abstract fun applyUpdateRules(value: V, neighbors: Sequence<V>): V
 
     /**
      * Returns a defensive copy of the given game [state].
@@ -45,17 +45,17 @@ abstract class GameOfLife<S, K, V> {
      * An implementation that modifies the current game state in-place in [setValue] *must* also
      * override this method.
      */
-    open fun copyState(state: S): S = state
+    protected open fun copyState(state: S): S = state
 
     /**
-     * Returns if the simulation should terminate, given the [previousState] and current [state] of
-     * the game.
+     * Returns `true` if the simulation should terminate, given the [previousState] and current
+     * [state] of the game.
      */
-    open fun shouldTerminate(previousState: S, state: S): Boolean = false
+    protected open fun shouldTerminate(previousState: S, state: S): Boolean = false
 
     /**
-     * Runs the Game of Life simulation, starting from an [initialState] and ending after
-     * [maxIterations] or when [shouldTerminate] is `true`, and returns the resulting game state.
+     * Returns the resulting game state after running the Game of Life simulation, starting from an
+     * [initialState] and ending after [maxIterations] or when [shouldTerminate] returns `true`.
      */
     fun runSimulation(initialState: S, maxIterations: Int? = null): S {
         var state = initialState

@@ -160,7 +160,6 @@ import com.curtislb.adventofcode.year2019.day18.vault.Vault
 import com.curtislb.adventofcode.year2019.day18.vault.search.KeySearch
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 18, part 2.
@@ -169,7 +168,8 @@ import kotlin.system.measureTimeMillis
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "part2", "input.txt")): Long? {
     val vault = Vault(inputPath.toFile())
-    return KeySearch(vault).minSearchDistance()
+    val keySearch = KeySearch(vault)
+    return keySearch.findMinimumSearchDistance()
 }
 
 fun main() = when (val solution = solve()) {

@@ -97,9 +97,9 @@ position to the location of the oxygen system?
 
 package com.curtislb.adventofcode.year2019.day15.part1
 
-import com.curtislb.adventofcode.common.graph.bfsDistance
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
+import com.curtislb.adventofcode.year2019.day15.repair.DroidSearch
 import com.curtislb.adventofcode.year2019.day15.repair.Space
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -110,15 +110,12 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
-    // Have the droid fully explore the grid.
+    // Have the droid fully explore the grid
     val droid = Droid(inputPath.toFile()).apply { explore() }
 
-    // Use BFS to determine the distance to the oxygen system.
-    return bfsDistance(
-        source = Point.ORIGIN,
-        isGoal = { droid.spaceAt(it) == Space.OXYGEN },
-        getNeighbors = { droid.adjacentOccupiableSpaces(it) }
-    )
+    // Use BFS to determine the distance to the oxygen system
+    val search = DroidSearch(droid)
+    return search.findShortestDistance(source = Point.ORIGIN) { droid.spaceAt(it) == Space.OXYGEN }
 }
 
 fun main() = when (val solution = solve()) {

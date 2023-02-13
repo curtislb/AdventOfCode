@@ -60,11 +60,14 @@ import java.nio.file.Paths
  *
  * @param inputPath The path to the input file for this puzzle.
  */
-fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
+fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     val riskLevelMap = RiskLevelMap.fromFile(inputPath.toFile())
     return riskLevelMap.findMinimalPathRisk()
 }
 
 fun main() {
-    println(solve())
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }
