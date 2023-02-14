@@ -20,6 +20,20 @@ fun Iterable<Int>.digitsToInt(radix: Int = 10): Int {
 }
 
 /**
+ * Returns the integer given by concatenating the digits in this iterable with the given [radix].
+ *
+ * @throws IllegalArgumentException If any number in this iterable is not a digit with the given
+ *  [radix].
+ */
+fun Iterable<Int>.digitsToLong(radix: Int = 10): Long {
+    val digitRange = 0 until radix
+    return fold(0L) { prefix, digit ->
+        require(digit in digitRange) { "Invalid digit for radix $radix: $digit" }
+        prefix * radix + digit
+    }
+}
+
+/**
  * Returns the number of digits in this non-negative integer when written with the given [radix].
  *
  * @throws IllegalArgumentException If this number is negative or [radix] is less than 2.

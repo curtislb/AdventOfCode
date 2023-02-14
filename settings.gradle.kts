@@ -377,3 +377,8 @@ include("year2021:day22:reactor")
 include("year2021:day23:amphipod")
 include("year2021:day23:part1")
 include("year2021:day23:part2")
+
+// Day 24: Arithmetic Logic Unit
+include("year2021:day24:monad")
+include("year2021:day24:part1")
+include("year2021:day24:part2")
