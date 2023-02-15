@@ -382,3 +382,7 @@ include("year2021:day23:part2")
 include("year2021:day24:monad")
 include("year2021:day24:part1")
 include("year2021:day24:part2")
+
+// Day 25: Sea Cucumber
+include("year2021:day25:cucumber")
+include("year2021:day25:part1")
