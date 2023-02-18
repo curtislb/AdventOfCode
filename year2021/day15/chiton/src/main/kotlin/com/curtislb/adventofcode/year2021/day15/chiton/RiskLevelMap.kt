@@ -2,8 +2,7 @@ package com.curtislb.adventofcode.year2021.day15.chiton
 
 import com.curtislb.adventofcode.common.collection.getCyclic
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.graph.AStar
-import com.curtislb.adventofcode.common.graph.DirectedEdge
+import com.curtislb.adventofcode.common.graph.WeightedGraph
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.toGrid
 import java.io.File
@@ -43,18 +42,16 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
         get() = baseRiskGrid.width * scaleFactor
 
     /**
-     * A* search config for finding the lowest-risk path through the map.
+     * A graph with edges from each position in the full map to its adjacent positions, weighted by
+     * the risk level at the new position.
      */
-    private val cavernSearch = object : AStar<Point>() {
-        /**
-         * Returns all positions adjacent to [node], along with their associated risk levels.
-         */
-        override fun getEdges(node: Point): List<DirectedEdge<Point>> =
+    private val riskGraph = object : WeightedGraph<Point>() {
+        override fun getEdges(node: Point): List<Edge<Point>> =
             node.cardinalNeighbors()
                 .filter { it in this@RiskLevelMap }
                 .map { neighbor ->
                     val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
-                    DirectedEdge(neighbor, riskLevel(rowIndex, colIndex).toLong())
+                    Edge(neighbor, riskLevel(rowIndex, colIndex).toLong())
                 }
     }
 
@@ -101,7 +98,7 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
      * The total risk of a path is given by adding the risk level of each space that is *entered*
      * (not exited) while traveling along that path.
      */
-    fun findMinimalPathRisk(): Long? = cavernSearch.findShortestDistance(
+    fun findMinimalPathRisk(): Long? = riskGraph.aStarDistance(
         source = Point.ORIGIN,
         heuristic = ::manhattanDistanceToGoal,
         isGoal = ::isGoal

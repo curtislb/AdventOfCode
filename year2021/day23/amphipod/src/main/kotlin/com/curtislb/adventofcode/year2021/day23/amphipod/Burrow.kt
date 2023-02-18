@@ -64,7 +64,7 @@ data class Burrow(
      * - Once an amphipod stops moving in the hallway, it will stay in that spot until it can move
      *   into a room.
      */
-    fun energyRequiredToOrganize(): Long? = BurrowSearch.findShortestDistance(
+    fun energyRequiredToOrganize(): Long? = BurrowGraph.aStarDistance(
         source = this,
         heuristic = { it.manhattanEnergyCost() },
         isGoal = { it.isOrganized() }

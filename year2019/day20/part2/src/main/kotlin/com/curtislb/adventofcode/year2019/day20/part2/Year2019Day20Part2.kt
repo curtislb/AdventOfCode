@@ -158,8 +158,8 @@ fun solve(
     entranceLabel: String = "AA",
     exitLabel: String = "ZZ"
 ): Long? {
-    val maze = Maze(inputPath.toFile())
-    return maze.findShortestDistance(entranceLabel, exitLabel, isRecursive = true)
+    val maze = Maze.fromFile(inputPath.toFile(), isRecursive = true)
+    return maze.findShortestDistance(entranceLabel, exitLabel)
 }
 
 fun main() = when (val solution = solve()) {

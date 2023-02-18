@@ -1,8 +1,7 @@
 package com.curtislb.adventofcode.year2019.day18.vault.search
 
 /**
- * A collection of keys in the vault, each of which is represented by a character from `a` to
- * `z`.
+ * A collection of keys in the vault, each of which is represented by a character from `a` to `z`.
  *
  * @param keyFlags An integer whose 26 rightmost bits indicate whether each possible key is in this
  *  collection.
@@ -21,7 +20,12 @@ value class KeyCollection(private val keyFlags: Int = 0) {
 
     companion object {
         /**
-         * Returns a [KeyCollection] containing [keys].
+         * The minimum character code for any key.
+         */
+        private const val MIN_KEY_CODE = 97
+
+        /**
+         * Returns a [KeyCollection] containing the given [keys].
          */
         fun from(keys: Iterable<Char>): KeyCollection {
             var keyFlags = 0
@@ -34,6 +38,6 @@ value class KeyCollection(private val keyFlags: Int = 0) {
         /**
          * Returns the integer flag corresponding to this key [Char].
          */
-        private fun Char.toFlag(): Int = 1 shl (code - 96)
+        private fun Char.toFlag(): Int = 1 shl (code - MIN_KEY_CODE)
     }
 }

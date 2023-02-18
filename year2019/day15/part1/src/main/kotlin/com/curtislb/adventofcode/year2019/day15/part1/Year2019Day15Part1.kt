@@ -99,8 +99,6 @@ package com.curtislb.adventofcode.year2019.day15.part1
 
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
-import com.curtislb.adventofcode.year2019.day15.repair.DroidSearch
-import com.curtislb.adventofcode.year2019.day15.repair.Space
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -114,11 +112,12 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
     val droid = Droid(inputPath.toFile()).apply { explore() }
 
     // Use BFS to determine the distance to the oxygen system
-    val search = DroidSearch(droid)
-    return search.findShortestDistance(source = Point.ORIGIN) { droid.spaceAt(it) == Space.OXYGEN }
+    return droid.exploredGraph.bfsDistance(Point.ORIGIN) { it == droid.goalPosition }
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("Unable to find the oxygen system.")
-    else -> println(solution)
+fun main() {
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }

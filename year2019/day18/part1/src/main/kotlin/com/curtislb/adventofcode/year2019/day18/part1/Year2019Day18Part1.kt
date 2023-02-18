@@ -127,10 +127,10 @@ import java.nio.file.Paths
 fun solve(inputPath: Path = Paths.get("..", "input", "part1", "input.txt")): Long? {
     val vault = Vault(inputPath.toFile())
     val keySearch = KeySearch(vault)
-    return keySearch.findMinimumSearchDistance()
+    return keySearch.minimumSearchDistance()
 }
 
 fun main() = when (val solution = solve()) {
-    null -> println("No path found.")
+    null -> println("No solution")
     else -> println(solution)
 }

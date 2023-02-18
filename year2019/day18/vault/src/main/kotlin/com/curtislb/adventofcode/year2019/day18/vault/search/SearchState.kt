@@ -8,4 +8,4 @@ import com.curtislb.adventofcode.common.geometry.Point
  * @param positions The current positions of all searchers in the vault.
  * @param heldKeys A collection of keys currently held by all searchers.
  */
-data class SearchState(val positions: Collection<Point>, val heldKeys: KeyCollection)
+data class SearchState(val positions: List<Point>, val heldKeys: KeyCollection)

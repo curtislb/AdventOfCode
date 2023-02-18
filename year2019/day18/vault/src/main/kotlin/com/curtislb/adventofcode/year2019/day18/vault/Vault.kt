@@ -33,8 +33,8 @@ class Vault(file: File) {
     /**
      * All positions in this vault that contain an [EntranceSpace].
      */
-    val entranceLocations: Set<Point> by lazy {
-        mutableSetOf<Point>().apply {
+    val entranceLocations: List<Point> by lazy {
+        mutableListOf<Point>().apply {
             grid.forEachPointValue { point, space ->
                 if (space == EntranceSpace) {
                     add(point)

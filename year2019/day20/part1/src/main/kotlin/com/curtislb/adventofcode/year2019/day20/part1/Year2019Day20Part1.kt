@@ -111,11 +111,13 @@ fun solve(
     entranceLabel: String = "AA",
     exitLabel: String = "ZZ"
 ): Long? {
-    val maze = Maze(inputPath.toFile())
+    val maze = Maze.fromFile(inputPath.toFile())
     return maze.findShortestDistance(entranceLabel, exitLabel)
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("No path found.")
-    else -> println(solution)
+fun main() {
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }

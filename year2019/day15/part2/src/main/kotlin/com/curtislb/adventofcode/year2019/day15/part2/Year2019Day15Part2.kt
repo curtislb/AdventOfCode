@@ -59,7 +59,6 @@ oxygen?
 package com.curtislb.adventofcode.year2019.day15.part2
 
 import com.curtislb.adventofcode.year2019.day15.repair.Droid
-import com.curtislb.adventofcode.year2019.day15.repair.DroidSearch
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.max
@@ -78,16 +77,17 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long? {
 
     // Use BFS to find the furthest open space from the oxygen system
     var maxDistance = 0L
-    val search = DroidSearch(droid)
-    search.forEachNode(source = oxygenStartPosition) { _, distance ->
+    droid.exploredGraph.bfsApply(oxygenStartPosition) { _, distance ->
         maxDistance = max(maxDistance, distance)
-        false // Not done searching
+        false // Keep searching
     }
 
     return maxDistance
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("Unable to find the oxygen system.")
-    else -> println(solution)
+fun main() {
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }

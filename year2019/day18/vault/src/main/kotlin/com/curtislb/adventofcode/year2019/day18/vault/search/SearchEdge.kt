@@ -38,7 +38,7 @@ data class SearchEdge(val distance: Int, val doorsAndKeys: List<Space>) {
         /**
          * Returns a [SearchEdge] representing the given [path] of spaces through the vault.
          */
-        fun from(path: List<Space>): SearchEdge {
+        fun fromPath(path: List<Space>): SearchEdge {
             return SearchEdge(path.size, path.filter { it is DoorSpace || it is KeySpace })
         }
     }

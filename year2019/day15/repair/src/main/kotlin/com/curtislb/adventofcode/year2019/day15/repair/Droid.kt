@@ -3,6 +3,7 @@ package com.curtislb.adventofcode.year2019.day15.repair
 import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.geometry.SpatialInfo
 import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.graph.UnweightedGraph
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
@@ -24,6 +25,13 @@ class Droid(file: File) {
      */
     var goalPosition: Point? = null
         private set
+
+    /**
+     * A graph with edges from each grid position to adjacent occupiable spaces seen by the droid.
+     */
+    val exploredGraph = object : UnweightedGraph<Point>() {
+        override fun getNeighbors(node: Point): Iterable<Point> = adjacentOccupiableSpaces(node)
+    }
 
     /**
      * The most recent space identified by the repair droid.
@@ -93,19 +101,19 @@ class Droid(file: File) {
     /**
      * Makes the repair droid search all grid spaces reachable from its current position.
      */
-    fun explore() = exploreInternal(visited = mutableSetOf())
+    fun explore() = exploreRecursive(visited = mutableSetOf())
 
     /**
      * Recursive helper function for [explore].
      */
-    private fun exploreInternal(visited: MutableSet<Point>) {
+    private fun exploreRecursive(visited: MutableSet<Point>) {
         visited.add(spatialInfo.position)
         for (direction in Direction.cardinalValues()) {
             val newPosition = spatialInfo.position.move(direction)
             if (newPosition !in visited && spaceAt(newPosition).isOccupiable != false) {
                 move(direction)
                 if (spatialInfo.position == newPosition) {
-                    exploreInternal(visited)
+                    exploreRecursive(visited)
                     move(direction.reverse())
                 }
             }

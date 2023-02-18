@@ -1,22 +1,16 @@
 package com.curtislb.adventofcode.year2021.day23.amphipod
 
 import com.curtislb.adventofcode.common.collection.replace
-import com.curtislb.adventofcode.common.graph.AStar
-import com.curtislb.adventofcode.common.graph.DirectedEdge
+import com.curtislb.adventofcode.common.graph.WeightedGraph
 import com.curtislb.adventofcode.common.range.size
 
 /**
- * A* search config for finding the minimum energy required to reach a given [Burrow] state.
- *
- * See [Burrow.energyRequiredToOrganize] for more details.
+ * A graph with edges from each possible [Burrow] state to new [Burrow] states that result from
+ * moving a single amphipod to a valid space, weighted by the energy required to move it.
  */
-internal object BurrowSearch : AStar<Burrow>() {
-    /**
-     * Returns a list of all burrow states that result from a single amphipod in the given burrow
-     * [node] moving to a valid space, along with the associated energy cost.
-     */
-    override fun getEdges(node: Burrow): List<DirectedEdge<Burrow>> {
-        val edges = mutableListOf<DirectedEdge<Burrow>>()
+internal object BurrowGraph : WeightedGraph<Burrow>() {
+    override fun getEdges(node: Burrow): List<Edge<Burrow>> {
+        val edges = mutableListOf<Edge<Burrow>>()
 
         // Try moving each amphipod in the hallway to its destination room
         node.hallway.forEachIndexed { hallwayIndex, amphipod ->
@@ -27,7 +21,7 @@ internal object BurrowSearch : AStar<Burrow>() {
                     val newRooms = node.rooms.replace(amphipod.roomIndex) { it + amphipod }
                     val newState = node.copy(hallway = newHallway, rooms = newRooms)
                     val energy = distance * amphipod.energyPerStep
-                    edges.add(DirectedEdge(node = newState, weight = energy))
+                    edges.add(Edge(node = newState, weight = energy))
                 }
             }
         }
@@ -43,7 +37,7 @@ internal object BurrowSearch : AStar<Burrow>() {
                         val newRooms = node.rooms.replace(roomIndex) { it.subList(0, it.lastIndex) }
                         val newState = node.copy(hallway = newHallway, rooms = newRooms)
                         val energy = distance * amphipod.energyPerStep
-                        edges.add(DirectedEdge(node = newState, weight = energy))
+                        edges.add(Edge(node = newState, weight = energy))
                     }
                 }
             }

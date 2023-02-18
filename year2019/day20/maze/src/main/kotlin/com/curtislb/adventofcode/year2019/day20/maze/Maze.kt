@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.year2019.day20.maze
 import com.curtislb.adventofcode.common.collection.getOrNull
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.graph.Bfs
+import com.curtislb.adventofcode.common.graph.UnweightedGraph
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.io.mapLines
@@ -15,49 +15,46 @@ import java.io.File
 /**
  * A maze containing labeled spaces that lead to other locations within or to additional recursive
  * copies of the maze.
- *
- * @param file A file containing the layout for the maze. Each line should contain a row of
- *  characters, with each representing a [Space] in the maze, or part of a two-letter label to be
- *  associated with an adjacent non-empty space.
  */
-class Maze(file: File) {
-    /**
-     * A matrix representing the space at each position in the maze.
-     */
-    private val grid: Grid<Space>
-
-    init {
-        val charRows = file.mapLines { it.trimEnd().toMutableList() }
-        val spaceLabels = processLabels(charRows)
-        grid = createSpaceGrid(charRows, spaceLabels)
-    }
-
+class Maze(private val grid: Grid<Space>, private val isRecursive: Boolean = false) {
     /**
      * A map from each label to the positions of spaces in the maze grid with that label.
      */
     private val labeledSpaces: Map<String, List<Point>> = findLabeledSpaces(grid)
 
     /**
+     * A graph with edges from each [Location] in the maze to its adjacent locations.
+     */
+    private val locationGraph = object : UnweightedGraph<Location>() {
+        override fun getNeighbors(node: Location): Iterable<Location> {
+            val neighbors = mutableListOf<Location>()
+            for (neighbor in node.point.cardinalNeighbors()) {
+                if (grid.getOrNull(neighbor)?.isOccupiable == true) {
+                    neighbors.add(Location(neighbor, node.depth))
+                }
+            }
+            neighbors.addAll(getPortalLocations(node, isRecursive))
+            return neighbors
+        }
+    }
+
+    /**
      * Returns the shortest distance through the maze from the space labeled [entranceLabel] to one
      * labeled [exitLabel].
      *
-     * If [isRecursive] is `false`, labeled spaces are treated as portals, which are adjacent to all
-     * other spaces in the maze that share the same label.
+     * If the maze is non-recursive, labeled spaces are treated as portals, which are adjacent to
+     * all other spaces in the maze that share the same label.
      *
-     * If [isRecursive] is `true`, labeled spaces are treated as entrances to or exits from
-     * recursive copies of the maze. Labeled spaces in the interior (not outer edges) of the maze
-     * are adjacent to other similarly labeled spaces in a copy of the maze one level deeper, and
-     * vice versa. In this case, the function returns the shortest distance between the spaces
-     * labeled [entranceLabel] and [exitLabel] within the original, outermost copy of the maze.
+     * If the maze is recursive, labeled spaces are treated as entrances to or exits from recursive
+     * copies of the maze. Labeled spaces in the interior (not outer edges) of the maze are adjacent
+     * to other similarly labeled spaces in a copy of the maze one level deeper, and vice versa. In
+     * this case, the function returns the shortest distance between the spaces labeled
+     * [entranceLabel] and [exitLabel] within the original, outermost copy of the maze.
      */
-    fun findShortestDistance(
-        entranceLabel: String,
-        exitLabel: String,
-        isRecursive: Boolean = false
-    ): Long? {
-        val search = Search(isRecursive)
-        val source = Location(labeledSpaces[entranceLabel]?.first() ?: return null)
-        return search.findShortestDistance(source) { isLabeledExit(it, exitLabel) }
+    fun findShortestDistance(entranceLabel: String, exitLabel: String): Long? {
+        val entranceSpace = labeledSpaces[entranceLabel]?.first() ?: return null
+        val source = Location(entranceSpace)
+        return locationGraph.bfsDistance(source) { isLabeledExit(it, exitLabel) }
     }
 
     /**
@@ -80,13 +77,12 @@ class Maze(file: File) {
      *
      * @see [findShortestDistance]
      */
-    private fun getPortalLocations(location: Location, isRecursive: Boolean): List<Location> {
-        return if (isRecursive) {
+    private fun getPortalLocations(location: Location, isRecursive: Boolean): List<Location> =
+        if (isRecursive) {
             getRecursivePortalLocations(location)
         } else {
             getNonRecursivePortalLocations(location)
         }
-    }
 
     /**
      * Returns all locations within a recursive maze that are adjacent to [location].
@@ -97,15 +93,14 @@ class Maze(file: File) {
     private fun getRecursivePortalLocations(location: Location): List<Location> {
         val space = grid.getOrNull(location.point)
         val isOuterPortal = isOuterPoint(location.point)
-        return when {
-            space !is LabeledSpace || (isOuterPortal && location.depth == 0) -> emptyList()
-
-            else -> {
-                val newPoints =
-                    labeledSpaces[space.label]?.filter { it != location.point } ?: emptyList()
-                val newDepth = if (isOuterPortal) location.depth - 1 else location.depth + 1
-                newPoints.map { Location(it, newDepth) }
-            }
+        return if (space !is LabeledSpace || (isOuterPortal && location.depth == 0)) {
+            emptyList()
+        } else {
+            val newPoints = labeledSpaces[space.label]
+                ?.filter { it != location.point }
+                ?: emptyList()
+            val newDepth = if (isOuterPortal) location.depth - 1 else location.depth + 1
+            newPoints.map { Location(it, newDepth) }
         }
     }
 
@@ -137,6 +132,16 @@ class Maze(file: File) {
     }
 
     companion object {
+        /**
+         * Returns a [Maze] with the layout read from the given [file].
+         */
+        fun fromFile(file: File, isRecursive: Boolean = false): Maze {
+            val charRows = file.mapLines { it.trimEnd().toMutableList() }
+            val spaceLabels = processLabels(charRows)
+            val grid = createSpaceGrid(charRows, spaceLabels)
+            return Maze(grid, isRecursive)
+        }
+
         /**
          * Processes the given [charRows] (representing a maze) by removing all label characters,
          * and returns a map from each labeled point in the grid to its associated label.
@@ -236,27 +241,6 @@ class Maze(file: File) {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Breadth-first search config for locating the shortest path out of the maze.
-     *
-     * @param isRecursive Whether the maze is defined recursively across multiple levels.
-     */
-    private inner class Search(private val isRecursive: Boolean) : Bfs<Location>() {
-        /**
-         * Returns all [Location]s that are adjacent to the given location [node] in the maze.
-         */
-        override fun getNeighbors(node: Location): Iterable<Location> {
-            val neighbors = mutableListOf<Location>()
-            for (neighbor in node.point.cardinalNeighbors()) {
-                if (grid.getOrNull(neighbor)?.isOccupiable == true) {
-                    neighbors.add(Location(neighbor, node.depth))
-                }
-            }
-            neighbors.addAll(getPortalLocations(node, isRecursive))
-            return neighbors
         }
     }
 }
