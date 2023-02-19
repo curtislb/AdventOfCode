@@ -23,19 +23,6 @@ class TreeField(treePattern: String) {
     }.toGrid()
 
     /**
-     * The height (in grid units) of this tree field.
-     */
-    val height = patternGrid.height
-
-    /**
-     * Checks if there is a tree at the given [position] in the grid.
-     */
-    fun isTreeAt(position: Point): Boolean {
-        val (rowIndex, colIndex) = position.toMatrixCoordinates()
-        return patternGrid[rowIndex, colIndex % patternGrid.width]
-    }
-
-    /**
      * Returns the number of trees intersected by a line with the given [slope], starting from the
      * top-left position.
      *
@@ -52,7 +39,7 @@ class TreeField(treePattern: String) {
         var count = 0
         for (point in ray.points()) {
             // Stop after reaching the bottom of the pattern.
-            if (-point.y >= height) {
+            if (-point.y >= patternGrid.height) {
                 break
             }
 
@@ -63,4 +50,10 @@ class TreeField(treePattern: String) {
         }
         return count
     }
+
+    /**
+     * Returns `true` if there is a tree at the given [position] in the grid.
+     */
+    private fun isTreeAt(position: Point): Boolean =
+        patternGrid[position.matrixRow, position.matrixCol % patternGrid.width]
 }

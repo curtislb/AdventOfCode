@@ -127,10 +127,7 @@ class ImageData(file: File) {
     /**
      * TODO
      */
-    operator fun get(point: Point): Boolean {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return this[rowIndex, colIndex]
-    }
+    operator fun get(point: Point): Boolean = this[point.matrixRow, point.matrixCol]
 
     /**
      * TODO

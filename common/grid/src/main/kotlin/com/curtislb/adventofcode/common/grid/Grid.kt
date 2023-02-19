@@ -88,8 +88,7 @@ interface Grid<out E> {
      * @throws IndexOutOfBoundsException If [point] is outside the grid range.
      */
     operator fun get(point: Point): E {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return this[rowIndex, colIndex]
+        return this[point.matrixRow, point.matrixCol]
     }
 
     /**

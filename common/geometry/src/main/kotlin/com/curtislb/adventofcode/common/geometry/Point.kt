@@ -9,16 +9,25 @@ import kotlin.math.atan2
  */
 data class Point(val x: Int, val y: Int) {
     /**
+     * The matrix row index corresponding to this point.
+     */
+    val matrixRow: Int
+        get() = -y
+
+    /**
+     * The matrix column index corresponding to this point.
+     */
+    val matrixCol: Int
+        get() = x
+
+    /**
      * Returns the point given by adding each coordinate of [other] to this point.
      */
-    operator fun plus(other: Point): Point =
-        if (this == ORIGIN) {
-            other
-        } else if (other == ORIGIN) {
-            this
-        } else {
-            Point(x + other.x, y + other.y)
-        }
+    operator fun plus(other: Point): Point = when {
+        this == ORIGIN -> other
+        other == ORIGIN -> this
+        else -> Point(x + other.x, y + other.y)
+    }
 
     /**
      * Returns the point given by subtracting each coordinate of [other] from this point.
@@ -122,11 +131,6 @@ data class Point(val x: Int, val y: Int) {
         val theta = atan2((other.x - x).toDouble(), (other.y - y).toDouble())
         return if (theta >= 0) theta else 2.0 * PI + theta
     }
-
-    /**
-     * Returns the pair of `(row, column)` matrix coordinates corresponding to this point.
-     */
-    fun toMatrixCoordinates(): Pair<Int, Int> = Pair(-y, x)
 
     override fun toString() = "($x, $y)"
 

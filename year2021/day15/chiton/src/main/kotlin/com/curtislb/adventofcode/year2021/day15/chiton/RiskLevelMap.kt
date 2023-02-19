@@ -50,18 +50,16 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
             node.cardinalNeighbors()
                 .filter { it in this@RiskLevelMap }
                 .map { neighbor ->
-                    val (rowIndex, colIndex) = neighbor.toMatrixCoordinates()
-                    Edge(neighbor, riskLevel(rowIndex, colIndex).toLong())
+                    val weight = riskLevel(neighbor.matrixRow, neighbor.matrixCol).toLong()
+                    Edge(neighbor, weight)
                 }
     }
 
     /**
      * Returns if [point] is within the bounds of the full map.
      */
-    operator fun contains(point: Point): Boolean {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return rowIndex in 0 until height && colIndex in 0 until width
-    }
+    operator fun contains(point: Point): Boolean =
+        point.matrixRow in 0 until height && point.matrixCol in 0 until width
 
     /**
      * Returns the risk level at the given [point] position in the full map.
@@ -72,8 +70,7 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
         if (point !in this) {
             throw IndexOutOfBoundsException("Point must fit in ${height}x$width grid: $point")
         }
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return riskLevel(rowIndex, colIndex)
+        return riskLevel(point.matrixRow, point.matrixCol)
     }
 
     /**
@@ -108,19 +105,16 @@ class RiskLevelMap(private val baseRiskGrid: Grid<Int>, private val scaleFactor:
      * Returns the Manhattan distance from the given [point] to the bottom-right corner of the map.
      */
     private fun manhattanDistanceToGoal(point: Point): Long {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        val rowDistance = abs(height - 1 - rowIndex)
-        val colDistance = abs(width - 1 - colIndex)
+        val rowDistance = abs(height - 1 - point.matrixRow)
+        val colDistance = abs(width - 1 - point.matrixCol)
         return rowDistance.toLong() + colDistance.toLong()
     }
 
     /**
      * Returns if [point] corresponds to the bottom-right corner of the full map.
      */
-    private fun isGoal(point: Point): Boolean {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return rowIndex == height - 1 && colIndex == width - 1
-    }
+    private fun isGoal(point: Point): Boolean =
+        point.matrixRow == height - 1 && point.matrixCol == width - 1
 
     /**
      * Returns the risk level at the given [rowIndex] and [colIndex], which is assumed to be within

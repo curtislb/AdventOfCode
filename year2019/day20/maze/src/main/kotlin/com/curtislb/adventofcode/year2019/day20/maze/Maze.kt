@@ -126,9 +126,9 @@ class Maze(private val grid: Grid<Space>, private val isRecursive: Boolean = fal
      * Returns `true` if a given [point] in the maze is on an outer edge, or `false` otherwise.
      */
     private fun isOuterPoint(point: Point): Boolean {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return rowIndex == 0 || rowIndex == grid.lastRowIndex ||
-            colIndex == 0 || colIndex == grid.lastColumnIndex
+        val row = point.matrixRow
+        val col = point.matrixCol
+        return row == 0 || col == 0 || row == grid.lastRowIndex || col == grid.lastColumnIndex
     }
 
     companion object {

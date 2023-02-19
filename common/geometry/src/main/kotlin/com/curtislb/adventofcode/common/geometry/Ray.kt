@@ -8,10 +8,8 @@ import com.curtislb.adventofcode.common.number.Fraction
  * @param source The origin point of the ray.
  * @param slope The slope of the ray, or `null` if its slope is infinite.
  * @param directionParity A flag indicating the direction of the ray. If [slope] is non-null, `true`
- *  indicates that the x values of points on the ray approach positive infinity, whereas `false`
- *  indicates that they approach negative infinity. If [slope] is `null`, `true` indicates that the
- *  y values of points on the ray approach positive infinity, whereas `false` indicates that they
- *  approach negative infinity.
+ *  indicates that the x values of points on the ray approach positive infinity. If [slope] is
+ *  `null`, `true` indicates that the y values of points on the ray approach positive infinity.
  */
 data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boolean) {
     /**

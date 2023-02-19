@@ -23,10 +23,7 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
     /**
      * TODO
      */
-    operator fun get(point: Point): Boolean {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        return this[rowIndex, colIndex]
-    }
+    operator fun get(point: Point): Boolean = this[point.matrixRow, point.matrixCol]
 
     /**
      * TODO

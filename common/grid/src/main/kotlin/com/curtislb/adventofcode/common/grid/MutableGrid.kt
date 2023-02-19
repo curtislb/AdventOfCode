@@ -20,8 +20,7 @@ interface MutableGrid<E> : Grid<E> {
      * @throws IndexOutOfBoundsException If [point] is outside the bounds of the grid.
      */
     operator fun set(point: Point, value: E) {
-        val (rowIndex, colIndex) = point.toMatrixCoordinates()
-        this[rowIndex, colIndex] = value
+        this[point.matrixRow, point.matrixCol] = value
     }
 
     /**

@@ -274,21 +274,6 @@ class PointTest {
     }
 
     @Test
-    fun testToMatrixCoordinates() {
-        assertEquals(Pair(0, 0), Point.ORIGIN.toMatrixCoordinates())
-        assertEquals(Pair(7, 9), Point(9, -7).toMatrixCoordinates())
-        assertEquals(Pair(12, 20), Point(20, -12).toMatrixCoordinates())
-        assertEquals(Pair(15, 0), Point(0, -15).toMatrixCoordinates())
-        assertEquals(Pair(17, 8), Point(8, -17).toMatrixCoordinates())
-        assertEquals(Pair(5, -2), Point(-2, -5).toMatrixCoordinates())
-        assertEquals(Pair(13, -6), Point(-6, -13).toMatrixCoordinates())
-        assertEquals(Pair(-10, 2), Point(2, 10).toMatrixCoordinates())
-        assertEquals(Pair(-9, 5), Point(5, 9).toMatrixCoordinates())
-        assertEquals(Pair(-5, -19), Point(-19, 5).toMatrixCoordinates())
-        assertEquals(Pair(-7, -3), Point(-3, 7).toMatrixCoordinates())
-    }
-
-    @Test
     fun testToString() {
         assertEquals("(0, 0)", Point.ORIGIN.toString())
         assertEquals("(4, 20)", Point(4, 20).toString())

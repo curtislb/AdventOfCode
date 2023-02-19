@@ -82,7 +82,8 @@ class BingoBoard private constructor(private val spaceGrid: Grid<BingoSpace>) {
         }
 
         // Increment the marked counts for this row and column
-        val (rowIndex, colIndex) = position.toMatrixCoordinates()
+        val rowIndex = position.matrixRow
+        val colIndex = position.matrixCol
         rowMarkedCounts[rowIndex]++
         columnMarkedCounts[colIndex]++
 
