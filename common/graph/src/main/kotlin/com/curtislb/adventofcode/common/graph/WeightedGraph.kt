@@ -21,13 +21,13 @@ abstract class WeightedGraph<V> {
 
     /**
      * Returns the minimal path cost from [source] to any node in the graph for which [isGoal]
-     * returns `true`, using the A* path finding algorithm with the given [heuristic] function.
+     * returns `true`, using the A* path search algorithm with the given [heuristic] function.
      *
      * If there is no path from [source] to any goal node, this function instead returns `null`.
      *
      * The [heuristic] function should return an estimate of the minimal path cost from a node to
-     * any goal node. It must *not* return a negative value or a value that is greater than the
-     * minimal path cost from a node. Otherwise, the behavior of this function is undefined.
+     * any goal node. It *must not* return a negative value or a value that is greater than the
+     * minimal path cost. Otherwise, the behavior of this function is undefined.
      */
     fun aStarDistance(
         source: V,
@@ -39,14 +39,15 @@ abstract class WeightedGraph<V> {
         while (!nodeHeap.isEmpty()) {
             // Check the next node with the lowest f-score
             val (node, _) = nodeHeap.popMinimum()
+            val distance = distanceMap[node]!!
             if (isGoal(node)) {
-                return distanceMap[node]
+                return distance
             }
 
             // Update the f-score of each neighboring node
             for (edge in getEdges(node)) {
                 val oldDistance = distanceMap[edge.node]
-                val newDistance = distanceMap[node]?.let { it + edge.weight } ?: Long.MAX_VALUE
+                val newDistance = distance + edge.weight
                 if (oldDistance == null || oldDistance > newDistance) {
                     distanceMap[edge.node] = newDistance
                     nodeHeap.addOrDecreaseKey(edge.node, newDistance + heuristic(edge.node))
@@ -82,7 +83,7 @@ abstract class WeightedGraph<V> {
                     val oldDistance = nodeHeap[edge.node]
                     val newDistance = distance + edge.weight
                     if (oldDistance == null || oldDistance > newDistance) {
-                        nodeHeap.addOrDecreaseKey(edge.node, distance + edge.weight)
+                        nodeHeap.addOrDecreaseKey(edge.node, newDistance)
                     }
                 }
             }
