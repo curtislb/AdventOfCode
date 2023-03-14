@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.common.search
 
 import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.collection.forEachNested
+import com.curtislb.adventofcode.common.iteration.nestedLoop
 
 /**
  * Returns a list of [count] values in this iterable that sum to [targetSum], or `null` if there are
@@ -23,26 +23,30 @@ fun Iterable<Long>.findTupleSum(count: Int, targetSum: Long): List<Long>? {
         1 -> find { it == targetSum }?.let { listOf(it) }
         2 -> findPairSum(targetSum)?.toList()
         else -> {
-            // Count and list all unique values.
-            val counter = Counter(this)
+            // Count and list all unique values
+            val counter = Counter<Long>().apply { addAll(this@findTupleSum) }
             val uniqueValues = counter.keys.toList()
 
             var result: List<Long>? = null
-            uniqueValues.forEachNested(count - 1, overlapIndices = false) { indexedValues ->
-                // Pick `count - 1` distinct values, then check for the necessary remaining value.
-                val values = indexedValues.map { (_, value) -> value }
+            nestedLoop(
+                items = uniqueValues,
+                levelCount = count - 1,
+                overlapIndices = false
+            ) { values ->
+                // Pick `count - 1` distinct values, then check for the remaining value
                 val remainder = targetSum - values.sum()
-                if (remainder in counter) {
-                    // Ensure that the same values aren't used multiple times.
-                    val candidateValues = values.toMutableList().apply { add(remainder) }
-                    if (Counter(candidateValues) in counter) {
-                        result = candidateValues
-                        true // Stop iterating.
-                    } else {
-                        false // Don't stop iterating.
-                    }
+                if (remainder !in counter) {
+                    false // Keep iterating
                 } else {
-                    false // Don't stop iterating.
+                    // Ensure the same values aren't used multiple times
+                    val candidateValues = values.toMutableList().apply { add(remainder) }
+                    val candidateCounts = Counter<Long>().apply { addAll(candidateValues) }
+                    if (candidateCounts in counter) {
+                        result = candidateValues
+                        true // Stop iterating
+                    } else {
+                        false // Keep iterating
+                    }
                 }
             }
             result

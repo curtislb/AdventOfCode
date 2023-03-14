@@ -124,7 +124,7 @@ player's score?
 
 package com.curtislb.adventofcode.year2020.day22.part1
 
-import com.curtislb.adventofcode.common.collection.argmaxByOrNull
+import com.curtislb.adventofcode.common.comparison.argmaxBy
 import com.curtislb.adventofcode.common.io.forEachSection
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -143,7 +143,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     }
 
     while (decks.count { it.isNotEmpty() } > 1) {
-        val maxIndex = decks.argmaxByOrNull { it.first() }!!
+        val maxIndex = decks.argmaxBy { it.first() }
         var index = maxIndex
         for (i in decks.indices) {
             decks[maxIndex].addLast(decks[index].removeFirst())

@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:collection"))
     implementation(project(":common:intcode"))
+    implementation(project(":common:iteration"))
     testImplementation(project(":common:testing"))
 }

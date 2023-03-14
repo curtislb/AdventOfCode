@@ -1,8 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -11,7 +9,7 @@ import org.junit.jupiter.api.assertThrows
  * Tests [ValueSequencer].
  */
 class ValueSequencerTest {
-    private lateinit var sequencer: ValueSequencer<Int>
+    private lateinit var sequencer: ValueSequencer<String>
 
     @BeforeEach
     fun setUp() {
@@ -19,49 +17,173 @@ class ValueSequencerTest {
     }
 
     @Test
-    fun testWhenEmpty() {
-        assertFalse(sequencer.hasNext())
-        assertThrows<NoSuchElementException> { sequencer.next() }
-        sequencer.clear()
-        assertFalse(sequencer.hasNext())
+    fun isEmpty_afterInit() {
+        assertThat(sequencer.isEmpty()).isTrue
     }
 
     @Test
-    fun testQueueing() {
-        sequencer.queue(sequenceOf(11))
-        assertTrue(sequencer.hasNext())
-        sequencer.queue(sequenceOf(52, -73))
-        assertTrue(sequencer.hasNext())
-        assertEquals(11, sequencer.next())
-        assertTrue(sequencer.hasNext())
-        sequencer.queue(sequenceOf(11, 23, 33))
-        assertTrue(sequencer.hasNext())
-        assertEquals(52, sequencer.next())
-        assertTrue(sequencer.hasNext())
-        assertEquals(-73, sequencer.next())
-        assertTrue(sequencer.hasNext())
-        assertEquals(11, sequencer.next())
-        assertTrue(sequencer.hasNext())
-        assertEquals(23, sequencer.next())
-        assertTrue(sequencer.hasNext())
-        assertEquals(33, sequencer.next())
-        assertFalse(sequencer.hasNext())
-        assertThrows<NoSuchElementException> { sequencer.next() }
+    fun isEmpty_withEmptySequences() {
+        repeat(3) { sequencer.offer(emptySequence()) }
+        assertThat(sequencer.isEmpty()).isTrue
     }
 
     @Test
-    fun testClear() {
-        sequencer.queue(sequenceOf(-30, 71))
-        assertTrue(sequencer.hasNext())
-        sequencer.clear()
-        assertFalse(sequencer.hasNext())
-        assertThrows<NoSuchElementException> { sequencer.next() }
+    fun poll_afterInit() {
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
 
-        sequencer.queue(sequenceOf(64))
-        sequencer.queue(sequenceOf(-6, 91))
-        assertTrue(sequencer.hasNext())
+    @Test
+    fun poll_withEmptySequence() {
+        sequencer.offer(emptySequence())
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withSingleValue() {
+        sequencer.offer(sequenceOf("foo"))
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withSingleValue_afterEmptySequence() {
+        with(sequencer) {
+            offer(emptySequence())
+            offer(sequenceOf("foo"))
+        }
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withSingleSequence() {
+        sequencer.offer(sequenceOf("foo", "bar", "baz"))
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThat(sequencer.poll()).isEqualTo("bar")
+        assertThat(sequencer.poll()).isEqualTo("baz")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withSingleSequence_afterEmptySequence() {
+        with(sequencer) {
+            offer(emptySequence())
+            offer(sequenceOf("foo", "bar", "baz"))
+        }
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThat(sequencer.poll()).isEqualTo("bar")
+        assertThat(sequencer.poll()).isEqualTo("baz")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withMultipleSequences_noneEmpty() {
+        with(sequencer) {
+            offer(sequenceOf("foo", "bar", "baz"))
+            offer(sequenceOf("qux"))
+            offer(sequenceOf("quux", "fred"))
+        }
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThat(sequencer.poll()).isEqualTo("bar")
+        assertThat(sequencer.poll()).isEqualTo("baz")
+        assertThat(sequencer.poll()).isEqualTo("qux")
+        assertThat(sequencer.poll()).isEqualTo("quux")
+        assertThat(sequencer.poll()).isEqualTo("fred")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun poll_withMultipleSequences_someEmpty() {
+        with(sequencer) {
+            offer(emptySequence())
+            offer(sequenceOf("foo", "bar", "baz"))
+            offer(sequenceOf("qux"))
+            offer(emptySequence())
+            offer(emptySequence())
+            offer(sequenceOf("quux", "fred"))
+            offer(emptySequence())
+        }
+
+        assertThat(sequencer.poll()).isEqualTo("foo")
+        assertThat(sequencer.poll()).isEqualTo("bar")
+        assertThat(sequencer.poll()).isEqualTo("baz")
+        assertThat(sequencer.poll()).isEqualTo("qux")
+        assertThat(sequencer.poll()).isEqualTo("quux")
+        assertThat(sequencer.poll()).isEqualTo("fred")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_afterInit() {
         sequencer.clear()
-        assertFalse(sequencer.hasNext())
-        assertThrows<NoSuchElementException> { sequencer.next() }
+
+        assertThat(sequencer.isEmpty()).isTrue
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_withEmptySequence() {
+        with(sequencer) {
+            offer(emptySequence())
+            clear()
+        }
+
+        assertThat(sequencer.isEmpty()).isTrue
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_beforePolling() {
+        with(sequencer) {
+            offer(sequenceOf("foo", "bar", "baz"))
+            clear()
+        }
+
+        assertThat(sequencer.isEmpty()).isTrue
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_midSequence() {
+        with(sequencer) {
+            offer(sequenceOf("foo", "bar", "baz"))
+            poll()
+            clear()
+        }
+
+        assertThat(sequencer.isEmpty()).isTrue
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_betweenSequences() {
+        with(sequencer) {
+            offer(sequenceOf("foo"))
+            offer(sequenceOf("bar", "baz"))
+            poll()
+            clear()
+        }
+
+        assertThat(sequencer.isEmpty()).isTrue
+        assertThrows<NoSuchElementException> { sequencer.poll() }
+    }
+
+    @Test
+    fun clear_offerAndPollAfterward() {
+        with(sequencer) {
+            offer(sequenceOf("foo"))
+            clear()
+            offer(sequenceOf("bar", "baz"))
+        }
+
+        assertThat(sequencer.isEmpty()).isFalse
+        assertThat(sequencer.poll()).isEqualTo("bar")
+        assertThat(sequencer.poll()).isEqualTo("baz")
+        assertThrows<NoSuchElementException> { sequencer.poll() }
     }
 }

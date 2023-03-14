@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2021.day14.polymer
 
 import com.curtislb.adventofcode.common.collection.Counter
 import com.curtislb.adventofcode.common.collection.mapToMap
-import com.curtislb.adventofcode.common.collection.minAndMaxByOrNull
+import com.curtislb.adventofcode.common.comparison.minMaxByOrNull
 import com.curtislb.adventofcode.common.io.forEachSection
 import java.io.File
 
@@ -70,7 +70,7 @@ class PolymerizationProcess(val template: String, insertionRuleStrings: Collecti
             pairCounts = newPairCounts
         }
 
-        elementCounts.clearNonzeroCounts()
+        elementCounts.clear()
         for ((pair, count) in pairCounts.entries) {
             elementCounts[pair.first] += count
         }
@@ -82,7 +82,7 @@ class PolymerizationProcess(val template: String, insertionRuleStrings: Collecti
      * in the current polymer.
      */
     fun maxElementCountDifference(): Long {
-        val minMaxEntries = elementCounts.entries.minAndMaxByOrNull { it.value }
+        val minMaxEntries = elementCounts.entries.minMaxByOrNull { it.value }
         val maxCount = minMaxEntries?.max?.value ?: 0L
         val minCount = minMaxEntries?.min?.value ?: 0L
         return maxCount - minCount

@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day23.amphipod
 
-import com.curtislb.adventofcode.common.collection.replace
+import com.curtislb.adventofcode.common.collection.replaceAt
 import com.curtislb.adventofcode.common.graph.WeightedGraph
 import com.curtislb.adventofcode.common.range.size
 
@@ -17,8 +17,8 @@ internal object BurrowGraph : WeightedGraph<Burrow>() {
             if (amphipod != null) {
                 val distance = node.distanceToRoom(hallwayIndex)
                 if (distance != null) {
-                    val newHallway = node.hallway.replace(hallwayIndex) { null }
-                    val newRooms = node.rooms.replace(amphipod.roomIndex) { it + amphipod }
+                    val newHallway = node.hallway.replaceAt(hallwayIndex) { null }
+                    val newRooms = node.rooms.replaceAt(amphipod.roomIndex) { it + amphipod }
                     val newState = node.copy(hallway = newHallway, rooms = newRooms)
                     val energy = distance * amphipod.energyPerStep
                     edges.add(Edge(node = newState, weight = energy))
@@ -33,8 +33,10 @@ internal object BurrowGraph : WeightedGraph<Burrow>() {
                 for (hallwayIndex in node.hallway.indices) {
                     val distance = node.distanceToHallway(roomIndex, hallwayIndex)
                     if (distance != null) {
-                        val newHallway = node.hallway.replace(hallwayIndex) { amphipod }
-                        val newRooms = node.rooms.replace(roomIndex) { it.subList(0, it.lastIndex) }
+                        val newHallway = node.hallway.replaceAt(hallwayIndex) { amphipod }
+                        val newRooms = node.rooms.replaceAt(roomIndex) { room ->
+                            room.subList(0, room.lastIndex)
+                        }
                         val newState = node.copy(hallway = newHallway, rooms = newRooms)
                         val energy = distance * amphipod.energyPerStep
                         edges.add(Edge(node = newState, weight = energy))

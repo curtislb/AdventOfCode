@@ -2,6 +2,7 @@
  * Gradle dependency versions used throughout the project.
  */
 object Versions {
+    const val ASSERTJ = "3.24.2"
     const val COROUTINES = "1.6.4"
     const val HAMCREST = "2.2"
     const val JAVA = "17"

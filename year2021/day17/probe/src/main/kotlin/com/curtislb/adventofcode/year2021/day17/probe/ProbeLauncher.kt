@@ -1,9 +1,9 @@
 package com.curtislb.adventofcode.year2021.day17.probe
 
-import com.curtislb.adventofcode.common.collection.addVector
 import com.curtislb.adventofcode.common.io.readLongs
 import com.curtislb.adventofcode.common.number.triangleNumber
 import com.curtislb.adventofcode.common.search.bisect
+import com.curtislb.adventofcode.common.vector.longVectorOf
 import java.io.File
 
 /**
@@ -58,16 +58,16 @@ class ProbeLauncher(private val target: ProbeTarget) {
      * pass through the target area.
      */
     private fun isOnTarget(initialXVelocity: Long, initialYVelocity: Long): Boolean {
-        val position = longArrayOf(0L, 0L)
-        val velocity = longArrayOf(initialXVelocity, initialYVelocity)
-        while (position[0] < target.maxX && position[1] > target.minY) {
-            position.addVector(velocity)
-            if (position[0] in target.xRange && position[1] in target.yRange) {
+        val position = longVectorOf(0L, 0L)
+        val velocity = longVectorOf(initialXVelocity, initialYVelocity)
+        while (position.x < target.maxX && position.y > target.minY) {
+            position.add(velocity)
+            if (position.x in target.xRange && position.y in target.yRange) {
                 return true
             }
 
-            velocity[0] = if (velocity[0] > 0L) velocity[0] - 1L else 0L
-            velocity[1]--
+            velocity.x = if (velocity.x > 0L) velocity.x - 1L else 0L
+            velocity.y--
         }
 
         return false

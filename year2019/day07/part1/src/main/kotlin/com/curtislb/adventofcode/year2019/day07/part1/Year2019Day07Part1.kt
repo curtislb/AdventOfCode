@@ -91,7 +91,7 @@ import java.nio.file.Paths
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
     amplifierCount: Int = 5,
-    phaseSettings: Collection<BigInteger> = BigIntegerRange(0..4).toList()
+    phaseSettings: List<BigInteger> = BigIntegerRange(0..4).toList()
 ): BigInteger {
     val series = AmplifierSeries(inputPath.toFile(), amplifierCount)
     return series.findMaxSignal(phaseSettings)

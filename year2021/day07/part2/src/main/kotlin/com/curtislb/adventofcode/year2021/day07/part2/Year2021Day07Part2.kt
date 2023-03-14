@@ -31,8 +31,8 @@ can make you an escape route! How much fuel must they spend to align to that pos
 
 package com.curtislb.adventofcode.year2021.day07.part2
 
-import com.curtislb.adventofcode.common.collection.MinMax
-import com.curtislb.adventofcode.common.collection.minAndMaxOrNull
+import com.curtislb.adventofcode.common.comparison.MinMax
+import com.curtislb.adventofcode.common.comparison.minMaxOrNull
 import com.curtislb.adventofcode.common.io.readInts
 import com.curtislb.adventofcode.common.number.triangleNumber
 import java.nio.file.Path
@@ -48,7 +48,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val positions = inputPath.toFile().readInts()
 
     // The optimal alignment position must be in the range of starting positions
-    val minMaxPositions = positions.minAndMaxOrNull() ?: MinMax(0, 0)
+    val minMaxPositions = positions.minMaxOrNull() ?: MinMax(0, 0)
 
     // Fuel usage over a distance of n units is the nth triangular number
     return (minMaxPositions.min..minMaxPositions.max).minOfOrNull { position ->

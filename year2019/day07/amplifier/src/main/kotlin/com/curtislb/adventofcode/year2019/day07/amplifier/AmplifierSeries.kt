@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2019.day07.amplifier
 
-import com.curtislb.adventofcode.common.collection.permutations
+import com.curtislb.adventofcode.common.iteration.permutations
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.io.File
 import java.math.BigInteger
@@ -37,7 +37,7 @@ class AmplifierSeries(file: File, count: Int) {
      * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number
      *  of amplifiers.
      */
-    fun findMaxSignal(phaseSettings: Collection<BigInteger>): BigInteger {
+    fun findMaxSignal(phaseSettings: List<BigInteger>): BigInteger {
         checkPhaseSettings(phaseSettings)
 
         // Keep track of maximum output from the last amplifier
@@ -72,7 +72,7 @@ class AmplifierSeries(file: File, count: Int) {
      * @throws IllegalArgumentException If the number of [phaseSettings] does not match the number
      *  of amplifiers.
      */
-    fun findMaxSignalWithFeedback(phaseSettings: Collection<BigInteger>): BigInteger {
+    fun findMaxSignalWithFeedback(phaseSettings: List<BigInteger>): BigInteger {
         checkPhaseSettings(phaseSettings)
 
         // Send output from the last amplifier to the first, keeping track of the max final output

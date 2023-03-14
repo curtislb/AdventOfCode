@@ -34,7 +34,7 @@ assignment?
 
 package com.curtislb.adventofcode.year2021.day18.part2
 
-import com.curtislb.adventofcode.common.collection.uniquePairs
+import com.curtislb.adventofcode.common.iteration.uniquePairs
 import com.curtislb.adventofcode.year2021.day18.snailfish.SnailfishNumber
 import java.nio.file.Path
 import java.nio.file.Paths

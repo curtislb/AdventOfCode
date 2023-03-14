@@ -3,7 +3,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":common:collection"))
+    api(project(":common:vector"))
     implementation(project(":common:io"))
+    implementation(project(":common:iteration"))
     testImplementation(project(":common:testing"))
 }

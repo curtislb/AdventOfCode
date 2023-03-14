@@ -48,7 +48,7 @@ class School(initialTimers: List<Int>, cycleDays: Int, maturationDays: Int) {
     /**
      * Returns the current total number of fish.
      */
-    fun countFish(): Long = fishCounts.sumCounts()
+    fun countFish(): Long = fishCounts.entries.sumOf { (_, count) -> count }
 
     /**
      * Simulates population growth for [dayCount] days, starting from the current state.

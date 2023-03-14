@@ -31,7 +31,7 @@ class RebootProcedure {
                 counterUpdates[overlap] -= count
             }
         }
-        activeRegionsCounter += counterUpdates
+        activeRegionsCounter.addCounts(counterUpdates)
 
         // Add the current region's volume, if this step involves activating cubes
         if (rebootStep.isOn) {

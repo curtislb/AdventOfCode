@@ -116,7 +116,7 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * program.
      */
     fun sendInput(inputSequence: Sequence<BigInteger>) {
-        input.queue(inputSequence)
+        input.offer(inputSequence)
     }
 
     /**
@@ -124,11 +124,11 @@ class Intcode(programString: String, var onOutput: (output: BigInteger) -> Unit 
      * if no next input is available.
      */
     internal fun nextInput(): BigInteger? {
-        if (!input.hasNext()) {
+        if (input.isEmpty()) {
             isPaused = true
             return null
         }
-        return input.next()
+        return input.poll()
     }
 
     /**

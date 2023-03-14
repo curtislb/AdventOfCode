@@ -218,7 +218,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), stepCount: Int = 1000): Int {
     val system = NBodySystem(inputPath.toFile()).apply { simulate(stepCount) }
-    return system.totalEnergy
+    return system.totalEnergy()
 }
 
 fun main() {

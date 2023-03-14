@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day18.vault.search
 
 import com.curtislb.adventofcode.common.collection.mapToMap
-import com.curtislb.adventofcode.common.collection.replace
+import com.curtislb.adventofcode.common.collection.replaceAt
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.graph.UnweightedGraph
 import com.curtislb.adventofcode.common.graph.WeightedGraph
@@ -34,7 +34,7 @@ class KeySearch(private val vault: Vault) {
                     searchEdges[position]?.forEach { (neighbor, searchEdges) ->
                         val key = vault[neighbor]?.symbol
                         if (key != null && key !in node.heldKeys) {
-                            val newPositions = node.positions.replace(index) { neighbor }
+                            val newPositions = node.positions.replaceAt(index) { neighbor }
                             val newKeys = node.heldKeys.withKey(key)
                             val newState = SearchState(newPositions, newKeys)
                             for (searchEdge in searchEdges) {

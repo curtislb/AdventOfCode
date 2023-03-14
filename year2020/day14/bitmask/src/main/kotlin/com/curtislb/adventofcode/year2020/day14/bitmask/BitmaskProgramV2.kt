@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day14.bitmask
 
-import com.curtislb.adventofcode.common.collection.forEachNested
+import com.curtislb.adventofcode.common.iteration.nestedLoop
 import com.curtislb.adventofcode.common.number.setBit
 import com.curtislb.adventofcode.common.number.clearBit
 
@@ -41,18 +41,18 @@ class BitmaskProgramV2(programString: String) : BitmaskProgram(programString) {
 
         val maskedAddresses = mutableListOf<Long>()
         val floatingIndices = maskBits.getOrElse(Bit.FLOATING) { emptyList() }
-        listOf(false, true).forEachNested(floatingIndices.size) { indexedBitFlags ->
+        nestedLoop(items = listOf(false, true), levelCount = floatingIndices.size) { bitFlags ->
             var maskedAddress = baseAddress
-            indexedBitFlags.forEachIndexed { index, (_, isOneBit) ->
+            bitFlags.forEachIndexed { index, isSet ->
                 val floatingIndex = floatingIndices[index]
-                maskedAddress = if (isOneBit) {
+                maskedAddress = if (isSet) {
                     maskedAddress.setBit(floatingIndex)
                 } else {
                     maskedAddress.clearBit(floatingIndex)
                 }
             }
             maskedAddresses.add(maskedAddress)
-            false // Don't stop iterating
+            false // Keep iterating
         }
 
         return maskedAddresses

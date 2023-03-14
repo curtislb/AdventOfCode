@@ -58,7 +58,7 @@ What do you get if you multiply together the sizes of the three largest basins?
 
 package com.curtislb.adventofcode.year2021.day09.part2
 
-import com.curtislb.adventofcode.common.collection.takeLargest
+import com.curtislb.adventofcode.common.comparison.takeLargest
 import com.curtislb.adventofcode.common.number.product
 import com.curtislb.adventofcode.year2021.day09.basin.HeightMap
 import java.nio.file.Path

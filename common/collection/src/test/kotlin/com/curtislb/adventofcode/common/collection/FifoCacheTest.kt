@@ -1,8 +1,6 @@
 package com.curtislb.adventofcode.common.collection
 
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -11,68 +9,272 @@ import org.junit.jupiter.api.assertThrows
  */
 class FifoCacheTest {
     @Test
-    fun testConstructWithInvalidCapacity() {
+    fun construct_zeroCapacity() {
         assertThrows<IllegalArgumentException> { FifoCache<Any>(capacity = 0) }
+    }
+
+    @Test
+    fun construct_negativeCapacity() {
         assertThrows<IllegalArgumentException> { FifoCache<Any>(capacity = -1) }
-        assertThrows<IllegalArgumentException> { FifoCache<Any>(capacity = -364) }
     }
 
     @Test
-    fun testWhenEmpty() {
+    fun size_whenEmpty() {
         val cache = FifoCache<Any>(capacity = 1)
-        assertEquals(1, cache.capacity)
-        assertEquals(0, cache.size)
-        assertFalse("foo" in cache)
-        assertTrue(cache.containsAll(emptyList()))
-        assertFalse(cache.containsAll(setOf("bar", "baz")))
-        assertTrue(cache.isEmpty())
-        assertEquals(0, cache.count())
-        assertThrows<IndexOutOfBoundsException> { cache[0] }
-        assertFalse(cache.isFull())
+        assertThat(cache).hasSize(0)
     }
 
     @Test
-    fun testAddingItems() {
+    fun size_whenNotFull() {
         val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
-        assertEquals(2, cache.capacity)
-        assertEquals(1, cache.size)
-        assertTrue("foo" in cache)
-        assertFalse("bar" in cache)
-        assertTrue(cache.containsAll(listOf("foo")))
-        assertFalse(cache.containsAll(setOf("foo", "bar")))
-        assertFalse(cache.isEmpty())
-        assertEquals(1, cache.count())
-        assertEquals("foo", cache[0])
+        assertThat(cache).hasSize(1)
+    }
+
+    @Test
+    fun size_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat(cache).hasSize(2)
+    }
+
+    @Test
+    fun isEmpty_whenEmpty() {
+        val cache = FifoCache<Any>(capacity = 1)
+        assertThat(cache).isEmpty()
+    }
+
+    @Test
+    fun isEmpty_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
+        assertThat(cache).isNotEmpty
+    }
+
+    @Test
+    fun isEmpty_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+        }
+        assertThat(cache).isNotEmpty
+    }
+
+    @Test
+    fun isEmpty_whenOverFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat(cache).isNotEmpty
+    }
+
+    @Test
+    fun contains_whenEmpty() {
+        val cache = FifoCache<String>(capacity = 1)
+        assertThat("foo" in cache).isFalse
+    }
+
+    @Test
+    fun contains_presentElement() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat("bar" in cache).isTrue
+    }
+
+    @Test
+    fun contains_novelElement() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat("qux" in cache).isFalse
+    }
+
+    @Test
+    fun contains_evictedElement() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat("foo" in cache).isFalse
+    }
+
+    @Test
+    fun containsAll_whenEmpty() {
+        val cache = FifoCache<Any>(capacity = 1)
+        assertThat(cache.containsAll(listOf("foo"))).isFalse
+    }
+
+    @Test
+    fun containsAll_presentElements() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+
+        assertThat(cache.containsAll(listOf("bar", "baz"))).isTrue
+    }
+
+    @Test
+    fun containsAll_withNovelElement() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+
+        val elements = listOf("bar", "qux")
+        assertThat(cache.containsAll(elements)).isFalse
+    }
+
+    @Test
+    fun containsAll_withEvictedElement() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+
+        val elements = listOf("foo", "bar", "baz")
+        assertThat(cache.containsAll(elements)).isFalse
+    }
+
+    @Test
+    fun iterator_whenEmpty() {
+        val cache = FifoCache<Any>(capacity = 1)
+
+        val elements = mutableListOf<Any>()
+        for (element in cache) {
+            elements.add(element)
+        }
+
+        assertThat(elements).isEmpty()
+    }
+
+    @Test
+    fun iterator_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
+
+        val elements = mutableListOf<String>()
+        for (element in cache) {
+            elements.add(element)
+        }
+
+        assertThat(elements).containsExactly("foo")
+    }
+
+    @Test
+    fun iterator_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+
+        val elements = mutableListOf<String>()
+        for (element in cache) {
+            elements.add(element)
+        }
+
+        assertThat(elements).containsExactly("bar", "baz")
+    }
+
+    @Test
+    fun get_whenEmpty() {
+        val cache = FifoCache<Any>(capacity = 1)
+        assertThrows<IndexOutOfBoundsException> { cache[0] }
+    }
+
+    @Test
+    fun get_inBounds_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
+        assertThat(cache[0]).isEqualTo("foo")
+    }
+
+    @Test
+    fun get_outOfBounds_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
         assertThrows<IndexOutOfBoundsException> { cache[1] }
-        assertFalse(cache.isFull())
+    }
 
-        cache.add("bar")
-        assertEquals(2, cache.capacity)
-        assertEquals(2, cache.size)
-        assertTrue("foo" in cache)
-        assertTrue("bar" in cache)
-        assertTrue(cache.containsAll(listOf("foo")))
-        assertTrue(cache.containsAll(setOf("foo", "bar")))
-        assertFalse(cache.isEmpty())
-        assertEquals(2, cache.count())
-        assertEquals("foo", cache[0])
-        assertEquals("bar", cache[1])
-        assertThrows<IndexOutOfBoundsException> { cache[2] }
-        assertTrue(cache.isFull())
+    @Test
+    fun get_inBounds_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
 
-        cache.add("baz")
-        assertEquals(2, cache.capacity)
-        assertEquals(2, cache.size)
-        assertFalse("foo" in cache)
-        assertTrue("bar" in cache)
-        assertTrue("baz" in cache)
-        assertFalse(cache.containsAll(setOf("foo", "bar")))
-        assertTrue(cache.containsAll(setOf("bar", "baz")))
-        assertFalse(cache.isEmpty())
-        assertEquals(2, cache.count())
-        assertEquals("bar", cache[0])
-        assertEquals("baz", cache[1])
+        assertThat(cache[0]).isEqualTo("bar")
+        assertThat(cache[1]).isEqualTo("baz")
+    }
+
+    @Test
+    fun get_outOfBounds_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
         assertThrows<IndexOutOfBoundsException> { cache[2] }
-        assertTrue(cache.isFull())
+    }
+
+    @Test
+    fun isFull_whenEmpty() {
+        val cache = FifoCache<Any>(capacity = 1)
+        assertThat(cache.isFull()).isFalse
+    }
+
+    @Test
+    fun isFull_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply { add("foo") }
+        assertThat(cache.isFull()).isFalse
+    }
+
+    @Test
+    fun isFull_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+        }
+        assertThat(cache.isFull()).isTrue
+    }
+
+    @Test
+    fun isFull_whenOverFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("baz")
+        }
+        assertThat(cache.isFull()).isTrue
+    }
+
+    @Test
+    fun add_duplicateElement_whenNotFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("foo")
+        }
+        assertThat(cache).containsExactly("foo", "foo")
+    }
+
+    @Test
+    fun add_duplicateElement_whenFull() {
+        val cache = FifoCache<String>(capacity = 2).apply {
+            add("foo")
+            add("bar")
+            add("bar")
+        }
+        assertThat(cache).containsExactly("bar", "bar")
     }
 }

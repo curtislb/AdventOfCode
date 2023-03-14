@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2021.day05.vents
 
-import com.curtislb.adventofcode.common.collection.uniquePairs
+import com.curtislb.adventofcode.common.iteration.uniquePairs
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.geometry.Segment
 import com.curtislb.adventofcode.common.parse.toInts

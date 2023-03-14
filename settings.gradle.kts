@@ -2,18 +2,21 @@ rootProject.name = "AdventOfCode"
 
 // Common utility libraries
 include("common:collection")
+include("common:comparison")
 include("common:geometry")
 include("common:graph")
 include("common:grid")
 include("common:heap")
 include("common:intcode")
 include("common:io")
+include("common:iteration")
 include("common:number")
 include("common:parse")
 include("common:range")
 include("common:search")
 include("common:simulation")
 include("common:testing")
+include("common:vector")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Advent of Code 2019

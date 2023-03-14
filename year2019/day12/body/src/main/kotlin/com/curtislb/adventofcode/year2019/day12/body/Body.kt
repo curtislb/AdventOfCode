@@ -1,78 +1,57 @@
 package com.curtislb.adventofcode.year2019.day12.body
 
-import com.curtislb.adventofcode.common.collection.addVector
+import com.curtislb.adventofcode.common.vector.IntVector
 import java.util.Objects
 import kotlin.math.abs
 
 /**
  * A celestial body, with a [position] and [velocity] in 3D space.
  *
- * @param initialPosition The initial 3D position vector of this body.
- * @param initialVelocity The initial 3D velocity vector of this body.
+ * @param initialPosition The initial 3D position vector of the body.
+ * @param initialVelocity The initial 3D velocity vector of the body.
  */
 class Body(
-    initialPosition: Triple<Int, Int, Int> = DEFAULT_VECTOR,
-    initialVelocity: Triple<Int, Int, Int> = DEFAULT_VECTOR
+    initialPosition: IntVector = IntVector(DIMENSION_COUNT),
+    initialVelocity: IntVector = IntVector(DIMENSION_COUNT)
 ) {
     /**
-     * TODO
+     * The current 3D position vector of the body.
      */
-    private val _position: IntArray = initialPosition.toList().toIntArray()
+    private val _position: IntVector = initialPosition.copy()
 
     /**
-     * TODO
+     * The current 3D velocity vector of the body.
      */
-    val position: Triple<Int, Int, Int>
-        get() = Triple(_position[0], _position[1], _position[2])
+    private val _velocity: IntVector = initialVelocity.copy()
 
     /**
-     * TODO
+     * Returns a copy of the current 3D position vector of the body.
      */
-    private val _velocity: IntArray = initialVelocity.toList().toIntArray()
+    fun position(): IntVector = _position.copy()
 
     /**
-     * TODO
+     * Returns a copy of the current 3D velocity vector of the body
      */
-    val velocity: Triple<Int, Int, Int>
-        get() = Triple(_velocity[0], _velocity[1], _velocity[2])
+    fun velocity(): IntVector = _velocity.copy()
 
     /**
-     * The current total energy (potential and kinetic) of this body.
+     * The current total energy (potential and kinetic) of the body.
      */
-    val totalEnergy: Int get() = _position.sumOf { abs(it) } * _velocity.sumOf { abs(it) }
-
-    /**
-     * A celestial body, with a [position] and [velocity] in 3D space.
-     *
-     * @param positionString A string representation of the position for this body, in the form
-     *  `<x=${position.first}, y=${position.second}, z=${position.third}>`.
-     *
-     * @throws IllegalArgumentException If [positionString] has the wrong format.
-     */
-    constructor(positionString: String) : this() {
-        val componentStrings = positionString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
-        require(componentStrings.size == DIMENSION_COUNT) {
-            "Incorrect number of components: ${componentStrings.size} != $DIMENSION_COUNT"
-        }
-
-        for (componentString in componentStrings) {
-            val (name, value) = componentString.trim().split('=')
-            when (name) {
-                "x" -> _position[0] = value.toInt()
-                "y" -> _position[1] = value.toInt()
-                "z" -> _position[2] = value.toInt()
-                else -> throw IllegalArgumentException("Unknown component name: $name")
-            }
-        }
+    fun totalEnergy(): Int {
+        val potentialEnergy = _position.componentSumOf { abs(it) }
+        val kineticEnergy = _velocity.componentSumOf { abs(it) }
+        return potentialEnergy * kineticEnergy
     }
 
     /**
      * Updates the velocity of this body due to gravity from [other].
      */
     fun applyGravity(other: Body) {
-        for (i in 0 until DIMENSION_COUNT) {
-            if (_position[i] != other._position[i]) {
-                _velocity[i] += if (_position[i] < other._position[i]) 1 else -1
+        for (index in 0 until DIMENSION_COUNT) {
+            when {
+                _position[index] < other._position[index] -> _velocity[index]++
+                _position[index] > other._position[index] -> _velocity[index]--
+                else -> {}
             }
         }
     }
@@ -81,40 +60,56 @@ class Body(
      * Updates the [position] of this body based on its current velocity.
      */
     fun applyVelocity() {
-        _position.addVector(_velocity)
+        _position.add(_velocity)
     }
 
-    /**
-     * Returns a deep copy of this body, with the same current position and velocity.
-     */
-    fun copy(): Body = Body(position, velocity)
+    override fun toString(): String =
+        "pos=${_position.toXyzString()}, vel=${_velocity.toXyzString()}"
 
     override fun equals(other: Any?): Boolean {
-        return other is Body && position == other.position && velocity == other.velocity
+        return other is Body && _position == other._position && _velocity == other._velocity
     }
 
-    override fun hashCode(): Int = Objects.hash(position, velocity)
-
-    override fun toString(): String = "pos=${position.toXyzString()}, vel=${velocity.toXyzString()}"
+    override fun hashCode(): Int = Objects.hash(_position, _velocity)
 
     companion object {
         /**
          * The number of spatial dimensions for the position and velocity of a body.
          */
-        private const val DIMENSION_COUNT = 3
+        const val DIMENSION_COUNT = 3
 
         /**
-         * TODO
+         * Returns a [Body] with an initial position read from the given [positionString].
+         *
+         * @param positionString A string representing a position, in the form `<x=$x, y=$y, z=$z>`.
+         *
+         * @throws IllegalArgumentException If [positionString] has the wrong format.
          */
-        private val DEFAULT_VECTOR = Triple(0, 0, 0)
+        fun fromPositionString(positionString: String): Body {
+            val componentStrings = positionString.trim(' ', '\t', '\r', '\n', '<', '>').split(',')
+            require(componentStrings.size == DIMENSION_COUNT) {
+                "Incorrect number of components: ${componentStrings.size} != $DIMENSION_COUNT"
+            }
+
+            val position = IntVector(DIMENSION_COUNT)
+            for (componentString in componentStrings) {
+                val (name, value) = componentString.trim().split('=')
+                when (name) {
+                    "x" -> position.x = value.toInt()
+                    "y" -> position.y = value.toInt()
+                    "z" -> position.z = value.toInt()
+                    else -> throw IllegalArgumentException("Unknown component name: $name")
+                }
+            }
+
+            return Body(initialPosition = position)
+        }
 
         /**
          * Returns a string representation of this 3D vector, in the form `<x=$x, y=$y, z=$z>`.
          *
-         * @throws IllegalArgumentException If this vector has the wrong number of components.
+         * @throws IndexOutOfBoundsException If the dimensionality of the vector is less than 3.
          */
-        fun Triple<Int, Int, Int>.toXyzString(): String {
-            return "<x=${first}, y=${second}, z=${third}>"
-        }
+        private fun IntVector.toXyzString(): String = "<x=$x, y=$y, z=$z>"
     }
 }

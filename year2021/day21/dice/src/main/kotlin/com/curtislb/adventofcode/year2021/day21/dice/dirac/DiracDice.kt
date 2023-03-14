@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day21.dice.dirac
 
 import com.curtislb.adventofcode.common.collection.Counter
-import com.curtislb.adventofcode.common.collection.forEachNested
+import com.curtislb.adventofcode.common.iteration.nestedLoop
 
 /**
  * A set of dice, each of which can roll any integer from 1 to [sidesCount] with equal probability.
@@ -15,10 +15,10 @@ class DiracDice(val diceCount: Int, val sidesCount: Int) {
      */
     private val outcomeCounts: Map<Int, Long> = Counter<Int>()
         .apply {
-            (1..sidesCount).toList().forEachNested(diceCount) { indexedRolls ->
-                val rollResult = indexedRolls.sumOf { (_, roll) -> roll }
-                this[rollResult]++
-                false // Don't stop iterating
+            val rollValues = (1..sidesCount).toList()
+            nestedLoop(items = rollValues, levelCount = diceCount) { rolls ->
+                this[rolls.sum()]++
+                false // Keep iterating
             }
         }
         .toMap()

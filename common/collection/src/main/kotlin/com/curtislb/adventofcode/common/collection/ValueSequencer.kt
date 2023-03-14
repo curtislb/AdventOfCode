@@ -1,58 +1,56 @@
 package com.curtislb.adventofcode.common.collection
 
-import java.util.ArrayDeque
-import java.util.Deque
-
 /**
- * Produces values from one or more sequences in the order they were provided.
+ * Produces values from one or more value sequences in the order they were provided.
+ *
+ * @param E The type of values produced by the sequencer.
+ *
+ * @constructor Creates a new empty instance of [ValueSequencer].
  */
 class ValueSequencer<E> {
     /**
-     * All currently queued sequences of values.
+     * Iterators for all currently queued value sequences.
      */
-    private var sequences: Deque<Iterator<E>> = ArrayDeque()
+    private var iterators: ArrayDeque<Iterator<E>> = ArrayDeque()
 
     /**
-     * Queues an additional [valueSequence] after all previous values.
+     * Returns `true` if the sequencer has no queued values.
      */
-    fun queue(valueSequence: Sequence<E>) {
-        sequences.addLast(valueSequence.iterator())
+    fun isEmpty(): Boolean {
+        dropEmptyIterators()
+        return iterators.isEmpty()
     }
 
     /**
-     * Resets the state of this sequencer by removing all queued values.
+     * Queues a sequence of [values] to be produced after all previous values.
      */
-    fun clear() {
-        sequences = ArrayDeque()
+    fun offer(values: Sequence<E>) {
+        iterators.addLast(values.iterator())
     }
 
     /**
-     * Returns `true` if this sequencer has at least one queued value, or `false` otherwise.
-     */
-    fun hasNext(): Boolean {
-        dropEmptySequences()
-        return sequences.isNotEmpty()
-    }
-
-    /**
-     * Returns and removes the next queued value from this sequencer.
+     * Returns and removes the next queued value from the sequencer.
      *
      * @throws NoSuchElementException If there is no queued value to return.
      */
-    fun next(): E {
-        dropEmptySequences()
-        if (sequences.isEmpty()) {
-            throw NoSuchElementException("Can't get next value. All queued values are exhausted.")
-        }
-        return sequences.first.next()
+    fun poll(): E {
+        dropEmptyIterators()
+        return iterators.first().next()
     }
 
     /**
-     * Removes all empty value sequences from the front of [sequences].
+     * Resets the state of the sequencer by removing all queued values.
      */
-    private fun dropEmptySequences() {
-        while (sequences.isNotEmpty() && !sequences.first.hasNext()) {
-            sequences.removeFirst()
+    fun clear() {
+        iterators = ArrayDeque()
+    }
+
+    /**
+     * Removes all empty value sequences from the front of [iterators].
+     */
+    private fun dropEmptyIterators() {
+        while (iterators.firstOrNull()?.hasNext() == false) {
+            iterators.removeFirst()
         }
     }
 }
