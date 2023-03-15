@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [nestedLoop].
+ * Tests the [nestedLoop] function.
  */
 class NestedLoopTest {
     @Test

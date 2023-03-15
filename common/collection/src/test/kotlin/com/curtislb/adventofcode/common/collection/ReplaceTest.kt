@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [replaceAt].
+ * Tests the [replaceAt] extension function.
  */
 class ReplaceTest {
     @Test

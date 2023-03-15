@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [LongVector].
+ * Tests the [LongVector] class.
  */
 class LongVectorTest {
     @Test

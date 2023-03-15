@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [IntVector].
+ * Tests the [IntVector] class.
  */
 class IntVectorTest {
     @Test

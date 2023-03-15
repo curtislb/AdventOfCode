@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [argmax] and [argmaxBy].
+ * Tests the [argmax] and [argmaxBy] extension functions.
  */
 class ArgmaxTest {
     @Test

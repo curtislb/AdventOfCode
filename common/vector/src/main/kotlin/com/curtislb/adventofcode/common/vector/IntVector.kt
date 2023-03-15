@@ -229,7 +229,7 @@ class IntVector internal constructor(private val components: IntArray) {
         /**
          * The empty vector, which has a dimensionality of 0.
          */
-        val EMPTY = IntVector(IntArray(0))
+        val EMPTY: IntVector = IntVector(IntArray(0))
     }
 }
 

@@ -40,9 +40,9 @@ class Nanofactory(file: File) {
         }
 
         // Work backwards from the desired products to determine the amount of raw materials needed.
-        while (requiredMaterials.getPositiveKeys().toSet() != rawMaterials) {
+        while (requiredMaterials.positiveKeys().toSet() != rawMaterials) {
             val (requiredMaterial, requiredAmount) =
-                requiredMaterials.getPositiveEntries().find { it.key !in rawMaterials } ?: break
+                requiredMaterials.positiveEntries().find { it.key !in rawMaterials } ?: break
             val reaction = reactions[requiredMaterial] ?: break
             val coefficient = Fraction(requiredAmount, reaction.product.amount).ceil()
             for ((material, amount) in reaction.reactants) {
@@ -51,8 +51,8 @@ class Nanofactory(file: File) {
             requiredMaterials[reaction.product.material] -= coefficient * reaction.product.amount
         }
 
-        return if (requiredMaterials.getPositiveKeys().toSet() == rawMaterials) {
-            requiredMaterials.getPositiveEntries().map { (material, amount) ->
+        return if (requiredMaterials.positiveKeys().toSet() == rawMaterials) {
+            requiredMaterials.positiveEntries().map { (material, amount) ->
                 MaterialAmount(material, amount)
             }
         } else {

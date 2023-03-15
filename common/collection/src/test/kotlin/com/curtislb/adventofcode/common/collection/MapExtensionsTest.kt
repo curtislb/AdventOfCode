@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [mapToMap], [mapToSet], and related functions.
+ * Tests [mapToMap], [mapToSet], and related extension functions.
  */
 class MapExtensionsTest {
     @Test

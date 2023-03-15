@@ -5,7 +5,7 @@ package com.curtislb.adventofcode.common.collection
  *
  * @param E The key type, representing the type of items counted by the counter.
  *
- * @constructor Creates a new instance of [Counter] with a count of 0 for all items.
+ * @constructor Creates a new instance of [Counter] with a count of 0 for all keys.
  */
 class Counter<E> {
     /**
@@ -34,7 +34,7 @@ class Counter<E> {
      * Returns `true` if the count for each key in the counter is greater than or equal to the
      * corresponding count in [other].
      *
-     * Any key not stored in a counter is treating as having a count of 0 in that counter.
+     * Any key not stored in a counter is treated as having a count of 0 in that counter.
      */
     operator fun contains(other: Counter<E>): Boolean =
         (keys union other.keys).all { this[it] >= other[it] }
@@ -49,7 +49,7 @@ class Counter<E> {
     /**
      * Updates the [count] stored for [key] in the counter.
      *
-     * If [count] is 0, this function instead removes [key] from the counter.
+     * If [count] is 0, this function instead removes [key] from the counter (if present).
      */
     operator fun set(key: E, count: Long) {
         if (count == 0L) {
@@ -94,12 +94,12 @@ class Counter<E> {
     /**
      * Returns all `(key, count)` entries in the counter for which `count > 0`.
      */
-    fun getPositiveEntries(): List<Map.Entry<E, Long>> = counts.entries.filter { it.value > 0L }
+    fun positiveEntries(): List<Map.Entry<E, Long>> = counts.entries.filter { it.value > 0L }
 
     /**
      * Returns all keys with positive counts in the counter.
      */
-    fun getPositiveKeys(): List<E> = counts.entries.filter { it.value > 0L }.map { it.key }
+    fun positiveKeys(): List<E> = counts.entries.filter { it.value > 0L }.map { it.key }
 
     /**
      * Returns a map containing all `(key, count)` entries in the counter for which `count != 0`.

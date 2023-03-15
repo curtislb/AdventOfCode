@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [Counter].
+ * Tests the [Counter] class.
  */
 class CounterTest {
     private lateinit var counter: Counter<String>
@@ -325,7 +325,7 @@ class CounterTest {
 
     @Test
     fun getPositiveEntries_whenEmpty() {
-        assertThat(counter.getPositiveEntries()).isEmpty()
+        assertThat(counter.positiveEntries()).isEmpty()
     }
 
     @Test
@@ -335,14 +335,14 @@ class CounterTest {
         counter["baz"] = 3L
         counter["qux"] = -2L
 
-        assertThat(counter.getPositiveEntries())
+        assertThat(counter.positiveEntries())
             .map<Pair<String, Long>> { it.toPair() }
             .containsExactlyInAnyOrder("foo" to 1L, "baz" to 3L)
     }
 
     @Test
     fun getPositiveKeys_whenEmpty() {
-        assertThat(counter.getPositiveKeys()).isEmpty()
+        assertThat(counter.positiveKeys()).isEmpty()
     }
 
     @Test
@@ -352,7 +352,7 @@ class CounterTest {
         counter["baz"] = 3L
         counter["qux"] = -2L
 
-        assertThat(counter.getPositiveKeys()).containsExactlyInAnyOrder("foo", "baz")
+        assertThat(counter.positiveKeys()).containsExactlyInAnyOrder("foo", "baz")
     }
 
     @Test

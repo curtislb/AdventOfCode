@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [FifoCache].
+ * Tests the [FifoCache] class.
  */
 class FifoCacheTest {
     @Test

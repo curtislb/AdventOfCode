@@ -229,7 +229,7 @@ class LongVector internal constructor(private val components: LongArray) {
         /**
          * The empty vector, which has a dimensionality of 0.
          */
-        val EMPTY = LongVector(LongArray(0))
+        val EMPTY: LongVector = LongVector(LongArray(0))
     }
 }
 

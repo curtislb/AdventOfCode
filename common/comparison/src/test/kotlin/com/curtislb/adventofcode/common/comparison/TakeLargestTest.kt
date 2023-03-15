@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [takeLargest].
+ * Tests the [takeLargest] extension function.
  */
 class TakeLargestTest {
     @Test

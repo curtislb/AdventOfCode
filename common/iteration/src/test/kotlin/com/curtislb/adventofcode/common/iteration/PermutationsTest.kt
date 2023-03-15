@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [permutations].
+ * Tests the [permutations] extension function.
  */
 class PermutationsTest {
     @Test

@@ -6,37 +6,30 @@ import java.util.Objects
 /**
  * An ordered, contiguous range of [BigInteger] values.
  *
- * @property first The minimum value contained in the range.
- * @property last The maximum value contained in the range.
+ * @property first The minimum value in the range.
+ * @property last The maximum value in the range (inclusive).
  *
  * @constructor Creates a new instance of [BigIntegerRange] with the given [first] and [last]
- *  (inclusive) values.
+ *  values.
  */
 class BigIntegerRange(
     val first: BigInteger,
     val last: BigInteger
 ) : ClosedRange<BigInteger>, Iterable<BigInteger> {
-    /**
-     * The minimum value contained in the range.
-     */
+
     override val start: BigInteger
         get() = first
 
-    /**
-     * The maximum value contained in the range.
-     */
     override val endInclusive: BigInteger
         get() = last
 
     /**
-     * Creates a new instance of [BigIntegerRange] with the given [first] and [last]
-     * (inclusive) values.
+     * Creates a new instance of [BigIntegerRange] with the given [first] and [last] values.
      */
     constructor(first: Int, last: Int) : this(first.toBigInteger(), last.toBigInteger())
 
     /**
-     * Creates a new instance of [BigIntegerRange] with the given [first] and [last]
-     * (inclusive) values.
+     * Creates a new instance of [BigIntegerRange] with the given [first] and [last] values.
      */
     constructor(first: Long, last: Long) : this(first.toBigInteger(), last.toBigInteger())
 
@@ -62,7 +55,7 @@ class BigIntegerRange(
         /**
          * An empty range of values of type [BigInteger].
          */
-        val EMPTY = BigIntegerRange(BigInteger.ONE, BigInteger.ZERO)
+        val EMPTY: BigIntegerRange = BigIntegerRange(BigInteger.ONE, BigInteger.ZERO)
     }
 }
 

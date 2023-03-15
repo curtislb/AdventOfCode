@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [minMaxOrNull] and [minMaxByOrNull].
+ * Tests the [minMaxOrNull] and [minMaxByOrNull] extension functions.
  */
 class MinMaxTest {
     @Test

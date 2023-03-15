@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [getCyclic] and [getOrNull].
+ * Tests the [getCyclic] and [getOrNull] extension functions.
  */
 class GetExtensionsTest {
     @Test

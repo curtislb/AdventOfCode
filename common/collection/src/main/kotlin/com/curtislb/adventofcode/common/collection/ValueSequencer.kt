@@ -11,7 +11,7 @@ class ValueSequencer<E> {
     /**
      * Iterators for all currently queued value sequences.
      */
-    private var iterators: ArrayDeque<Iterator<E>> = ArrayDeque()
+    private val iterators: ArrayDeque<Iterator<E>> = ArrayDeque()
 
     /**
      * Returns `true` if the sequencer has no queued values.
@@ -42,7 +42,7 @@ class ValueSequencer<E> {
      * Resets the state of the sequencer by removing all queued values.
      */
     fun clear() {
-        iterators = ArrayDeque()
+        iterators.clear()
     }
 
     /**

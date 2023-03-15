@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [uniquePairs].
+ * Tests the [uniquePairs] extension function.
  */
 class UniquePairsTest {
     @Test

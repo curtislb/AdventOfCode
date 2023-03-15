@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [ValueSequencer].
+ * Tests the [ValueSequencer] class.
  */
 class ValueSequencerTest {
     private lateinit var sequencer: ValueSequencer<String>
