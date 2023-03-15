@@ -159,7 +159,7 @@ class IntVector internal constructor(private val components: IntArray) {
     }
 
     /**
-     * Returns the length of the vector, as measured from the origin in [dimension]-space.
+     * Returns the length of the vector, measured from the origin in [dimension]-dimensional space.
      */
     fun magnitude(): Double {
         val sumOfSquares = components.sumOf { component -> component.toDouble().let { it * it } }
@@ -221,7 +221,7 @@ class IntVector internal constructor(private val components: IntArray) {
     }
 
     /**
-     * Returns `true` if the [dimension] of this vector is 0.
+     * Returns `true` if the [dimension] of the vector is 0.
      */
     private fun isEmpty(): Boolean = components.isEmpty()
 

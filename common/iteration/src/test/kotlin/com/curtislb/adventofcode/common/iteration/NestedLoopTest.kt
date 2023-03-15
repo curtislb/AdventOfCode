@@ -296,7 +296,7 @@ class NestedLoopTest {
 
         nestedLoop(items = items, levelCount = 2, overlapIndices = false) {
             processedItems.add(it)
-            processedItems.size >= 2 // Keep iterating
+            processedItems.size >= 2
         }
 
         assertThat(processedItems).containsExactly(listOf("foo", "bar"), listOf("foo", "baz"))

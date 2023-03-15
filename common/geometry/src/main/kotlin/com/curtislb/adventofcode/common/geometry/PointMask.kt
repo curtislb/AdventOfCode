@@ -20,8 +20,8 @@ class PointMask(val points: Set<Point>) {
 
     init {
         val (xRange, yRange) = points.coordinateRanges()
-        width = xRange.size
-        height = yRange.size
+        width = xRange.size()
+        height = yRange.size()
     }
 
     override fun equals(other: Any?): Boolean = other is PointMask && points == other.points

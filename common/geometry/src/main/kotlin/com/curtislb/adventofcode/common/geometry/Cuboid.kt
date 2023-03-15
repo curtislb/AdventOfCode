@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.common.geometry
 import com.curtislb.adventofcode.common.range.contains
 import com.curtislb.adventofcode.common.range.overlapWith
 import com.curtislb.adventofcode.common.range.size
-import com.curtislb.adventofcode.common.range.toIterableRange
 
 /**
  * A box consisting of unit cubes that are aligned to a 3D grid.
@@ -20,7 +19,7 @@ data class Cuboid(val xRange: IntRange, val yRange: IntRange, val zRange: IntRan
         get() = if (isEmpty()) {
             0L
         } else {
-            xRange.size.toLong() * yRange.size.toLong() * zRange.size.toLong()
+            xRange.size().toLong() * yRange.size().toLong() * zRange.size().toLong()
         }
 
     /**
@@ -44,7 +43,7 @@ data class Cuboid(val xRange: IntRange, val yRange: IntRange, val zRange: IntRan
     /**
      * Returns a [Cuboid] representing the intersection of this cuboid and [other].
      */
-    fun overlapWith(other: Cuboid): Cuboid {
+    infix fun overlapWith(other: Cuboid): Cuboid {
         // Check if either cuboid is empty
         if (isEmpty() || other.isEmpty()) {
             return EMPTY
@@ -61,19 +60,15 @@ data class Cuboid(val xRange: IntRange, val yRange: IntRange, val zRange: IntRan
         }
 
         // Find coordinate overlaps and check if any is empty
-        val xOverlap = xRange.overlapWith(other.xRange)
-        val yOverlap = yRange.overlapWith(other.yRange)
-        val zOverlap = zRange.overlapWith(other.zRange)
+        val xOverlap = xRange overlapWith other.xRange
+        val yOverlap = yRange overlapWith other.yRange
+        val zOverlap = zRange overlapWith other.zRange
         if (xOverlap.isEmpty() || yOverlap.isEmpty() || zOverlap.isEmpty()) {
             return EMPTY
         }
 
         // Create a cuboid with the overlapping coordinates
-        return Cuboid(
-            xRange = xOverlap.toIterableRange(),
-            yRange = yOverlap.toIterableRange(),
-            zRange = zOverlap.toIterableRange()
-        )
+        return Cuboid(xRange = xOverlap, yRange = yOverlap, zRange = zOverlap)
     }
 
     companion object {

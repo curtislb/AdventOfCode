@@ -53,11 +53,11 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2019, day 19, part 1.
  *
  * @param inputPath The path to the input file for this puzzle.
- * @param gridRange The range of x and y-coordinate values on the grid for the drones to scan.
+ * @param gridRange The range of x- and y-coordinate values on the grid for the drones to scan.
  */
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
-    gridRange: BigIntegerRange = BigIntegerRange(0 until 50)
+    gridRange: BigIntegerRange = BigIntegerRange(0, 49)
 ): Int {
     val droneSystem = DroneSystem(inputPath.toFile())
     return droneSystem.scanArea(gridRange, gridRange)

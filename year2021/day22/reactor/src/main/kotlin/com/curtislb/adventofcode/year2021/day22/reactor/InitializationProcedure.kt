@@ -20,9 +20,9 @@ class InitializationProcedure(private val region: Cuboid) {
      * The active states of all cubes in the initialization procedure region.
      */
     private val cubes: List<List<BooleanArray>> =
-        List(region.xRange.size) {
-            List(region.yRange.size) {
-                BooleanArray(region.zRange.size)
+        List(region.xRange.size()) {
+            List(region.yRange.size()) {
+                BooleanArray(region.zRange.size())
             }
         }
 
@@ -46,7 +46,7 @@ class InitializationProcedure(private val region: Cuboid) {
      * overlap with the initialization procedure region.
      */
     fun execute(rebootStep: RebootStep) {
-        val overlap = region.overlapWith(rebootStep.region)
+        val overlap = region overlapWith rebootStep.region
         overlap.forEachVoxel { x, y, z ->
             if (rebootStep.isOn != isCubeActive(x, y, z)) {
                 activeCubesCount += if (rebootStep.isOn) 1 else -1

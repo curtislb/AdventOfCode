@@ -121,7 +121,7 @@ class Ascii private constructor(
         /**
          * A range containing all valid ASCII code values.
          */
-        val ASCII_CODE_RANGE = BigIntegerRange(0..127)
+        val ASCII_CODE_RANGE = BigIntegerRange(0, 127)
 
         /**
          * The ASCII value of the newline character.
@@ -129,4 +129,3 @@ class Ascii private constructor(
         val NEWLINE_CODE: BigInteger = BigInteger.TEN
     }
 }
-

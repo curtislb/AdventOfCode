@@ -68,7 +68,7 @@ internal object BurrowGraph : WeightedGraph<Burrow>() {
         }
 
         val distanceOutOfRoom = roomCapacity - room.lastIndex
-        return distanceOutOfRoom + moveRange.size
+        return distanceOutOfRoom + moveRange.size()
     }
 
     /**
@@ -93,7 +93,7 @@ internal object BurrowGraph : WeightedGraph<Burrow>() {
         }
 
         val distanceIntoRoom = roomCapacity - targetRoom.size
-        return moveRange.size + distanceIntoRoom
+        return moveRange.size() + distanceIntoRoom
     }
 
     /**

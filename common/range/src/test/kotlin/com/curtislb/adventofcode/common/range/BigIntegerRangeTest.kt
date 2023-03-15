@@ -1,172 +1,227 @@
 package com.curtislb.adventofcode.common.range
 
 import java.math.BigInteger
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [BigIntegerRange].
+ * Tests the [BigIntegerRange] class and related functions.
  */
 class BigIntegerRangeTest {
     @Test
-    fun testSize() {
-        assertEquals(BigInteger.ZERO, BigIntegerRange.EMPTY.size)
-        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ZERO, BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO).size)
-        assertEquals(BigInteger.ONE, BigIntegerRange(BigInteger.ONE, BigInteger.ONE).size)
-        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ZERO, BigInteger.ONE).size)
-        assertEquals(BigInteger.TWO, BigIntegerRange(BigInteger.ONE, BigInteger.TWO).size)
-        assertEquals(BigInteger("9"), BigIntegerRange(BigInteger.TWO, BigInteger.TEN).size)
-        assertEquals(BigInteger("18"), BigIntegerRange(BigInteger("-5"), BigInteger("12")).size)
-        assertEquals(
-            BigInteger("1420198"),
-            BigIntegerRange(BigInteger("-475962"), BigInteger("944235")).size
-        )
+    fun startAndEndInclusive_whenEmpty() {
+        val range = BigIntegerRange.EMPTY
+        assertThat(range.start).isGreaterThan(range.endInclusive)
     }
 
     @Test
-    fun testConstructWithIntRange() {
-        var range = BigIntegerRange(0..0)
-        assertEquals(BigInteger.ZERO, range.start)
-        assertEquals(BigInteger.ZERO, range.endInclusive)
-
-        range = BigIntegerRange(0..1)
-        assertEquals(BigInteger.ZERO, range.start)
-        assertEquals(BigInteger.ONE, range.endInclusive)
-
-        range = BigIntegerRange(-1..1)
-        assertEquals(BigInteger("-1"), range.start)
-        assertEquals(BigInteger.ONE, range.endInclusive)
-
-        range = BigIntegerRange(1..100)
-        assertEquals(BigInteger.ONE, range.start)
-        assertEquals(BigInteger("100"), range.endInclusive)
+    fun startAndEndInclusive_withSingleValue() {
+        val range = BigIntegerRange(42, 42)
+        assertThat(range.start).isEqualTo(BigInteger.valueOf(42))
+        assertThat(range.endInclusive).isEqualTo(BigInteger.valueOf(42))
     }
 
     @Test
-    fun testConstructWithLongRange() {
-        var range = BigIntegerRange(0L..0L)
-        assertEquals(BigInteger.ZERO, range.start)
-        assertEquals(BigInteger.ZERO, range.endInclusive)
-
-        range = BigIntegerRange(0L..1L)
-        assertEquals(BigInteger.ZERO, range.start)
-        assertEquals(BigInteger.ONE, range.endInclusive)
-
-        range = BigIntegerRange(-1L..1L)
-        assertEquals(BigInteger("-1"), range.start)
-        assertEquals(BigInteger.ONE, range.endInclusive)
-
-        range = BigIntegerRange(1L..100L)
-        assertEquals(BigInteger.ONE, range.start)
-        assertEquals(BigInteger("100"), range.endInclusive)
+    fun startAndEndInclusive_withMultipleValues() {
+        val range = BigIntegerRange(-5, 12)
+        assertThat(range.start).isEqualTo(BigInteger.valueOf(-5))
+        assertThat(range.endInclusive).isEqualTo(BigInteger.valueOf(12))
     }
 
     @Test
-    fun testIterator() {
-        val items = mutableListOf<BigInteger>()
-        for (item in BigIntegerRange(BigInteger("-4"), BigInteger("3"))) {
-            items.add(item)
+    fun constructor_withLongs() {
+        val range = BigIntegerRange(-2147483649L, 2147483648L)
+        assertThat(range.first).isEqualTo(BigInteger.valueOf(-2147483649L))
+        assertThat(range.last).isEqualTo(BigInteger.valueOf(2147483648L))
+    }
+
+    @Test
+    fun constructor_withBigIntegers() {
+        val first = BigInteger("-9223372036854775809")
+        val last = BigInteger("9223372036854775808")
+        val range = BigIntegerRange(first, last)
+        assertThat(range.first).isEqualTo(first)
+        assertThat(range.last).isEqualTo(last)
+    }
+
+    @Test
+    fun toString_whenEmpty() {
+        val range = BigIntegerRange(2, -3)
+        assertThat(range.toString()).isEqualTo("BigIntegerRange(2, -3)")
+    }
+
+    @Test
+    fun toString_withSingleValue() {
+        val range = BigIntegerRange(-23, -23)
+        assertThat(range.toString()).isEqualTo("BigIntegerRange(-23, -23)")
+    }
+
+    @Test
+    fun toString_withMultipleValues() {
+        val range = BigIntegerRange(0, 101)
+        assertThat(range.toString()).isEqualTo("BigIntegerRange(0, 101)")
+    }
+
+    @Test
+    fun equals_nullRange_whenEmpty() {
+        val range = BigIntegerRange.EMPTY
+        val other: BigIntegerRange? = null
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nullRange_whenNotEmpty() {
+        val range = BigIntegerRange(0, 0)
+        val other: BigIntegerRange? = null
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyRange_whenEmpty() {
+        val range = BigIntegerRange(1, 0)
+        val other = BigIntegerRange(0, -1)
+        assertThat(range).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyRange_whenNotEmpty() {
+        val range = BigIntegerRange(0, 1)
+        val other = BigIntegerRange(1, 0)
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonEmptyRange_whenEmpty() {
+        val range = BigIntegerRange(0, -1)
+        val other = BigIntegerRange(-1, 0)
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_differentFirstValues() {
+        val range = BigIntegerRange(1, 3)
+        val other = BigIntegerRange(2, 3)
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_differentSecondValues() {
+        val range = BigIntegerRange(1, 4)
+        val other = BigIntegerRange(1, 3)
+        assertThat(range).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_sameFirstAndSecondValues() {
+        val range = BigIntegerRange(-2, 0)
+        val other = BigIntegerRange(-2, 0)
+        assertThat(range).isEqualTo(other)
+    }
+
+    @Test
+    fun hashCode_whenEmpty() {
+        val hashMap = hashMapOf(BigIntegerRange.EMPTY to "foo")
+        assertThat(hashMap[BigIntegerRange.EMPTY]).isEqualTo("foo")
+        assertThat(hashMap[BigIntegerRange(2, 1)]).isEqualTo("foo")
+        assertThat(hashMap[BigIntegerRange(-1, -2)]).isEqualTo("foo")
+        assertThat(hashMap[BigIntegerRange(0, 0)]).isNull()
+    }
+
+    @Test
+    fun hashCode_whenNotEmpty() {
+        val hashMap = hashMapOf(BigIntegerRange(1, 3) to "bar")
+        assertThat(hashMap[BigIntegerRange(1, 3)]).isEqualTo("bar")
+        assertThat(hashMap[BigIntegerRange.EMPTY]).isNull()
+        assertThat(hashMap[BigIntegerRange(3, 1)]).isNull()
+        assertThat(hashMap[BigIntegerRange(2, 3)]).isNull()
+    }
+
+    @Test
+    fun iterator_whenEmpty() {
+        val range = BigIntegerRange.EMPTY
+
+        val values = mutableListOf<BigInteger>()
+        for (value in range) {
+            values.add(value)
         }
-        assertEquals(
-            listOf(
-                BigInteger("-4"),
-                BigInteger("-3"),
-                BigInteger("-2"),
-                BigInteger("-1"),
-                BigInteger.ZERO,
-                BigInteger.ONE,
-                BigInteger.TWO,
-                BigInteger("3")
-            ),
-            items.toList()
+
+        assertThat(values).isEmpty()
+    }
+
+    @Test
+    fun iterator_withSingleValue() {
+        val range = BigIntegerRange(99, 99)
+
+        val values = mutableListOf<BigInteger>()
+        for (value in range) {
+            values.add(value)
+        }
+
+        assertThat(values).containsExactly(BigInteger.valueOf(99))
+    }
+
+    @Test
+    fun iterator_withMultipleValues() {
+        val range = BigIntegerRange(-2, 3)
+
+        val values = mutableListOf<BigInteger>()
+        for (value in range) {
+            values.add(value)
+        }
+
+        assertThat(values).containsExactly(
+            BigInteger.valueOf(-2),
+            BigInteger.valueOf(-1),
+            BigInteger.ZERO,
+            BigInteger.ONE,
+            BigInteger.TWO,
+            BigInteger.valueOf(3)
         )
     }
 
     @Test
-    fun testEquals() {
-        assertEquals(BigIntegerRange.EMPTY, BigIntegerRange.EMPTY)
-        assertEquals(BigIntegerRange(BigInteger.ONE, BigInteger.ZERO), BigIntegerRange.EMPTY)
-        assertEquals(
-            BigIntegerRange(BigInteger.ONE, BigInteger.ZERO),
-            BigIntegerRange(BigInteger.TWO, BigInteger.ZERO)
-        )
-        assertEquals(
-            BigIntegerRange(BigInteger.TEN, BigInteger.TWO),
-            BigIntegerRange(BigInteger.TWO, BigInteger.ZERO)
-        )
-        assertEquals(
-            BigIntegerRange(BigInteger.ONE, BigInteger.ONE),
-            BigIntegerRange(BigInteger.ONE, BigInteger.ONE)
-        )
-        assertEquals(
-            BigIntegerRange(BigInteger.ONE, BigInteger.TWO),
-            BigIntegerRange(BigInteger.ONE, BigInteger.TWO)
-        )
-        assertEquals(
-            BigIntegerRange(BigInteger.TWO, BigInteger.TEN),
-            BigIntegerRange(BigInteger.TWO, BigInteger.TEN)
-        )
-        assertEquals(
-            BigIntegerRange(BigInteger("-3"), BigInteger("4")),
-            BigIntegerRange(BigInteger("-3"), BigInteger("4"))
-        )
-
-        assertNotEquals(BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO), BigIntegerRange.EMPTY)
-        assertNotEquals(
-            BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO),
-            BigIntegerRange(BigInteger.ONE, BigInteger.ONE)
-        )
-        assertNotEquals(
-            BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO),
-            BigIntegerRange(BigInteger.ZERO, BigInteger.ONE)
-        )
-        assertNotEquals(
-            BigIntegerRange(BigInteger.ZERO, BigInteger.ONE),
-            BigIntegerRange(BigInteger.ONE, BigInteger.ONE)
-        )
-        assertNotEquals(
-            BigIntegerRange(BigInteger.ZERO, BigInteger.TWO),
-            BigIntegerRange(BigInteger.ONE, BigInteger.TEN)
-        )
-        assertNotEquals(
-            BigIntegerRange(BigInteger("-3"), BigInteger("4")),
-            BigIntegerRange(BigInteger("-4"), BigInteger("3"))
-        )
+    fun toBigIntegerRange_intRange_empty() {
+        val intRange = IntRange.EMPTY
+        val bigIntRange = intRange.toBigIntegerRange()
+        assertThat(bigIntRange.isEmpty()).isTrue
     }
 
     @Test
-    fun testHashCode() {
-        val ranges = listOf(
-            BigIntegerRange(BigInteger("90"), BigInteger("-4")),
-            BigIntegerRange(BigInteger("-100"), BigInteger("-27")),
-            BigIntegerRange(BigInteger("8"), BigInteger("58")),
-            BigIntegerRange(BigInteger("72"), BigInteger("94")),
-            BigIntegerRange(BigInteger("-89"), BigInteger("-53")),
-            BigIntegerRange(BigInteger("-16"), BigInteger("83")),
-            BigIntegerRange(BigInteger("-43"), BigInteger("-5")),
-            BigIntegerRange(BigInteger("-85"), BigInteger("-51")),
-            BigIntegerRange(BigInteger("-29"), BigInteger("90")),
-            BigIntegerRange(BigInteger("-63"), BigInteger("10"))
-        )
-        val hashMap = HashMap<BigIntegerRange, Int>()
-        ranges.forEachIndexed { index, range -> hashMap[range] = index }
-        ranges.forEachIndexed { index, range -> assertEquals(index, hashMap[range]) }
+    fun toBigIntegerRange_intRange_singleValue() {
+        val intRange = 2..2
+        val bigIntRange = intRange.toBigIntegerRange()
+        assertThat(bigIntRange.first).isEqualTo(BigInteger.TWO)
+        assertThat(bigIntRange.last).isEqualTo(BigInteger.TWO)
     }
 
     @Test
-    fun testToString() {
-        assertEquals("1..0", BigIntegerRange(BigInteger.ONE, BigInteger.ZERO).toString())
-        assertEquals("2..0", BigIntegerRange(BigInteger.TWO, BigInteger.ZERO).toString())
-        assertEquals("0..0", BigIntegerRange(BigInteger.ZERO, BigInteger.ZERO).toString())
-        assertEquals("0..-1", BigIntegerRange(BigInteger.ZERO, BigInteger("-1")).toString())
-        assertEquals("1..1", BigIntegerRange(BigInteger.ONE, BigInteger.ONE).toString())
-        assertEquals("0..1", BigIntegerRange(BigInteger.ZERO, BigInteger.ONE).toString())
-        assertEquals("1..2", BigIntegerRange(BigInteger.ONE, BigInteger.TWO).toString())
-        assertEquals("2..10", BigIntegerRange(BigInteger.TWO, BigInteger.TEN).toString())
-        assertEquals("-5..-2", BigIntegerRange(BigInteger("-5"), BigInteger("-2")).toString())
-        assertEquals("-861..987", BigIntegerRange(BigInteger("-861"), BigInteger("987")).toString())
+    fun toBigIntegerRange_intRange_multipleValues() {
+        val intRange = -76..13
+        val bigIntRange = intRange.toBigIntegerRange()
+        assertThat(bigIntRange.first).isEqualTo(BigInteger.valueOf(-76))
+        assertThat(bigIntRange.last).isEqualTo(BigInteger.valueOf(13))
+    }
+
+    @Test
+    fun toBigIntegerRange_longRange_empty() {
+        val longRange = LongRange.EMPTY
+        val bigIntRange = longRange.toBigIntegerRange()
+        assertThat(bigIntRange.isEmpty()).isTrue
+    }
+
+    @Test
+    fun toBigIntegerRange_longRange_singleValue() {
+        val longRange = 2L..2L
+        val bigIntRange = longRange.toBigIntegerRange()
+        assertThat(bigIntRange.first).isEqualTo(BigInteger.TWO)
+        assertThat(bigIntRange.last).isEqualTo(BigInteger.TWO)
+    }
+
+    @Test
+    fun toBigIntegerRange_longRange_multipleValues() {
+        val longRange = -76L..13L
+        val bigIntRange = longRange.toBigIntegerRange()
+        assertThat(bigIntRange.first).isEqualTo(BigInteger.valueOf(-76))
+        assertThat(bigIntRange.last).isEqualTo(BigInteger.valueOf(13))
     }
 }

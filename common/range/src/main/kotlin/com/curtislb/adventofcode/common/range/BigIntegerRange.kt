@@ -4,74 +4,59 @@ import java.math.BigInteger
 import java.util.Objects
 
 /**
- * A contiguous range of [BigInteger] values.
+ * An ordered, contiguous range of [BigInteger] values.
  *
- * @param start The minimum value contained in this range.
- * @param endInclusive The maximum value contained in this range.
+ * @property first The minimum value contained in the range.
+ * @property last The maximum value contained in the range.
+ *
+ * @constructor Creates a new instance of [BigIntegerRange] with the given [first] and [last]
+ *  (inclusive) values.
  */
 class BigIntegerRange(
-    override val start: BigInteger,
-    override val endInclusive: BigInteger
+    val first: BigInteger,
+    val last: BigInteger
 ) : ClosedRange<BigInteger>, Iterable<BigInteger> {
     /**
-     * The minimum value contained in this range.
+     * The minimum value contained in the range.
      */
-    val first: BigInteger
-        get() = start
+    override val start: BigInteger
+        get() = first
 
     /**
-     * The maximum value contained in this range.
+     * The maximum value contained in the range.
      */
-    val last: BigInteger
-        get() = endInclusive
+    override val endInclusive: BigInteger
+        get() = last
 
     /**
-     * The number of distinct integer values in this range.
+     * Creates a new instance of [BigIntegerRange] with the given [first] and [last]
+     * (inclusive) values.
      */
-    val size: BigInteger
-        get() = if (isEmpty()) BigInteger.ZERO else endInclusive - start + BigInteger.ONE
+    constructor(first: Int, last: Int) : this(first.toBigInteger(), last.toBigInteger())
 
     /**
-     * A contiguous range of [BigInteger] values.
-     *
-     * @param intRange A range of [Int] values that will be used to create this range.
+     * Creates a new instance of [BigIntegerRange] with the given [first] and [last]
+     * (inclusive) values.
      */
-    constructor(intRange: IntRange) : this(
-        intRange.first.toBigInteger(),
-        intRange.last.toBigInteger()
-    )
+    constructor(first: Long, last: Long) : this(first.toBigInteger(), last.toBigInteger())
 
-    /**
-     * A range of values of type [BigInteger], from [start] up to and including [endInclusive].
-     *
-     * @param longRange A range of [Long] values that will be used to create this range.
-     */
-    constructor(longRange: LongRange) : this(
-        longRange.first.toBigInteger(),
-        longRange.last.toBigInteger()
-    )
+    override fun toString(): String = "BigIntegerRange($first, $last)"
 
-    override fun equals(other: Any?): Boolean {
-        return other is BigIntegerRange && ((isEmpty() && other.isEmpty()) ||
-            (start == other.start && endInclusive == other.endInclusive))
+    override fun equals(other: Any?): Boolean = when {
+        other !is BigIntegerRange -> false
+        isEmpty() && other.isEmpty() -> true
+        else -> first == other.first && last == other.last
     }
 
-    override fun hashCode(): Int = if (isEmpty()) -1 else Objects.hash(start, endInclusive)
-
-    override fun toString(): String = "$start..$endInclusive"
+    override fun hashCode(): Int = if (isEmpty()) -1 else Objects.hash(first, last)
 
     override fun iterator(): Iterator<BigInteger> = object : Iterator<BigInteger> {
-        private var current: BigInteger = start
+        private var current: BigInteger = first
 
-        override fun hasNext(): Boolean = current <= endInclusive
+        override fun hasNext(): Boolean = current <= last
 
         override fun next(): BigInteger = current++
     }
-
-    /**
-     * Returns if all the values in [other] are also in this range.
-     */
-    operator fun contains(other: BigIntegerRange) = other.all { it in this }
 
     companion object {
         /**
@@ -82,13 +67,11 @@ class BigIntegerRange(
 }
 
 /**
- * Returns a [BigIntegerRange] containing the values from this up to and including [other].
+ * Returns a [BigIntegerRange] with the same integer values as this range.
  */
-operator fun BigInteger.rangeTo(other: BigInteger): BigIntegerRange = BigIntegerRange(this, other)
+fun IntRange.toBigIntegerRange(): BigIntegerRange = BigIntegerRange(first, last)
 
 /**
- * Returns a [BigIntegerRange] containing the values from this up until (but not including) [other].
+ * Returns a [BigIntegerRange] with the same integer values as this range.
  */
-infix fun BigInteger.until(other: BigInteger): BigIntegerRange {
-    return BigIntegerRange(this, other - BigInteger.ONE)
-}
+fun LongRange.toBigIntegerRange(): BigIntegerRange = BigIntegerRange(first, last)

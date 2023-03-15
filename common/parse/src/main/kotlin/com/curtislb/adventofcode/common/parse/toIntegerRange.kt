@@ -1,7 +1,6 @@
 package com.curtislb.adventofcode.common.parse
 
 import com.curtislb.adventofcode.common.range.BigIntegerRange
-import com.curtislb.adventofcode.common.range.rangeTo
 
 /**
  * TODO
@@ -32,5 +31,5 @@ fun String.toLongRange(): LongRange {
 fun String.toBigIntegerRange(): BigIntegerRange {
     val matches = INTEGER_RANGE_REGEX.find(this)?.groupValues
     require(matches != null && matches.size == 3) { "Invalid range format: $this" }
-    return matches[1].toBigInteger()..matches[2].toBigInteger()
+    return BigIntegerRange(matches[1].toBigInteger(), matches[2].toBigInteger())
 }

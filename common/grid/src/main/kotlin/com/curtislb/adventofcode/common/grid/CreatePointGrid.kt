@@ -18,7 +18,7 @@ fun <T> createPointGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): 
     }
 
     // Populate all grid cells in the visible bounds
-    return Grid(yRange.size, xRange.size) { rowIndex, colIndex ->
+    return Grid(yRange.size(), xRange.size()) { rowIndex, colIndex ->
         valueAt(Point(xRange.first + colIndex, yRange.last - rowIndex))
     }
 }

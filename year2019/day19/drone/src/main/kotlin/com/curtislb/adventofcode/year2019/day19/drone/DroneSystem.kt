@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.year2019.day19.drone
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.common.range.BigIntegerRange
 import com.curtislb.adventofcode.common.range.overlapWith
-import com.curtislb.adventofcode.common.range.toIterableRange
 import java.io.File
 import java.math.BigInteger
 import java.util.concurrent.atomic.AtomicInteger
@@ -109,6 +108,6 @@ class DroneSystem(file: File) {
     fun findBeamOverlap(rowIndex: BigInteger, rowDelta: BigInteger): BigIntegerRange {
         val row1Range = findBeamRange(rowIndex)
         val row2Range = findBeamRange(rowIndex + rowDelta)
-        return row1Range.overlapWith(row2Range).toIterableRange()
+        return row1Range overlapWith row2Range
     }
 }

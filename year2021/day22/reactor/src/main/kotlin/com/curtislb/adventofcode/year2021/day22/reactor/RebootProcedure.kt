@@ -26,7 +26,7 @@ class RebootProcedure {
         // Subtract volumes of overlapping regions that were previously activated
         val counterUpdates = Counter<Cuboid>()
         for ((region, count) in activeRegionsCounter.entries) {
-            val overlap = region.overlapWith(rebootStep.region)
+            val overlap = region overlapWith rebootStep.region
             if (!overlap.isEmpty()) {
                 counterUpdates[overlap] -= count
             }

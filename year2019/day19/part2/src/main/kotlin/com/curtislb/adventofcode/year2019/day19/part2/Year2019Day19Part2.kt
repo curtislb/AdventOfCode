@@ -59,6 +59,7 @@ would be 250020.)
 
 package com.curtislb.adventofcode.year2019.day19.part2
 
+import com.curtislb.adventofcode.common.range.size
 import com.curtislb.adventofcode.common.search.bisect
 import com.curtislb.adventofcode.year2019.day19.drone.DroneSystem
 import java.math.BigInteger
@@ -82,7 +83,7 @@ fun solve(
     val shipRowDelta = shipSize - BigInteger.ONE
     val targetIndex = bisect { value ->
         val overlap = droneSystem.findBeamOverlap(value.toBigInteger(), shipRowDelta)
-        overlap.size >= shipSize
+        overlap.size() >= shipSize
     }
 
     return if (targetIndex != null) {

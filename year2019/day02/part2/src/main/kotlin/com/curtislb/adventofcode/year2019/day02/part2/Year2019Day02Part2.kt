@@ -58,7 +58,7 @@ import java.nio.file.Paths
  */
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
-    nounVerbValues: BigIntegerRange = BigIntegerRange(0..99),
+    nounVerbValues: BigIntegerRange = BigIntegerRange(0, 99),
     nounFactor: BigInteger = BigInteger("100"),
     targetOutput: BigInteger = BigInteger("19690720")
 ): BigInteger? {

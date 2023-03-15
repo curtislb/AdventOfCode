@@ -51,7 +51,7 @@ class Segment private constructor(
     val isHorizontal: Boolean get() = !isPoint && slope == Slope.HORIZONTAL
 
     /**
-     * Whether this segment if vertical.
+     * Whether this segment is vertical.
      *
      * A segment consisting of a single point is not considered vertical.
      */
@@ -114,7 +114,7 @@ class Segment private constructor(
         }
 
         Slope.UP_RIGHT, Slope.DOWN_RIGHT -> sequence {
-            for (distance in 0 until xRange.size) {
+            for (distance in 0 until xRange.size()) {
                 yield(start.move(slope.direction, distance))
             }
         }
@@ -272,13 +272,13 @@ class Segment private constructor(
             }
 
             // Check if the segments' x-coordinates overlap
-            val xOverlap = segmentA.xRange.overlapWith(segmentB.xRange)
+            val xOverlap = segmentA.xRange overlapWith segmentB.xRange
             if (xOverlap.isEmpty()) {
                 return null
             }
 
-            val overlapStart = segmentA.start.copy(x = xOverlap.start)
-            val overlapEnd = segmentA.start.copy(x = xOverlap.endInclusive)
+            val overlapStart = segmentA.start.copy(x = xOverlap.first)
+            val overlapEnd = segmentA.start.copy(x = xOverlap.last)
             return between(overlapStart, overlapEnd)
         }
 
@@ -292,13 +292,13 @@ class Segment private constructor(
             }
 
             // Check if the segments' y-coordinates overlap
-            val yOverlap = segmentA.yRange.overlapWith(segmentB.yRange)
+            val yOverlap = segmentA.yRange overlapWith segmentB.yRange
             if (yOverlap.isEmpty()) {
                 return null
             }
 
-            val overlapStart = segmentA.start.copy(y = yOverlap.start)
-            val overlapEnd = segmentA.start.copy(y = yOverlap.endInclusive)
+            val overlapStart = segmentA.start.copy(y = yOverlap.first)
+            val overlapEnd = segmentA.start.copy(y = yOverlap.last)
             return between(overlapStart, overlapEnd)
         }
 
@@ -314,15 +314,15 @@ class Segment private constructor(
             }
 
             // Check if the segments' x-coordinates overlap
-            val xOverlap = segmentA.xRange.overlapWith(segmentB.xRange)
+            val xOverlap = segmentA.xRange overlapWith segmentB.xRange
             if (xOverlap.isEmpty()) {
                 return null
             }
 
             // The segments' y-coordinates must also overlap
-            val yOverlap = segmentA.yRange.overlapWith(segmentB.yRange)
-            val overlapStart = Point(xOverlap.start, yOverlap.start)
-            val overlapEnd = Point(xOverlap.endInclusive, yOverlap.endInclusive)
+            val yOverlap = segmentA.yRange overlapWith segmentB.yRange
+            val overlapStart = Point(xOverlap.first, yOverlap.first)
+            val overlapEnd = Point(xOverlap.last, yOverlap.last)
             return between(overlapStart, overlapEnd)
         }
 
@@ -338,15 +338,15 @@ class Segment private constructor(
             }
 
             // Check if the segments' x-coordinates overlap
-            val xOverlap = segmentA.xRange.overlapWith(segmentB.xRange)
+            val xOverlap = segmentA.xRange overlapWith segmentB.xRange
             if (xOverlap.isEmpty()) {
                 return null
             }
 
             // The segments' y-coordinates must also overlap
-            val yOverlap = segmentA.yRange.overlapWith(segmentB.yRange)
-            val overlapStart = Point(xOverlap.start, yOverlap.endInclusive)
-            val overlapEnd = Point(xOverlap.endInclusive, yOverlap.start)
+            val yOverlap = segmentA.yRange overlapWith segmentB.yRange
+            val overlapStart = Point(xOverlap.first, yOverlap.last)
+            val overlapEnd = Point(xOverlap.last, yOverlap.first)
             return between(overlapStart, overlapEnd)
         }
 
