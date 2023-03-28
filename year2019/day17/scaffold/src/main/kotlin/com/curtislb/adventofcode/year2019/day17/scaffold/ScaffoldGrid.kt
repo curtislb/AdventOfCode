@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2019.day17.scaffold
 
 import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Pose
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.toGrid
@@ -58,7 +58,7 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
         val instructions = mutableListOf<Instruction>()
 
         // Find the vacuum robot's starting position and direction
-        var robotStart: SpatialInfo? = null
+        var robotStart: Pose? = null
         for (rowIndex in grid.rowIndices) {
             if (robotStart != null) {
                 break
@@ -70,28 +70,28 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
 
                 when (grid[rowIndex, colIndex]) {
                     Space.ROBOT_UP -> {
-                        robotStart = SpatialInfo(
+                        robotStart = Pose(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.UP
                         )
                     }
 
                     Space.ROBOT_RIGHT -> {
-                        robotStart = SpatialInfo(
+                        robotStart = Pose(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.RIGHT
                         )
                     }
 
                     Space.ROBOT_DOWN -> {
-                        robotStart = SpatialInfo(
+                        robotStart = Pose(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.DOWN
                         )
                     }
 
                     Space.ROBOT_LEFT -> {
-                        robotStart = SpatialInfo(
+                        robotStart = Pose(
                             Point.fromMatrixCoordinates(rowIndex, colIndex),
                             Direction.LEFT
                         )
@@ -107,14 +107,14 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
             return instructions
         }
 
-        // Simulate moving the robot from its current spatial info (without actually doing so)
-        var spatialInfo: SpatialInfo = robotStart
+        // Simulate moving the robot from its current pose (without actually doing so)
+        var pose: Pose = robotStart
         var moveCount = 0
         while (true) {
-            // Check if the robot can safely move forward.
-            val forwardOrientation = spatialInfo.move()
-            if (isSafeSpace(forwardOrientation.position)) {
-                spatialInfo = forwardOrientation
+            // Check if the robot can safely move forward
+            val forwardPose = pose.move()
+            if (isSafeSpace(forwardPose.position)) {
+                pose = forwardPose
                 moveCount++
             } else {
                 // If the robot can no longer move forward, add the move instruction to get here
@@ -123,18 +123,18 @@ class ScaffoldGrid private constructor(private val grid: Grid<Space>) {
                     moveCount = 0
                 }
 
-                // Check if the robot can safely move forward after turning.
-                val rightOrientation = spatialInfo.turnRight().move()
-                val leftOrientation = spatialInfo.turnLeft().move()
+                // Check if the robot can safely move forward after turning
+                val rightwardPose = pose.turnRight().move()
+                val leftwardPose = pose.turnLeft().move()
                 when {
-                    isSafeSpace(rightOrientation.position) -> {
-                        spatialInfo = rightOrientation
+                    isSafeSpace(rightwardPose.position) -> {
+                        pose = rightwardPose
                         instructions.add(TurnRight)
                         moveCount++
                     }
 
-                    isSafeSpace(leftOrientation.position) -> {
-                        spatialInfo = leftOrientation
+                    isSafeSpace(leftwardPose.position) -> {
+                        pose = leftwardPose
                         instructions.add(TurnLeft)
                         moveCount++
                     }

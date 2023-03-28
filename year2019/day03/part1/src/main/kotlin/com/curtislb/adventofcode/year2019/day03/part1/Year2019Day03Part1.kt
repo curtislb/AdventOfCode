@@ -68,7 +68,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val (wireA, wireB) = inputPath.toFile().readLines().subList(0, 2).map { Wire(it.trim()) }
-    val (intersection, distance) = wireA.findNearestIntersection(wireB)
+    val (intersection, distance) = wireA nearestIntersect wireB
     return if (intersection != null) distance else null
 }
 

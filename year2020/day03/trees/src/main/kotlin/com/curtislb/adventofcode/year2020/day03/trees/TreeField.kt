@@ -31,19 +31,19 @@ class TreeField(treePattern: String) {
      * @throws IllegalArgumentException If [slope] is not negative or `null`.
      */
     fun countTreesAlongSlope(slope: Fraction?): Int {
-        // Convert slope to a ray originating from the top-left corner.
+        // Convert slope to a ray originating from the top-left corner
         require(slope == null || slope.numerator < 0L) { "Slope must be negative or null: $slope" }
-        val ray = Ray(Point.ORIGIN, slope, directionParity = slope != null)
+        val ray = Ray(source = Point.ORIGIN, slope = slope, isDirectionPositive = slope != null)
 
-        // Count trees at each point intersected by the ray.
+        // Count trees at each point intersected by the ray
         var count = 0
         for (point in ray.points()) {
-            // Stop after reaching the bottom of the pattern.
+            // Stop after reaching the bottom of the pattern
             if (-point.y >= patternGrid.height) {
                 break
             }
 
-            // Check for a tree at the current point.
+            // Check for a tree at the current point
             if (isTreeAt(point)) {
                 count++
             }

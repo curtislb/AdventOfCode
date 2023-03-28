@@ -1,69 +1,160 @@
 package com.curtislb.adventofcode.common.geometry
 
 import com.curtislb.adventofcode.common.number.Fraction
-import kotlin.test.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [Ray].
+ * Tests the [Ray] class.
  */
 class RayTest {
     @Test
-    fun testConstructWithIdenticalPoints() {
-        val point = Point(20, -18)
-        assertThrows<IllegalArgumentException> { Ray(point, point) }
+    fun points_zeroSlope_positiveDirection() {
+        val ray = Ray(source = Point(-49, -89), slope = Fraction(0), isDirectionPositive = true)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(-49, -89), Point(-48, -89), Point(-47, -89))
     }
 
     @Test
-    fun testConstructWithDistinctPoints() {
-        assertEquals(
-            Ray(source = Point(16, -6), slope = null, directionParity = true),
-            Ray(source = Point(16, -6), member = Point(16, 10))
-        )
-        assertEquals(
-            Ray(source = Point(-14, 18), slope = null, directionParity = false),
-            Ray(source = Point(-14, 18), member = Point(-14, 1))
-        )
-        assertEquals(
-            Ray(source = Point(9, 11), slope = Fraction(0), directionParity = true),
-            Ray(source = Point(9, 11), member = Point(10, 11))
-        )
-        assertEquals(
-            Ray(source = Point(-8, -20), slope = Fraction(0), directionParity = false),
-            Ray(source = Point(-8, -20), member = Point(-16, -20))
-        )
-        assertEquals(
-            Ray(source = Point(-17, -8), slope = Fraction(8, 25), directionParity = true),
-            Ray(source = Point(-17, -8), member = Point(8, 0))
-        )
-        assertEquals(
-            Ray(source = Point(-16, -10), slope = Fraction(17, 9), directionParity = true),
-            Ray(source = Point(-16, -10), member = Point(-7, 7))
-        )
-        assertEquals(
-            Ray(source = Point(-13, 14), slope = Fraction(-31, 6), directionParity = true),
-            Ray(source = Point(-13, 14), member = Point(-7, -17))
-        )
-        assertEquals(
-            Ray(source = Point(-7, -7), slope = Fraction(-1, 3), directionParity = true),
-            Ray(source = Point(-7, -7), member = Point(5, -11))
-        )
-        assertEquals(
-            Ray(source = Point(-3, -19), slope = Fraction(-19, 13), directionParity = false),
-            Ray(source = Point(-3, -19), member = Point(-16, 0))
-        )
-        assertEquals(
-            Ray(source = Point(12, -13), slope = Fraction(-26, 15), directionParity = false),
-            Ray(source = Point(12, -13), member = Point(-3, 13))
-        )
-        assertEquals(
-            Ray(source = Point(6, 10), slope = Fraction(21), directionParity = false),
-            Ray(source = Point(6, 10), member = Point(5, -11))
-        )
-        assertEquals(
-            Ray(source = Point(7, 15), slope = Fraction(11, 26), directionParity = false),
-            Ray(source = Point(7, 15), member = Point(-19, 4))
-        )
+    fun points_zeroSlope_negativeDirection() {
+        val ray = Ray(source = Point(6, 52), slope = Fraction(0), isDirectionPositive = false)
+        assertThat(ray.points().asIterable()).startsWith(Point(6, 52), Point(5, 52), Point(4, 52))
+    }
+
+    @Test
+    fun points_positiveSlope_positiveDirection() {
+        val ray = Ray(source = Point(-17, 1), slope = Fraction(21, 22), isDirectionPositive = true)
+        assertThat(ray.points().asIterable()).startsWith(Point(-17, 1), Point(5, 22), Point(27, 43))
+    }
+
+    @Test
+    fun points_positiveSlope_negativeDirection() {
+        val ray = Ray(source = Point(3, -23), slope = Fraction(3, 26), isDirectionPositive = false)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(3, -23), Point(-23, -26), Point(-49, -29))
+    }
+
+    @Test
+    fun points_negativeSlope_positiveDirection() {
+        val ray = Ray(source = Point(-49, -30), slope = Fraction(-2), isDirectionPositive = true)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(-49, -30), Point(-48, -32), Point(-47, -34))
+    }
+
+    @Test
+    fun points_negativeSlope_negativeDirection() {
+        val ray = Ray(source = Point(41, -66), slope = Fraction(-4, 3), isDirectionPositive = false)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(41, -66), Point(38, -62), Point(35, -58))
+    }
+
+    @Test
+    fun points_nullSlope_positiveDirection() {
+        val ray = Ray(source = Point(-28, -70), slope = null, isDirectionPositive = true)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(-28, -70), Point(-28, -69), Point(-28, -68))
+    }
+
+    @Test
+    fun points_nullSlope_negativeDirection() {
+        val ray = Ray(source = Point(58, -40), slope = null, isDirectionPositive = false)
+        assertThat(ray.points().asIterable())
+            .startsWith(Point(58, -40), Point(58, -41), Point(58, -42))
+    }
+
+    @Test
+    fun points_xReachesMaxValue() {
+        val source = Point(Int.MAX_VALUE - 1, -2)
+        val ray = Ray(source, slope = Fraction(0), isDirectionPositive = true)
+        assertThat(ray.points().asIterable()).containsExactly(source, Point(Int.MAX_VALUE, -2))
+    }
+
+    @Test
+    fun points_xOvershootsMaxValue() {
+        val source = Point(Int.MAX_VALUE - 1, 85)
+        val ray = Ray(source, slope = Fraction(1, 2), isDirectionPositive = true)
+        assertThat(ray.points().asIterable()).containsExactly(source)
+    }
+
+    @Test
+    fun points_xReachesMinValue() {
+        val source = Point(Int.MIN_VALUE + 1, 48)
+        val ray = Ray(source, slope = Fraction(0), isDirectionPositive = false)
+        assertThat(ray.points().asIterable()).containsExactly(source, Point(Int.MIN_VALUE, 48))
+    }
+
+    @Test
+    fun points_xOvershootsMinValue() {
+        val source = Point(Int.MIN_VALUE + 1, -65)
+        val ray = Ray(source, slope = Fraction(1, 2), isDirectionPositive = false)
+        assertThat(ray.points().asIterable()).containsExactly(source)
+    }
+
+    @Test
+    fun points_yReachesMaxValue() {
+        val source = Point(-3, Int.MAX_VALUE - 1)
+        val ray = Ray(source, slope = null, isDirectionPositive = true)
+        assertThat(ray.points().asIterable()).containsExactly(source, Point(-3, Int.MAX_VALUE))
+    }
+
+    @Test
+    fun points_yOvershootsMaxValue() {
+        val source = Point(3, Int.MAX_VALUE - 1)
+        val ray = Ray(source, slope = Fraction(2), isDirectionPositive = true)
+        assertThat(ray.points().asIterable()).containsExactly(source)
+    }
+
+    @Test
+    fun points_yReachesMinValue() {
+        val source = Point(-92, Int.MIN_VALUE + 1)
+        val ray = Ray(source, slope = null, isDirectionPositive = false)
+        assertThat(ray.points().asIterable()).containsExactly(source, Point(-92, Int.MIN_VALUE))
+    }
+
+    @Test
+    fun points_yOvershootsMinValue() {
+        val source = Point(39, Int.MIN_VALUE + 1)
+        val ray = Ray(source, slope = Fraction(2), isDirectionPositive = false)
+        assertThat(ray.points().asIterable()).containsExactly(source)
+    }
+
+    @Test
+    fun fromPoints_bothSamePoint() {
+        val source = Point(85, -10)
+        val member = Point(85, -10)
+        assertThrows<IllegalArgumentException> { Ray.fromPoints(source, member) }
+    }
+
+    @Test
+    fun fromPoints_verticalSlope_positiveDirection() {
+        val source = Point(24, -80)
+        val member = Point(24, -7)
+        assertThat(Ray.fromPoints(source, member))
+            .isEqualTo(Ray(source, slope = null, isDirectionPositive = true))
+    }
+
+    @Test
+    fun fromPoints_verticalSlope_negativeDirection() {
+        val source = Point(97, 55)
+        val member = Point(97, 49)
+        assertThat(Ray.fromPoints(source, member))
+            .isEqualTo(Ray(source, slope = null, isDirectionPositive = false))
+    }
+
+    @Test
+    fun fromPoints_nonVerticalSlope_positiveDirection() {
+        val source = Point(50, 32)
+        val member = Point(86, 82)
+        assertThat(Ray.fromPoints(source, member))
+            .isEqualTo(Ray(source, slope = Fraction(25, 18), isDirectionPositive = true))
+    }
+
+    @Test
+    fun fromPoints_nonVerticalSlope_negativeDirection() {
+        val source = Point(90, -57)
+        val member = Point(18, 1)
+        assertThat(Ray.fromPoints(source, member))
+            .isEqualTo(Ray(source, slope = Fraction(-29, 36), isDirectionPositive = false))
     }
 }

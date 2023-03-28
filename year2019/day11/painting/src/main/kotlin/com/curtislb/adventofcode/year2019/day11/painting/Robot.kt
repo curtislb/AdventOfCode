@@ -2,7 +2,7 @@ package com.curtislb.adventofcode.year2019.day11.painting
 
 import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Pose
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.createPointGrid
 import com.curtislb.adventofcode.common.intcode.Intcode
@@ -13,9 +13,9 @@ import java.math.BigInteger
  */
 class Robot {
     /**
-     * The current spatial info of the robot in the grid.
+     * The current position and direction of the robot in the grid.
      */
-    var spatialInfo: SpatialInfo = SpatialInfo(Point.ORIGIN, Direction.UP)
+    var pose: Pose = Pose(Point.ORIGIN, Direction.UP)
         private set
 
     /**
@@ -26,7 +26,7 @@ class Robot {
     /**
      * Whether the panel that the robot is currently on has been painted white.
      */
-    private val isOnWhitePanel: Boolean get() = paintedPanels[spatialInfo.position] == Color.WHITE
+    private val isOnWhitePanel: Boolean get() = paintedPanels[pose.position] == Color.WHITE
 
     /**
      * The number of panels in the grid that the robot has painted.
@@ -48,28 +48,28 @@ class Robot {
      * Moves the robot forward one space from its current position, in the direction it's facing.
      */
     fun moveForward() {
-        spatialInfo = spatialInfo.move()
+        pose = pose.move()
     }
 
     /**
      * Turns the robot 90 degrees to the left from the direction it's currently facing.
      */
     fun turnLeft() {
-        spatialInfo = spatialInfo.turnLeft()
+        pose = pose.turnLeft()
     }
 
     /**
      * Turns the robot 90 degrees to the right from the direction it's currently facing.
      */
     fun turnRight() {
-        spatialInfo = spatialInfo.turnRight()
+        pose = pose.turnRight()
     }
 
     /**
      * Paints the panel currently underneath the robot with [color] paint.
      */
     fun paint(color: Color) {
-        paintedPanels[spatialInfo.position] = color
+        paintedPanels[pose.position] = color
     }
 
     /**

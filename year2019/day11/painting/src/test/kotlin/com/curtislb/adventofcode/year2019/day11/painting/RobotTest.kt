@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2019.day11.painting
 
 import com.curtislb.adventofcode.common.geometry.Direction
-import com.curtislb.adventofcode.common.geometry.SpatialInfo
+import com.curtislb.adventofcode.common.geometry.Pose
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.emptyGrid
 import com.curtislb.adventofcode.common.grid.gridOf
@@ -24,52 +24,52 @@ class RobotTest {
 
     @Test
     fun testMoveAndTurn() {
-        assertEquals(SpatialInfo(Point(0, 0), Direction.UP), robot.spatialInfo)
+        assertEquals(Pose(Point(0, 0), Direction.UP), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(0, 1), Direction.UP), robot.spatialInfo)
+        assertEquals(Pose(Point(0, 1), Direction.UP), robot.pose)
 
         robot.turnRight()
-        assertEquals(SpatialInfo(Point(0, 1), Direction.RIGHT), robot.spatialInfo)
+        assertEquals(Pose(Point(0, 1), Direction.RIGHT), robot.pose)
 
         robot.turnRight()
-        assertEquals(SpatialInfo(Point(0, 1), Direction.DOWN), robot.spatialInfo)
+        assertEquals(Pose(Point(0, 1), Direction.DOWN), robot.pose)
 
         robot.turnLeft()
-        assertEquals(SpatialInfo(Point(0, 1), Direction.RIGHT), robot.spatialInfo)
+        assertEquals(Pose(Point(0, 1), Direction.RIGHT), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(1, 1), Direction.RIGHT), robot.spatialInfo)
+        assertEquals(Pose(Point(1, 1), Direction.RIGHT), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(2, 1), Direction.RIGHT), robot.spatialInfo)
+        assertEquals(Pose(Point(2, 1), Direction.RIGHT), robot.pose)
 
         robot.turnLeft()
-        assertEquals(SpatialInfo(Point(2, 1), Direction.UP), robot.spatialInfo)
+        assertEquals(Pose(Point(2, 1), Direction.UP), robot.pose)
 
         robot.turnLeft()
-        assertEquals(SpatialInfo(Point(2, 1), Direction.LEFT), robot.spatialInfo)
+        assertEquals(Pose(Point(2, 1), Direction.LEFT), robot.pose)
 
         robot.turnLeft()
-        assertEquals(SpatialInfo(Point(2, 1), Direction.DOWN), robot.spatialInfo)
+        assertEquals(Pose(Point(2, 1), Direction.DOWN), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(2, 0), Direction.DOWN), robot.spatialInfo)
+        assertEquals(Pose(Point(2, 0), Direction.DOWN), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(2, -1), Direction.DOWN), robot.spatialInfo)
+        assertEquals(Pose(Point(2, -1), Direction.DOWN), robot.pose)
 
         robot.turnRight()
-        assertEquals(SpatialInfo(Point(2, -1), Direction.LEFT), robot.spatialInfo)
+        assertEquals(Pose(Point(2, -1), Direction.LEFT), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(1, -1), Direction.LEFT), robot.spatialInfo)
+        assertEquals(Pose(Point(1, -1), Direction.LEFT), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(0, -1), Direction.LEFT), robot.spatialInfo)
+        assertEquals(Pose(Point(0, -1), Direction.LEFT), robot.pose)
 
         robot.moveForward()
-        assertEquals(SpatialInfo(Point(-1, -1), Direction.LEFT), robot.spatialInfo)
+        assertEquals(Pose(Point(-1, -1), Direction.LEFT), robot.pose)
     }
 
     @Test

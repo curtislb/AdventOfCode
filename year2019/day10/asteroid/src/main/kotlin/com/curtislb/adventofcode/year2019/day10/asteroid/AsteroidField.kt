@@ -92,7 +92,7 @@ class AsteroidField(file: File) {
         }
 
         // Sort visible asteroids in the order they would be vaporized.
-        val sortedAsteroids = visibleAsteroids.sortedBy { station.angleClockwiseFromPositiveY(it) }
+        val sortedAsteroids = visibleAsteroids.sortedBy { station.clockwiseAngleFromYTo(it) }
 
         // Remove all asteroids up to target and return it.
         val targetIndex = count - vaporizedCount - 1
@@ -108,13 +108,17 @@ class AsteroidField(file: File) {
      * considered to be visible.
      */
     private fun countVisibleAsteroids(source: Point): Int {
-        val asteroidRays = mutableSetOf<Ray>().apply {
-            for (asteroid in asteroids) {
-                if (asteroid != source) {
-                    add(Ray(source, asteroid))
-                }
+        val asteroidRays = mutableSetOf<Ray>()
+
+        for (asteroid in asteroids) {
+            if (asteroid == source) {
+                continue
             }
+
+            val ray = Ray.fromPoints(source, asteroid)
+            asteroidRays.add(ray)
         }
+
         return asteroidRays.size
     }
 
@@ -126,18 +130,21 @@ class AsteroidField(file: File) {
      * considered visible.
      */
     private fun findVisibleAsteroids(source: Point): List<Point> {
-        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Long>>().apply {
-            for (asteroid in asteroids) {
-                if (asteroid != source) {
-                    val ray = Ray(source, asteroid)
-                    val oldSquaredDistance = this[ray]?.second ?: Long.MAX_VALUE
-                    val newSquaredDistance = source.squaredDistance(asteroid)
-                    if (newSquaredDistance < oldSquaredDistance) {
-                        this[ray] = Pair(asteroid, newSquaredDistance)
-                    }
-                }
+        val closestAsteroids = mutableMapOf<Ray, Pair<Point, Long>>()
+
+        for (asteroid in asteroids) {
+            if (asteroid == source) {
+                continue
+            }
+
+            val ray = Ray.fromPoints(source, asteroid)
+            val oldSquaredDistance = closestAsteroids[ray]?.second ?: Long.MAX_VALUE
+            val newSquaredDistance = source squaredDistance asteroid
+            if (newSquaredDistance < oldSquaredDistance) {
+                closestAsteroids[ray] = Pair(asteroid, newSquaredDistance)
             }
         }
+
         return closestAsteroids.values.map { it.first }
     }
 }

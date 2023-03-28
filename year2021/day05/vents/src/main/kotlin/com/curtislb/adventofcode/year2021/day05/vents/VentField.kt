@@ -33,7 +33,7 @@ class VentField(ventStrings: List<String>, filterPredicate: (vent: Segment) -> B
     fun overlapPoints(): Set<Point> {
         val points = mutableSetOf<Point>()
         for ((ventA, ventB) in vents.uniquePairs()) {
-            ventA.overlapWith(ventB)?.let { points.addAll(it.points()) }
+            (ventA overlap ventB)?.let { points.addAll(it.points()) }
         }
         return points
     }

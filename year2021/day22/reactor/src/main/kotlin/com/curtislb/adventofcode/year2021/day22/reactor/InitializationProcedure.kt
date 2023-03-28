@@ -46,7 +46,7 @@ class InitializationProcedure(private val region: Cuboid) {
      * overlap with the initialization procedure region.
      */
     fun execute(rebootStep: RebootStep) {
-        val overlap = region overlapWith rebootStep.region
+        val overlap = region overlap rebootStep.region
         overlap.forEachVoxel { x, y, z ->
             if (rebootStep.isOn != isCubeActive(x, y, z)) {
                 activeCubesCount += if (rebootStep.isOn) 1 else -1

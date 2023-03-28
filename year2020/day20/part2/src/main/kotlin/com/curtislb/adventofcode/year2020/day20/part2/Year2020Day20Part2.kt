@@ -169,21 +169,18 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val imageGrid = imageData.constructImageGrid()
     val monsterPoints = mutableSetOf<Point>()
     for (initialMask in pointMasks) {
-        var pointMask = initialMask
-        val maxRowIndex = imageData.sideLength - pointMask.height
-        val maxColIndex = imageData.sideLength - pointMask.width
+        var mask = initialMask
+        val maxRowIndex = imageData.sideLength - mask.height
+        val maxColIndex = imageData.sideLength - mask.width
         for (rowIndex in 0..maxRowIndex) {
             for (colIndex in 0..maxColIndex) {
-                val isMonster = pointMask
-                    .maskValues { imageGrid.getOrNull(it) }
-                    .all { (_, isFilled) -> isFilled }
+                val isMonster = mask.mapSelected { imageGrid.getOrNull(it) }.all { it.value }
                 if (isMonster) {
-                    monsterPoints.addAll(pointMask.points)
+                    monsterPoints.addAll(mask.points)
                 }
-                pointMask = pointMask.translated(Direction.RIGHT)
+                mask = mask.translate(Direction.RIGHT)
             }
-            pointMask =
-                pointMask.translated(Direction.LEFT, maxColIndex + 1).translated(Direction.DOWN)
+            mask = mask.translate(Direction.LEFT, maxColIndex + 1).translate(Direction.DOWN)
         }
     }
 

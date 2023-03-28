@@ -5,48 +5,48 @@ import com.curtislb.adventofcode.common.collection.getCyclic
 /**
  * A valid direction in a two-dimensional grid.
  *
- * @param clockwiseIndex The index of this direction in clockwise order, starting with [UP].
+ * @property clockwiseIndex The index of the direction in clockwise order, starting with [UP].
  */
 enum class Direction(private val clockwiseIndex: Int) {
     /**
      * The direction of positive y.
      */
-    UP(0),
+    UP(clockwiseIndex = 0),
 
     /**
      * The direction of positive x and y.
      */
-    UP_RIGHT(1),
+    UP_RIGHT(clockwiseIndex = 1),
 
     /**
      * The direction of positive x.
      */
-    RIGHT(2),
+    RIGHT(clockwiseIndex = 2),
 
     /**
      * The direction of positive x and negative y.
      */
-    DOWN_RIGHT(3),
+    DOWN_RIGHT(clockwiseIndex = 3),
 
     /**
      * The direction of negative y.
      */
-    DOWN(4),
+    DOWN(clockwiseIndex = 4),
 
     /**
      * The direction of negative x and y.
      */
-    DOWN_LEFT(5),
+    DOWN_LEFT(clockwiseIndex = 5),
 
     /**
      * The direction of negative x.
      */
-    LEFT(6),
+    LEFT(clockwiseIndex = 6),
 
     /**
      * The direction of negative x and positive y.
      */
-    UP_LEFT(7);
+    UP_LEFT(clockwiseIndex = 7);
 
     /**
      * Returns the direction given by turning 180 degrees from this one.
@@ -87,7 +87,7 @@ enum class Direction(private val clockwiseIndex: Int) {
             'R', 'r' -> RIGHT
             'D', 'd' -> DOWN
             'L', 'l' -> LEFT
-            else -> throw IllegalArgumentException("Invalid direction character: $char")
+            else -> throw IllegalArgumentException("No direction for char: $char")
         }
     }
 }

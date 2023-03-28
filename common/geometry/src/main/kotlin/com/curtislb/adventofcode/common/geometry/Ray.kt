@@ -5,50 +5,83 @@ import com.curtislb.adventofcode.common.number.Fraction
 /**
  * A unique representation of a ray with a given origin and direction in a 2D grid.
  *
- * @param source The origin point of the ray.
- * @param slope The slope of the ray, or `null` if its slope is infinite.
- * @param directionParity A flag indicating the direction of the ray. If [slope] is non-null, `true`
- *  indicates that the x values of points on the ray approach positive infinity. If [slope] is
- *  `null`, `true` indicates that the y values of points on the ray approach positive infinity.
+ * @property source The origin point of the ray.
+ * @property slope The slope of the ray, or `null` if its slope is infinite.
+ * @property isDirectionPositive A flag indicating the direction of the ray. If [slope] is finite,
+ *  this is `true` if the x-coordinates of points on the ray approach positive infinity. If [slope]
+ *  is `null`, this is `true` if the y-coordinates of points on the ray approach positive infinity.
+ *
+ * @constructor Creates a new instance of [Ray] with the given [source] point, [slope], and
+ *  direction indicated by [isDirectionPositive].
  */
-data class Ray(val source: Point, val slope: Fraction?, val directionParity: Boolean) {
+data class Ray(val source: Point, val slope: Fraction?, val isDirectionPositive: Boolean) {
     /**
-     * A unique representation of a ray with a given origin and direction in a 2D grid.
-     *
-     * @param source The origin point of the ray.
-     * @param member A second point on the ray. Must be distinct from [source].
-     *
-     * @throws IllegalArgumentException If [source] and [member] are the same point.
-     */
-    constructor(source: Point, member: Point) : this(
-        source = source,
-        slope = when {
-            member == source -> {
-                throw IllegalArgumentException("Source and member points must be distinct.")
-            }
-            member.x == source.x -> null
-            else -> Fraction(member.y - source.y, member.x - source.x)
-        },
-        directionParity = if (source.x != member.x) member.x > source.x else member.y > source.y
-    )
-
-    /**
-     * Returns an infinite sequence of all grid points that fall on this ray, sorted by their
-     * distances from (and including) the [source] point.
+     * Returns a sequence of all grid points that fall on this ray, including the [source] point,
+     * sorted by their distance from [source].
      */
     fun points(): Sequence<Point> = sequence {
-        // Calculate the change in x and y values between subsequent points.
-        val directionSign = if (directionParity) 1 else -1
+        // Calculate the change in x and y between subsequent points
+        val directionSign = if (isDirectionPositive) 1 else -1
         val deltaX = directionSign * (slope?.denominator?.toInt() ?: 0)
         val deltaY = directionSign * (slope?.numerator?.toInt() ?: 1)
 
-        // Yield each point in order, starting with source.
+        // Determine last coordinate values before integer overflow
+        val lastX = when {
+            deltaX > 0 -> Int.MAX_VALUE - (deltaX - 1)
+            deltaX < 0 -> Int.MIN_VALUE - (deltaX + 1)
+            else -> 0
+        }
+        val lastY = when {
+            deltaY > 0 -> Int.MAX_VALUE - (deltaY - 1)
+            deltaY < 0 -> Int.MIN_VALUE - (deltaY + 1)
+            else -> 0
+        }
+
+        // Produce each point in order, starting with source
         var x = source.x
         var y = source.y
         while (true) {
             yield(Point(x, y))
+
+            // Stop producing points if either coordinate would overflow
+            if (
+                deltaX > 0 && x >= lastX ||
+                deltaX < 0 && x <= lastX ||
+                deltaY > 0 && y >= lastY ||
+                deltaY < 0 && y <= lastY
+            ) {
+                break
+            }
+
             x += deltaX
             y += deltaY
+        }
+    }
+
+    companion object {
+        /**
+         * Returns the unique [Ray] defined by the given [source] point and distinct [member] point.
+         *
+         * @throws IllegalArgumentException If [source] and [member] are the same point.
+         */
+        fun fromPoints(source: Point, member: Point): Ray {
+            require(source != member) {
+                "Source and member points must be distinct: $source == $member"
+            }
+
+            val slope: Fraction?
+            val isDirectionPositive: Boolean
+            if (source.x == member.x) {
+                // Ray is vertical (infinite slope)
+                slope = null
+                isDirectionPositive = source.y < member.y
+            } else {
+                // Ray is not vertical (finite slope)
+                slope = Fraction(member.y - source.y, member.x - source.x)
+                isDirectionPositive = source.x < member.x
+            }
+
+            return Ray(source, slope, isDirectionPositive)
         }
     }
 }

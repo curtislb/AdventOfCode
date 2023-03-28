@@ -35,81 +35,87 @@ class Wire(wireString: String) {
     }
 
     /**
-     * Finds the intersection of this wire and [other] that is closest to the origin.
+     * Finds the intersection point of this wire and [other] that is closest to the origin `(0, 0)`.
      *
-     * The origin point `(0, 0)` is not considered an intersection unless both wires return to this
-     * point. Parallel wire segments are not considered intersecting, even if they overlap at one or
-     * more points.
+     * The origin is not considered an intersection point unless both wires return to that point.
+     * Additionally, parallel wire segments are not considered intersecting, even if they overlap at
+     * one or more points.
      *
      * @return A pair containing the nearest intersection point and its Manhattan distance from the
-     *  origin. If this wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is
-     *  returned instead.
+     *  origin. If this wire and [other] do not intersect, this function instead returns
+     *  [NO_INTERSECT].
      */
-    fun findNearestIntersection(other: Wire): Pair<Point?, Int> {
-        var nearestIntersection: Point? = null
-        var nearestDistance = Int.MAX_VALUE
+    infix fun nearestIntersect(other: Wire): Pair<Point?, Int> {
+        var bestIntersection: Point? = null
+        var bestDistance = Int.MAX_VALUE
         segments.forEachIndexed { i, segment ->
             other.segments.forEachIndexed { j, otherSegment ->
                 // Ignore the "intersection" of the first two segments at the origin
                 if (i != 0 || j != 0) {
                     // Check for a new nearest intersection point
-                    val intersection = segment.intersectionWith(otherSegment)
+                    val intersection = segment intersect otherSegment
                     val distance = intersection?.manhattanDistance(Point.ORIGIN) ?: Int.MAX_VALUE
-                    if (distance < nearestDistance) {
-                        nearestIntersection = intersection
-                        nearestDistance = distance
+                    if (distance < bestDistance) {
+                        bestIntersection = intersection
+                        bestDistance = distance
                     }
                 }
             }
         }
-        return Pair(nearestIntersection, nearestDistance)
+        return Pair(bestIntersection, bestDistance)
     }
 
     /**
-     * Finds the intersection of this wire and [other] with the shortest total distance along wires.
+     * Finds the intersection point of this wire and [other] with the shortest combined distance
+     * along both wires from the origin `(0, 0)` to that point.
      *
-     * The total distance to an intersection point is the sum of the distances to that point (in
-     * grid units) along each of the two wires.
-     *
-     * The origin point `(0, 0)` is not considered an intersection unless both wires return to this
-     * point. Parallel wire segments are not considered intersecting, even if they overlap at one or
-     * more points.
+     * The origin is not considered an intersection point unless both wires return to that point.
+     * Additionally, parallel wire segments are not considered intersecting, even if they overlap at
+     * one or more points.
      *
      * @return A pair containing the shortest-path intersection point and its total distance along
-     *  both wires. If this wire and [other] do not intersect, the pair (`null`, [Int.MAX_VALUE]) is
-     *  returned instead.
+     *  both wires. If this wire and [other] do not intersect, this function instead returns
+     *  [NO_INTERSECT].
      */
-    fun findShortestPathIntersection(other: Wire): Pair<Point?, Int> {
-        var shortestPathIntersection: Point? = null
-        var shortestPathLength = Int.MAX_VALUE
-        var thisPathLength = 0
-        var thisSegmentStart = Point.ORIGIN
-        segments.forEachIndexed { i, thisSegment ->
+    infix fun shortestIntersect(other: Wire): Pair<Point?, Int> {
+        var bestIntersection: Point? = null
+        var bestLength = Int.MAX_VALUE
+        var pathLength = 0
+        var segmentStart = Point.ORIGIN
+        segments.forEachIndexed { i, segment ->
             var otherPathLength = 0
             var otherSegmentStart = Point.ORIGIN
             other.segments.forEachIndexed { j, otherSegment ->
                 // Ignore the "intersection" of the first two segments at the origin
                 if (i != 0 || j != 0) {
-                    val intersection = thisSegment.intersectionWith(otherSegment)
+                    val intersection = segment intersect otherSegment
                     if (intersection != null) {
                         // Calculate the total path length to this intersection point
-                        val totalPathLength = thisPathLength + otherPathLength +
-                            thisSegmentStart.manhattanDistance(intersection) +
-                            otherSegmentStart.manhattanDistance(intersection)
+                        val totalPathLength = pathLength + otherPathLength +
+                            (segmentStart manhattanDistance intersection) +
+                            (otherSegmentStart manhattanDistance intersection)
 
                         // Check if we've found a new shortest (nonzero length) path intersection
-                        if (totalPathLength in 1 until shortestPathLength) {
-                            shortestPathIntersection = intersection
-                            shortestPathLength = totalPathLength
+                        if (totalPathLength in 1 until bestLength) {
+                            bestIntersection = intersection
+                            bestLength = totalPathLength
                         }
                     }
                 }
                 otherPathLength += otherSegment.distance
                 otherSegmentStart = otherSegment.otherEndpoint(otherSegmentStart)
             }
-            thisPathLength += thisSegment.distance
-            thisSegmentStart = thisSegment.otherEndpoint(thisSegmentStart)
+            pathLength += segment.distance
+            segmentStart = segment.otherEndpoint(segmentStart)
         }
-        return Pair(shortestPathIntersection, shortestPathLength)
+        return Pair(bestIntersection, bestLength)
+    }
+
+    companion object {
+        /**
+         * Placeholder value returned by [Wire.nearestIntersect] and [Wire.shortestIntersect] if the
+         * wires do not intersect.
+         */
+        val NO_INTERSECT: Pair<Point?, Int> = Pair(null, Int.MAX_VALUE)
     }
 }

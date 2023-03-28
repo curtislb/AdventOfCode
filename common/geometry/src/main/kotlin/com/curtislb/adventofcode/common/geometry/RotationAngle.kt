@@ -3,49 +3,48 @@ package com.curtislb.adventofcode.common.geometry
 /**
  * A net rotation angle that results from making 0 or more 45-degree turns.
  *
- * @param turnCount The minimum number of 45-degree turns in the direction of rotation that result
- *  in this net angle.
+ * @property turnCount The minimum number of 45-degree turns required to produce this net angle.
  */
 enum class RotationAngle(val turnCount: Int) {
     /**
-     * No net angle.
+     * A net angle of 0 degrees.
      */
-    DEGREES_0(0),
+    DEGREES_0(turnCount = 0),
 
     /**
      * A net angle of 45 degrees in the direction of rotation.
      */
-    DEGREES_45(1),
+    DEGREES_45(turnCount = 1),
 
     /**
      * A net angle of 90 degrees in the direction of rotation.
      */
-    DEGREES_90(2),
+    DEGREES_90(turnCount = 2),
 
     /**
      * A net angle of 135 degrees in the direction of rotation.
      */
-    DEGREES_135(3),
+    DEGREES_135(turnCount = 3),
 
     /**
      * A net angle of 180 degrees.
      */
-    DEGREES_180(4),
+    DEGREES_180(turnCount = 4),
 
     /**
      * A net angle of 225 degrees in the direction of rotation.
      */
-    DEGREES_225(5),
+    DEGREES_225(turnCount = 5),
 
     /**
      * A net angle of 275 degrees in the direction of rotation.
      */
-    DEGREES_270(6),
+    DEGREES_270(turnCount = 6),
 
     /**
      * A net angle of 315 degrees in the direction of rotation.
      */
-    DEGREES_315(7);
+    DEGREES_315(turnCount = 7);
 
     /**
      * Returns the net angle given by turning this angle and [other] in the direction of rotation.
@@ -67,7 +66,11 @@ enum class RotationAngle(val turnCount: Int) {
 
     companion object {
         /**
-         * Returns the rotation angle corresponding to the given number of [degrees].
+         * Returns the net rotation angle given by turning a specified number of [degrees] in the
+         * direction of rotation.
+         *
+         * If [degrees] is negative, this function instead returns the net angle given by turning
+         * -[degrees] degrees opposite the direction of rotation.
          *
          * @throws IllegalArgumentException If no rotation angle matches the number of [degrees].
          */
@@ -84,9 +87,11 @@ enum class RotationAngle(val turnCount: Int) {
         }
 
         /**
-         * Returns the rotation angle corresponding to the given 45-degree [turnCount].
+         * Returns the net rotation angle given by turning 45 degrees in the direction of rotation
+         * a number of times equal to [turnCount].
          *
-         * @throws IllegalArgumentException If no rotation angle matches the given [turnCount].
+         * If [turnCount] is negative, this function instead returns the net angle given by turning
+         * 45 degrees opposite the direction of rotation a number of times equal to -[turnCount].
          */
         fun fromTurnCount(turnCount: Int): RotationAngle = when (turnCount.mod(8)) {
             0 -> DEGREES_0
@@ -96,8 +101,7 @@ enum class RotationAngle(val turnCount: Int) {
             4 -> DEGREES_180
             5 -> DEGREES_225
             6 -> DEGREES_270
-            7 -> DEGREES_315
-            else -> throw IllegalArgumentException("No rotation angle for turn count: $turnCount")
+            else -> DEGREES_315
         }
     }
 }

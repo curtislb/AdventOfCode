@@ -1,30 +1,29 @@
 package com.curtislb.adventofcode.common.geometry
 
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [coordinateRanges].
+ * Tests the [CoordinateRanges] class.
  */
 class CoordinateRangesTest {
     @Test
-    fun testWithNoPoints() {
-        val (xRange, yRange) = emptyList<Point>().coordinateRanges()
-        assertTrue(xRange.isEmpty())
-        assertTrue(yRange.isEmpty())
+    fun ofPoints_noPoints() {
+        val points = emptyList<Point>()
+        val ranges = CoordinateRanges.ofPoints(points)
+        assertThat(ranges).isEqualTo(CoordinateRanges(x = IntRange.EMPTY, y = IntRange.EMPTY))
     }
 
     @Test
-    fun testWithOnePoint() {
-        val (xRange, yRange) = listOf(Point(70, -41)).coordinateRanges()
-        assertEquals(70..70, xRange)
-        assertEquals(-41..-41, yRange)
+    fun ofPoints_singlePoint() {
+        val points = listOf(Point(70, -41))
+        val ranges = CoordinateRanges.ofPoints(points)
+        assertThat(ranges).isEqualTo(CoordinateRanges(x = 70..70, y = -41..-41))
     }
 
     @Test
-    fun testWithMultiplePoints() {
-        val (xRange, yRange) = listOf(
+    fun ofPoints_multiplePoints() {
+        val points = listOf(
             Point(-25, 71),
             Point(90, -25),
             Point(17, 72),
@@ -33,8 +32,8 @@ class CoordinateRangesTest {
             Point(-92, -77),
             Point(86, -64),
             Point(0, -37)
-        ).coordinateRanges()
-        assertEquals(-92..90, xRange)
-        assertEquals(-98..86, yRange)
+        )
+        val ranges = CoordinateRanges.ofPoints(points)
+        assertThat(ranges).isEqualTo(CoordinateRanges(x = -92..90, y = -98..86))
     }
 }
