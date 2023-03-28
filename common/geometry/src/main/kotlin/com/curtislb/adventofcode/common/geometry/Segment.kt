@@ -458,15 +458,15 @@ private fun downRightSegmentOverlap(segmentA: Segment, segmentB: Segment): Segme
 /**
  * Returns the intersection point of two [horizontal] and [vertical] segments.
  */
-private fun horizontalVerticalIntersection(horizontal: Segment, vertical: Segment): Point? =
-    if (
-        horizontal.start.y in vertical.coordRanges.y &&
-        vertical.start.x in horizontal.coordRanges.x
-    ) {
-        Point(vertical.start.x, horizontal.start.y)
+private fun horizontalVerticalIntersection(horizontal: Segment, vertical: Segment): Point? {
+    val x = vertical.start.x
+    val y = horizontal.start.y
+    return if (x in horizontal.coordRanges.x && y in vertical.coordRanges.y) {
+        Point(x, y)
     } else {
         null
     }
+}
 
 /**
  * Returns the intersection point of two [horizontal] and [upRight] diagonal segments.
@@ -475,7 +475,8 @@ private fun horizontalUpRightIntersection(horizontal: Segment, upRight: Segment)
     // Find the x-coordinate of the diagonal segment if extended to the horizontal one
     val x = upRight.start.x + (horizontal.start.y - upRight.start.y)
     return if (x in horizontal.coordRanges.x && x in upRight.coordRanges.x) {
-        Point(x, horizontal.start.y)
+        val y = horizontal.start.y
+        Point(x, y)
     } else {
         null
     }
@@ -488,7 +489,8 @@ private fun horizontalDownRightIntersection(horizontal: Segment, downRight: Segm
     // Find the x-coordinate of the diagonal segment if extended to the horizontal one
     val x = downRight.start.x + (downRight.start.y - horizontal.start.y)
     return if (x in horizontal.coordRanges.x && x in downRight.coordRanges.x) {
-        Point(x, horizontal.start.y)
+        val y = horizontal.start.y
+        Point(x, y)
     } else {
         null
     }
@@ -501,7 +503,8 @@ private fun verticalUpRightIntersection(vertical: Segment, upRight: Segment): Po
     // Find the y-coordinate of the diagonal segment if extended to the vertical one
     val y = upRight.start.y + (vertical.start.x - upRight.start.x)
     return if (y in vertical.coordRanges.y && y in upRight.coordRanges.y) {
-        Point(vertical.start.x, y)
+        val x = vertical.start.x
+        Point(x, y)
     } else {
         null
     }
@@ -514,7 +517,8 @@ private fun verticalDownRightIntersection(vertical: Segment, downRight: Segment)
     // Find the y-coordinate of the diagonal segment if extended to the vertical one
     val y = downRight.start.y - (vertical.start.x - downRight.start.x)
     return if (y in vertical.coordRanges.y && y in downRight.coordRanges.y) {
-        Point(vertical.start.x, y)
+        val x = vertical.start.x
+        Point(x, y)
     } else {
         null
     }
@@ -527,7 +531,7 @@ private fun oppositeDiagonalIntersection(upRight: Segment, downRight: Segment): 
     // Calculate 2x, assuming an intersection exists at point (x, y)
     val twoX = upRight.start.x - upRight.start.y + downRight.start.x + downRight.start.y
     if (twoX % 2 != 0) {
-        // Intersection can't exist at non-integer coordinates
+        // Ignore intersections at non-integer coordinates
         return null
     }
 
