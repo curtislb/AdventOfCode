@@ -125,48 +125,48 @@ interface Grid<out E> {
      *
      * @throws NoSuchElementException If the grid is empty.
      */
-    fun firstRow(): List<E> =
+    fun firstRow(): List<E> {
         if (isEmpty()) {
             throw NoSuchElementException("Empty grid has no first row.")
-        } else {
-            row(0)
         }
+        return row(0)
+    }
 
     /**
      * Returns a read-only copy of the first column in the grid.
      *
      * @throws NoSuchElementException If the grid is empty.
      */
-    fun firstColumn(): List<E> =
+    fun firstColumn(): List<E> {
         if (isEmpty()) {
             throw NoSuchElementException("Empty grid has no first column.")
-        } else {
-            column(0)
         }
+        return column(0)
+    }
 
     /**
      * Returns a read-only copy of the last row in the grid.
      *
      * @throws NoSuchElementException If the grid is empty.
      */
-    fun lastRow(): List<E> =
+    fun lastRow(): List<E> {
         if (isEmpty()) {
             throw NoSuchElementException("Empty grid has no last row.")
-        } else {
-            row(lastRowIndex)
         }
+        return row(lastRowIndex)
+    }
 
     /**
      * Returns a read-only copy of the last column of the grid.
      *
      * @throws NoSuchElementException If the grid is empty.
      */
-    fun lastColumn(): List<E> =
+    fun lastColumn(): List<E> {
         if (isEmpty()) {
             throw NoSuchElementException("Empty grid has no last column.")
-        } else {
-            column(lastColumnIndex)
         }
+        return column(lastColumnIndex)
+    }
 
     /**
      * Returns a read-only copy of the row corresponding to the given [rowIndex] in the grid, or
@@ -232,52 +232,6 @@ interface Grid<out E> {
     fun shallowColumns(): List<List<E>> = columns()
 
     /**
-     * Returns a string by transforming each row in the grid with the [transform] function and
-     * combining them with the given [separator].
-     */
-    fun joinRowsToString(separator: String = ", ", transform: (row: List<E>) -> String): String =
-        shallowRows().joinToString(separator = separator, transform = transform)
-
-    /**
-     * Returns a read-only copy of the grid that has been flipped horizontally.
-     */
-    fun flippedHorizontal(): Grid<E> =
-        transformed(height, width) { Point(lastColumnIndex - it.x, it.y) }
-
-    /**
-     * Returns a read-only copy of the grid that has been rotated counterclockwise by 90 degrees.
-     */
-    fun rotatedLeft(): Grid<E> = transformed(width, height) { Point(-it.y, it.x - lastColumnIndex) }
-
-    /**
-     * Returns a new grid with the given [newHeight] and [newWidth]. The element at each point in
-     * the current grid is copied to the point in the new grid given by the [mapPoint] function.
-     *
-     * Any points in the new grid that are not explicitly mapped to by the [mapPoint] function will
-     * instead contain a (shallow) copy of the element in the top-left corner of the original grid.
-     *
-     * @throws IllegalArgumentException If the current grid is empty and either [newHeight] or
-     *  [newWidth] is nonzero.
-     */
-    private fun transformed(
-        newHeight: Int,
-        newWidth: Int,
-        mapPoint: (point: Point) -> Point
-    ): Grid<E> {
-        if (isEmpty()) {
-            require(newHeight == 0 && newWidth == 0) {
-                "Empty grid can't be transformed into a non-empty grid."
-            }
-            return this
-        }
-
-        val tempValue = this[0, 0]
-        val newGrid = MutableGrid(newHeight, newWidth) { _, _ -> tempValue }
-        forEachPointValue { point, value -> newGrid[mapPoint(point)] = value }
-        return newGrid
-    }
-
-    /**
      * Checks if the grid and [other] are equivalent.
      *
      * In addition to fulfilling the general contract, implementors must ensure that a grid is equal
@@ -301,25 +255,25 @@ interface Grid<out E> {
  * @throws IllegalArgumentException If [height] or [width] is negative, or if only one of [height]
  *  and [width] is zero.
  */
-inline fun <E> Grid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> E): Grid<E> =
+inline fun <T> Grid(height: Int, width: Int, init: (rowIndex: Int, colIndex: Int) -> T): Grid<T> =
     if (height == 0 && width == 0) emptyGrid() else RowArrayGrid(height, width, init)
 
 /**
  * Returns a read-only grid constructed from the given [rows].
  *
- * @throws IllegalArgumentException If not all [rows] have equal size.
+ * @throws IllegalArgumentException If not all [rows] have the same size.
  */
-fun <E> gridOf(vararg rows: List<E>): Grid<E> =
-    if (rows.isEmpty()) emptyGrid() else RowArrayGrid(*rows)
+fun <T> gridOf(vararg rows: List<T>): Grid<T> =
+    if (rows.isEmpty()) emptyGrid() else rowArrayGridOf(*rows)
 
 /**
  * Returns a read-only grid constructed from this list of rows.
  *
- * @throws IllegalArgumentException If not all rows have equal size.
+ * @throws IllegalArgumentException If not all rows have the same size.
  */
-fun <E> List<List<E>>.toGrid(): Grid<E> = if (isEmpty()) emptyGrid() else RowArrayGrid(this)
+fun <T> List<List<T>>.toGrid(): Grid<T> = if (isEmpty()) emptyGrid() else RowArrayGrid(this)
 
 /**
  * Returns a read-only copy of this mutable grid.
  */
-fun <E> MutableGrid<E>.toGrid(): Grid<E> = if (isEmpty()) emptyGrid() else RowArrayGrid(this)
+fun <T> MutableGrid<T>.toGrid(): Grid<T> = if (isEmpty()) emptyGrid() else RowArrayGrid(this)

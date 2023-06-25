@@ -1,112 +1,126 @@
 package com.curtislb.adventofcode.common.grid
 
-import com.curtislb.adventofcode.common.geometry.Point
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [EmptyGrid].
+ * Tests the [EmptyGrid] object.
  */
 class EmptyGridTest {
-    @Test
-    fun testHeightAndWidth() {
-        assertEquals(0, EmptyGrid.height)
-        assertEquals(0, EmptyGrid.width)
+    private lateinit var grid: Grid<Any>
+
+    @BeforeEach
+    fun setUp() {
+        grid = emptyGrid()
     }
 
     @Test
-    fun testGetWithIndices() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[0, 0] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[0, 1] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[1, 0] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[1, 2] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[-1, 0] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[0, -1] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[-1, -2] }
+    fun height_isZero() {
+        assertThat(grid.height).isEqualTo(0)
     }
 
     @Test
-    fun testGetWithPoint() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point.ORIGIN] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(1, 0)] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(0, -1)] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(2, -1)] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(0, 1)] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(-1, 0)] }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid[Point(-2, 1)] }
+    fun width_isZero() {
+        assertThat(grid.width).isEqualTo(0)
     }
 
     @Test
-    fun testRow() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.row(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.row(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.row(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.row(2) }
+    fun get_indices_bothZero() {
+        assertThrows<IndexOutOfBoundsException> { grid[0, 0] }
     }
 
     @Test
-    fun testColumn() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.column(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.column(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.column(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.column(2) }
+    fun get_indices_rowIndexZero() {
+        assertThrows<IndexOutOfBoundsException> { grid[0, 1] }
     }
 
     @Test
-    fun testRowsAndColumns() {
-        assertEquals(emptyList(), EmptyGrid.rows())
-        assertEquals(emptyList(), EmptyGrid.columns())
+    fun get_indices_colIndexZero() {
+        assertThrows<IndexOutOfBoundsException> { grid[1, 0] }
     }
 
     @Test
-    fun testShallowRow() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowRow(2) }
+    fun get_indices_bothNonzero() {
+        assertThrows<IndexOutOfBoundsException> { grid[1, 2] }
     }
 
     @Test
-    fun testShallowColumn() {
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(0) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(-1) }
-        assertThrows<IndexOutOfBoundsException> { EmptyGrid.shallowColumn(2) }
+    fun row_indexZero() {
+        assertThrows<IndexOutOfBoundsException> { grid.row(0) }
     }
 
     @Test
-    fun testShallowRowsAndColumns() {
-        assertEquals(emptyList(), EmptyGrid.shallowRows())
-        assertEquals(emptyList(), EmptyGrid.shallowColumns())
+    fun row_indexNonzero() {
+        assertThrows<IndexOutOfBoundsException> { grid.row(1) }
     }
 
     @Test
-    fun testEquals() {
-        assertEquals(emptyGrid(), EmptyGrid)
-        assertEquals(gridOf(), EmptyGrid)
-        assertEquals(mutableGridOf<Nothing>() as Grid<Nothing>, EmptyGrid)
-
-        val nullGrid: Grid<Nothing>? = null
-        assertNotEquals(nullGrid, EmptyGrid)
-
-        assertEquals(gridOf<Nothing>(), emptyGrid())
-        assertEquals(gridOf<Int>(), emptyGrid())
-        assertEquals(gridOf<String>(), emptyGrid())
-        assertNotEquals(gridOf(listOf(0)), emptyGrid())
+    fun column_indexZero() {
+        assertThrows<IndexOutOfBoundsException> { grid.column(0) }
     }
 
     @Test
-    fun testHashCode() {
-        val hashMap = HashMap<Grid<Nothing>, Int>()
-        hashMap[emptyGrid()] = 42
-        assertEquals(42, hashMap[emptyGrid()])
+    fun column_indexNonzero() {
+        assertThrows<IndexOutOfBoundsException> { grid.column(1) }
     }
 
     @Test
-    fun testToString() {
-        assertEquals("[]", EmptyGrid.toString())
-        assertEquals("[]", emptyGrid<Int>().toString())
+    fun rows_isEmpty() {
+        assertThat(grid.rows()).isEmpty()
+    }
+
+    @Test
+    fun columns_isEmpty() {
+        assertThat(grid.columns()).isEmpty()
+    }
+
+    @Test
+    fun equals_self() {
+        assertThat(grid).isEqualTo(grid)
+    }
+
+    @Test
+    fun equals_emptyGrid() {
+        val other = emptyGrid<Any>()
+        assertThat(grid).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyImmutableGrid() {
+        val other = gridOf<Any>()
+        assertThat(grid).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyMutableGrid() {
+        val other = mutableGridOf<Any>()
+        assertThat(grid).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_nullGrid() {
+        val other: Grid<Any>? = null
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonEmptyGrid() {
+        val other = gridOf(listOf(0))
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun hashCode_isConsistent() {
+        val grid = emptyGrid<Any>()
+        assertThat(grid.hashCode())
+            .isEqualTo(grid.hashCode())
+            .isEqualTo(emptyGrid<Any>().hashCode())
+    }
+
+    @Test
+    fun toString_isCorrect() {
+        assertThat(grid.toString()).isEqualTo("[]")
     }
 }

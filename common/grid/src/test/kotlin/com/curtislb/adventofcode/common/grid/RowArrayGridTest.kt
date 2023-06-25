@@ -1,12 +1,7 @@
 package com.curtislb.adventofcode.common.grid
 
-import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.testing.assertContainsExactly
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import java.util.LinkedList
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -15,833 +10,1066 @@ import org.junit.jupiter.api.assertThrows
  */
 class RowArrayGridTest {
     @Test
-    fun testWhenEmpty() {
-        val grid = RowArrayGrid<Int>()
+    fun height_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThat(grid.height).isEqualTo(0)
+    }
 
-        assertEquals(0, grid.width)
-        assertEquals(0, grid.height)
-        assertEquals(0, grid.size)
+    @Test
+    fun height_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.height).isEqualTo(1)
+    }
 
-        assertEquals(-1, grid.lastRowIndex)
-        assertEquals(-1, grid.lastColumnIndex)
+    @Test
+    fun height_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.height).isEqualTo(1)
+    }
 
-        assertTrue(grid.rowIndices.isEmpty())
-        assertTrue(grid.columnIndices.isEmpty())
+    @Test
+    fun height_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid.height).isEqualTo(3)
+    }
 
-        assertTrue(grid.isEmpty())
-        assertEquals(emptyList(), grid.points().toList())
-        assertFalse(Point.ORIGIN in grid)
+    @Test
+    fun width_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThat(grid.width).isEqualTo(0)
+    }
 
+    @Test
+    fun width_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.width).isEqualTo(1)
+    }
+
+    @Test
+    fun width_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.width).isEqualTo(3)
+    }
+
+    @Test
+    fun width_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid.width).isEqualTo(2)
+    }
+
+    @Test
+    fun get_indices_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
         assertThrows<IndexOutOfBoundsException> { grid[0, 0] }
-        assertThrows<IndexOutOfBoundsException> { grid[Point.ORIGIN] }
-
-        assertNull(grid.getOrNull(0, 0))
-        assertNull(grid.getOrNull(Point.ORIGIN))
-
-        assertThrows<IndexOutOfBoundsException> { grid.row(0) }
-        assertThrows<IndexOutOfBoundsException> { grid.column(0) }
-
-        assertThrows<NoSuchElementException> { grid.firstRow() }
-        assertThrows<NoSuchElementException> { grid.firstColumn() }
-        assertThrows<NoSuchElementException> { grid.lastRow() }
-        assertThrows<NoSuchElementException> { grid.lastColumn() }
-
-        assertNull(grid.rowOrNull(0))
-        assertNull(grid.columnOrNull(0))
-
-        assertEquals(emptyList(), grid.rows())
-        assertEquals(emptyList(), grid.columns())
-
-        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(0) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(0) }
-
-        assertEquals(emptyList(), grid.shallowRows())
-        assertEquals(emptyList(), grid.shallowColumns())
-
-        assertEquals("", grid.joinRowsToString { it.toString() })
-
-        assertTrue(grid.flippedHorizontal().isEmpty())
-        assertTrue(grid.rotatedLeft().isEmpty())
     }
 
     @Test
-    fun testWithOneElement() {
-        val rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>(1).apply { add(42) })
-        }
-        val grid = RowArrayGrid(rows)
+    fun get_indices_withSingleElement_indicesInBounds() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid[0, 0]).isEqualTo("foo")
+    }
 
-        assertEquals(1, grid.width)
-        assertEquals(1, grid.height)
-        assertEquals(1, grid.size)
+    @Test
+    fun get_indices_withSingleElement_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] }
+    }
 
-        assertEquals(0, grid.lastRowIndex)
-        assertEquals(0, grid.lastColumnIndex)
-
-        assertEquals(0..0, grid.rowIndices)
-        assertEquals(0..0, grid.columnIndices)
-
-        assertFalse(grid.isEmpty())
-        assertEquals(listOf(Point.ORIGIN), grid.points().toList())
-        assertTrue(Point.ORIGIN in grid)
-        assertFalse(Point(1, 0) in grid)
-        assertFalse(Point(0, -1) in grid)
-
-        assertEquals(42, grid[0, 0])
-        assertEquals(42, grid[Point.ORIGIN])
+    @Test
+    fun get_indices_withSingleElement_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
         assertThrows<IndexOutOfBoundsException> { grid[1, 0] }
-        assertThrows<IndexOutOfBoundsException> { grid[Point(0, -1)] }
+    }
 
-        assertEquals(42, grid.getOrNull(0, 0))
-        assertEquals(42, grid.getOrNull(Point.ORIGIN))
-        assertNull(grid.getOrNull(-1, 0))
-        assertNull(grid.getOrNull(Point(1, 0)))
+    @Test
+    fun get_indices_withSingleElement_colIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] }
+    }
 
-        assertEquals(listOf(42), grid.row(0))
-        assertEquals(listOf(42), grid.column(0))
+    @Test
+    fun get_indices_withSingleElement_colIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, 1] }
+    }
+
+    @Test
+    fun get_indices_withSingleRow_pointInBounds() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid[0, 2]).isEqualTo("baz")
+    }
+
+    @Test
+    fun get_indices_withSingleRow_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] }
+    }
+
+    @Test
+    fun get_indices_withSingleRow_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[1, 0] }
+    }
+
+    @Test
+    fun get_indices_withSingleRow_colIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] }
+    }
+
+    @Test
+    fun get_indices_withSingleRow_colIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, 3] }
+    }
+
+    @Test
+    fun get_indices_withMultipleRows_indicesInBounds() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid[2, 1]).isEqualTo("fred")
+    }
+
+    @Test
+    fun get_indices_withMultipleRows_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] }
+    }
+
+    @Test
+    fun get_indices_withMultipleRows_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[3, 0] }
+    }
+
+    @Test
+    fun get_indices_withMultipleRows_colIndexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] }
+    }
+
+    @Test
+    fun get_indices_withMultipleRows_colIndexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[0, 2] }
+    }
+
+    @Test
+    fun row_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThrows<IndexOutOfBoundsException> { grid.row(0) }
+    }
+
+    @Test
+    fun row_withSingleElement_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.row(0)).containsExactly("foo")
+    }
+
+    @Test
+    fun row_withSingleElement_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid.row(-1) }
+    }
+
+    @Test
+    fun row_withSingleElement_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
         assertThrows<IndexOutOfBoundsException> { grid.row(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.column(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.row(-1) }
-        assertThrows<IndexOutOfBoundsException> { grid.column(-1) }
-
-        assertEquals(listOf(42), grid.firstRow())
-        assertEquals(listOf(42), grid.firstColumn())
-        assertEquals(listOf(42), grid.lastRow())
-        assertEquals(listOf(42), grid.lastColumn())
-
-        assertEquals(listOf(42), grid.rowOrNull(0))
-        assertEquals(listOf(42), grid.columnOrNull(0))
-        assertNull(grid.rowOrNull(1))
-        assertNull(grid.columnOrNull(1))
-        assertNull(grid.rowOrNull(-1))
-        assertNull(grid.columnOrNull(-1))
-
-        assertEquals(listOf(listOf(42)), grid.rows())
-        assertEquals(listOf(listOf(42)), grid.columns())
-
-        assertEquals(listOf(42), grid.shallowRow(0))
-        assertEquals(listOf(42), grid.shallowColumn(0))
-        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(-1) }
-
-        assertEquals(listOf(listOf(42)), grid.shallowRows())
-        assertEquals(listOf(listOf(42)), grid.shallowColumns())
-
-        assertEquals("<[42]>", grid.joinRowsToString { "<$it>" })
-
-        assertEquals(gridOf(listOf(42)), grid.flippedHorizontal())
-        assertEquals(gridOf(listOf(42)), grid.rotatedLeft())
     }
 
     @Test
-    fun testWithMultipleElements() {
-        val rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>(4).apply { addAll(listOf(10, 20, 28, -48)) })
-            add(ArrayList<Int>(4).apply { addAll(listOf(73, 34, -63, -67)) })
-            add(ArrayList<Int>(4).apply { addAll(listOf(-79, -60, 13, -55)) })
-        }
-        val grid = RowArrayGrid(rows)
+    fun row_withSingleRow_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.row(0)).containsExactly("foo", "bar", "baz")
+    }
 
-        assertEquals(4, grid.width)
-        assertEquals(3, grid.height)
-        assertEquals(12, grid.size)
+    @Test
+    fun row_withSingleRow_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.row(-1) }
+    }
 
-        assertEquals(2, grid.lastRowIndex)
-        assertEquals(3, grid.lastColumnIndex)
+    @Test
+    fun row_withSingleRow_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.row(1) }
+    }
 
-        assertEquals(0..2, grid.rowIndices)
-        assertEquals(0..3, grid.columnIndices)
-
-        assertFalse(grid.isEmpty())
-        assertContainsExactly(
-            listOf(
-                Point(0,  0), Point(1,  0), Point(2,  0), Point(3,  0),
-                Point(0, -1), Point(1, -1), Point(2, -1), Point(3, -1),
-                Point(0, -2), Point(1, -2), Point(2, -2), Point(3, -2)
-            ),
-            grid.points().toList()
+    @Test
+    fun row_withMultipleRows_indexInBounds() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
         )
-        assertTrue(Point.ORIGIN in grid)
-        assertTrue(Point(3, 0) in grid)
-        assertTrue(Point(0, -2) in grid)
-        assertFalse(Point(4, 0) in grid)
-        assertFalse(Point(0, -3) in grid)
+        assertThat(grid.row(1)).containsExactly("baz", "qux")
+    }
 
-        assertEquals(10, grid[0, 0])
-        assertEquals(20, grid[0, 1])
-        assertEquals(28, grid[0, 2])
-        assertEquals(-48, grid[0, 3])
-        assertEquals(73, grid[1, 0])
-        assertEquals(34, grid[1, 1])
-        assertEquals(-63, grid[1, 2])
-        assertEquals(-67, grid[1, 3])
-        assertEquals(-79, grid[2, 0])
-        assertEquals(-60, grid[2, 1])
-        assertEquals(13, grid[2, 2])
-        assertEquals(-55, grid[2, 3])
-        assertEquals(10, grid[Point.ORIGIN])
-        assertEquals(20, grid[Point(1, 0)])
-        assertEquals(28, grid[Point(2, 0)])
-        assertEquals(-48, grid[Point(3, 0)])
-        assertEquals(73, grid[Point(0, -1)])
-        assertEquals(34, grid[Point(1, -1)])
-        assertEquals(-63, grid[Point(2, -1)])
-        assertEquals(-67, grid[Point(3, -1)])
-        assertEquals(-79, grid[Point(0, -2)])
-        assertEquals(-60, grid[Point(1, -2)])
-        assertEquals(13, grid[Point(2, -2)])
-        assertEquals(-55, grid[Point(3, -2)])
-        assertThrows<IndexOutOfBoundsException> { grid[4, 0] }
-        assertThrows<IndexOutOfBoundsException> { grid[Point(0, -3)] }
+    @Test
+    fun row_withMultipleRows_indexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid.row(-1) }
+    }
 
-        assertEquals(10, grid.getOrNull(0, 0))
-        assertEquals(-63, grid.getOrNull(1, 2))
-        assertEquals(28, grid.getOrNull(Point(2, 0)))
-        assertEquals(-60, grid.getOrNull(Point(1, -2)))
-        assertNull(grid.getOrNull(-1, 0))
-        assertNull(grid.getOrNull(Point(4, 0)))
-
-        assertEquals(listOf(10, 20, 28, -48), grid.row(0))
-        assertEquals(listOf(73, 34, -63, -67), grid.row(1))
-        assertEquals(listOf(-79, -60, 13, -55), grid.row(2))
-        assertEquals(listOf(10, 73, -79), grid.column(0))
-        assertEquals(listOf(20, 34, -60), grid.column(1))
-        assertEquals(listOf(28, -63, 13), grid.column(2))
-        assertEquals(listOf(-48, -67, -55), grid.column(3))
+    @Test
+    fun row_withMultipleRows_indexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
         assertThrows<IndexOutOfBoundsException> { grid.row(3) }
-        assertThrows<IndexOutOfBoundsException> { grid.column(4) }
-        assertThrows<IndexOutOfBoundsException> { grid.row(-1) }
+    }
+
+    @Test
+    fun column_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThrows<IndexOutOfBoundsException> { grid.column(0) }
+    }
+
+    @Test
+    fun column_withSingleElement_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.column(0)).containsExactly("foo")
+    }
+
+    @Test
+    fun column_withSingleElement_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
         assertThrows<IndexOutOfBoundsException> { grid.column(-1) }
+    }
 
-        assertEquals(listOf(10, 20, 28, -48), grid.firstRow())
-        assertEquals(listOf(10, 73, -79), grid.firstColumn())
-        assertEquals(listOf(-79, -60, 13, -55), grid.lastRow())
-        assertEquals(listOf(-48, -67, -55), grid.lastColumn())
+    @Test
+    fun column_withSingleElement_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid.column(1) }
+    }
 
-        assertEquals(listOf(10, 20, 28, -48), grid.rowOrNull(0))
-        assertEquals(listOf(73, 34, -63, -67), grid.rowOrNull(1))
-        assertEquals(listOf(-79, -60, 13, -55), grid.rowOrNull(2))
-        assertEquals(listOf(10, 73, -79), grid.columnOrNull(0))
-        assertEquals(listOf(20, 34, -60), grid.columnOrNull(1))
-        assertEquals(listOf(28, -63, 13), grid.columnOrNull(2))
-        assertEquals(listOf(-48, -67, -55), grid.columnOrNull(3))
-        assertNull(grid.rowOrNull(3))
-        assertNull(grid.columnOrNull(4))
-        assertNull(grid.rowOrNull(-1))
-        assertNull(grid.columnOrNull(-1))
+    @Test
+    fun column_withSingleRow_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.column(1)).containsExactly("bar")
+    }
 
-        assertEquals(
-            listOf(
-                listOf(10, 20, 28, -48),
-                listOf(73, 34, -63, -67),
-                listOf(-79, -60, 13, -55)
-            ),
-            grid.rows()
+    @Test
+    fun column_withSingleRow_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.column(-1) }
+    }
+
+    @Test
+    fun column_withSingleRow_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.column(3) }
+    }
+
+    @Test
+    fun column_withMultipleRows_indexInBounds() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
         )
-        assertEquals(
-            listOf(
-                listOf(10, 73, -79),
-                listOf(20, 34, -60),
-                listOf(28, -63, 13),
-                listOf(-48, -67, -55)
-            ),
-            grid.columns()
-        )
+        assertThat(grid.column(1)).containsExactly("bar", "qux", "fred")
+    }
 
-        assertEquals(listOf(10, 20, 28, -48), grid.shallowRow(0))
-        assertEquals(listOf(73, 34, -63, -67), grid.shallowRow(1))
-        assertEquals(listOf(-79, -60, 13, -55), grid.shallowRow(2))
-        assertEquals(listOf(10, 73, -79), grid.shallowColumn(0))
-        assertEquals(listOf(20, 34, -60), grid.shallowColumn(1))
-        assertEquals(listOf(28, -63, 13), grid.shallowColumn(2))
-        assertEquals(listOf(-48, -67, -55), grid.shallowColumn(3))
-        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(3) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(4) }
+    @Test
+    fun column_withMultipleRows_indexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid.column(-1) }
+    }
+
+    @Test
+    fun column_withMultipleRows_indexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid.column(3) }
+    }
+
+    @Test
+    fun shallowRow_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(0) }
+    }
+
+    @Test
+    fun shallowRow_withSingleElement_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.shallowRow(0))
+            .isSameAs(grid.shallowRow(0))
+            .containsExactly("foo")
+    }
+
+    @Test
+    fun shallowRow_withSingleElement_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
         assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { grid.shallowColumn(-1) }
+    }
 
-        assertEquals(
-            listOf(
-                listOf(10, 20, 28, -48),
-                listOf(73, 34, -63, -67),
-                listOf(-79, -60, 13, -55)
-            ),
-            grid.shallowRows()
-        )
-        assertEquals(
-            listOf(
-                listOf(10, 73, -79),
-                listOf(20, 34, -60),
-                listOf(28, -63, 13),
-                listOf(-48, -67, -55)
-            ),
-            grid.shallowColumns()
-        )
+    @Test
+    fun shallowRow_withSingleElement_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(1) }
+    }
 
-        assertEquals(
-            "[10, 20, 28, -48] + [73, 34, -63, -67] + [-79, -60, 13, -55]",
-            grid.joinRowsToString(separator = " + ") { it.toString() }
-        )
+    @Test
+    fun shallowRow_withSingleRow_indexInBounds() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.shallowRow(0))
+            .isSameAs(grid.shallowRow(0))
+            .containsExactly("foo", "bar", "baz")
+    }
 
-        assertEquals(
-            gridOf(
-                listOf(-48, 28, 20, 10),
-                listOf(-67, -63, 34, 73),
-                listOf(-55, 13, -60, -79)
-            ),
-            grid.flippedHorizontal()
+    @Test
+    fun shallowRow_withSingleRow_indexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
+    }
+
+    @Test
+    fun shallowRow_withSingleRow_indexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(1) }
+    }
+
+    @Test
+    fun shallowRow_withMultipleRows_indexInBounds() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
         )
-        assertEquals(
-            gridOf(
-                listOf(-48, -67, -55),
-                listOf(28, -63, 13),
-                listOf(20, 34, -60),
-                listOf(10, 73, -79)
-            ),
-            grid.rotatedLeft()
+        assertThat(grid.shallowRow(1))
+            .isSameAs(grid.shallowRow(1))
+            .containsExactly("baz", "qux")
+    }
+
+    @Test
+    fun shallowRow_withMultipleRows_indexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(-1) }
+    }
+
+    @Test
+    fun shallowRow_withMultipleRows_indexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid.shallowRow(3) }
+    }
+
+    @Test
+    fun shallowRows_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThat(grid.shallowRows())
+            .isSameAs(grid.shallowRows())
+            .isEmpty()
+    }
+
+    @Test
+    fun shallowRows_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.shallowRows())
+            .isSameAs(grid.shallowRows())
+            .containsExactly(listOf("foo"))
+    }
+
+    @Test
+    fun shallowRows_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.shallowRows())
+            .isSameAs(grid.shallowRows())
+            .containsExactly(listOf("foo", "bar", "baz"))
+    }
+
+    @Test
+    fun shallowRows_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid.shallowRows())
+            .isSameAs(grid.shallowRows())
+            .containsExactly(listOf("foo", "bar"), listOf("baz", "qux"), listOf("qox", "fred"))
+    }
+
+    @Test
+    fun set_indices_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThrows<IndexOutOfBoundsException> { grid[0, 0] = "foo" }
+    }
+
+    @Test
+    fun set_indices_withSingleElement_indicesInBounds() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        grid[0, 0] = "bar"
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("bar")))
+    }
+
+    @Test
+    fun set_indices_withSingleElement_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] = "bar" }
+    }
+
+    @Test
+    fun set_indices_withSingleElement_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[1, 0] = "bar" }
+    }
+
+    @Test
+    fun set_indices_withSingleElement_colIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] = "bar" }
+    }
+
+    @Test
+    fun set_indices_withSingleElement_colIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, 1] = "bar" }
+    }
+
+    @Test
+    fun set_indices_withSingleRow_indicesInBounds() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        grid[0, 2] = "qux"
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar", "qux")))
+    }
+
+    @Test
+    fun set_indices_withSingleRow_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] = "qux" }
+    }
+
+    @Test
+    fun set_indices_withSingleRow_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[1, 0] = "qux" }
+    }
+
+    @Test
+    fun set_indices_withSingleRow_colIndexTooSmall() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] = "qux" }
+    }
+
+    @Test
+    fun set_indices_withSingleRow_colIndexTooLarge() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IndexOutOfBoundsException> { grid[0, 3] = "qux" }
+    }
+
+    @Test
+    fun set_indices_withMultipleRows_indicesInBounds() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        grid[2, 1] = "echo"
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "echo")
+            )
         )
     }
 
     @Test
-    fun testSet() {
-        val rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>(3).apply { addAll(listOf(-36, -20, -66)) })
-            add(ArrayList<Int>(3).apply { addAll(listOf(67, -61, 13)) })
-            add(ArrayList<Int>(3).apply { addAll(listOf(80, -32, -37)) })
-            add(ArrayList<Int>(3).apply { addAll(listOf(-48, -85, 4)) })
-        }
-        val grid = RowArrayGrid(rows)
-
-        grid[0, 0] = 17
-        grid[1, 2] = -51
-        grid[2, 1] = 87
-        grid[3, 0] = -62
-
-        assertThrows<IndexOutOfBoundsException> { grid[0, -1] = -44 }
-        assertThrows<IndexOutOfBoundsException> { grid[-1, 2] = 26 }
-        assertThrows<IndexOutOfBoundsException> { grid[1, 3] = 99 }
-        assertThrows<IndexOutOfBoundsException> { grid[4, 2] = 71 }
-
-        grid[Point(2, 0)] = 22
-        grid[Point(0, -1)] = -57
-        grid[Point(1, -2)] = 12
-        grid[Point(2, -3)] = 95
-
-        assertThrows<IndexOutOfBoundsException> { grid[Point(-1, 0)] = 25 }
-        assertThrows<IndexOutOfBoundsException> { grid[Point(2, 1)] = 57 }
-        assertThrows<IndexOutOfBoundsException> { grid[Point(3, -1)] = -94 }
-        assertThrows<IndexOutOfBoundsException> { grid[Point(2, -4)] = -89 }
-
-        assertEquals(
-            gridOf(
-                listOf(17, -20, 22),
-                listOf(-57, -61, -51),
-                listOf(80, 12, -37),
-                listOf(-62, -85, 95)
-            ),
-            grid
+    fun set_indices_withMultipleRows_rowIndexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
         )
+        assertThrows<IndexOutOfBoundsException> { grid[-1, 0] = "echo" }
     }
 
     @Test
-    fun testAddRowsAndColumns() {
-        val grid = RowArrayGrid<Int>()
+    fun set_indices_withMultipleRows_rowIndexTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[3, 0] = "echo" }
+    }
+
+    @Test
+    fun set_indices_withMultipleRows_colIndexTooSmall() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[0, -1] = "echo" }
+    }
+
+    @Test
+    fun set_point_withMultipleRows_yTooLarge() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThrows<IndexOutOfBoundsException> { grid[0, 2] = "echo" }
+    }
+
+    @Test
+    fun addRow_whenEmpty_emptyRow() {
+        val grid = rowArrayGridOf<String>()
         assertThrows<IllegalArgumentException> { grid.addRow(emptyList()) }
-        assertThrows<IllegalArgumentException> { grid.addColumn(emptyList()) }
-
-        grid.addRow(listOf(1, 2))
-        assertEquals(gridOf(listOf(1, 2)), grid)
-
-        assertThrows<IllegalArgumentException> { grid.addRow(listOf(3)) }
-        assertThrows<IllegalArgumentException> { grid.addColumn(listOf(3, 4)) }
-
-        grid.addColumn(listOf(3))
-        assertEquals(gridOf(listOf(1, 2, 3)), grid)
-
-        grid.addRow(listOf(4, 5, 6))
-        assertEquals(gridOf(listOf(1, 2, 3), listOf(4, 5, 6)), grid)
-
-        assertThrows<IllegalArgumentException> { grid.addRow(listOf(7, 8, 9, 0)) }
-        assertThrows<IllegalArgumentException> { grid.addColumn(listOf(7)) }
-
-        grid.addColumn(listOf(7, 8))
-        assertEquals(gridOf(listOf(1, 2, 3, 7), listOf(4, 5, 6, 8)), grid)
     }
 
     @Test
-    fun testAddRowCopiesRow() {
-        val grid = RowArrayGrid<Int>()
-        val row = mutableListOf(1, 2, 3)
+    fun addRow_whenEmpty_nonEmptyRow() {
+        val grid = rowArrayGridOf<String>()
+        val row = mutableListOf("foo", "bar", "baz")
         grid.addRow(row)
-
-        row[0] = 4
-        row[1] = 5
-        row[2] = 6
-        row.add(7)
-
-        assertEquals(gridOf(listOf(1, 2, 3)), grid)
-        assertEquals(listOf(1, 2, 3), grid.firstRow())
+        row.clear()
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar", "baz")))
     }
 
     @Test
-    fun testAddColumnCopiesColumn() {
-        val grid = RowArrayGrid<Int>()
-        val column = mutableListOf(1, 2, 3)
-        grid.addColumn(column)
-
-        column[0] = 4
-        column[1] = 5
-        column[2] = 6
-        column.add(7)
-
-        assertEquals(gridOf(listOf(1), listOf(2), listOf(3)), grid)
-        assertEquals(listOf(1, 2, 3), grid.firstColumn())
+    fun addRow_whenNotEmpty_emptyRow() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IllegalArgumentException> { grid.addRow(emptyList()) }
     }
 
     @Test
-    fun testAddShallowRowsAndColumns() {
-        val grid = RowArrayGrid<Int>()
-        assertThrows<IllegalArgumentException> { grid.addShallowRow(emptyList()) }
-        assertThrows<IllegalArgumentException> { grid.addShallowColumn(emptyList()) }
-
-        grid.addShallowRow(listOf(1, 2))
-        assertEquals(gridOf(listOf(1, 2)), grid)
-
-        assertThrows<IllegalArgumentException> { grid.addShallowRow(listOf(3)) }
-        assertThrows<IllegalArgumentException> { grid.addShallowColumn(listOf(3, 4)) }
-
-        grid.addShallowColumn(listOf(3))
-        assertEquals(gridOf(listOf(1, 2, 3)), grid)
-
-        grid.addShallowRow(listOf(4, 5, 6))
-        assertEquals(gridOf(listOf(1, 2, 3), listOf(4, 5, 6)), grid)
-
-        assertThrows<IllegalArgumentException> { grid.addShallowRow(listOf(7, 8, 9, 0)) }
-        assertThrows<IllegalArgumentException> { grid.addShallowColumn(listOf(7)) }
-
-        grid.addShallowColumn(listOf(7, 8))
-        assertEquals(gridOf(listOf(1, 2, 3, 7), listOf(4, 5, 6, 8)), grid)
+    fun addRow_whenNotEmpty_sameSizeRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux"))
+        val row = mutableListOf("qox", "fred")
+        grid.addRow(row)
+        row.clear()
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
+        )
     }
 
     @Test
-    fun testRemoveLastRowAndColumn() {
-        val rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>(5).apply { addAll(listOf(17, -8, -55, -24, 10)) })
-            add(ArrayList<Int>(5).apply { addAll(listOf(16, -17, -67, -26, -73)) })
-            add(ArrayList<Int>(5).apply { addAll(listOf(12, 53, -7, -83, -75)) })
-            add(ArrayList<Int>(5).apply { addAll(listOf(55, 34, -69, -16, 58)) })
-        }
-        val grid = RowArrayGrid(rows)
+    fun addRow_whenNotEmpty_differentSizeRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IllegalArgumentException> { grid.addRow(listOf("qox", "fred")) }
+    }
 
-        grid.removeLastRow()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55, -24, 10),
-                listOf(16, -17, -67, -26, -73),
-                listOf(12, 53, -7, -83, -75)
-            ),
-            grid
+    @Test
+    fun addColumn_whenEmpty_emptyColumn() {
+        val grid = rowArrayGridOf<String>()
+        assertThrows<IllegalArgumentException> { grid.addColumn(emptyList()) }
+    }
+
+    @Test
+    fun addColumn_whenEmpty_nonEmptyColumn() {
+        val grid = rowArrayGridOf<String>()
+        grid.addColumn(listOf("foo", "bar", "baz"))
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo"), listOf("bar"), listOf("baz")))
+    }
+
+    @Test
+    fun addColumn_whenNotEmpty_emptyColumn() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IllegalArgumentException> { grid.addColumn(emptyList()) }
+    }
+
+    @Test
+    fun addColumn_whenNotEmpty_sameSizeColumn() {
+        val grid = rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux"))
+        grid.addColumn(listOf("qox", "fred"))
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(listOf("foo", "bar", "qox"), listOf("baz", "qux", "fred"))
         )
+    }
 
-        grid.removeLastColumn()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55, -24),
-                listOf(16, -17, -67, -26),
-                listOf(12, 53, -7, -83)
-            ),
-            grid
+    @Test
+    fun addColumn_whenNotEmpty_differentSizeColumn() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThrows<IllegalArgumentException> { grid.addColumn(listOf("qox", "fred")) }
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_emptyRow_arrayList() {
+        val grid = rowArrayGridOf<String>()
+        val row = ArrayList<String>()
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(row) }
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_emptyRow_linkedList() {
+        val grid = rowArrayGridOf<String>()
+        val row = LinkedList<String>()
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(row) }
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_nonEmptyRow_arrayList() {
+        val grid = rowArrayGridOf<String>()
+        val row = arrayListOf("foo", "bar", "baz")
+        grid.addShallowRow(row)
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar", "baz")))
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_nonEmptyRow_linkedList() {
+        val grid = rowArrayGridOf<String>()
+        val row = LinkedList(listOf("foo", "bar", "baz"))
+        grid.addShallowRow(row)
+        row.clear()
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar", "baz")))
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_emptyRow_arrayList() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(ArrayList()) }
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_emptyRow_linkedList() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(LinkedList()) }
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_sameSizeRow_arrayList() {
+        val grid = rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux"))
+        val row = arrayListOf("qox", "fred")
+        grid.addShallowRow(row)
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
         )
+    }
 
-        grid.removeLastColumn()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55),
-                listOf(16, -17, -67),
-                listOf(12, 53, -7)
-            ),
-            grid
+    @Test
+    fun addShallowRow_whenNotEmpty_sameSizeRow_linkedList() {
+        val grid = rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux"))
+        val row = LinkedList(listOf("qox", "fred"))
+        grid.addShallowRow(row)
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
         )
+    }
 
-        grid.removeLastRow()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55),
-                listOf(16, -17, -67)
-            ),
-            grid
-        )
+    @Test
+    fun addShallowRow_whenNotEmpty_differentSizeRow_arrayList() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        val row = arrayListOf("qox", "fred")
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(row) }
+    }
 
-        grid.removeLastRow()
-        assertEquals(gridOf(listOf(17, -8, -55)), grid)
+    @Test
+    fun addShallowRow_whenNotEmpty_differentSizeRow_linkedList() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        val row = LinkedList(listOf("qox", "fred"))
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(row) }
+    }
 
-        grid.removeLastColumn()
-        assertEquals(gridOf(listOf(17, -8)), grid)
-
-        grid.removeLastRow()
-        assertEquals(emptyGrid(), grid)
-
+    @Test
+    fun removeLastRow_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
         assertThrows<NoSuchElementException> { grid.removeLastRow() }
+    }
+
+    @Test
+    fun removeLastRow_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        grid.removeLastRow()
+        assertThat(grid).isEqualTo(emptyGrid<String>())
+    }
+
+    @Test
+    fun removeLastRow_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        grid.removeLastRow()
+        assertThat(grid).isEqualTo(emptyGrid<String>())
+    }
+
+    @Test
+    fun removeLastRow_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        grid.removeLastRow()
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux")))
+    }
+
+    @Test
+    fun removeLastColumn_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
         assertThrows<NoSuchElementException> { grid.removeLastColumn() }
     }
 
     @Test
-    fun testEquals() {
-        assertEquals(EmptyGrid, RowArrayGrid<Nothing>() as Grid<Nothing>)
-        assertEquals(emptyGrid(), RowArrayGrid<Nothing>())
-        assertEquals(emptyGrid(), RowArrayGrid<Int>())
-        assertEquals(emptyGrid(), RowArrayGrid<String>())
-        assertEquals(gridOf(), RowArrayGrid<Nothing>())
-        assertEquals(mutableGridOf(), RowArrayGrid<Nothing>())
-
-        val nullGrid: RowArrayGrid<Int>? = null
-        assertNotEquals(nullGrid, RowArrayGrid())
-
-        val rowArrayGrids = listOf(
-            RowArrayGrid(),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(1) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(2) })
-                    add(ArrayList<Int>().apply { add(3) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(4, 5)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(6, 7)) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(8, 9, 0)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(-1, -2, -3)) })
-                }
-            )
-        )
-        val rowArrayGridsCopy = listOf(
-            RowArrayGrid(),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(1) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(2) })
-                    add(ArrayList<Int>().apply { add(3) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(4, 5)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(6, 7)) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(8, 9, 0)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(-1, -2, -3)) })
-                }
-            )
-        )
-
-        rowArrayGrids.forEachIndexed { origIndex, origGrid ->
-            rowArrayGridsCopy.forEachIndexed { copyIndex, copyGrid ->
-                if (origIndex == copyIndex) {
-                    assertEquals(origGrid, copyGrid)
-                } else {
-                    assertNotEquals(origGrid, copyGrid)
-                }
-            }
-        }
+    fun removeLastColumn_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        grid.removeLastColumn()
+        assertThat(grid).isEqualTo(emptyGrid<String>())
     }
 
     @Test
-    fun testHashCode() {
-        assertEquals(EmptyGrid.hashCode(), RowArrayGrid<Nothing>().hashCode())
-        assertEquals(EmptyGrid.hashCode(), RowArrayGrid<Int>().hashCode())
-
-        val rowArrayGrids = listOf(
-            RowArrayGrid(),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(1) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(2) })
-                    add(ArrayList<Int>().apply { add(3) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(4, 5)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(6, 7)) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(8, 9, 0)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(-1, -2, -3)) })
-                }
-            )
-        )
-        val rowArrayGridsCopy = listOf(
-            RowArrayGrid(),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(1) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { add(2) })
-                    add(ArrayList<Int>().apply { add(3) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(4, 5)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(6, 7)) })
-                }
-            ),
-            RowArrayGrid(
-                ArrayList<ArrayList<Int>>().apply {
-                    add(ArrayList<Int>().apply { addAll(listOf(8, 9, 0)) })
-                    add(ArrayList<Int>().apply { addAll(listOf(-1, -2, -3)) })
-                }
-            )
-        )
-
-        val hashMap = HashMap<RowArrayGrid<Int>, Int>()
-        rowArrayGrids.forEachIndexed { index, rowArrayGrid ->
-            hashMap[rowArrayGrid] = index
-        }
-        rowArrayGridsCopy.forEachIndexed { index, rowArrayGrid ->
-            assertEquals(index, hashMap[rowArrayGrid])
-        }
+    fun removeLastColumn_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        grid.removeLastColumn()
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar")))
     }
 
     @Test
-    fun testToString() {
-        assertEquals("[]", RowArrayGrid<Nothing>().toString())
+    fun removeLastColumn_withSingleColumn() {
+        val grid = rowArrayGridOf(listOf("foo"), listOf("bar"), listOf("baz"))
+        grid.removeLastColumn()
+        assertThat(grid).isEqualTo(emptyGrid<String>())
+    }
 
-        var rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>().apply { add(42) })
-        }
-        assertEquals("[[42]]", RowArrayGrid(rows).toString())
+    @Test
+    fun removeLastColumn_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        grid.removeLastColumn()
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo"), listOf("baz"), listOf("qox")))
+    }
 
-        rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>().apply { addAll(listOf(1, -2, 3)) })
-        }
-        assertEquals("[[1, -2, 3]]", RowArrayGrid(rows).toString())
+    @Test
+    fun toString_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThat(grid.toString()).isEqualTo("[]")
+    }
 
-        rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>().apply { add(-1) })
-            add(ArrayList<Int>().apply { add(2) })
-            add(ArrayList<Int>().apply { add(3) })
-        }
-        assertEquals(
+    @Test
+    fun toString_withSingleElement() {
+        val grid = rowArrayGridOf(listOf("foo"))
+        assertThat(grid.toString()).isEqualTo("[[foo]]")
+    }
+
+    @Test
+    fun toString_withSingleRow() {
+        val grid = rowArrayGridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.toString()).isEqualTo("[[foo, bar, baz]]")
+    }
+
+    @Test
+    fun toString_withMultipleRows() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid.toString()).isEqualTo(
             """
-                [[-1],
-                 [2],
-                 [3]]
-            """.trimIndent(),
-            RowArrayGrid(rows).toString()
-        )
-
-        rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>().apply { addAll(listOf(1, -2)) })
-            add(ArrayList<Int>().apply { addAll(listOf(-3, 4)) })
-        }
-        assertEquals(
-            """
-                [[1, -2],
-                 [-3, 4]]
-            """.trimIndent(),
-            RowArrayGrid(rows).toString()
-        )
-
-        rows = ArrayList<ArrayList<Int>>().apply {
-            add(ArrayList<Int>().apply { addAll(listOf(-10, -27, 89, -46)) })
-            add(ArrayList<Int>().apply { addAll(listOf(-23, -63, -37, 44)) })
-            add(ArrayList<Int>().apply { addAll(listOf(76, 19, -88, -32)) })
-            add(ArrayList<Int>().apply { addAll(listOf(73, 94, 56, 19)) })
-            add(ArrayList<Int>().apply { addAll(listOf(-64, -1, -47, -42)) })
-        }
-        assertEquals(
-            """
-                [[-10, -27, 89, -46],
-                 [-23, -63, -37, 44],
-                 [76, 19, -88, -32],
-                 [73, 94, 56, 19],
-                 [-64, -1, -47, -42]]
-            """.trimIndent(),
-            RowArrayGrid(rows).toString()
+            [[foo, bar],
+             [baz, qux],
+             [qox, fred]]
+            """.trimIndent()
         )
     }
 
     @Test
-    fun testConstructWithInvalidRows() {
+    fun equals_nullGrid() {
+        val grid = rowArrayGridOf<Any>()
+        val other: RowArrayGrid<Any>? = null
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyGrid_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        val other = emptyGrid<Any>()
+        assertThat(grid).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_emptyGrid_whenNotEmpty() {
+        val grid = rowArrayGridOf(listOf(0))
+        val other = emptyGrid<Int>()
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonEmptyGrid_whenEmpty() {
+        val grid = rowArrayGridOf<Int>()
+        val other = gridOf(listOf(0))
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonEmptyGrid_withSameElements() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        val other = gridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(grid).isEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonEmptyGrid_withDifferentElements() {
+        val grid = rowArrayGridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        val other = gridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("fred", "qox")
+        )
+        assertThat(grid).isNotEqualTo(other)
+    }
+
+    @Test
+    fun hashCode_whenEmpty() {
+        val grid = rowArrayGridOf<Any>()
+        assertThat(grid.hashCode())
+            .isEqualTo(grid.hashCode())
+            .isEqualTo(emptyGrid<Any>().hashCode())
+            .isEqualTo(gridOf<Any>().hashCode())
+            .isEqualTo(rowArrayGridOf<Any>().hashCode())
+            .isNotEqualTo(rowArrayGridOf(listOf(0)).hashCode())
+    }
+
+    @Test
+    fun hashCode_whenNotEmpty() {
+        val grid = rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux"))
+        assertThat(grid.hashCode())
+            .isEqualTo(grid.hashCode())
+            .isNotEqualTo(emptyGrid<Any>().hashCode())
+            .isEqualTo(gridOf(listOf("foo", "bar"), listOf("baz", "qux")).hashCode())
+            .isEqualTo(rowArrayGridOf(listOf("foo", "bar"), listOf("baz", "qux")).hashCode())
+            .isNotEqualTo(rowArrayGridOf(listOf("foo", "bar"), listOf("qux", "baz")).hashCode())
+    }
+
+    @Test
+    fun constructor_withInit_negativeHeight_negativeWidth() {
         assertThrows<IllegalArgumentException> {
-            val rows = ArrayList<ArrayList<Nothing>>().apply { add(ArrayList()) }
-            RowArrayGrid(rows)
-        }
-        assertThrows<IllegalArgumentException> {
-            val rows = ArrayList<ArrayList<String>>().apply {
-                add(ArrayList<String>().apply { add("a") })
-                add(ArrayList())
-            }
-            RowArrayGrid(rows)
-        }
-        assertThrows<IllegalArgumentException> {
-            val rows = ArrayList<ArrayList<Int>>().apply {
-                add(ArrayList<Int>().apply { add(1) })
-                add(ArrayList<Int>().apply { addAll(listOf(2, 3)) })
-            }
-            RowArrayGrid(rows)
-        }
-        assertThrows<IllegalArgumentException> {
-            val rows = ArrayList<ArrayList<Int>>().apply {
-                add(ArrayList<Int>().apply { addAll(listOf(-37, 94, -76)) })
-                add(ArrayList<Int>().apply { addAll(listOf(3, 21, -80)) })
-                add(ArrayList<Int>().apply { addAll(listOf(22, 10)) })
-            }
-            RowArrayGrid(rows)
-        }
-        assertThrows<IllegalArgumentException> {
-            val rows = ArrayList<ArrayList<Int>>().apply {
-                add(ArrayList<Int>().apply { addAll(listOf(-89, -76, 26, 36)) })
-                add(ArrayList<Int>().apply { addAll(listOf(48, 82, -16, 5)) })
-                add(ArrayList<Int>().apply { addAll(listOf(40, 44, -42, 2, -44, 99)) })
-                add(ArrayList<Int>().apply { addAll(listOf(-9, 66, 43, 29)) })
-            }
-            RowArrayGrid(rows)
+            RowArrayGrid(height = -1, width = -1) { _, _ -> "foo" }
         }
     }
 
     @Test
-    fun testFakeInitConstructor() {
-        assertEquals(emptyGrid(), RowArrayGrid(0, 0) { _, _ -> 42 })
-        assertThrows<IllegalArgumentException> { RowArrayGrid(0, 1) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { RowArrayGrid(2, 0) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { RowArrayGrid(-1, 3) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { RowArrayGrid(0, -1) { _, _ -> 42 } }
-        assertEquals(gridOf(listOf(42)), RowArrayGrid(1, 1) { _, _ -> 42 })
-        assertEquals(
-            gridOf(
-                listOf(0, 1, 2, 3, 4),
-                listOf(10, 11, 12, 13, 14),
-                listOf(20, 21, 22, 23, 24),
-                listOf(30, 31, 32, 33, 34),
-                listOf(40, 41, 42, 43, 44),
-                listOf(50, 51, 52, 53, 54)
-            ),
-            RowArrayGrid(6, 5) { rowIndex, colIndex -> rowIndex * 10 + colIndex }
-        )
+    fun constructor_withInit_negativeHeight_zeroWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = -1, width = 0) { _, _ -> "foo" }
+        }
     }
 
     @Test
-    fun testFakeGridConstructor() {
-        var mutableGrid = mutableGridOf<Int>()
-        assertEquals(emptyGrid(), RowArrayGrid(mutableGrid))
-
-        mutableGrid = mutableGridOf(listOf(42))
-        assertEquals(gridOf(listOf(42)), RowArrayGrid(mutableGrid))
-
-        mutableGrid = mutableGridOf(
-            listOf(20, 37, 63, -69, -2),
-            listOf(6, -10, -71, 58, 94),
-            listOf(-19, -73, 10, -30, 37),
-            listOf(95, 84, -28, -14, 5)
-        )
-        assertEquals(
-            gridOf(
-                listOf(20, 37, 63, -69, -2),
-                listOf(6, -10, -71, 58, 94),
-                listOf(-19, -73, 10, -30, 37),
-                listOf(95, 84, -28, -14, 5)
-            ),
-            RowArrayGrid(mutableGrid)
-        )
-
-        mutableGrid = mutableGridOf(mutableListOf(1, 2))
-        val rowArrayGrid = RowArrayGrid(mutableGrid)
-
-        mutableGrid[0, 0] = 3
-        mutableGrid[0, 1] = 4
-        mutableGrid.addRow(mutableListOf(5, 6))
-
-        assertEquals(gridOf(listOf(1, 2)), rowArrayGrid)
+    fun constructor_withInit_negativeHeight_positiveWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = -1, width = 1) { _, _ -> "foo" }
+        }
     }
 
     @Test
-    fun testFakeRowListConstructor() {
-        assertEquals(emptyGrid(), RowArrayGrid<Nothing>(emptyList()))
-        assertEquals(gridOf(listOf(42)), RowArrayGrid(listOf(listOf(42))))
-        assertThrows<IllegalArgumentException> { RowArrayGrid(listOf(listOf(5), listOf(6, 7))) }
-        assertEquals(
-            gridOf(
-                listOf(-89, 17, 9, -6, -9),
-                listOf(-60, -11, 47, 65, -86),
-                listOf(-77, -12, 45, -12, 2),
-                listOf(-3, 74, -43, 2, -46)
-            ),
-            RowArrayGrid(
-                listOf(
-                    listOf(-89, 17, 9, -6, -9),
-                    listOf(-60, -11, 47, 65, -86),
-                    listOf(-77, -12, 45, -12, 2),
-                    listOf(-3, 74, -43, 2, -46)
-                )
+    fun constructor_withInit_zeroHeight_negativeWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = 0, width = -1) { _, _ -> "foo" }
+        }
+    }
+
+    @Test
+    fun constructor_withInit_zeroHeight_zeroWidth() {
+        val grid = RowArrayGrid(height = 0, width = 0) { _, _ -> "foo" }
+        assertThat(grid).isEqualTo(emptyGrid<String>())
+    }
+
+    @Test
+    fun constructor_withInit_zeroHeight_positiveWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = 0, width = 1) { _, _ -> "foo" }
+        }
+    }
+
+    @Test
+    fun constructor_withInit_positiveHeight_negativeWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = 1, width = -1) { _, _ -> "foo" }
+        }
+    }
+
+    @Test
+    fun constructor_withInit_positiveHeight_zeroWidth() {
+        assertThrows<IllegalArgumentException> {
+            RowArrayGrid(height = 1, width = 0) { _, _ -> "foo" }
+        }
+    }
+
+    @Test
+    fun constructor_withInit_singleElement() {
+        val grid = RowArrayGrid(height = 1, width = 1) { _, _ -> "foo" }
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo")))
+    }
+
+    @Test
+    fun constructor_withInit_singleRow() {
+        val row = listOf("foo", "bar", "baz")
+        val grid = RowArrayGrid(height = 1, width = 3) { _, colIndex -> row[colIndex] }
+        assertThat(grid).isEqualTo(rowArrayGridOf(row))
+    }
+
+    @Test
+    fun constructor_withInit_multipleRows() {
+        val rows = listOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        val grid = RowArrayGrid(height = 3, width = 2) { rowIndex, colIndex ->
+            rows[rowIndex][colIndex]
+        }
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
             )
         )
-
-        val rows = mutableListOf(mutableListOf(1, 2))
-        val rowArrayGrid = RowArrayGrid(rows)
-
-        rows[0][0] = 3
-        rows[0][1] = 4
-        rows.add(mutableListOf(5, 6))
-
-        assertEquals(gridOf(listOf(1, 2)), rowArrayGrid)
     }
 
     @Test
-    fun testFakeVarargRowsConstructor() {
-        assertEquals(emptyGrid(), RowArrayGrid<Nothing>(emptyList()))
-        assertEquals(gridOf(listOf(42)), RowArrayGrid(listOf(42)))
-        assertThrows<IllegalArgumentException> { RowArrayGrid(listOf(5), listOf(6, 7)) }
-        assertEquals(
-            gridOf(
-                listOf(-89, 17, 9, -6, -9),
-                listOf(-60, -11, 47, 65, -86),
-                listOf(-77, -12, 45, -12, 2),
-                listOf(-3, 74, -43, 2, -46)
-            ),
-            RowArrayGrid(
-                listOf(-89, 17, 9, -6, -9),
-                listOf(-60, -11, 47, 65, -86),
-                listOf(-77, -12, 45, -12, 2),
-                listOf(-3, 74, -43, 2, -46)
+    fun constructor_withGrid_noElements() {
+        val grid = emptyGrid<Any>()
+        assertThat(RowArrayGrid(grid)).isEqualTo(grid).isNotSameAs(grid)
+    }
+
+    @Test
+    fun constructor_withGrid_singleElement() {
+        val grid = gridOf(listOf("foo"))
+        assertThat(RowArrayGrid(grid)).isEqualTo(grid).isNotSameAs(grid)
+    }
+
+    @Test
+    fun constructor_withGrid_singleRow() {
+        val grid = gridOf(listOf("foo", "bar", "baz"))
+        assertThat(RowArrayGrid(grid)).isEqualTo(grid).isNotSameAs(grid)
+    }
+
+    @Test
+    fun constructor_withGrid_multipleRows() {
+        val grid = gridOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        assertThat(RowArrayGrid(grid)).isEqualTo(grid).isNotSameAs(grid)
+    }
+
+    @Test
+    fun constructor_withRows_emptyList() {
+        val rows = emptyList<List<Any>>()
+        val grid = RowArrayGrid(rows)
+        assertThat(grid).isEqualTo(emptyGrid<Any>())
+    }
+
+    @Test
+    fun constructor_withRows_singleRow_emptyList() {
+        val rows = listOf(emptyList<Any>())
+        assertThrows<IllegalArgumentException> { RowArrayGrid(rows) }
+    }
+
+    @Test
+    fun constructor_withRows_singleRow_singleElement() {
+        val rows = listOf(listOf("foo"))
+        val grid = RowArrayGrid(rows)
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo")))
+    }
+
+    @Test
+    fun constructor_withRows_singleRow_multipleElements() {
+        val rows = listOf(listOf("foo", "bar", "baz"))
+        val grid = RowArrayGrid(rows)
+        assertThat(grid).isEqualTo(rowArrayGridOf(listOf("foo", "bar", "baz")))
+    }
+
+    @Test
+    fun constructor_withRows_multipleRows_differentLengths() {
+        val rows = listOf(listOf("foo"), listOf("bar", "baz"))
+        assertThrows<IllegalArgumentException> { RowArrayGrid(rows) }
+    }
+
+    @Test
+    fun constructor_withRows_multipleRows_equalLengths() {
+        val rows = listOf(
+            listOf("foo", "bar"),
+            listOf("baz", "qux"),
+            listOf("qox", "fred")
+        )
+        val grid = RowArrayGrid(rows)
+        assertThat(grid).isEqualTo(
+            rowArrayGridOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
             )
         )
-
-        val row = mutableListOf(1, 2)
-        val rowArrayGrid = RowArrayGrid(row)
-
-        row[0] = 3
-        row[1] = 4
-        row.add(5)
-
-        assertEquals(gridOf(listOf(1, 2)), rowArrayGrid)
     }
 }

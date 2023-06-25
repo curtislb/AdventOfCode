@@ -5,6 +5,7 @@ import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Pose
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.forEachPointValue
+import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.grid.toGrid
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Instruction
 import com.curtislb.adventofcode.year2019.day17.scaffold.instruction.Move

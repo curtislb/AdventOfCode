@@ -15,6 +15,7 @@ panel instead, what registration identifier does it paint on your hull?
 
 package com.curtislb.adventofcode.year2019.day11.part2
 
+import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.intcode.Intcode
 import com.curtislb.adventofcode.year2019.day11.painting.Color
 import com.curtislb.adventofcode.year2019.day11.painting.Robot

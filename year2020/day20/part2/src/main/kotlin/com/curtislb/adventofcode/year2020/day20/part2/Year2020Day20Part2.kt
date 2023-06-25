@@ -109,8 +109,10 @@ package com.curtislb.adventofcode.year2020.day20.part2
 import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.geometry.PointMask
-import com.curtislb.adventofcode.common.grid.createPointGrid
 import com.curtislb.adventofcode.common.grid.forEachPointValue
+import com.curtislb.adventofcode.common.grid.gridOfPoints
+import com.curtislb.adventofcode.common.grid.horizontalReflection
+import com.curtislb.adventofcode.common.grid.leftRotation
 import com.curtislb.adventofcode.common.grid.sumRowsBy
 import com.curtislb.adventofcode.common.grid.toMutableGrid
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
@@ -144,13 +146,13 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
         Point(19, -1)
     )
 
-    val maskGrids = mutableListOf(createPointGrid(maskPoints) { it in maskPoints })
+    val maskGrids = mutableListOf(gridOfPoints(maskPoints) { it in maskPoints })
     for (rotationCount in 1..3) {
-        maskGrids.add(maskGrids.last().rotatedLeft())
+        maskGrids.add(maskGrids.last().leftRotation())
     }
-    maskGrids.add(maskGrids.last().flippedHorizontal())
+    maskGrids.add(maskGrids.last().horizontalReflection())
     for (rotationCount in 1..3) {
-        maskGrids.add(maskGrids.last().rotatedLeft())
+        maskGrids.add(maskGrids.last().leftRotation())
     }
 
     val pointMasks = mutableListOf<PointMask>().apply {

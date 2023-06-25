@@ -3,18 +3,9 @@ package com.curtislb.adventofcode.common.grid
 import com.curtislb.adventofcode.common.geometry.Point
 
 /**
- * Adds a new row to this grid, constructed by applying the [initRow] function to an empty list.
- *
- * @throws IllegalArgumentException If this grid is non-empty and the new row is of the wrong size.
- */
-inline fun <E> MutableGrid<E>.addRowWith(initRow: MutableList<E>.() -> Unit) {
-    addShallowRow(ArrayList<E>().apply(initRow))
-}
-
-/**
  * Performs the given [action] on each element and its row and column indices in this grid.
  */
-inline fun <E> Grid<E>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, value: E) -> Unit) {
+inline fun <T> Grid<T>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, value: T) -> Unit) {
     for (rowIndex in rowIndices) {
         for (colIndex in columnIndices) {
             action(rowIndex, colIndex, this[rowIndex, colIndex])
@@ -25,47 +16,67 @@ inline fun <E> Grid<E>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, val
 /**
  * Performs the given [action] on each element and its point position in this grid.
  */
-inline fun <E> Grid<E>.forEachPointValue(action: (point: Point, value: E) -> Unit) {
+inline fun <T> Grid<T>.forEachPointValue(action: (point: Point, value: T) -> Unit) {
     forEachIndexed { rowIndex, colIndex, value ->
         action(Point.fromMatrixCoordinates(rowIndex, colIndex), value)
     }
 }
 
 /**
- * Returns a grid containing the results of applying the given [transform] function to each element
- * and its row and column indices in the original grid.
+ * Returns a grid with elements given by applying the [transform] function to each element and its
+ * row and column indices in the original grid.
  */
-inline fun <E, R> Grid<E>.mapIndexed(
-    transform: (rowIndex: Int, colIndex: Int, value: E) -> R
-): Grid<R> =
-    Grid(height, width) { rowIndex, colIndex ->
+inline fun <T, R> Grid<T>.mapIndexed(
+    transform: (rowIndex: Int, colIndex: Int, value: T) -> R
+): Grid<R> {
+    return Grid(height, width) { rowIndex, colIndex ->
         transform(rowIndex, colIndex, this[rowIndex, colIndex])
     }
+}
 
 /**
- * Returns a grid containing the results of applying the given [transform] function to each element
- * and its point position in the original grid.
+ * Returns a grid with elements given by applying the [transform] function to each element and its
+ * point position in the original grid.
  */
-inline fun <E, R> Grid<E>.mapPointValues(transform: (point: Point, value: E) -> R): Grid<R> =
+inline fun <T, R> Grid<T>.mapPointValues(transform: (point: Point, value: T) -> R): Grid<R> =
     mapIndexed { rowIndex, colIndex, value ->
         transform(Point.fromMatrixCoordinates(rowIndex, colIndex), value)
     }
 
 /**
- * Returns the results of applying the given [transform] function to each element of the row with
- * the given [rowIndex] in the grid.
+ * Returns a grid with elements given by applying the [transform] function to each element of the
+ * row with the given [rowIndex] in the original grid.
+ *
+ * @throws IndexOutOfBoundsException If the grid has no row with the given [rowIndex].
  */
-inline fun <E, R> Grid<E>.mapRow(rowIndex: Int, transform: (value: E) -> R): List<R> =
+inline fun <T, R> Grid<T>.mapRow(rowIndex: Int, transform: (value: T) -> R): List<R> =
     shallowRow(rowIndex).map(transform)
 
 /**
  * Returns the sum of the values given by applying the [transform] function to each row in the grid.
  */
-inline fun <E> Grid<E>.sumRowsBy(transform: (row: List<E>) -> Int): Int =
+inline fun <T> Grid<T>.sumRowsBy(transform: (row: List<T>) -> Int): Int =
     shallowRows().sumOf(transform)
 
 /**
- * Replaces each element in the grid with the result of the [update] function applied to that value.
+ * Returns a string by transforming each row in the grid with the [transform] function and
+ * combining them with the given [separator].
  */
-inline fun <E> MutableGrid<E>.replaceAll(update: (value: E) -> E) =
-    forEachIndexed { rowIndex, colIndex, value -> this[rowIndex, colIndex] = update(value) }
+fun <T> Grid<T>.joinRowsToString(
+    separator: CharSequence = ", ",
+    transform: ((row: List<T>) -> CharSequence)? = null
+): String {
+    return shallowRows().joinToString(separator = separator, transform = transform)
+}
+
+/**
+ * Returns a read-only copy of the grid that has been reflected horizontally.
+ */
+fun <T> Grid<T>.horizontalReflection(): Grid<T> =
+    Grid(height, width) { rowIndex, colIndex -> get(rowIndex, lastColumnIndex - colIndex) }
+
+/**
+ * Returns a read-only copy of the grid that has been rotated counterclockwise by 90 degrees.
+ */
+fun <T> Grid<T>.leftRotation(): Grid<T> =
+    Grid(width, height) { rowIndex, colIndex -> get(colIndex, lastColumnIndex - rowIndex) }

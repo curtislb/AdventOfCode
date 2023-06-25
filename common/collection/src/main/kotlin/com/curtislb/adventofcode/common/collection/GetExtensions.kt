@@ -7,7 +7,7 @@ package com.curtislb.adventofcode.common.collection
  */
 fun <T> List<T>.getCyclic(index: Int): T {
     if (isEmpty()) {
-        throw NoSuchElementException("Can't get an element from an empty list")
+        throw NoSuchElementException("Can't get an element from an empty list.")
     }
     return this[index.mod(size)]
 }

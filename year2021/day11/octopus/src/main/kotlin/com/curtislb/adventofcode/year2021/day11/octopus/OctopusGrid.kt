@@ -3,10 +3,10 @@ package com.curtislb.adventofcode.year2021.day11.octopus
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.MutableGrid
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.grid.addRowWith
+import com.curtislb.adventofcode.common.grid.addRow
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
-import com.curtislb.adventofcode.common.grid.replaceAll
+import com.curtislb.adventofcode.common.grid.updateAll
 import com.curtislb.adventofcode.common.grid.toGrid
 
 /**
@@ -24,7 +24,7 @@ class OctopusGrid(gridString: String) {
      */
     private val energyGrid: MutableGrid<Int> = mutableGridOf<Int>().apply {
         for (line in gridString.trim().lines()) {
-            addRowWith {
+            addRow {
                 for (char in line.trim()) {
                     add(char.digitToInt())
                 }
@@ -85,7 +85,7 @@ class OctopusGrid(gridString: String) {
         totalSteps += stepCount
         repeat(stepCount) {
             // Rule 1: Increment the energy level of each octopus
-            energyGrid.replaceAll { it + 1 }
+            energyGrid.updateAll { it + 1 }
 
             // Rule 2: Handle energy increases due to flashing octopuses
             var isUpdated: Boolean

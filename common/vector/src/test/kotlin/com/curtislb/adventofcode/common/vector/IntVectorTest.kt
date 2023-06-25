@@ -700,35 +700,35 @@ class IntVectorTest {
     }
 
     @Test
-    fun pseudoConstructor_noInit_negativeDimension() {
+    fun constructor_noInit_negativeDimension() {
         assertThrows<IllegalArgumentException> { IntVector(-1) }
     }
 
     @Test
-    fun pseudoConstructor_noInit_zeroDimension() {
+    fun constructor_noInit_zeroDimension() {
         val vector = IntVector(0)
         assertThat(vector).isEqualTo(IntVector.EMPTY)
     }
 
     @Test
-    fun pseudoConstructor_noInit_positiveDimension() {
+    fun constructor_noInit_positiveDimension() {
         val vector = IntVector(3)
         assertThat(vector).isEqualTo(intVectorOf(0, 0, 0))
     }
 
     @Test
-    fun pseudoConstructor_withInit_negativeDimension() {
+    fun constructor_withInit_negativeDimension() {
         assertThrows<IllegalArgumentException> { IntVector(-1) { it } }
     }
 
     @Test
-    fun pseudoConstructor_withInit_zeroDimension() {
+    fun constructor_withInit_zeroDimension() {
         val vector = IntVector(0) { it }
         assertThat(vector).isEqualTo(IntVector.EMPTY)
     }
 
     @Test
-    fun pseudoConstructor_withInit_positiveDimension() {
+    fun constructor_withInit_positiveDimension() {
         val vector = IntVector(3) { (it + 1) * 2 - 3 }
         assertThat(vector).isEqualTo(intVectorOf(-1, 1, 3))
     }

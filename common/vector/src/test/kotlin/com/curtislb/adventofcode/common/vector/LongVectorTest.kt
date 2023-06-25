@@ -700,35 +700,35 @@ class LongVectorTest {
     }
 
     @Test
-    fun pseudoConstructor_noInit_negativeDimension() {
+    fun constructor_noInit_negativeDimension() {
         assertThrows<IllegalArgumentException> { LongVector(-1) }
     }
 
     @Test
-    fun pseudoConstructor_noInit_zeroDimension() {
+    fun constructor_noInit_zeroDimension() {
         val vector = LongVector(0)
         assertThat(vector).isEqualTo(LongVector.EMPTY)
     }
 
     @Test
-    fun pseudoConstructor_noInit_positiveDimension() {
+    fun constructor_noInit_positiveDimension() {
         val vector = LongVector(3)
         assertThat(vector).isEqualTo(longVectorOf(0, 0, 0))
     }
 
     @Test
-    fun pseudoConstructor_withInit_negativeDimension() {
+    fun constructor_withInit_negativeDimension() {
         assertThrows<IllegalArgumentException> { LongVector(-1) { it.toLong() } }
     }
 
     @Test
-    fun pseudoConstructor_withInit_zeroDimension() {
+    fun constructor_withInit_zeroDimension() {
         val vector = LongVector(0) { it.toLong() }
         assertThat(vector).isEqualTo(LongVector.EMPTY)
     }
 
     @Test
-    fun pseudoConstructor_withInit_positiveDimension() {
+    fun constructor_withInit_positiveDimension() {
         val vector = LongVector(3) { (it + 1L) * 2L - 3L }
         assertThat(vector).isEqualTo(longVectorOf(-1, 1, 3))
     }

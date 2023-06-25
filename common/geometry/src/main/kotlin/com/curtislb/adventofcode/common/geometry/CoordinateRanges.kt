@@ -8,9 +8,14 @@ package com.curtislb.adventofcode.common.geometry
  * @property y The range of y-coordinate values for the region.
  */
 data class CoordinateRanges(val x: IntRange, val y: IntRange) {
+    /**
+     * Returns `true` if at least one of the coordinate ranges is empty.
+     */
+    fun isEmpty(): Boolean = x.isEmpty() || y.isEmpty()
+
     companion object {
         /**
-         * Returns the smallest x- and y-coordinate ranges that contain all the given [points].
+         * Returns the smallest x- and y-coordinate ranges that contain the given [points].
          */
         fun ofPoints(points: Iterable<Point>): CoordinateRanges {
             var minX = Int.MAX_VALUE

@@ -5,7 +5,7 @@ import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.MutableGrid
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.grid.createPointGrid
+import com.curtislb.adventofcode.common.grid.gridOfPoints
 import com.curtislb.adventofcode.common.grid.emptyGrid
 import com.curtislb.adventofcode.common.io.forEachSection
 import java.io.File
@@ -144,7 +144,7 @@ class ImageData(file: File) {
      * TODO
      */
     fun constructImageGrid(): Grid<Boolean> {
-        return createPointGrid(
+        return gridOfPoints(
             listOf(
                 Point.ORIGIN,
                 Point(sideLength - 1, 1 - sideLength)

@@ -9,34 +9,11 @@ import org.junit.jupiter.api.Test
  * Tests [UnweightedGraph].
  */
 class UnweightedGraphTest {
-    /**
-     * Sample implementation of an unweighted graph with integer nodes.
-     */
-    private object SampleGraph : UnweightedGraph<Int>() {
-        private val adjacencyList = listOf(
-            listOf(1, 5),
-            emptyList(),
-            listOf(0, 3),
-            listOf(2, 5),
-            listOf(2, 3),
-            listOf(4),
-            listOf(0, 4, 8, 9),
-            listOf(6, 9),
-            listOf(6),
-            listOf(10, 11),
-            listOf(12),
-            listOf(4, 12),
-            listOf(9),
-        )
-
-        override fun getNeighbors(node: Int): Iterable<Int> = adjacencyList[node]
-    }
-
     @Test
     fun bfsApply_withSourceOnly() {
         for (source in 0..12) {
             val appliedList = mutableListOf<Pair<Int, Long>>()
-            SampleGraph.bfsApply(source) { node, distance ->
+            UnweightedGraphImpl.bfsApply(source) { node, distance ->
                 appliedList.add(Pair(node, distance))
                 true // Stop searching
             }
@@ -47,7 +24,7 @@ class UnweightedGraphTest {
     @Test
     fun bfsApply_withSourceAndNeighbors() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        SampleGraph.bfsApply(source = 0) { node, distance ->
+        UnweightedGraphImpl.bfsApply(source = 0) { node, distance ->
             if (distance <= 1L) {
                 appliedList.add(Pair(node, distance))
                 false // Keep searching
@@ -63,7 +40,7 @@ class UnweightedGraphTest {
     @Test
     fun bfsApply_withAllNodes_inSubgraph() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        SampleGraph.bfsApply(source = 0) { node, distance ->
+        UnweightedGraphImpl.bfsApply(source = 0) { node, distance ->
             appliedList.add(Pair(node, distance))
             false // Don't stop searching
         }
@@ -82,7 +59,7 @@ class UnweightedGraphTest {
     @Test
     fun bfsApply_withAllNodes_inFullGraph() {
         val appliedList = mutableListOf<Pair<Int, Long>>()
-        SampleGraph.bfsApply(source = 7) { node, distance ->
+        UnweightedGraphImpl.bfsApply(source = 7) { node, distance ->
             appliedList.add(Pair(node, distance))
             false // Don't stop searching
         }
@@ -108,7 +85,7 @@ class UnweightedGraphTest {
     @Test
     fun bfsDistance_toSource() {
         for (source in 0..12) {
-            val distance = SampleGraph.bfsDistance(source) { it == source }
+            val distance = UnweightedGraphImpl.bfsDistance(source) { it == source }
             assertEquals(0L, distance)
         }
     }
@@ -116,27 +93,27 @@ class UnweightedGraphTest {
     @Test
     fun bfsDistance_toNonexistentNode() {
         for (source in 0..12) {
-            val distance = SampleGraph.bfsDistance(source) { it == 13 }
+            val distance = UnweightedGraphImpl.bfsDistance(source) { it == 13 }
             assertNull(distance)
         }
     }
 
     @Test
     fun bfsDistance_toUnreachableNode() {
-        val distance = SampleGraph.bfsDistance(source = 0) { it == 6 }
+        val distance = UnweightedGraphImpl.bfsDistance(source = 0) { it == 6 }
         assertNull(distance)
     }
 
     @Test
     fun bfsDistance_toReachableNode() {
-        val distance = SampleGraph.bfsDistance(source = 7) { it == 2 }
+        val distance = UnweightedGraphImpl.bfsDistance(source = 7) { it == 2 }
         assertEquals(3L, distance)
     }
 
     @Test
     fun dfsPaths_toSource() {
         for (source in 0..12) {
-            val paths = SampleGraph.dfsPaths(source) { it == source }
+            val paths = UnweightedGraphImpl.dfsPaths(source) { it == source }
             assertEquals(mapOf(source to listOf(emptyList())), paths)
         }
     }
@@ -144,14 +121,14 @@ class UnweightedGraphTest {
     @Test
     fun dfsDistance_toNonexistentNode() {
         for (source in 0..12) {
-            val paths = SampleGraph.dfsPaths(source) { it == 13 }
+            val paths = UnweightedGraphImpl.dfsPaths(source) { it == 13 }
             assertEquals(emptyMap(), paths)
         }
     }
 
     @Test
     fun dfsPaths_toAllNodes_inSubgraph() {
-        val paths = SampleGraph.dfsPaths(source = 0) { true }
+        val paths = UnweightedGraphImpl.dfsPaths(source = 0) { true }
         assertContainsExactly((0..5).toList(), paths.keys)
         assertEquals(listOf(emptyList()), paths[0]!!)
         assertEquals(listOf(listOf(1)), paths[1]!!)
@@ -163,7 +140,7 @@ class UnweightedGraphTest {
 
     @Test
     fun dfsPaths_toAllNodes_inFullGraph() {
-        val paths = SampleGraph.dfsPaths(source = 7) { true }
+        val paths = UnweightedGraphImpl.dfsPaths(source = 7) { true }
         assertContainsExactly((0..12).toList(), paths.keys)
         assertContainsExactly(
             listOf(
@@ -258,4 +235,27 @@ class UnweightedGraphTest {
             paths[12]!!
         )
     }
+}
+
+/**
+ * Sample implementation of an unweighted graph with integer nodes.
+ */
+private object UnweightedGraphImpl : UnweightedGraph<Int>() {
+    private val adjacencyList = listOf(
+        listOf(1, 5),
+        emptyList(),
+        listOf(0, 3),
+        listOf(2, 5),
+        listOf(2, 3),
+        listOf(4),
+        listOf(0, 4, 8, 9),
+        listOf(6, 9),
+        listOf(6),
+        listOf(10, 11),
+        listOf(12),
+        listOf(4, 12),
+        listOf(9),
+    )
+
+    override fun getNeighbors(node: Int): Iterable<Int> = adjacencyList[node]
 }

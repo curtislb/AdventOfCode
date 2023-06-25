@@ -8,12 +8,12 @@ import com.curtislb.adventofcode.common.range.size
  * Returns the minimal 2D grid that contains all [points], where the value at each position is given
  * by [valueAt].
  */
-fun <T> createPointGrid(points: Iterable<Point>, valueAt: (point: Point) -> T): Grid<T> {
+fun <T> gridOfPoints(points: Iterable<Point>, valueAt: (point: Point) -> T): Grid<T> {
     // Determine the visible bounds of the grid
     val coordRanges = CoordinateRanges.ofPoints(points)
 
     // Return an empty grid if given no points
-    if (coordRanges.x.isEmpty() || coordRanges.y.isEmpty()) {
+    if (coordRanges.isEmpty()) {
         return emptyGrid()
     }
 

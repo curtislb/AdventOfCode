@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.common.grid
 /**
  * A read-only grid that contains no values.
  */
-internal object EmptyGrid : Grid<Nothing> {
+private object EmptyGrid : Grid<Nothing> {
     override val height: Int = 0
 
     override val width: Int = 0

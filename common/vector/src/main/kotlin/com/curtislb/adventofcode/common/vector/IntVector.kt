@@ -212,7 +212,9 @@ class IntVector internal constructor(private val components: IntArray) {
     override fun hashCode(): Int = components.contentHashCode()
 
     /**
-     * Throws an [IllegalArgumentException] if this vector and [other] have different [dimension]s.
+     * Checks that this vector and [other] have the same dimensionality.
+     *
+     * @throws [IllegalArgumentException] If this vector and [other] have different [dimension]s.
      */
     private fun checkSameDimension(other: IntVector) {
         require(dimension == other.dimension) {
@@ -234,7 +236,7 @@ class IntVector internal constructor(private val components: IntArray) {
 }
 
 /**
- * Returns an [IntVector] with the given [dimension] and all component values initialized to 0.
+ * Returns a new [IntVector] with the given [dimension] and all component values initialized to 0.
  */
 fun IntVector(dimension: Int): IntVector = when {
     dimension == 0 -> IntVector.EMPTY
@@ -243,8 +245,8 @@ fun IntVector(dimension: Int): IntVector = when {
 }
 
 /**
- * Returns an [IntVector] with the given [dimension] and all component values initialized according
- * to the [init] function.
+ * Returns a new [IntVector] with the given [dimension], where all component values are initialized
+ * by calling the specified [init] function.
  */
 fun IntVector(dimension: Int, init: (index: Int) -> Int) = when {
     dimension == 0 -> IntVector.EMPTY
@@ -253,12 +255,12 @@ fun IntVector(dimension: Int, init: (index: Int) -> Int) = when {
 }
 
 /**
- * Returns an [IntVector] with the given [components].
+ * Returns a new [IntVector] with the given [components].
  */
 fun intVectorOf(vararg components: Int): IntVector =
     if (components.isEmpty()) IntVector.EMPTY else IntVector(components)
 
 /**
- * Returns an [IntVector] whose components correspond to the values of this array.
+ * Returns a new [IntVector] with initial component values that match the values of this array.
  */
 fun IntArray.toVector(): IntVector = if (isEmpty()) IntVector.EMPTY else IntVector(copyOf())

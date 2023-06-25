@@ -4,7 +4,7 @@ import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Pose
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.grid.createPointGrid
+import com.curtislb.adventofcode.common.grid.gridOfPoints
 import com.curtislb.adventofcode.common.intcode.Intcode
 import java.math.BigInteger
 
@@ -36,13 +36,9 @@ class Robot {
     /**
      * Returns a matrix representing the portion of the grid that the robot has painted.
      */
-    fun getPaintedGrid(): Grid<Color> =
-        createPointGrid(paintedPanels.keys) {
-            paintedPanels.getOrDefault(
-                it,
-                Color.BLACK
-            )
-        }
+    fun getPaintedGrid(): Grid<Color> = gridOfPoints(paintedPanels.keys) { point ->
+        paintedPanels.getOrDefault(point, Color.BLACK)
+    }
 
     /**
      * Moves the robot forward one space from its current position, in the direction it's facing.

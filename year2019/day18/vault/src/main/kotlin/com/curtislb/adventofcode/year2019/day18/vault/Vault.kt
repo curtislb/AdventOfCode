@@ -2,8 +2,9 @@ package com.curtislb.adventofcode.year2019.day18.vault
 
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.grid.addRowWith
+import com.curtislb.adventofcode.common.grid.addRow
 import com.curtislb.adventofcode.common.grid.forEachPointValue
+import com.curtislb.adventofcode.common.grid.joinRowsToString
 import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.year2019.day18.vault.space.EntranceSpace
 import com.curtislb.adventofcode.year2019.day18.vault.space.KeySpace
@@ -22,7 +23,7 @@ class Vault(file: File) {
      */
     private val grid: Grid<Space> = mutableGridOf<Space>().apply {
         file.forEachLine { line ->
-            addRowWith {
+            addRow {
                 for (char in line.trim()) {
                     add(Space.from(char))
                 }

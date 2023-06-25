@@ -3,6 +3,9 @@ package com.curtislb.adventofcode.year2020.day20.image
 import com.curtislb.adventofcode.common.geometry.Direction
 import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.geometry.Point
+import com.curtislb.adventofcode.common.grid.horizontalReflection
+import com.curtislb.adventofcode.common.grid.joinRowsToString
+import com.curtislb.adventofcode.common.grid.leftRotation
 import com.curtislb.adventofcode.common.grid.toGrid
 
 /**
@@ -51,12 +54,12 @@ class Tile(val id: Int, private var dataGrid: Grid<Boolean>) {
     /**
      * TODO
      */
-    fun rotateLeft(): Tile = Tile(id, dataGrid.rotatedLeft())
+    fun rotateLeft(): Tile = Tile(id, dataGrid.leftRotation())
 
     /**
      * TODO
      */
-    fun flipHorizontal(): Tile = Tile(id, dataGrid.flippedHorizontal())
+    fun flipHorizontal(): Tile = Tile(id, dataGrid.horizontalReflection())
 
     override fun toString(): String = dataGrid.joinRowsToString(separator = "\n") { row ->
         row.joinToString(separator = "") { isFilled -> if (isFilled) "#" else "." }

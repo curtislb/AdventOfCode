@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day03.diagnostic
 
 import com.curtislb.adventofcode.common.grid.Grid
-import com.curtislb.adventofcode.common.grid.addRowWith
+import com.curtislb.adventofcode.common.grid.addRow
 import com.curtislb.adventofcode.common.grid.forEachIndexed
 import com.curtislb.adventofcode.common.grid.mapRow
 import com.curtislb.adventofcode.common.grid.mutableGridOf
@@ -21,7 +21,7 @@ class DiagnosticReport(lines: List<String>) {
      */
     private val boolGrid: Grid<Boolean> = mutableGridOf<Boolean>().apply {
         for (line in lines) {
-            addRowWith {
+            addRow {
                 line.trim().map { bitChar ->
                     when (bitChar) {
                         '0' -> add(false)

@@ -8,6 +8,30 @@ import org.junit.jupiter.api.Test
  */
 class CoordinateRangesTest {
     @Test
+    fun isEmpty_whenBothEmpty() {
+        val ranges = CoordinateRanges(x = IntRange.EMPTY, y = IntRange.EMPTY)
+        assertThat(ranges.isEmpty()).isTrue
+    }
+
+    @Test
+    fun isEmpty_whenXEmpty() {
+        val ranges = CoordinateRanges(x = IntRange.EMPTY, y = -20..56)
+        assertThat(ranges.isEmpty()).isTrue
+    }
+
+    @Test
+    fun isEmpty_whenYEmpty() {
+        val ranges = CoordinateRanges(x = 6..17, y = IntRange.EMPTY)
+        assertThat(ranges.isEmpty()).isTrue
+    }
+
+    @Test
+    fun isEmpty_whenBothNonEmpty() {
+        val ranges = CoordinateRanges(x = 6..17, y = -20..56)
+        assertThat(ranges.isEmpty()).isFalse
+    }
+
+    @Test
     fun ofPoints_noPoints() {
         val points = emptyList<Point>()
         val ranges = CoordinateRanges.ofPoints(points)

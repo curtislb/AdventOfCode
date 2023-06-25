@@ -212,7 +212,9 @@ class LongVector internal constructor(private val components: LongArray) {
     override fun hashCode(): Int = components.contentHashCode()
 
     /**
-     * Throws an [IllegalArgumentException] if this vector and [other] have different [dimension]s.
+     * Checks that this vector and [other] have the same dimensionality.
+     *
+     * @throws [IllegalArgumentException] If this vector and [other] have different [dimension]s.
      */
     private fun checkSameDimension(other: LongVector) {
         require(dimension == other.dimension) {
@@ -234,7 +236,7 @@ class LongVector internal constructor(private val components: LongArray) {
 }
 
 /**
- * Returns a [LongVector] with the given [dimension] and all component values initialized to 0.
+ * Returns a new [LongVector] with the given [dimension] and all component values initialized to 0.
  */
 fun LongVector(dimension: Int): LongVector = when {
     dimension == 0 -> LongVector.EMPTY
@@ -243,22 +245,22 @@ fun LongVector(dimension: Int): LongVector = when {
 }
 
 /**
- * Returns a [LongVector] with the given [dimension] and all component values initialized according
- * to the [init] function.
+ * Returns a new [LongVector] with the given [dimension], where all component values initialized by
+ * calling the specified [init] function.
  */
-fun LongVector(dimension: Int, init: (index: Int) -> Long) = when {
+fun LongVector(dimension: Int, init: (index: Int) -> Long): LongVector = when {
     dimension == 0 -> LongVector.EMPTY
     dimension > 0 -> LongVector(LongArray(dimension, init))
     else -> throw IllegalArgumentException("Vector dimensionality must be non-negative: $dimension")
 }
 
 /**
- * Returns a [LongVector] with the given [components].
+ * Returns a new [LongVector] with the given [components].
  */
 fun longVectorOf(vararg components: Long): LongVector =
     if (components.isEmpty()) LongVector.EMPTY else LongVector(components)
 
 /**
- * Returns a [LongVector] whose components correspond to the values of this array.
+ * Returns a new [LongVector] with initial component values that match the values of this array.
  */
 fun LongArray.toVector(): LongVector = if (isEmpty()) LongVector.EMPTY else LongVector(copyOf())

@@ -1,595 +1,520 @@
 package com.curtislb.adventofcode.common.grid
 
 import com.curtislb.adventofcode.common.geometry.Point
-import com.curtislb.adventofcode.common.testing.assertContainsExactly
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotSame
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import java.util.Objects
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [MutableGrid].
+ * Tests the [MutableGrid] interface and related functions.
  */
 class MutableGridTest {
     @Test
-    fun testWhenEmpty() {
-        val mutableGrid = mutableGridOf<Int>()
-
-        assertEquals(0, mutableGrid.width)
-        assertEquals(0, mutableGrid.height)
-        assertEquals(0, mutableGrid.size)
-
-        assertEquals(-1, mutableGrid.lastRowIndex)
-        assertEquals(-1, mutableGrid.lastColumnIndex)
-
-        assertTrue(mutableGrid.rowIndices.isEmpty())
-        assertTrue(mutableGrid.columnIndices.isEmpty())
-
-        assertTrue(mutableGrid.isEmpty())
-        assertEquals(emptyList(), mutableGrid.points().toList())
-        assertFalse(Point.ORIGIN in mutableGrid)
-
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[0, 0] }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point.ORIGIN] }
-
-        assertNull(mutableGrid.getOrNull(0, 0))
-        assertNull(mutableGrid.getOrNull(Point.ORIGIN))
-
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.row(0) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.column(0) }
-
-        assertThrows<NoSuchElementException> { mutableGrid.firstRow() }
-        assertThrows<NoSuchElementException> { mutableGrid.firstColumn() }
-        assertThrows<NoSuchElementException> { mutableGrid.lastRow() }
-        assertThrows<NoSuchElementException> { mutableGrid.lastColumn() }
-
-        assertNull(mutableGrid.rowOrNull(0))
-        assertNull(mutableGrid.columnOrNull(0))
-
-        assertEquals(emptyList(), mutableGrid.rows())
-        assertEquals(emptyList(), mutableGrid.columns())
-
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(0) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(0) }
-
-        assertEquals(emptyList(), mutableGrid.shallowRows())
-        assertEquals(emptyList(), mutableGrid.shallowColumns())
-
-        assertEquals("", mutableGrid.joinRowsToString { it.toString() })
-
-        assertTrue(mutableGrid.flippedHorizontal().isEmpty())
-        assertTrue(mutableGrid.rotatedLeft().isEmpty())
+    fun set_point_whenEmpty() {
+        val grid = MutableGridImpl<Any>(emptyList())
+        val point = Point.ORIGIN
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "foo" }
     }
 
     @Test
-    fun testWithOneElement() {
-        val mutableGrid = mutableGridOf(listOf(42))
-
-        assertEquals(1, mutableGrid.width)
-        assertEquals(1, mutableGrid.height)
-        assertEquals(1, mutableGrid.size)
-
-        assertEquals(0, mutableGrid.lastRowIndex)
-        assertEquals(0, mutableGrid.lastColumnIndex)
-
-        assertEquals(0..0, mutableGrid.rowIndices)
-        assertEquals(0..0, mutableGrid.columnIndices)
-
-        assertFalse(mutableGrid.isEmpty())
-        assertEquals(listOf(Point.ORIGIN), mutableGrid.points().toList())
-        assertTrue(Point.ORIGIN in mutableGrid)
-        assertFalse(Point(1, 0) in mutableGrid)
-        assertFalse(Point(0, -1) in mutableGrid)
-
-        assertEquals(42, mutableGrid[0, 0])
-        assertEquals(42, mutableGrid[Point.ORIGIN])
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[1, 0] }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(0, -1)] }
-
-        assertEquals(42, mutableGrid.getOrNull(0, 0))
-        assertEquals(42, mutableGrid.getOrNull(Point.ORIGIN))
-        assertNull(mutableGrid.getOrNull(-1, 0))
-        assertNull(mutableGrid.getOrNull(Point(1, 0)))
-
-        assertEquals(listOf(42), mutableGrid.row(0))
-        assertEquals(listOf(42), mutableGrid.column(0))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.row(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.column(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.row(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.column(-1) }
-
-        assertEquals(listOf(42), mutableGrid.firstRow())
-        assertEquals(listOf(42), mutableGrid.firstColumn())
-        assertEquals(listOf(42), mutableGrid.lastRow())
-        assertEquals(listOf(42), mutableGrid.lastColumn())
-
-        assertEquals(listOf(42), mutableGrid.rowOrNull(0))
-        assertEquals(listOf(42), mutableGrid.columnOrNull(0))
-        assertNull(mutableGrid.rowOrNull(1))
-        assertNull(mutableGrid.columnOrNull(1))
-        assertNull(mutableGrid.rowOrNull(-1))
-        assertNull(mutableGrid.columnOrNull(-1))
-
-        assertEquals(listOf(listOf(42)), mutableGrid.rows())
-        assertEquals(listOf(listOf(42)), mutableGrid.columns())
-
-        assertEquals(listOf(42), mutableGrid.shallowRow(0))
-        assertEquals(listOf(42), mutableGrid.shallowColumn(0))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(-1) }
-
-        assertEquals(listOf(listOf(42)), mutableGrid.shallowRows())
-        assertEquals(listOf(listOf(42)), mutableGrid.shallowColumns())
-
-        assertEquals("<[42]>", mutableGrid.joinRowsToString { "<$it>" })
-
-        assertEquals(gridOf(listOf(42)), mutableGrid.flippedHorizontal())
-        assertEquals(gridOf(listOf(42)), mutableGrid.rotatedLeft())
+    fun set_point_withSingleElement_pointInBounds() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        val point = Point.ORIGIN
+        grid[point] = "bar"
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf("bar"))))
     }
 
     @Test
-    fun testWithMultipleElements() {
-        val mutableGrid = mutableGridOf(
-            listOf(10, 20, 28, -48),
-            listOf(73, 34, -63, -67),
-            listOf(-79, -60, 13, -55)
-        )
+    fun set_point_withSingleElement_xTooSmall() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        val point = Point(-1, 0)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "bar" }
+    }
 
-        assertEquals(4, mutableGrid.width)
-        assertEquals(3, mutableGrid.height)
-        assertEquals(12, mutableGrid.size)
+    @Test
+    fun set_point_withSingleElement_xTooLarge() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        val point = Point(1, 0)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "bar" }
+    }
 
-        assertEquals(2, mutableGrid.lastRowIndex)
-        assertEquals(3, mutableGrid.lastColumnIndex)
+    @Test
+    fun set_point_withSingleElement_yTooSmall() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        val point = Point(0, -1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "bar" }
+    }
 
-        assertEquals(0..2, mutableGrid.rowIndices)
-        assertEquals(0..3, mutableGrid.columnIndices)
+    @Test
+    fun set_point_withSingleElement_yTooLarge() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        val point = Point(0, 1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "bar" }
+    }
 
-        assertFalse(mutableGrid.isEmpty())
-        assertContainsExactly(
+    @Test
+    fun set_point_withSingleRow_pointInBounds() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        val point = Point(2, 0)
+        grid[point] = "qux"
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf("foo", "bar", "qux"))))
+    }
+
+    @Test
+    fun set_point_withSingleRow_xTooSmall() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        val point = Point(-1, 1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "qux" }
+    }
+
+    @Test
+    fun set_point_withSingleRow_xTooLarge() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        val point = Point(3, 0)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "qux" }
+    }
+
+    @Test
+    fun set_point_withSingleRow_yTooSmall() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        val point = Point(1, -1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "qux" }
+    }
+
+    @Test
+    fun set_point_withSingleRow_yTooLarge() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        val point = Point(1, 1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "qux" }
+    }
+
+    @Test
+    fun set_point_withMultipleRows_pointInBounds() {
+        val grid = MutableGridImpl(
             listOf(
-                Point(0,  0), Point(1,  0), Point(2,  0), Point(3,  0),
-                Point(0, -1), Point(1, -1), Point(2, -1), Point(3, -1),
-                Point(0, -2), Point(1, -2), Point(2, -2), Point(3, -2)
-            ),
-            mutableGrid.points().toList()
-        )
-        assertTrue(Point.ORIGIN in mutableGrid)
-        assertTrue(Point(3, 0) in mutableGrid)
-        assertTrue(Point(0, -2) in mutableGrid)
-        assertFalse(Point(4, 0) in mutableGrid)
-        assertFalse(Point(0, -3) in mutableGrid)
-
-        assertEquals(10, mutableGrid[0, 0])
-        assertEquals(20, mutableGrid[0, 1])
-        assertEquals(28, mutableGrid[0, 2])
-        assertEquals(-48, mutableGrid[0, 3])
-        assertEquals(73, mutableGrid[1, 0])
-        assertEquals(34, mutableGrid[1, 1])
-        assertEquals(-63, mutableGrid[1, 2])
-        assertEquals(-67, mutableGrid[1, 3])
-        assertEquals(-79, mutableGrid[2, 0])
-        assertEquals(-60, mutableGrid[2, 1])
-        assertEquals(13, mutableGrid[2, 2])
-        assertEquals(-55, mutableGrid[2, 3])
-        assertEquals(10, mutableGrid[Point.ORIGIN])
-        assertEquals(20, mutableGrid[Point(1, 0)])
-        assertEquals(28, mutableGrid[Point(2, 0)])
-        assertEquals(-48, mutableGrid[Point(3, 0)])
-        assertEquals(73, mutableGrid[Point(0, -1)])
-        assertEquals(34, mutableGrid[Point(1, -1)])
-        assertEquals(-63, mutableGrid[Point(2, -1)])
-        assertEquals(-67, mutableGrid[Point(3, -1)])
-        assertEquals(-79, mutableGrid[Point(0, -2)])
-        assertEquals(-60, mutableGrid[Point(1, -2)])
-        assertEquals(13, mutableGrid[Point(2, -2)])
-        assertEquals(-55, mutableGrid[Point(3, -2)])
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[4, 0] }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(0, -3)] }
-
-        assertEquals(10, mutableGrid.getOrNull(0, 0))
-        assertEquals(-63, mutableGrid.getOrNull(1, 2))
-        assertEquals(28, mutableGrid.getOrNull(Point(2, 0)))
-        assertEquals(-60, mutableGrid.getOrNull(Point(1, -2)))
-        assertNull(mutableGrid.getOrNull(-1, 0))
-        assertNull(mutableGrid.getOrNull(Point(4, 0)))
-
-        assertEquals(listOf(10, 20, 28, -48), mutableGrid.row(0))
-        assertEquals(listOf(73, 34, -63, -67), mutableGrid.row(1))
-        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.row(2))
-        assertEquals(listOf(10, 73, -79), mutableGrid.column(0))
-        assertEquals(listOf(20, 34, -60), mutableGrid.column(1))
-        assertEquals(listOf(28, -63, 13), mutableGrid.column(2))
-        assertEquals(listOf(-48, -67, -55), mutableGrid.column(3))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.row(3) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.column(4) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.row(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.column(-1) }
-
-        assertEquals(listOf(10, 20, 28, -48), mutableGrid.firstRow())
-        assertEquals(listOf(10, 73, -79), mutableGrid.firstColumn())
-        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.lastRow())
-        assertEquals(listOf(-48, -67, -55), mutableGrid.lastColumn())
-
-        assertEquals(listOf(10, 20, 28, -48), mutableGrid.rowOrNull(0))
-        assertEquals(listOf(73, 34, -63, -67), mutableGrid.rowOrNull(1))
-        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.rowOrNull(2))
-        assertEquals(listOf(10, 73, -79), mutableGrid.columnOrNull(0))
-        assertEquals(listOf(20, 34, -60), mutableGrid.columnOrNull(1))
-        assertEquals(listOf(28, -63, 13), mutableGrid.columnOrNull(2))
-        assertEquals(listOf(-48, -67, -55), mutableGrid.columnOrNull(3))
-        assertNull(mutableGrid.rowOrNull(3))
-        assertNull(mutableGrid.columnOrNull(4))
-        assertNull(mutableGrid.rowOrNull(-1))
-        assertNull(mutableGrid.columnOrNull(-1))
-
-        assertEquals(
-            listOf(
-                listOf(10, 20, 28, -48),
-                listOf(73, 34, -63, -67),
-                listOf(-79, -60, 13, -55)
-            ),
-            mutableGrid.rows()
-        )
-        assertEquals(
-            listOf(
-                listOf(10, 73, -79),
-                listOf(20, 34, -60),
-                listOf(28, -63, 13),
-                listOf(-48, -67, -55)
-            ),
-            mutableGrid.columns()
-        )
-
-        assertEquals(listOf(10, 20, 28, -48), mutableGrid.shallowRow(0))
-        assertEquals(listOf(73, 34, -63, -67), mutableGrid.shallowRow(1))
-        assertEquals(listOf(-79, -60, 13, -55), mutableGrid.shallowRow(2))
-        assertEquals(listOf(10, 73, -79), mutableGrid.shallowColumn(0))
-        assertEquals(listOf(20, 34, -60), mutableGrid.shallowColumn(1))
-        assertEquals(listOf(28, -63, 13), mutableGrid.shallowColumn(2))
-        assertEquals(listOf(-48, -67, -55), mutableGrid.shallowColumn(3))
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(3) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(4) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowRow(-1) }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid.shallowColumn(-1) }
-
-        assertEquals(
-            listOf(
-                listOf(10, 20, 28, -48),
-                listOf(73, 34, -63, -67),
-                listOf(-79, -60, 13, -55)
-            ),
-            mutableGrid.shallowRows()
-        )
-        assertEquals(
-            listOf(
-                listOf(10, 73, -79),
-                listOf(20, 34, -60),
-                listOf(28, -63, 13),
-                listOf(-48, -67, -55)
-            ),
-            mutableGrid.shallowColumns()
-        )
-
-        assertEquals(
-            "[10, 20, 28, -48] + [73, 34, -63, -67] + [-79, -60, 13, -55]",
-            mutableGrid.joinRowsToString(separator = " + ") { it.toString() }
-        )
-
-        assertEquals(
-            gridOf(
-                listOf(-48, 28, 20, 10),
-                listOf(-67, -63, 34, 73),
-                listOf(-55, 13, -60, -79)
-            ),
-            mutableGrid.flippedHorizontal()
-        )
-        assertEquals(
-            gridOf(
-                listOf(-48, -67, -55),
-                listOf(28, -63, 13),
-                listOf(20, 34, -60),
-                listOf(10, 73, -79)
-            ),
-            mutableGrid.rotatedLeft()
-        )
-    }
-
-    @Test
-    fun testSet() {
-        val mutableGrid = mutableGridOf(
-            listOf(-36, -20, -66),
-            listOf(67, -61, 13),
-            listOf(80, -32, -37),
-            listOf(-48, -85, 4)
-        )
-
-        mutableGrid[0, 0] = 17
-        mutableGrid[1, 2] = -51
-        mutableGrid[2, 1] = 87
-        mutableGrid[3, 0] = -62
-
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[0, -1] = -44 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[-1, 2] = 26 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[1, 3] = 99 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[4, 2] = 71 }
-
-        mutableGrid[Point(2, 0)] = 22
-        mutableGrid[Point(0, -1)] = -57
-        mutableGrid[Point(1, -2)] = 12
-        mutableGrid[Point(2, -3)] = 95
-
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(-1, 0)] = 25 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(2, 1)] = 57 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(3, -1)] = -94 }
-        assertThrows<IndexOutOfBoundsException> { mutableGrid[Point(2, -4)] = -89 }
-
-        assertEquals(
-            gridOf(
-                listOf(17, -20, 22),
-                listOf(-57, -61, -51),
-                listOf(80, 12, -37),
-                listOf(-62, -85, 95)
-            ),
-            mutableGrid
-        )
-    }
-
-    @Test
-    fun testAddRowsAndColumns() {
-        val mutableGrid = mutableGridOf<Int>()
-        assertThrows<IllegalArgumentException> { mutableGrid.addRow(emptyList()) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addColumn(emptyList()) }
-
-        mutableGrid.addRow(listOf(1, 2))
-        assertEquals(gridOf(listOf(1, 2)), mutableGrid)
-
-        assertThrows<IllegalArgumentException> { mutableGrid.addRow(listOf(3)) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addColumn(listOf(3, 4)) }
-
-        mutableGrid.addColumn(listOf(3))
-        assertEquals(gridOf(listOf(1, 2, 3)), mutableGrid)
-
-        mutableGrid.addRow(listOf(4, 5, 6))
-        assertEquals(gridOf(listOf(1, 2, 3), listOf(4, 5, 6)), mutableGrid)
-
-        assertThrows<IllegalArgumentException> { mutableGrid.addRow(listOf(7, 8, 9, 0)) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addColumn(listOf(7)) }
-
-        mutableGrid.addColumn(listOf(7, 8))
-        assertEquals(gridOf(listOf(1, 2, 3, 7), listOf(4, 5, 6, 8)), mutableGrid)
-    }
-
-    @Test
-    fun testAddRowCopiesRow() {
-        val mutableGrid = mutableGridOf<Int>()
-        val row = mutableListOf(1, 2, 3)
-        mutableGrid.addRow(row)
-
-        row[0] = 4
-        row[1] = 5
-        row[2] = 6
-        row.add(7)
-
-        assertEquals(gridOf(listOf(1, 2, 3)), mutableGrid)
-        assertEquals(listOf(1, 2, 3), mutableGrid.firstRow())
-    }
-
-    @Test
-    fun testAddColumnCopiesColumn() {
-        val mutableGrid = mutableGridOf<Int>()
-        val column = mutableListOf(1, 2, 3)
-        mutableGrid.addColumn(column)
-
-        column[0] = 4
-        column[1] = 5
-        column[2] = 6
-        column.add(7)
-
-        assertEquals(gridOf(listOf(1), listOf(2), listOf(3)), mutableGrid)
-        assertEquals(listOf(1, 2, 3), mutableGrid.firstColumn())
-    }
-
-    @Test
-    fun testAddShallowRowsAndColumns() {
-        val mutableGrid = mutableGridOf<Int>()
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowRow(emptyList()) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowColumn(emptyList()) }
-
-        mutableGrid.addShallowRow(listOf(1, 2))
-        assertEquals(gridOf(listOf(1, 2)), mutableGrid)
-
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowRow(listOf(3)) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowColumn(listOf(3, 4)) }
-
-        mutableGrid.addShallowColumn(listOf(3))
-        assertEquals(gridOf(listOf(1, 2, 3)), mutableGrid)
-
-        mutableGrid.addShallowRow(listOf(4, 5, 6))
-        assertEquals(gridOf(listOf(1, 2, 3), listOf(4, 5, 6)), mutableGrid)
-
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowRow(listOf(7, 8, 9, 0)) }
-        assertThrows<IllegalArgumentException> { mutableGrid.addShallowColumn(listOf(7)) }
-
-        mutableGrid.addShallowColumn(listOf(7, 8))
-        assertEquals(gridOf(listOf(1, 2, 3, 7), listOf(4, 5, 6, 8)), mutableGrid)
-    }
-
-    @Test
-    fun testRemoveLastRowAndColumn() {
-        val mutableGrid = mutableGridOf(
-            listOf(17, -8, -55, -24, 10),
-            listOf(16, -17, -67, -26, -73),
-            listOf(12, 53, -7, -83, -75),
-            listOf(55, 34, -69, -16, 58)
-        )
-
-        mutableGrid.removeLastRow()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55, -24, 10),
-                listOf(16, -17, -67, -26, -73),
-                listOf(12, 53, -7, -83, -75)
-            ),
-            mutableGrid
-        )
-
-        mutableGrid.removeLastColumn()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55, -24),
-                listOf(16, -17, -67, -26),
-                listOf(12, 53, -7, -83)
-            ),
-            mutableGrid
-        )
-
-        mutableGrid.removeLastColumn()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55),
-                listOf(16, -17, -67),
-                listOf(12, 53, -7)
-            ),
-            mutableGrid
-        )
-
-        mutableGrid.removeLastRow()
-        assertEquals(
-            gridOf(
-                listOf(17, -8, -55),
-                listOf(16, -17, -67)
-            ),
-            mutableGrid
-        )
-
-        mutableGrid.removeLastRow()
-        assertEquals(gridOf(listOf(17, -8, -55)), mutableGrid)
-
-        mutableGrid.removeLastColumn()
-        assertEquals(gridOf(listOf(17, -8)), mutableGrid)
-
-        mutableGrid.removeLastRow()
-        assertEquals(emptyGrid(), mutableGrid)
-
-        assertThrows<NoSuchElementException> { mutableGrid.removeLastRow() }
-        assertThrows<NoSuchElementException> { mutableGrid.removeLastColumn() }
-    }
-
-    @Test
-    fun testMutableGridOfInvalidRows() {
-        assertThrows<IllegalArgumentException> { mutableGridOf(emptyList<Nothing>()) }
-        assertThrows<IllegalArgumentException> { mutableGridOf(listOf("a"), emptyList()) }
-        assertThrows<IllegalArgumentException> { mutableGridOf(listOf(1), listOf(2, 3)) }
-        assertThrows<IllegalArgumentException> {
-            mutableGridOf(listOf(-37, 94, -76), listOf(3, 21, -80), listOf(22, 10))
-        }
-        assertThrows<IllegalArgumentException> {
-            mutableGridOf(
-                listOf(-89, -76, 26, 36),
-                listOf(48, 82, -16, 5),
-                listOf(40, 44, -42, 2, -44, 99),
-                listOf(-9, 66, 43, 29)
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
             )
+        )
+        val point = Point(1, -2)
+        grid[point] = "echo"
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(
+                listOf(
+                    listOf("foo", "bar"),
+                    listOf("baz", "qux"),
+                    listOf("qox", "echo")
+                )
+            )
+        )
+    }
+
+    @Test
+    fun set_point_withMultipleRows_xTooSmall() {
+        val grid = MutableGridImpl(
+            listOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
+        )
+        val point = Point(-1, -1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "echo" }
+    }
+
+    @Test
+    fun set_point_withMultipleRows_xTooLarge() {
+        val grid = MutableGridImpl(
+            listOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
+        )
+        val point = Point(2, -1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "echo" }
+    }
+
+    @Test
+    fun set_point_withMultipleRows_yTooSmall() {
+        val grid = MutableGridImpl(
+            listOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
+        )
+        val point = Point(0, -3)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "echo" }
+    }
+
+    @Test
+    fun set_point_withMultipleRows_yTooLarge() {
+        val grid = MutableGridImpl(
+            listOf(
+                listOf("foo", "bar"),
+                listOf("baz", "qux"),
+                listOf("qox", "fred")
+            )
+        )
+        val point = Point(0, 1)
+        assertThrows<IndexOutOfBoundsException> { grid[point] = "echo" }
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_emptyRow() {
+        val grid = MutableGridImpl<String>(emptyList())
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(emptyList()) }
+    }
+
+    @Test
+    fun addShallowRow_whenEmpty_nonEmptyRow() {
+        val grid = MutableGridImpl<String>(emptyList())
+        grid.addShallowRow(listOf("foo", "bar", "baz"))
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf("foo", "bar", "baz"))))
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_emptyRow() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(emptyList()) }
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_sameSizeRow() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar"), listOf("baz", "qux")))
+        grid.addShallowRow(listOf("qox", "fred"))
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(
+                listOf(
+                    listOf("foo", "bar"),
+                    listOf("baz", "qux"),
+                    listOf("qox", "fred")
+                )
+            )
+        )
+    }
+
+    @Test
+    fun addShallowRow_whenNotEmpty_differentSizeRow() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        assertThrows<IllegalArgumentException> { grid.addShallowRow(listOf("qox", "fred")) }
+    }
+
+    @Test
+    fun addShallowColumn_whenEmpty_emptyColumn() {
+        val grid = MutableGridImpl<String>(emptyList())
+        assertThrows<IllegalArgumentException> { grid.addShallowColumn(emptyList()) }
+    }
+
+    @Test
+    fun addShallowColumn_whenEmpty_nonEmptyColumn() {
+        val grid = MutableGridImpl<String>(emptyList())
+        grid.addShallowColumn(listOf("foo", "bar", "baz"))
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(listOf(listOf("foo"), listOf("bar"), listOf("baz")))
+        )
+    }
+
+    @Test
+    fun addShallowColumn_whenNotEmpty_emptyColumn() {
+        val grid = MutableGridImpl(listOf(listOf("foo")))
+        assertThrows<IllegalArgumentException> { grid.addShallowColumn(emptyList()) }
+    }
+
+    @Test
+    fun addShallowColumn_whenNotEmpty_sameSizeColumn() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar"), listOf("baz", "qux")))
+        grid.addShallowColumn(listOf("qox", "fred"))
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(listOf(listOf("foo", "bar", "qox"), listOf("baz", "qux", "fred")))
+        )
+    }
+
+    @Test
+    fun addShallowColumn_whenNotEmpty_differentSizeColumn() {
+        val grid = MutableGridImpl(listOf(listOf("foo", "bar", "baz")))
+        assertThrows<IllegalArgumentException> { grid.addShallowColumn(listOf("qox", "fred")) }
+    }
+
+    @Test
+    fun constructor_zeroHeight_nonzeroWidth() {
+        val height = 0
+        val width = 1
+        assertThrows<IllegalArgumentException> { MutableGrid(height, width) { _, _ -> 0 } }
+    }
+
+    @Test
+    fun constructor_nonzeroHeight_zeroWidth() {
+        val height = 1
+        val width = 0
+        assertThrows<IllegalArgumentException> { MutableGrid(height, width) { _, _ -> 0 } }
+    }
+
+    @Test
+    fun constructor_negativeHeight() {
+        val height = -1
+        val width = 1
+        assertThrows<IllegalArgumentException> { MutableGrid(height, width) { _, _ -> 0 } }
+    }
+
+    @Test
+    fun constructor_negativeWidth() {
+        val height = 1
+        val width = -1
+        assertThrows<IllegalArgumentException> { MutableGrid(height, width) { _, _ -> 0 } }
+    }
+
+    @Test
+    fun constructor_noRows_noColumns() {
+        val height = 0
+        val width = 0
+        val grid = MutableGrid(height, width) { _, _ -> 0 }
+        assertThat(grid).isEqualTo(emptyGrid<Int>())
+    }
+
+    @Test
+    fun constructor_singleRow_singleColumn() {
+        val height = 1
+        val width = 1
+        val grid = MutableGrid(height, width) { _, _ -> 42 }
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf(42))))
+    }
+
+    @Test
+    fun constructor_singleRow_multipleColumns() {
+        val height = 1
+        val width = 3
+        val row = listOf("foo", "bar", "baz")
+        val grid = Grid(height, width) { _, colIndex -> row[colIndex] }
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(row)))
+    }
+
+    @Test
+    fun constructor_multipleRows_singleColumn() {
+        val height = 3
+        val width = 1
+        val rows = listOf(listOf("foo"), listOf("bar"), listOf("baz"))
+        val grid = Grid(height, width) { rowIndex, _ -> rows[rowIndex][0] }
+        assertThat(grid).isEqualTo(MutableGridImpl(rows))
+    }
+
+    @Test
+    fun constructor_multipleRows_multipleColumns() {
+        val height = 3
+        val width = 2
+        val rows = listOf(listOf("foo", "bar"), listOf("baz", "qux"), listOf("qox", "fred"))
+        val grid = Grid(height, width) { rowIndex, colIndex -> rows[rowIndex][colIndex] }
+        assertThat(grid).isEqualTo(MutableGridImpl(rows))
+    }
+
+    @Test
+    fun mutableGridOf_noRows() {
+        val grid = mutableGridOf<Any>()
+        assertThat(grid).isEqualTo(emptyGrid<Any>())
+    }
+
+    @Test
+    fun mutableGridOf_singleRow() {
+        val row = mutableListOf("foo", "bar", "baz")
+        val grid = mutableGridOf(row)
+        row.clear()
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf("foo", "bar", "baz"))))
+    }
+
+    @Test
+    fun mutableGridOf_multipleRows() {
+        val rows = arrayOf(
+            mutableListOf("foo", "bar"),
+            mutableListOf("baz", "qux"),
+            mutableListOf("qox", "fred")
+        )
+        val grid = mutableGridOf(*rows)
+        rows.forEach { it.clear() }
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(
+                listOf(
+                    listOf("foo", "bar"),
+                    listOf("baz", "qux"),
+                    listOf("qox", "fred")
+                )
+            )
+        )
+    }
+
+    @Test
+    fun mutableGridOf_differentSizeRows() {
+        assertThrows<IllegalArgumentException> {
+            mutableGridOf(listOf("foo", "bar"), listOf("baz"))
         }
     }
 
     @Test
-    fun testMutableGridOfCopiesList() {
-        val list = mutableListOf(1, 2)
-        val mutableGrid = mutableGridOf(list)
-
-        list[0] = 3
-        list[1] = 4
-        list.add(5)
-
-        assertEquals(gridOf(listOf(1, 2)), mutableGrid)
+    fun toMutableGrid_list_noRows() {
+        val rows = mutableListOf<List<Any>>()
+        val grid = rows.toMutableGrid()
+        rows.add(listOf())
+        assertThat(grid).isEqualTo(emptyGrid<Any>())
     }
 
     @Test
-    fun testFakeConstructor() {
-        assertEquals(emptyGrid(), MutableGrid(0, 0) { _, _ -> 42 })
-        assertThrows<IllegalArgumentException> { MutableGrid(0, 1) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { MutableGrid(2, 0) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { MutableGrid(-1, 3) { _, _ -> 42 } }
-        assertThrows<IllegalArgumentException> { MutableGrid(0, -1) { _, _ -> 42 } }
-        assertEquals(gridOf(listOf(42)), MutableGrid(1, 1) { _, _ -> 42 })
-        assertEquals(
-            gridOf(
-                listOf(0, 1, 2, 3, 4),
-                listOf(10, 11, 12, 13, 14),
-                listOf(20, 21, 22, 23, 24),
-                listOf(30, 31, 32, 33, 34),
-                listOf(40, 41, 42, 43, 44),
-                listOf(50, 51, 52, 53, 54)
-            ),
-            MutableGrid(6, 5) { rowIndex, colIndex -> rowIndex * 10 + colIndex }
+    fun toMutableGrid_list_singleRow() {
+        val rows = listOf(mutableListOf("foo", "bar", "baz"))
+        val grid = rows.toMutableGrid()
+        rows[0][0] = "qux"
+        assertThat(grid).isEqualTo(MutableGridImpl(listOf(listOf("foo", "bar", "baz"))))
+    }
+
+    @Test
+    fun toMutableGrid_list_multipleRows() {
+        val rows = mutableListOf(
+            mutableListOf("foo", "bar"),
+            mutableListOf("baz", "qux"),
+            mutableListOf("qox", "fred")
+        )
+        val grid = rows.toMutableGrid()
+        rows[0][0] = "oof"
+        rows.removeLast()
+        assertThat(grid).isEqualTo(
+            MutableGridImpl(
+                listOf(
+                    listOf("foo", "bar"),
+                    listOf("baz", "qux"),
+                    listOf("qox", "fred")
+                )
+            )
         )
     }
 
     @Test
-    fun testListToMutableGrid() {
-        assertEquals(emptyGrid<Nothing>(), emptyList<Nothing>().toMutableGrid())
-        assertEquals(gridOf(listOf(42)), listOf(listOf(42)).toMutableGrid())
-        assertThrows<IllegalArgumentException> { listOf(listOf(5), listOf(6, 7)).toMutableGrid() }
-        assertEquals(
-            gridOf(
-                listOf(-89, 17, 9, -6, -9),
-                listOf(-60, -11, 47, 65, -86),
-                listOf(-77, -12, 45, -12, 2),
-                listOf(-3, 74, -43, 2, -46)
-            ),
-            listOf(
-                listOf(-89, 17, 9, -6, -9),
-                listOf(-60, -11, 47, 65, -86),
-                listOf(-77, -12, 45, -12, 2),
-                listOf(-3, 74, -43, 2, -46)
-            ).toMutableGrid()
+    fun toMutableGrid_list_differentSizeRows() {
+        val rows = listOf(listOf("foo", "bar"), listOf("baz"))
+        assertThrows<IllegalArgumentException> { rows.toMutableGrid() }
+    }
+
+    @Test
+    fun toMutableGrid_grid_noRows() {
+        val grid = gridOf<Any>()
+        assertThat(grid.toMutableGrid()).isEqualTo(emptyGrid<Any>())
+    }
+
+    @Test
+    fun toMutableGrid_grid_noRows_isSafeCopy() {
+        val grid = gridOf<Any>()
+        val mutableGrid = grid.toMutableGrid()
+        mutableGrid.addRow(listOf("foo"))
+        assertThat(grid).isEqualTo(emptyGrid<Any>())
+    }
+
+    @Test
+    fun toMutableGrid_grid_singleRow() {
+        val grid = gridOf(listOf("foo", "bar", "baz"))
+        assertThat(grid.toMutableGrid())
+            .isEqualTo(MutableGridImpl(listOf(listOf("foo", "bar", "baz"))))
+    }
+
+    @Test
+    fun toMutableGrid_grid_singleRow_isSafeCopy() {
+        val grid = gridOf(listOf("foo", "bar", "baz"))
+        val mutableGrid = grid.toMutableGrid()
+        mutableGrid[0, 0] = "qux"
+        assertThat(grid).isEqualTo(gridOf(listOf("foo", "bar", "baz")))
+    }
+
+    @Test
+    fun toMutableGrid_grid_multipleRows() {
+        val grid = gridOf(listOf("foo", "bar"), listOf("baz", "qux"), listOf("qox", "fred"))
+        assertThat(grid.toMutableGrid()).isEqualTo(
+            MutableGridImpl(
+                listOf(
+                    listOf("foo", "bar"),
+                    listOf("baz", "qux"),
+                    listOf("qox", "fred")
+                )
+            )
         )
     }
 
     @Test
-    fun testToMutableGridCopiesList() {
-        val list = mutableListOf(mutableListOf(1, 2))
-        val mutableGrid = list.toMutableGrid()
+    fun toMutableGrid_grid_multipleRows_isSafeCopy() {
+        val grid = gridOf(listOf("foo", "bar"), listOf("baz", "qux"), listOf("qox", "fred"))
+        val mutableGrid = grid.toMutableGrid()
+        mutableGrid[0, 0] = "oof"
+        mutableGrid.removeLastRow()
+        assertThat(grid)
+            .isEqualTo(gridOf(listOf("foo", "bar"), listOf("baz", "qux"), listOf("qox", "fred")))
+    }
+}
 
-        list[0][0] = 3
-        list[0][1] = 4
-        list.add(mutableListOf(5, 6))
-
-        assertEquals(gridOf(listOf(1, 2)), mutableGrid)
+/**
+ * Sample implementation of a mutable grid with arbitrary values.
+ *
+ * @param E The type of values stored in the grid.
+ * @param initialRows A list of rows representing the initial values stored in the grid.
+ *
+ * @constructor Creates a new instance of [GridImpl] with the given `initialRows`.
+ */
+private class MutableGridImpl<E>(initialRows: List<List<E>>) : MutableGrid<E> {
+    init {
+        require(initialRows.all { it.size == initialRows[0].size })
     }
 
-    @Test
-    fun testGridToMutableGrid() {
-        var grid = gridOf<Int>()
-        assertEquals(emptyGrid(), grid.toMutableGrid())
-        assertNotSame(grid, grid.toMutableGrid())
-
-        grid = gridOf(listOf(42))
-        assertEquals(gridOf(listOf(42)), grid.toMutableGrid())
-        assertNotSame(grid, grid.toMutableGrid())
-
-        grid = gridOf(
-            listOf(20, 37, 63, -69, -2),
-            listOf(6, -10, -71, 58, 94),
-            listOf(-19, -73, 10, -30, 37),
-            listOf(95, 84, -28, -14, 5)
-        )
-        assertEquals(
-            gridOf(
-                listOf(20, 37, 63, -69, -2),
-                listOf(6, -10, -71, 58, 94),
-                listOf(-19, -73, 10, -30, 37),
-                listOf(95, 84, -28, -14, 5)
-            ),
-            grid.toMutableGrid()
-        )
-        assertNotSame(grid, grid.toMutableGrid())
+    /**
+     * All rows currently in the grid.
+     */
+    private val rowList: MutableList<MutableList<E>> = MutableList(initialRows.size) { rowIndex ->
+        MutableList(initialRows[0].size) { colIndex -> initialRows[rowIndex][colIndex] }
     }
+
+    override val height: Int = rowList.size
+
+    override val width: Int = if (rowList.isEmpty()) 0 else rowList[0].size
+
+    override fun get(rowIndex: Int, colIndex: Int): E = rowList[rowIndex][colIndex]
+
+    override fun set(rowIndex: Int, colIndex: Int, value: E) {
+        rowList[rowIndex][colIndex] = value
+    }
+
+    override fun row(rowIndex: Int): List<E> = rowList[rowIndex]
+
+    override fun column(colIndex: Int): List<E> {
+        Objects.checkIndex(colIndex, width)
+        return rowList.map { it[colIndex] }
+    }
+
+    override fun addRow(row: List<E>) {
+        require(row.isNotEmpty())
+        require(rowList.isEmpty() || row.size == rowList[0].size)
+        rowList.add(row.toMutableList())
+    }
+
+    override fun addColumn(column: List<E>) {
+        require(column.isNotEmpty())
+        require(rowList.isEmpty() || column.size == rowList.size)
+        if (rowList.isEmpty()) {
+            column.forEach { rowList.add(mutableListOf(it)) }
+        } else {
+            column.forEachIndexed { index, value -> rowList[index].add(value) }
+        }
+    }
+
+    override fun removeLastRow() {
+        rowList.removeLast()
+    }
+
+    override fun removeLastColumn() {
+        when (width) {
+            0 -> throw NoSuchElementException()
+            1 -> rowList.clear()
+            else -> rowList.forEach { it.removeLast() }
+        }
+    }
+
+    override fun equals(other: Any?): Boolean = other is Grid<*> && rowList == other.rows()
+
+    override fun hashCode(): Int =
+        if (rowList.isEmpty()) emptyGrid<E>().hashCode() else rowList.hashCode()
 }
