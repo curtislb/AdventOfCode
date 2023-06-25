@@ -48,7 +48,7 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 
 package com.curtislb.adventofcode.year2021.day01.part2
 
-import com.curtislb.adventofcode.common.io.readInts
+import com.curtislb.adventofcode.common.parse.toInts
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -59,7 +59,7 @@ import java.nio.file.Paths
  * @param windowSize The size of the measurement window to use when comparing sums.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), windowSize: Int = 3): Int =
-    inputPath.toFile().readInts().windowed(windowSize + 1).count { depths ->
+    inputPath.toFile().readText().toInts().windowed(windowSize + 1).count { depths ->
         depths.first() < depths.last()
     }
 

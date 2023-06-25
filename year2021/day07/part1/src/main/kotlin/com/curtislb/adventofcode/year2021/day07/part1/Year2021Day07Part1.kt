@@ -50,8 +50,8 @@ much fuel must they spend to align to that position?
 
 package com.curtislb.adventofcode.year2021.day07.part1
 
-import com.curtislb.adventofcode.common.io.readInts
 import com.curtislb.adventofcode.common.number.medianOrNull
+import com.curtislb.adventofcode.common.parse.toInts
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.abs
@@ -62,7 +62,7 @@ import kotlin.math.abs
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
-    val positions = inputPath.toFile().readInts()
+    val positions = inputPath.toFile().readText().toInts()
     val bestPosition = positions.medianOrNull() ?: 0
     return positions.sumOf { abs(it - bestPosition) }
 }

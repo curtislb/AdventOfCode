@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":common:number"))
-    implementation(project(":common:io"))
+    implementation(project(":common:parse"))
 }

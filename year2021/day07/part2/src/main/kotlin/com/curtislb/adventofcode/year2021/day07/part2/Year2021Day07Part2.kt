@@ -33,8 +33,8 @@ package com.curtislb.adventofcode.year2021.day07.part2
 
 import com.curtislb.adventofcode.common.comparison.MinMax
 import com.curtislb.adventofcode.common.comparison.minMaxOrNull
-import com.curtislb.adventofcode.common.io.readInts
 import com.curtislb.adventofcode.common.number.triangleNumber
+import com.curtislb.adventofcode.common.parse.toInts
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.math.abs
@@ -45,7 +45,7 @@ import kotlin.math.abs
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
-    val positions = inputPath.toFile().readInts()
+    val positions = inputPath.toFile().readText().toInts()
 
     // The optimal alignment position must be in the range of starting positions
     val minMaxPositions = positions.minMaxOrNull() ?: MinMax(0, 0)

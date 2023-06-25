@@ -109,7 +109,7 @@ device. What is the number of 1-jolt differences multiplied by the number of 3-j
 
 package com.curtislb.adventofcode.year2020.day10.part1
 
-import com.curtislb.adventofcode.common.io.readInts
+import com.curtislb.adventofcode.common.parse.toInts
 import com.curtislb.adventofcode.year2020.day10.joltage.JoltageAdapters
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -121,7 +121,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
-    val adapters = JoltageAdapters(file.readInts().toSet())
+    val adapters = JoltageAdapters(file.readText().toInts().toSet())
     val differenceCounts = adapters.countRatingDifferences()
     return differenceCounts[1] * (differenceCounts[3] + 1L)
 }

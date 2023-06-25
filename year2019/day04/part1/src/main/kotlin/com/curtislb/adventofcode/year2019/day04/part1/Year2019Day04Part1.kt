@@ -23,7 +23,7 @@ How many different passwords within the range given in your puzzle input meet th
 
 package com.curtislb.adventofcode.year2019.day04.part1
 
-import com.curtislb.adventofcode.common.io.readIntRange
+import com.curtislb.adventofcode.common.parse.toIntRange
 import com.curtislb.adventofcode.year2019.day04.password.ExactLengthGenerator
 import com.curtislb.adventofcode.year2019.day04.password.HasRepeatedDigitGenerator
 import com.curtislb.adventofcode.year2019.day04.password.InRangeGenerator
@@ -39,7 +39,7 @@ import java.nio.file.Paths
  * @param passwordLength The number of digits in a valid password.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), passwordLength: Int = 6): Int {
-    val passwordRange = inputPath.toFile().readIntRange()
+    val passwordRange = inputPath.toFile().readText().toIntRange()
     val generator = SatisfiesAllGenerator(
         ExactLengthGenerator(passwordLength),
         InRangeGenerator(passwordRange.first, passwordRange.last),

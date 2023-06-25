@@ -103,28 +103,32 @@ class MinimumHeapTest {
 
     @Test
     fun addOrDecreaseKey_withElementInHeap_newKeyLess_fewEntries() {
-        heap.addOrDecreaseKey("foo", 2L)
-        heap.addOrDecreaseKey("bar", 5L)
-        heap.addOrDecreaseKey("foo", -1L)
-        heap.addOrDecreaseKey("bar", -2L)
-        heap.addOrDecreaseKey("baz", 0L)
+        with(heap) {
+            addOrDecreaseKey("foo", 2L)
+            addOrDecreaseKey("bar", 5L)
+            addOrDecreaseKey("foo", -1L)
+            addOrDecreaseKey("bar", -2L)
+            addOrDecreaseKey("baz", 0L)
+        }
         assertThat(heap["foo"]).isEqualTo(-1L)
     }
 
     @Test
     fun addOrDecreaseKey_withElementInHeap_newKeyLess_manyEntries() {
-        heap.addOrDecreaseKey("foo", 1L)
-        heap.addOrDecreaseKey("bar", 2L)
-        heap.addOrDecreaseKey("baz", 3L)
-        heap.addOrDecreaseKey("qux", 4L)
-        heap.addOrDecreaseKey("qox", 5L)
-        heap.addOrDecreaseKey("fred", 6L)
-        heap.addOrDecreaseKey("foo", -1L)
-        heap.addOrDecreaseKey("bar", -2L)
-        heap.addOrDecreaseKey("baz", -3L)
-        heap.addOrDecreaseKey("qux", -4L)
-        heap.addOrDecreaseKey("qox", -5L)
-        heap.addOrDecreaseKey("fred", -6L)
+        with(heap) {
+            addOrDecreaseKey("foo", 1L)
+            addOrDecreaseKey("bar", 2L)
+            addOrDecreaseKey("baz", 3L)
+            addOrDecreaseKey("qux", 4L)
+            addOrDecreaseKey("qox", 5L)
+            addOrDecreaseKey("fred", 6L)
+            addOrDecreaseKey("foo", -1L)
+            addOrDecreaseKey("bar", -2L)
+            addOrDecreaseKey("baz", -3L)
+            addOrDecreaseKey("qux", -4L)
+            addOrDecreaseKey("qox", -5L)
+            addOrDecreaseKey("fred", -6L)
+        }
         assertThat(heap["bar"]).isEqualTo(-2L)
     }
 

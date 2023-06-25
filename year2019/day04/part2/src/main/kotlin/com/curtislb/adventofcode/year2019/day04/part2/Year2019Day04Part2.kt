@@ -17,7 +17,7 @@ How many different passwords within the range given in your puzzle input meet al
 
 package com.curtislb.adventofcode.year2019.day04.part2
 
-import com.curtislb.adventofcode.common.io.readIntRange
+import com.curtislb.adventofcode.common.parse.toIntRange
 import com.curtislb.adventofcode.year2019.day04.password.ExactLengthGenerator
 import com.curtislb.adventofcode.year2019.day04.password.ExactRepeatCountDigitGenerator
 import com.curtislb.adventofcode.year2019.day04.password.InRangeGenerator
@@ -38,7 +38,7 @@ fun solve(
     passwordLength: Int = 6,
     repeatCount: Int = 2
 ): Int {
-    val passwordRange = inputPath.toFile().readIntRange()
+    val passwordRange = inputPath.toFile().readText().toIntRange()
     val generator = SatisfiesAllGenerator(
         ExactLengthGenerator(passwordLength),
         InRangeGenerator(passwordRange.first, passwordRange.last),

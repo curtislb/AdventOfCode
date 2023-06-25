@@ -6,6 +6,5 @@ import java.nio.file.Path
 /**
  * TODO
  */
-fun Path.createTempFile(name: String = "tmp", text: String = ""): File {
-    return resolve(name).toFile().apply { writeText(text) }
-}
+fun Path.createTempFile(text: String = "", fileName: String = "tmp"): File =
+    resolve(fileName).toFile().apply { writeText(text) }

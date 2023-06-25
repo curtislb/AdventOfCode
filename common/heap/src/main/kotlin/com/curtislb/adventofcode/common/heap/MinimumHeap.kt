@@ -15,9 +15,7 @@ class MinimumHeap<E> {
     /**
      * A priority queue used internally to store and produce elements.
      */
-    private val priorityQueue: PriorityQueue<HeapEntry<E>> = PriorityQueue { entry, other ->
-        entry.key.compareTo(other.key)
-    }
+    private val priorityQueue: PriorityQueue<HeapEntry<E>> = PriorityQueue(compareBy { it.key })
 
     /**
      * The number of elements currently in the heap.

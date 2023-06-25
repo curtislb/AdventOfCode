@@ -3,7 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:parse"))
-    implementation(project(":common:range"))
     testImplementation(project(":common:testing"))
 }
