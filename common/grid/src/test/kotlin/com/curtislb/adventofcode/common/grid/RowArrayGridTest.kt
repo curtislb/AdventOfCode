@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [RowArrayGrid].
+ * Tests the [RowArrayGrid] class and related functions.
  */
 class RowArrayGridTest {
     @Test
