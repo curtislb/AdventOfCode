@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:io"))
+    implementation(project(":common:parse"))
     implementation(project(":year2019:day04:password"))
 }

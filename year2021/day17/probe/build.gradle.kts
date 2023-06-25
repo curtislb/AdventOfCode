@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:io"))
     implementation(project(":common:number"))
+    implementation(project(":common:parse"))
     implementation(project(":common:search"))
     implementation(project(":common:vector"))
 }

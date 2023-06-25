@@ -39,7 +39,7 @@ What is the encryption weakness in your XMAS-encrypted list of numbers?
 
 package com.curtislb.adventofcode.year2020.day09.part2
 
-import com.curtislb.adventofcode.common.io.readLongs
+import com.curtislb.adventofcode.common.parse.toLongs
 import com.curtislb.adventofcode.year2020.day09.encryption.Xmas
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -51,7 +51,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
-    val xmas = Xmas(file.readLongs(), preambleSize)
+    val xmas = Xmas(file.readText().toLongs(), preambleSize)
     return xmas.findEncryptionWeakness()
 }
 
