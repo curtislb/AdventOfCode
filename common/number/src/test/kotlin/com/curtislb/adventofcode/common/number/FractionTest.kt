@@ -1,411 +1,958 @@
 package com.curtislb.adventofcode.common.number
 
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests [Fraction].
+ * Tests the [Fraction] class.
  */
 class FractionTest {
     @Test
-    fun testConstructWithZeroDenominator() {
-        assertThrows<IllegalArgumentException> { Fraction(2, 0) }
+    fun plus_thisZero_otherZero() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.ZERO
+        assertThat(fraction + other).isEqualTo(Fraction.ZERO)
     }
 
     @Test
-    fun testConstructWithInts() {
-        var fraction = Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(38)
-        assertEquals(38L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(0, 2)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1, 2)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = Fraction(660, 154)
-        assertEquals(30L, fraction.numerator)
-        assertEquals(7L, fraction.denominator)
-
-        fraction = Fraction(4, 6)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(-4, 6)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(4, -6)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(-4, -6)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
+    fun plus_thisZero_otherPositiveFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2, 3)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(2, 3))
     }
 
     @Test
-    fun testConstructWithLongs() {
-        var fraction = Fraction(0L)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1L)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(38)
-        assertEquals(38L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(0L, 2L)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1L, 2L)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = Fraction(660L, 154L)
-        assertEquals(30L, fraction.numerator)
-        assertEquals(7L, fraction.denominator)
-
-        fraction = Fraction(4L, 6L)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(-4L, 6L)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(4L, -6L)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(-4L, -6L)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
-
-        fraction = Fraction(30171142802624L, 36952357521510L)
-        assertEquals(15085571401312L, fraction.numerator)
-        assertEquals(18476178760755L, fraction.denominator)
+    fun plus_thisZero_otherPositiveWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(2))
     }
 
     @Test
-    fun testPlus() {
-        var fraction = Fraction(0) + Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) + Fraction(0)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) + Fraction(1)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) + Fraction(-1)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(2) + Fraction(1)
-        assertEquals(3L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1, 2) + Fraction(1, 3)
-        assertEquals(5L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(1, 2) + Fraction(-1, 3)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(-1, 2) + Fraction(1, 3)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(-1, 2) + Fraction(-1, 3)
-        assertEquals(-5L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(7, 11) + Fraction(25, 9)
-        assertEquals(338L, fraction.numerator)
-        assertEquals(99L, fraction.denominator)
-
-        fraction = Fraction(7, 11) + Fraction(-25, 9)
-        assertEquals(-212L, fraction.numerator)
-        assertEquals(99L, fraction.denominator)
+    fun plus_thisZero_otherNegativeFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2, 3)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-2, 3))
     }
 
     @Test
-    fun testMinus() {
-        var fraction = Fraction(0) - Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) - Fraction(0)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) - Fraction(1)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) - Fraction(-1)
-        assertEquals(2L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(2) - Fraction(1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1, 2) - Fraction(1, 3)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(1, 2) - Fraction(-1, 3)
-        assertEquals(5L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(-1, 2) - Fraction(1, 3)
-        assertEquals(-5L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(-1, 2) - Fraction(-1, 3)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(7, 11) - Fraction(25, 9)
-        assertEquals(-212L, fraction.numerator)
-        assertEquals(99L, fraction.denominator)
-
-        fraction = Fraction(7, 11) - Fraction(-25, 9)
-        assertEquals(338L, fraction.numerator)
-        assertEquals(99L, fraction.denominator)
+    fun plus_thisZero_otherNegativeWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-2))
     }
 
     @Test
-    fun testUnaryMinus() {
-        var fraction = -Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(-1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = -Fraction(1, 2)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = -Fraction(-1, 2)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = -Fraction(4, 6)
-        assertEquals(-2L, fraction.numerator)
-        assertEquals(3L, fraction.denominator)
+    fun plus_thisPositiveFraction_otherZero() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(2, 3))
     }
 
     @Test
-    fun testTimes() {
-        var fraction = Fraction(0) * Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) * Fraction(0)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) * Fraction(1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) * Fraction(-1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(-1) * Fraction(1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(-1) * Fraction(-1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1, 2) * Fraction(1, 3)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(6L, fraction.denominator)
-
-        fraction = Fraction(2, 3) * Fraction(7, 5)
-        assertEquals(14L, fraction.numerator)
-        assertEquals(15L, fraction.denominator)
-
-        fraction = Fraction(-17, 11) * Fraction(21, 40)
-        assertEquals(-357L, fraction.numerator)
-        assertEquals(440L, fraction.denominator)
+    fun plus_thisPositiveFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(19, 15))
     }
 
     @Test
-    fun testDiv() {
-        var fraction = Fraction(0) / Fraction(1)
-        assertEquals(0L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) / Fraction(1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1) / Fraction(-1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(-1) / Fraction(1)
-        assertEquals(-1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(-1) / Fraction(-1)
-        assertEquals(1L, fraction.numerator)
-        assertEquals(1L, fraction.denominator)
-
-        fraction = Fraction(1, 2) / Fraction(1, 3)
-        assertEquals(3L, fraction.numerator)
-        assertEquals(2L, fraction.denominator)
-
-        fraction = Fraction(2, 3) / Fraction(7, 5)
-        assertEquals(10L, fraction.numerator)
-        assertEquals(21L, fraction.denominator)
-
-        fraction = Fraction(-17, 11) / Fraction(21, 40)
-        assertEquals(-680L, fraction.numerator)
-        assertEquals(231L, fraction.denominator)
+    fun plus_thisPositiveFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(8, 3))
     }
 
     @Test
-    fun testDivByZero() {
-        assertThrows<IllegalArgumentException> { Fraction(1, 2) / Fraction(0) }
+    fun plus_thisPositiveFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(1, 15))
     }
 
     @Test
-    fun testCeil() {
-        assertEquals(0L, Fraction(0).ceil())
-        assertEquals(1L, Fraction(1).ceil())
-        assertEquals(2L, Fraction(2).ceil())
-        assertEquals(-1L, Fraction(-1).ceil())
-        assertEquals(-2L, Fraction(-2).ceil())
-        assertEquals(1L, Fraction(1, 2).ceil())
-        assertEquals(1L, Fraction(4, 5).ceil())
-        assertEquals(1L, Fraction(1, 1000).ceil())
-        assertEquals(0L, Fraction(-1, 2).ceil())
-        assertEquals(0L, Fraction(-4, 5).ceil())
-        assertEquals(0L, Fraction(-1, 1000).ceil())
-        assertEquals(2L, Fraction(6, 5).ceil())
-        assertEquals(0L, Fraction(-3, 13).ceil())
-        assertEquals(2L, Fraction(3, 2).ceil())
-        assertEquals(3L, Fraction(11, 5).ceil())
-        assertEquals(-2L, Fraction(-19, 9).ceil())
-        assertEquals(-6L, Fraction(-13, 2).ceil())
-        assertEquals(7L, Fraction(13, 2).ceil())
-        assertEquals(334L, Fraction(1000, 3).ceil())
-        assertEquals(-333L, Fraction(-1000, 3).ceil())
+    fun plus_thisPositiveFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-4, 3))
     }
 
     @Test
-    fun testFloor() {
-        assertEquals(0L, Fraction(0).floor())
-        assertEquals(1L, Fraction(1).floor())
-        assertEquals(2L, Fraction(2).floor())
-        assertEquals(-1L, Fraction(-1).floor())
-        assertEquals(-2L, Fraction(-2).floor())
-        assertEquals(0L, Fraction(1, 2).floor())
-        assertEquals(0L, Fraction(4, 5).floor())
-        assertEquals(0L, Fraction(1, 1000).floor())
-        assertEquals(-1L, Fraction(-1, 2).floor())
-        assertEquals(-1L, Fraction(-4, 5).floor())
-        assertEquals(-1L, Fraction(-1, 1000).floor())
-        assertEquals(1L, Fraction(6, 5).floor())
-        assertEquals(-1L, Fraction(-3, 13).floor())
-        assertEquals(1L, Fraction(3, 2).floor())
-        assertEquals(2L, Fraction(11, 5).floor())
-        assertEquals(-3L, Fraction(-19, 9).floor())
-        assertEquals(-7L, Fraction(-13, 2).floor())
-        assertEquals(6L, Fraction(13, 2).floor())
-        assertEquals(333L, Fraction(1000, 3).floor())
-        assertEquals(-334L, Fraction(-1000, 3).floor())
+    fun plus_thisPositiveWhole_otherZero() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.ZERO
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(3))
     }
 
     @Test
-    fun testEquals() {
-        assertEquals(Fraction(0), Fraction(0))
-        assertEquals(Fraction(-1), Fraction(-1))
-        assertEquals(Fraction(1, 2), Fraction(1, 2))
-        assertEquals(Fraction(1, 2), Fraction(2, 4))
-        assertEquals(Fraction(2, 4), Fraction(1, 2))
-        assertEquals(Fraction(1, 2), Fraction(123, 246))
-        assertEquals(Fraction(2, 4), Fraction(123, 246))
-        assertEquals(Fraction(-3, 5), Fraction(3, -5))
-        assertEquals(Fraction(3, 5), Fraction(-3, -5))
-
-        val nullFraction: Fraction? = null
-        assertNotEquals(nullFraction, Fraction(0))
-        assertNotEquals(Fraction(0), Fraction(1))
-        assertNotEquals(Fraction(1), Fraction(-1))
-        assertNotEquals(Fraction(1, 2), Fraction(2, 1))
-        assertNotEquals(Fraction(1, 2), Fraction(2, 3))
-        assertNotEquals(Fraction(2, 4), Fraction(6, 8))
-        assertNotEquals(Fraction(1, 2), Fraction(123, 456))
-        assertNotEquals(Fraction(3, 5), Fraction(3, -5))
-        assertNotEquals(Fraction(-3, 5), Fraction(-3, -5))
+    fun plus_thisPositiveWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(18, 5))
     }
 
     @Test
-    fun testHashCode() {
-        val fractions = listOf(
-            Fraction(11, 8),
-            Fraction(-17, -13),
-            Fraction(20, -3),
-            Fraction(11, 18),
-            Fraction(-7, 7),
-            Fraction(32, -20),
-            Fraction(-17, -1),
-            Fraction(13, 10),
-            Fraction(10, 18),
-            Fraction(-4, 11),
-            Fraction(2, -12)
-        )
-        val hashMap = HashMap<Fraction, Int>()
-        fractions.forEachIndexed { index, fraction -> hashMap[fraction] = index }
-        fractions.forEachIndexed { index, fraction -> assertEquals(index, hashMap[fraction]) }
+    fun plus_thisPositiveWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(5))
     }
 
     @Test
-    fun testToString() {
-        assertEquals("0/1", Fraction(0).toString())
-        assertEquals("1/1", Fraction(1).toString())
-        assertEquals("-1/1", Fraction(-1).toString())
-        assertEquals("2/1", Fraction(2).toString())
-        assertEquals("1/2", Fraction(1, 2).toString())
-        assertEquals("-1/2", Fraction(-1, 2).toString())
-        assertEquals("2/3", Fraction(2, 3).toString())
-        assertEquals("2/3", Fraction(4, 6).toString())
-        assertEquals("5/4", Fraction(5, 4).toString())
+    fun plus_thisPositiveWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(12, 5))
+    }
+
+    @Test
+    fun plus_thisPositiveWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(1))
+    }
+
+    @Test
+    fun plus_thisNegativeFraction_otherZero() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-2, 3))
+    }
+
+    @Test
+    fun plus_thisNegativeFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-1, 15))
+    }
+
+    @Test
+    fun plus_thisNegativeFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(4, 3))
+    }
+
+    @Test
+    fun plus_thisNegativeFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-19, 15))
+    }
+
+    @Test
+    fun plus_thisNegativeFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-8, 3))
+    }
+
+    @Test
+    fun plus_thisNegativeWhole_otherZero() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.ZERO
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-3))
+    }
+
+    @Test
+    fun plus_thisNegativeWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-12, 5))
+    }
+
+    @Test
+    fun plus_thisNegativeWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-1))
+    }
+
+    @Test
+    fun plus_thisNegativeWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-18, 5))
+    }
+
+    @Test
+    fun plus_thisNegativeWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction + other).isEqualTo(Fraction.valueOf(-5))
+    }
+
+    @Test
+    fun minus_thisZero_otherZero() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.ZERO
+        assertThat(fraction - other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun minus_thisZero_otherPositiveFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2, 3)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-2, 3))
+    }
+
+    @Test
+    fun minus_thisZero_otherPositiveWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-2))
+    }
+
+    @Test
+    fun minus_thisZero_otherNegativeFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2, 3)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(2, 3))
+    }
+
+    @Test
+    fun minus_thisZero_otherNegativeWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(2))
+    }
+
+    @Test
+    fun minus_thisPositiveFraction_otherZero() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(2, 3))
+    }
+
+    @Test
+    fun minus_thisPositiveFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(1, 15))
+    }
+
+    @Test
+    fun minus_thisPositiveFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-4, 3))
+    }
+
+    @Test
+    fun minus_thisPositiveFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(19, 15))
+    }
+
+    @Test
+    fun minus_thisPositiveFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(8, 3))
+    }
+
+    @Test
+    fun minus_thisPositiveWhole_otherZero() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.ZERO
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(3))
+    }
+
+    @Test
+    fun minus_thisPositiveWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(12, 5))
+    }
+
+    @Test
+    fun minus_thisPositiveWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(1))
+    }
+
+    @Test
+    fun minus_thisPositiveWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(18, 5))
+    }
+
+    @Test
+    fun minus_thisPositiveWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(5))
+    }
+
+    @Test
+    fun minus_thisNegativeFraction_otherZero() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-2, 3))
+    }
+
+    @Test
+    fun minus_thisNegativeFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-19, 15))
+    }
+
+    @Test
+    fun minus_thisNegativeFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-8, 3))
+    }
+
+    @Test
+    fun minus_thisNegativeFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-1, 15))
+    }
+
+    @Test
+    fun minus_thisNegativeFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(4, 3))
+    }
+
+    @Test
+    fun minus_thisNegativeWhole_otherZero() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.ZERO
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-3))
+    }
+
+    @Test
+    fun minus_thisNegativeWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-18, 5))
+    }
+
+    @Test
+    fun minus_thisNegativeWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-5))
+    }
+
+    @Test
+    fun minus_thisNegativeWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-12, 5))
+    }
+
+    @Test
+    fun minus_thisNegativeWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction - other).isEqualTo(Fraction.valueOf(-1))
+    }
+
+    @Test
+    fun unaryMinus_whenZero() {
+        val fraction = Fraction.ZERO
+        assertThat(-fraction).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun unaryMinus_whenPositiveFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        assertThat(-fraction).isEqualTo(Fraction.valueOf(-2, 3))
+    }
+
+    @Test
+    fun unaryMinus_whenPositiveWhole() {
+        val fraction = Fraction.valueOf(2)
+        assertThat(-fraction).isEqualTo(Fraction.valueOf(-2))
+    }
+
+    @Test
+    fun unaryMinus_whenNegativeFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        assertThat(-fraction).isEqualTo(Fraction.valueOf(2, 3))
+    }
+
+    @Test
+    fun unaryMinus_whenNegativeWhole() {
+        val fraction = Fraction.valueOf(-2)
+        assertThat(-fraction).isEqualTo(Fraction.valueOf(2))
+    }
+
+    @Test
+    fun times_thisZero_otherZero() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.ZERO
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisZero_otherPositiveFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2, 3)
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisZero_otherPositiveWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2)
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisZero_otherNegativeFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2, 3)
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisZero_otherNegativeWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisPositiveFraction_otherZero() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisPositiveFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(2, 5))
+    }
+
+    @Test
+    fun times_thisPositiveFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(4, 3))
+    }
+
+    @Test
+    fun times_thisPositiveFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-2, 5))
+    }
+
+    @Test
+    fun times_thisPositiveFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-4, 3))
+    }
+
+    @Test
+    fun times_thisPositiveWhole_otherZero() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.ZERO
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisPositiveWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(9, 5))
+    }
+
+    @Test
+    fun times_thisPositiveWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(6))
+    }
+
+    @Test
+    fun times_thisPositiveWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-9, 5))
+    }
+
+    @Test
+    fun times_thisPositiveWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-6))
+    }
+
+    @Test
+    fun times_thisNegativeFraction_otherZero() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.ZERO
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisNegativeFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-2, 5))
+    }
+
+    @Test
+    fun times_thisNegativeFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-4, 3))
+    }
+
+    @Test
+    fun times_thisNegativeFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(2, 5))
+    }
+
+    @Test
+    fun times_thisNegativeFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(4, 3))
+    }
+
+    @Test
+    fun times_thisNegativeWhole_otherZero() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.ZERO
+        assertThat(fraction * other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun times_thisNegativeWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-9, 5))
+    }
+
+    @Test
+    fun times_thisNegativeWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(-6))
+    }
+
+    @Test
+    fun times_thisNegativeWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(9, 5))
+    }
+
+    @Test
+    fun times_thisNegativeWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(6))
+    }
+
+
+    @Test
+    fun div_thisZero_otherZero() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.ZERO
+        assertThrows<ArithmeticException> { fraction / other }
+    }
+
+    @Test
+    fun div_thisZero_otherPositiveFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2, 3)
+        assertThat(fraction / other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun div_thisZero_otherPositiveWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(2)
+        assertThat(fraction / other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun div_thisZero_otherNegativeFraction() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2, 3)
+        assertThat(fraction / other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun div_thisZero_otherNegativeWhole() {
+        val fraction = Fraction.ZERO
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction / other).isEqualTo(Fraction.ZERO)
+    }
+
+    @Test
+    fun div_thisPositiveFraction_otherZero() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.ZERO
+        assertThrows<ArithmeticException> { fraction / other }
+    }
+
+    @Test
+    fun div_thisPositiveFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction * other).isEqualTo(Fraction.valueOf(2, 5))
+    }
+
+    @Test
+    fun div_thisPositiveFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(1, 3))
+    }
+
+    @Test
+    fun div_thisPositiveFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-10, 9))
+    }
+
+    @Test
+    fun div_thisPositiveFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-1, 3))
+    }
+
+    @Test
+    fun div_thisPositiveWhole_otherZero() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.ZERO
+        assertThrows<ArithmeticException> { fraction / other }
+    }
+
+    @Test
+    fun div_thisPositiveWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(5))
+    }
+
+    @Test
+    fun div_thisPositiveWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(3, 2))
+    }
+
+    @Test
+    fun div_thisPositiveWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-5))
+    }
+
+    @Test
+    fun div_thisPositiveWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-3, 2))
+    }
+
+    @Test
+    fun div_thisNegativeFraction_otherZero() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.ZERO
+        assertThrows<ArithmeticException> { fraction / other }
+    }
+
+    @Test
+    fun div_thisNegativeFraction_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-10, 9))
+    }
+
+    @Test
+    fun div_thisNegativeFraction_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-1, 3))
+    }
+
+    @Test
+    fun div_thisNegativeFraction_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(10, 9))
+    }
+
+    @Test
+    fun div_thisNegativeFraction_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-2, 3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(1, 3))
+    }
+
+    @Test
+    fun div_thisNegativeWhole_otherZero() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.ZERO
+        assertThrows<ArithmeticException> { fraction / other }
+    }
+
+    @Test
+    fun div_thisNegativeWhole_otherPositiveFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-5))
+    }
+
+    @Test
+    fun div_thisNegativeWhole_otherPositiveWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(-3, 2))
+    }
+
+    @Test
+    fun div_thisNegativeWhole_otherNegativeFraction() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-3, 5)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(5))
+    }
+
+    @Test
+    fun div_thisNegativeWhole_otherNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        val other = Fraction.valueOf(-2)
+        assertThat(fraction / other).isEqualTo(Fraction.valueOf(3, 2))
+    }
+
+    @Test
+    fun ceil_whenZero() {
+        val fraction = Fraction.ZERO
+        assertThat(fraction.ceil()).isEqualTo(0L)
+    }
+
+    @Test
+    fun ceil_whenPositiveWhole() {
+        val fraction = Fraction.valueOf(2)
+        assertThat(fraction.ceil()).isEqualTo(2L)
+    }
+
+    @Test
+    fun ceil_whenPositiveProperFraction() {
+        val fraction = Fraction.valueOf(2, 5)
+        assertThat(fraction.ceil()).isEqualTo(1L)
+    }
+
+    @Test
+    fun ceil_whenPositiveImproperFraction() {
+        val fraction = Fraction.valueOf(9, 4)
+        assertThat(fraction.ceil()).isEqualTo(3L)
+    }
+
+    @Test
+    fun ceil_whenNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        assertThat(fraction.ceil()).isEqualTo(-3L)
+    }
+
+    @Test
+    fun ceil_whenNegativeProperFraction() {
+        val fraction = Fraction.valueOf(-2, 5)
+        assertThat(fraction.ceil()).isEqualTo(0L)
+    }
+
+    @Test
+    fun ceil_whenNegativeImproperFraction() {
+        val fraction = Fraction.valueOf(-9, 4)
+        assertThat(fraction.ceil()).isEqualTo(-2L)
+    }
+
+    @Test
+    fun floor_whenZero() {
+        val fraction = Fraction.ZERO
+        assertThat(fraction.floor()).isEqualTo(0L)
+    }
+
+    @Test
+    fun floor_whenPositiveWhole() {
+        val fraction = Fraction.valueOf(2)
+        assertThat(fraction.floor()).isEqualTo(2L)
+    }
+
+    @Test
+    fun floor_whenPositiveProperFraction() {
+        val fraction = Fraction.valueOf(2, 5)
+        assertThat(fraction.floor()).isEqualTo(0L)
+    }
+
+    @Test
+    fun floor_whenPositiveImproperFraction() {
+        val fraction = Fraction.valueOf(9, 4)
+        assertThat(fraction.floor()).isEqualTo(2L)
+    }
+
+    @Test
+    fun floor_whenNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        assertThat(fraction.floor()).isEqualTo(-3L)
+    }
+
+    @Test
+    fun floor_whenNegativeProperFraction() {
+        val fraction = Fraction.valueOf(-2, 5)
+        assertThat(fraction.floor()).isEqualTo(-1L)
+    }
+
+    @Test
+    fun floor_whenNegativeImproperFraction() {
+        val fraction = Fraction.valueOf(-9, 4)
+        assertThat(fraction.floor()).isEqualTo(-3L)
+    }
+
+    @Test
+    fun toString_whenZero() {
+        val fraction = Fraction.ZERO
+        assertThat(fraction.toString()).isEqualTo("0/1")
+    }
+
+    @Test
+    fun toString_whenPositiveWhole() {
+        val fraction = Fraction.valueOf(2)
+        assertThat(fraction.toString()).isEqualTo("2/1")
+    }
+
+    @Test
+    fun toString_whenPositiveProperFraction() {
+        val fraction = Fraction.valueOf(2, 5)
+        assertThat(fraction.toString()).isEqualTo("2/5")
+    }
+
+    @Test
+    fun toString_whenPositiveImproperFraction() {
+        val fraction = Fraction.valueOf(9, 4)
+        assertThat(fraction.toString()).isEqualTo("9/4")
+    }
+
+    @Test
+    fun toString_whenNegativeWhole() {
+        val fraction = Fraction.valueOf(-3)
+        assertThat(fraction.toString()).isEqualTo("-3/1")
+    }
+
+    @Test
+    fun toString_whenNegativeProperFraction() {
+        val fraction = Fraction.valueOf(-2, 5)
+        assertThat(fraction.toString()).isEqualTo("-2/5")
+    }
+
+    @Test
+    fun toString_whenNegativeImproperFraction() {
+        val fraction = Fraction.valueOf(-9, 4)
+        assertThat(fraction.toString()).isEqualTo("-9/4")
+    }
+
+    @Test
+    fun hashCode_whenZero() {
+        val fraction = Fraction.ZERO
+        assertThat(fraction.hashCode())
+            .isEqualTo(Fraction.ZERO.hashCode())
+            .isEqualTo(Fraction.valueOf(0).hashCode())
+            .isEqualTo(Fraction.valueOf(0, 2).hashCode())
+            .isEqualTo(Fraction.valueOf(0, -3).hashCode())
+    }
+
+    @Test
+    fun hashCode_whenNonZero() {
+        val fraction = Fraction.valueOf(2, 3)
+        assertThat(fraction.hashCode())
+            .isEqualTo(Fraction.valueOf(2, 3).hashCode())
+            .isEqualTo(Fraction.valueOf(4, 6).hashCode())
+            .isEqualTo(Fraction.valueOf(-2, -3).hashCode())
+            .isEqualTo(Fraction.valueOf(-12, -18).hashCode())
+    }
+
+    @Test
+    fun valueOf_zeroDenominator() {
+        assertThrows<IllegalArgumentException> { Fraction.valueOf(1L, 0L) }
+    }
+
+    @Test
+    fun valueOf_zeroNumerator_noDenominator() {
+        val fraction = Fraction.valueOf(0L)
+        assertThat(fraction).isEqualTo(Fraction.ZERO)
+        assertThat(fraction.numerator).isEqualTo(0L)
+        assertThat(fraction.denominator).isEqualTo(1L)
+    }
+
+    @Test
+    fun valueOf_zeroNumerator_positiveDenominator() {
+        val fraction = Fraction.valueOf(0L, 4L)
+        assertThat(fraction).isEqualTo(Fraction.ZERO)
+        assertThat(fraction.numerator).isEqualTo(0L)
+        assertThat(fraction.denominator).isEqualTo(1L)
+    }
+
+    @Test
+    fun valueOf_zeroNumerator_negativeDenominator() {
+        val fraction = Fraction.valueOf(0L, -4L)
+        assertThat(fraction).isEqualTo(Fraction.ZERO)
+        assertThat(fraction.numerator).isEqualTo(0L)
+        assertThat(fraction.denominator).isEqualTo(1L)
+    }
+
+    @Test
+    fun valueOf_positiveNumerator_noDenominator() {
+        val fraction = Fraction.valueOf(6L)
+        assertThat(fraction.numerator).isEqualTo(6L)
+        assertThat(fraction.denominator).isEqualTo(1L)
+    }
+
+    @Test
+    fun valueOf_positiveNumerator_positiveDenominator() {
+        val fraction = Fraction.valueOf(6L, 4L)
+        assertThat(fraction.numerator).isEqualTo(3L)
+        assertThat(fraction.denominator).isEqualTo(2L)
+    }
+
+    @Test
+    fun valueOf_positiveNumerator_negativeDenominator() {
+        val fraction = Fraction.valueOf(6L, -4L)
+        assertThat(fraction.numerator).isEqualTo(-3L)
+        assertThat(fraction.denominator).isEqualTo(2L)
+    }
+
+    @Test
+    fun valueOf_negativeNumerator_noDenominator() {
+        val fraction = Fraction.valueOf(-6L)
+        assertThat(fraction.numerator).isEqualTo(-6L)
+        assertThat(fraction.denominator).isEqualTo(1L)
+    }
+
+    @Test
+    fun valueOf_negativeNumerator_positiveDenominator() {
+        val fraction = Fraction.valueOf(-6L, 4L)
+        assertThat(fraction.numerator).isEqualTo(-3L)
+        assertThat(fraction.denominator).isEqualTo(2L)
+    }
+
+    @Test
+    fun valueOf_negativeNumerator_negativeDenominator() {
+        val fraction = Fraction.valueOf(-6L, -4L)
+        assertThat(fraction.numerator).isEqualTo(3L)
+        assertThat(fraction.denominator).isEqualTo(2L)
     }
 }

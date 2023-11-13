@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
 /**
- * Tests various [File]-related extension functions.
+ * Tests [File]-related extension functions.
  */
 class FileExtensionsTest {
     @Test

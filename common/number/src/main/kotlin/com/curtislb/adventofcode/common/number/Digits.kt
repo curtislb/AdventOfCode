@@ -6,123 +6,123 @@ import kotlin.math.log10
 import kotlin.math.log2
 
 /**
- * Returns the integer given by concatenating the digits in this iterable with the given [radix].
+ * Returns the integer given by concatenating the digits in this iterable with the given [base].
  *
  * @throws IllegalArgumentException If any number in this iterable is not a digit with the given
- *  [radix].
+ *  [base].
  */
-fun Iterable<Int>.digitsToInt(radix: Int = 10): Int {
-    val digitRange = 0 until radix
+fun Iterable<Int>.digitsToInt(base: Int = 10): Int {
+    val digitRange = 0 until base
     return fold(0) { prefix, digit ->
-        require(digit in digitRange) { "Invalid digit for radix $radix: $digit" }
-        prefix * radix + digit
+        require(digit in digitRange) { "Invalid digit for base $base: $digit" }
+        prefix * base + digit
     }
 }
 
 /**
- * Returns the integer given by concatenating the digits in this iterable with the given [radix].
+ * Returns the integer given by concatenating the digits in this iterable with the given [base].
  *
  * @throws IllegalArgumentException If any number in this iterable is not a digit with the given
- *  [radix].
+ *  [base].
  */
-fun Iterable<Int>.digitsToLong(radix: Int = 10): Long {
-    val digitRange = 0 until radix
+fun Iterable<Int>.digitsToLong(base: Int = 10): Long {
+    val digitRange = 0 until base
     return fold(0L) { prefix, digit ->
-        require(digit in digitRange) { "Invalid digit for radix $radix: $digit" }
-        prefix * radix + digit
+        require(digit in digitRange) { "Invalid digit for base $base: $digit" }
+        prefix * base + digit
     }
 }
 
 /**
- * Returns the number of digits in this non-negative integer when written with the given [radix].
+ * Returns the number of digits in this non-negative integer when written with the given [base].
  *
- * @throws IllegalArgumentException If this number is negative or [radix] is less than 2.
+ * @throws IllegalArgumentException If this number is negative or [base] is less than 2.
  */
-fun Int.countDigits(radix: Int = 10): Int {
+fun Int.countDigits(base: Int = 10): Int {
     require(this >= 0) { "Number must be non-negative: $this" }
-    require(radix >= 2) { "Radix must be at least 2: $radix" }
+    require(base >= 2) { "Base must be at least 2: $base" }
 
-    // The number zero is written as "0" in all radixes
+    // The number zero is written as "0" in all bases
     if (this == 0) {
         return 1
     }
 
-    // Use specialized log functions for common radixes
-    val radixLog = when (radix) {
+    // Use specialized log functions for common bases
+    val baseLog = when (base) {
         2 -> log2(toDouble())
         10 -> log10(toDouble())
-        else -> log(toDouble(), radix.toDouble())
+        else -> log(toDouble(), base.toDouble())
     }
-    return floor(radixLog).toInt() + 1
+    return floor(baseLog).toInt() + 1
 }
 
 /**
- * Returns the number of digits in this non-negative integer when written with the given [radix].
+ * Returns the number of digits in this non-negative integer when written with the given [base].
  *
- * @throws IllegalArgumentException If this number is negative or [radix] is less than 2.
+ * @throws IllegalArgumentException If this number is negative or [base] is less than 2.
  */
-fun Long.countDigits(radix: Int = 10): Int {
+fun Long.countDigits(base: Int = 10): Int {
     require(this >= 0L) { "Number must be non-negative: $this" }
-    require(radix >= 2) { "Radix must be at least 2: $radix" }
+    require(base >= 2) { "Base must be at least 2: $base" }
 
-    // The number zero is written as "0" in all radixes
+    // The number zero is written as "0" in all bases
     if (this == 0L) {
         return 1
     }
 
-    // Use specialized log functions for common radixes
-    val radixLog = when (radix) {
+    // Use specialized log functions for common bases
+    val baseLog = when (base) {
         2 -> log2(toDouble())
         10 -> log10(toDouble())
-        else -> log(toDouble(), radix.toDouble())
+        else -> log(toDouble(), base.toDouble())
     }
-    return floor(radixLog).toInt() + 1
+    return floor(baseLog).toInt() + 1
 }
 
 /**
  * Returns the digit at [position] (from the left) for this non-negative integer when written with
- * the given [radix].
+ * the given [base].
  *
  * The value of [position] must be in the range `0 until n`, where `n` is the number of significant
- * (i.e. not leading zero) digits of this integer with the given [radix].
+ * (i.e. not leading zero) digits of this integer with the given [base].
  *
- * @throws IllegalArgumentException If this number is negative, [position] is negative, [radix] is
- *  less than 2, or there is no digit at [position] for this number with the given [radix].
+ * @throws IllegalArgumentException If this number is negative, [position] is negative, [base] is
+ *  less than 2, or there is no digit at [position] for this number with the given [base].
  */
-fun Int.bigEndianDigit(position: Int, radix: Int = 10): Int {
+fun Int.bigEndianDigit(position: Int, base: Int = 10): Int {
     require(this >= 0) { "Integer must be non-negative: $this" }
     require(position >= 0) { "Position must be non-negative: $position" }
-    require(radix >= 2) { "Radix must be at least 2: $radix" }
+    require(base >= 2) { "Base must be at least 2: $base" }
 
     // Check if position is valid for this number
-    val digitCount = countDigits(radix)
+    val digitCount = countDigits(base)
     require(position < digitCount) {
-        "Integer $this has no big-endian digit at position $position in radix $radix."
+        "Integer $this has no big-endian digit at position $position in base $base"
     }
 
-    return littleEndianDigitInternal(digitCount - position - 1, radix)
+    return littleEndianDigitInternal(digitCount - position - 1, base)
 }
 
 /**
  * Returns the digit at [position] (from the right) for this non-negative integer with the given
- * [radix].
+ * [base].
  *
  * If the value of [position] is greater than the number of significant digits with the given
- * [radix], this method will return 0.
+ * [base], this method will return 0.
  *
- * @throws IllegalArgumentException If this number is negative, [position] is negative, or [radix]
+ * @throws IllegalArgumentException If this number is negative, [position] is negative, or [base]
  *  is less than 2.
  */
-fun Int.littleEndianDigit(position: Int, radix: Int = 10): Int {
+fun Int.littleEndianDigit(position: Int, base: Int = 10): Int {
     require(this >= 0) { "Integer must be non-negative: $this" }
     require(position >= 0) { "Position must be non-negative: $position" }
-    require(radix >= 2) { "Radix must be at least 2: $radix" }
-    return littleEndianDigitInternal(position, radix)
+    require(base >= 2) { "Base must be at least 2: $base" }
+    return littleEndianDigitInternal(position, base)
 }
 
 /**
- * Returns the digit at [position] (from right) for this non-negative integer when written with the
- * given [radix].
+ * Returns the digit at [position] (from the right) for this non-negative integer when written with
+ * the given [base].
  */
-private fun Int.littleEndianDigitInternal(position: Int, radix: Int): Int =
-    (this / radix.pow(position)) % radix
+private fun Int.littleEndianDigitInternal(position: Int, base: Int): Int =
+    (this / base.pow(position)) % base

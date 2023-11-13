@@ -34,11 +34,11 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     val field = TreeField(file.readText())
     val slopes = listOf(
-        Fraction(-1, 1),
-        Fraction(-1, 3),
-        Fraction(-1, 5),
-        Fraction(-1, 7),
-        Fraction(-2, 1)
+        Fraction.valueOf(-1, 1),
+        Fraction.valueOf(-1, 3),
+        Fraction.valueOf(-1, 5),
+        Fraction.valueOf(-1, 7),
+        Fraction.valueOf(-2, 1)
     )
     return slopes.map { field.countTreesAlongSlope(it).toLong() }.product()
 }

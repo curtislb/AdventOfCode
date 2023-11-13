@@ -51,7 +51,7 @@ class EnhancementAlgorithm(private val pixelValues: List<Boolean>) {
         }
 
         // Get the "enhanced" pixel value from the given algorithm index
-        val algorithmIndex = indexDigits.digitsToInt(radix = 2)
+        val algorithmIndex = indexDigits.digitsToInt(base = 2)
         return pixelValues[algorithmIndex]
     }
 

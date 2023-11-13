@@ -44,7 +44,7 @@ class Nanofactory(file: File) {
             val (requiredMaterial, requiredAmount) =
                 requiredMaterials.positiveEntries().find { it.key !in rawMaterials } ?: break
             val reaction = reactions[requiredMaterial] ?: break
-            val coefficient = Fraction(requiredAmount, reaction.product.amount).ceil()
+            val coefficient = Fraction.valueOf(requiredAmount, reaction.product.amount).ceil()
             for ((material, amount) in reaction.reactants) {
                 requiredMaterials[material] += coefficient * amount
             }

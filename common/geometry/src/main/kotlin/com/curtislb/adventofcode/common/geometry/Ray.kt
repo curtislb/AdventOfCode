@@ -7,23 +7,23 @@ import com.curtislb.adventofcode.common.number.Fraction
  *
  * @property source The origin point of the ray.
  * @property slope The slope of the ray, or `null` if its slope is infinite.
- * @property isDirectionPositive A flag indicating the direction of the ray. If [slope] is finite,
+ * @property isPositive A boolean flag indicating the direction of the ray. If [slope] is finite,
  *  this is `true` if the x-coordinates of points on the ray approach positive infinity. If [slope]
  *  is `null`, this is `true` if the y-coordinates of points on the ray approach positive infinity.
  *
  * @constructor Creates a new instance of [Ray] with the given [source] point, [slope], and
- *  direction indicated by [isDirectionPositive].
+ *  direction indicated by [isPositive].
  */
-data class Ray(val source: Point, val slope: Fraction?, val isDirectionPositive: Boolean) {
+data class Ray(val source: Point, val slope: Fraction?, val isPositive: Boolean) {
     /**
      * Returns a sequence of all grid points that fall on this ray, including the [source] point,
      * sorted by their distance from [source].
      */
     fun points(): Sequence<Point> = sequence {
         // Calculate the change in x and y between subsequent points
-        val directionSign = if (isDirectionPositive) 1 else -1
-        val deltaX = directionSign * (slope?.denominator?.toInt() ?: 0)
-        val deltaY = directionSign * (slope?.numerator?.toInt() ?: 1)
+        val sign = if (isPositive) 1 else -1
+        val deltaX = sign * (slope?.denominator?.toInt() ?: 0)
+        val deltaY = sign * (slope?.numerator?.toInt() ?: 1)
 
         // Determine last coordinate values before integer overflow
         val lastX = when {
@@ -77,7 +77,7 @@ data class Ray(val source: Point, val slope: Fraction?, val isDirectionPositive:
                 isDirectionPositive = source.y < member.y
             } else {
                 // Ray is not vertical (finite slope)
-                slope = Fraction(member.y - source.y, member.x - source.x)
+                slope = Fraction.valueOf(member.y - source.y, member.x - source.x)
                 isDirectionPositive = source.x < member.x
             }
 

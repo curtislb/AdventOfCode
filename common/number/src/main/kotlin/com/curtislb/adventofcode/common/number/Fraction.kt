@@ -6,103 +6,114 @@ import kotlin.math.abs
 /**
  * A unique representation of a rational number, with reduced [numerator] and [denominator].
  *
- * @throws IllegalArgumentException If [denominator] is 0.
+ * @property numerator The numerator of the reduced-form fraction. May be negative or zero.
+ * @property denominator The denominator of the reduced-form fraction. Must be a positive integer.
  */
-class Fraction(numerator: Long, denominator: Long = 1L) {
+class Fraction private constructor(val numerator: Long, val denominator: Long) {
     /**
-     * The simplified numerator for this fraction. May be negative or 0.
+     * Returns the sum of this fraction and [other].
      */
-    val numerator: Long
-
-    /**
-     * The simplified denominator for this fraction. Must be a positive integer.
-     */
-    val denominator: Long
-
-    init {
-        require(denominator != 0L) { "Fraction can't have a denominator of 0." }
-        if (numerator == 0L) {
-            // All fractions with a numerator of 0 are equivalent
-            this.numerator = 0L
-            this.denominator = 1L
-        } else {
-            // Apply sign to numerator and reduce to lowest terms
-            val isNegative = (numerator < 0L) != (denominator < 0L)
-            val absNumerator = abs(numerator)
-            val absDenominator = abs(denominator)
-            val gcd = greatestCommonDivisor(absNumerator, absDenominator)
-            this.numerator = (if (isNegative) -absNumerator else absNumerator) / gcd
-            this.denominator = absDenominator / gcd
+    operator fun plus(other: Fraction): Fraction = when {
+        numerator == 0L -> other
+        other.numerator == 0L -> this
+        else -> {
+            val lcm = leastCommonMultiple(denominator, other.denominator)
+            val scaledNumerator = numerator * (lcm / denominator)
+            val otherScaledNumerator = other.numerator * (lcm / other.denominator)
+            valueOf(scaledNumerator + otherScaledNumerator, lcm)
         }
     }
 
     /**
-     * A unique representation of a rational number, with reduced [numerator] and [denominator].
+     * Returns the difference between this fraction and [other].
+     */
+    operator fun minus(other: Fraction) = -other + this
+
+    /**
+     * Returns the negative complement of this fraction.
+     */
+    operator fun unaryMinus(): Fraction =
+        if (numerator == 0L) ZERO else Fraction(-numerator, denominator)
+
+    /**
+     * Returns the product of this fraction and [other].
+     */
+    operator fun times(other: Fraction): Fraction =
+        valueOf(numerator * other.numerator, denominator * other.denominator)
+
+    /**
+     * Returns the quotient of this fraction and [other].
      *
-     * @throws IllegalArgumentException If [denominator] is 0.
+     * @throws ArithmeticException If [other] is [ZERO].
      */
-    constructor(numerator: Int, denominator: Int = 1) : this(
-        numerator.toLong(),
-        denominator.toLong()
-    )
-
-    /**
-     * Returns the sum of this and [other] as a fraction.
-     */
-    operator fun plus(other: Fraction): Fraction {
-        val lcm = leastCommonMultiple(denominator, other.denominator)
-        return Fraction(
-            numerator * (lcm / denominator) + other.numerator * (lcm / other.denominator),
-            lcm
-        )
+    operator fun div(other: Fraction): Fraction {
+        if (other.numerator == 0L) {
+            throw ArithmeticException("Can't divide by a zero-value fraction")
+        }
+        return valueOf(numerator * other.denominator, denominator * other.numerator)
     }
 
     /**
-     * Returns the difference between this and [other] as a fraction.
-     */
-    operator fun minus(other: Fraction) = this + (-other)
-
-    /**
-     * Returns the fraction that is the negative complement of this one.
-     */
-    operator fun unaryMinus(): Fraction = Fraction(-numerator, denominator)
-
-    /**
-     * Returns the product of this and [other] as a fraction.
-     */
-    operator fun times(other: Fraction): Fraction {
-        return Fraction(numerator * other.numerator, denominator * other.denominator)
-    }
-
-    /**
-     * Returns the quotient of this and [other] as a fraction.
-     */
-    operator fun div(other: Fraction): Fraction =
-        Fraction(numerator * other.denominator, denominator * other.numerator)
-
-    /**
-     * Returns the least integer value that is greater than or equal to the value of this fraction.
+     * Returns the least integer value that is greater than or equal to this fraction.
      */
     fun ceil(): Long = when {
         numerator == 0L -> 0L
         numerator > 0L -> denominator.nextMultipleAtLeast(numerator) / denominator
-        else -> -denominator.prevMultipleAtMost(abs(numerator)) / denominator
+        else -> -(denominator.prevMultipleAtMost(-numerator)) / denominator
     }
 
     /**
-     * Returns the greatest integer value that is less than or equal to the value of this fraction.
+     * Returns the greatest integer value that is less than or equal to this fraction.
      */
     fun floor(): Long = when {
         numerator == 0L -> 0L
         numerator > 0L -> denominator.prevMultipleAtMost(numerator) / denominator
-        else -> -denominator.nextMultipleAtLeast(abs(numerator)) / denominator
+        else -> -(denominator.nextMultipleAtLeast(-numerator)) / denominator
     }
 
-    override fun equals(other: Any?): Boolean {
-        return other is Fraction && numerator == other.numerator && denominator == other.denominator
-    }
+    override fun toString(): String = "$numerator/$denominator"
+
+    override fun equals(other: Any?): Boolean =
+        other is Fraction && numerator == other.numerator && denominator == other.denominator
 
     override fun hashCode(): Int = Objects.hash(numerator, denominator)
 
-    override fun toString(): String = "$numerator/$denominator"
+    companion object {
+        /**
+         * A [Fraction] representing the value 0.
+         */
+        val ZERO: Fraction = Fraction(0L, 1L)
+
+        /**
+         * Returns a reduced-form fraction that represents the value of [numerator] / [denominator].
+         *
+         * @throws IllegalArgumentException If [denominator] is zero.
+         */
+        fun valueOf(numerator: Int, denominator: Int): Fraction {
+            return valueOf(numerator.toLong(), denominator.toLong())
+        }
+
+        /**
+         * Returns a reduced-form fraction that represents the value of [numerator] / [denominator].
+         *
+         * @throws IllegalArgumentException If [denominator] is zero.
+         */
+        fun valueOf(numerator: Long, denominator: Long = 1L): Fraction {
+            require(denominator != 0L) { "Fraction can't have a denominator of 0" }
+
+            // Fractions with a numerator of 0 are equivalent
+            if (numerator == 0L) {
+                return ZERO
+            }
+
+            // Apply sign to numerator and reduce terms
+            val isNegative = (numerator < 0L) != (denominator < 0L)
+            val absNumerator = abs(numerator)
+            val absDenominator = abs(denominator)
+            val gcd = greatestCommonDivisor(absNumerator, absDenominator)
+            val reducedNumerator = (if (isNegative) -absNumerator else absNumerator) / gcd
+            val reducedDenominator = absDenominator / gcd
+            return Fraction(reducedNumerator, reducedDenominator)
+        }
+    }
 }

@@ -82,7 +82,7 @@ import java.nio.file.Paths
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val field = TreeField(file.readText())
-    return field.countTreesAlongSlope(Fraction(-1, 3))
+    return field.countTreesAlongSlope(Fraction.valueOf(-1, 3))
 }
 
 fun main() {

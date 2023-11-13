@@ -23,41 +23,41 @@ fun <T : Comparable<T>> List<T>.medianOrNull(): T? {
     while (true) {
         // Select the first element as the pivot (since the list is shuffled)
         val pivotIndex = minIndex
-        val pivot = list[minIndex]
+        val pivotValue = list[minIndex]
 
         // Partition elements relative to the pivot
-        var leftIndex = minIndex
-        var rightIndex = maxIndex + 1
-        while (leftIndex < rightIndex) {
+        var left = minIndex
+        var right = maxIndex + 1
+        while (left < right) {
             // Search for the first element greater than the pivot
             do {
-                leftIndex++
-            } while (leftIndex < maxIndex && list[leftIndex] < pivot)
+                left++
+            } while (left < maxIndex && list[left] < pivotValue)
 
             // Search for the last element less than the pivot
             do {
-                rightIndex--
-            } while (rightIndex > minIndex && list[rightIndex] > pivot)
+                right--
+            } while (right > minIndex && list[right] > pivotValue)
 
             // If misplaced elements are found, swap their positions
-            if (leftIndex < rightIndex) {
-                list[leftIndex] = list[rightIndex].also { list[rightIndex] = list[leftIndex] }
+            if (left < right) {
+                list[left] = list[right].also { list[right] = list[left] }
             }
         }
 
         // Check if we've found the median
-        if (rightIndex == medianIndex) {
-            return pivot
+        if (right == medianIndex) {
+            return pivotValue
         }
 
         // Swap the pivot into its final sorted position
-        list[pivotIndex] = list[rightIndex].also { list[rightIndex] = list[pivotIndex] }
+        list[pivotIndex] = list[right].also { list[right] = list[pivotIndex] }
 
         // Repeat the process for the appropriate sublist
-        if (medianIndex < rightIndex) {
-            maxIndex = rightIndex - 1
+        if (medianIndex < right) {
+            maxIndex = right - 1
         } else {
-            minIndex = rightIndex + 1
+            minIndex = right + 1
         }
     }
 }

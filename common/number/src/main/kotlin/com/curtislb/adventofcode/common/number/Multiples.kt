@@ -2,7 +2,6 @@ package com.curtislb.adventofcode.common.number
 
 import com.curtislb.adventofcode.common.collection.mapToMap
 import java.math.BigInteger
-import kotlin.math.max
 
 /**
  * Returns the largest positive integer that evenly divides both [m] and [n].
@@ -66,26 +65,29 @@ fun leastCommonMultiple(m: Long, n: Long): Long {
 fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
     require(m > 0L) { "First argument must be positive: $m" }
     require(n > 0L) { "Second argument must be positive: $n" }
-    val factorization = nums.fold(
-        takeLargestPowers(m.primeFactorization(), n.primeFactorization())
-    ) { partial, num ->
+
+    val initialPowers = takeLargestPowers(primeFactorization(m), primeFactorization(n))
+    val factorization = nums.fold(initialPowers) { acc, num ->
         require(num > 0L) { "Each vararg value must be positive: $num" }
-        takeLargestPowers(partial, num.primeFactorization())
+        takeLargestPowers(acc, primeFactorization(num))
     }
-    return factorization.entries.fold(1L) { result, (factor, power) -> result * factor.pow(power) }
+
+    return factorization.entries.fold(1L) { acc, (factor, power) -> acc * factor.pow(power) }
 }
 
 /**
- * Returns a map from each factor in [factorization1] or [factorization2] (or both) to the larger of
- * its powers from the two factorizations.
+ * Returns a map from each factor in [factorization1] and/or [factorization2] to the larger of its
+ * powers from the two factorizations.
  */
 private fun takeLargestPowers(
     factorization1: Map<Long, Int>,
     factorization2: Map<Long, Int>
-): Map<Long, Int> =
-    (factorization1.keys + factorization2.keys).mapToMap { factor ->
-        factor to max(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
+): Map<Long, Int> {
+    val factors = factorization1.keys + factorization2.keys
+    return factors.mapToMap { factor ->
+        factor to maxOf(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
     }
+}
 
 /**
  * Returns the least positive integer greater than [n] that is a multiple of this one.
@@ -95,7 +97,7 @@ private fun takeLargestPowers(
 fun Int.nextMultipleAbove(n: Int): Int {
     require(this > 0) { "Number must be positive: $this" }
     require(n >= 0) { "Argument must be non-negative: $n" }
-    return n + (this - (n % this))
+    return this - (n % this) + n
 }
 
 /**
@@ -106,7 +108,7 @@ fun Int.nextMultipleAbove(n: Int): Int {
 fun Long.nextMultipleAbove(n: Long): Long {
     require(this > 0L) { "Number must be positive: $this" }
     require(n >= 0L) { "Argument must be non-negative: $n" }
-    return n + (this - (n % this))
+    return this - (n % this) + n
 }
 
 /**
@@ -117,12 +119,11 @@ fun Long.nextMultipleAbove(n: Long): Long {
 fun BigInteger.nextMultipleAbove(n: BigInteger): BigInteger {
     require(this > BigInteger.ZERO) { "Number must be positive: $this" }
     require(n >= BigInteger.ZERO) { "Argument must be non-negative: $n" }
-    return n + (this - (n % this))
+    return this - (n % this) + n
 }
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
- * one.
+ * Returns the least integer greater than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -133,8 +134,7 @@ fun Int.nextMultipleAtLeast(n: Int): Int {
 }
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
- * one.
+ * Returns the least integer greater than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -145,8 +145,7 @@ fun Long.nextMultipleAtLeast(n: Long): Long {
 }
 
 /**
- * Returns the least non-negative integer greater than or equal to [n] that is a multiple of this
- * one.
+ * Returns the least integer greater than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -157,8 +156,7 @@ fun BigInteger.nextMultipleAtLeast(n: BigInteger): BigInteger {
 }
 
 /**
- * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this
- * one.
+ * Returns the greatest integer less than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -169,8 +167,7 @@ fun Int.prevMultipleAtMost(n: Int): Int {
 }
 
 /**
- * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this
- * one.
+ * Returns the greatest integer less than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -181,8 +178,7 @@ fun Long.prevMultipleAtMost(n: Long): Long {
 }
 
 /**
- * Returns the greatest non-negative integer less than or equal to [n] that is a multiple of this
- * one.
+ * Returns the greatest integer less than or equal to [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -193,7 +189,7 @@ fun BigInteger.prevMultipleAtMost(n: BigInteger): BigInteger {
 }
 
 /**
- * Returns the greatest non-negative integer less than [n] that is a multiple of this one.
+ * Returns the greatest integer less than [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -204,7 +200,7 @@ fun Int.prevMultipleBelow(n: Int): Int {
 }
 
 /**
- * Returns the greatest non-negative integer less than [n] that is a multiple of this one.
+ * Returns the greatest integer less than [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */
@@ -215,7 +211,7 @@ fun Long.prevMultipleBelow(n: Long): Long {
 }
 
 /**
- * Returns the greatest non-negative integer less than [n] that is a multiple of this one.
+ * Returns the greatest integer less than [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
  */

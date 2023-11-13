@@ -25,10 +25,10 @@ data class CoordinateRanges(val x: IntRange, val y: IntRange) {
 
             // Iterate over points, keeping track of min/max coordinates
             for (point in points) {
-                minX = point.x.coerceAtMost(minX)
-                maxX = point.x.coerceAtLeast(maxX)
-                minY = point.y.coerceAtMost(minY)
-                maxY = point.y.coerceAtLeast(maxY)
+                minX = minOf(minX, point.x)
+                maxX = maxOf(maxX, point.x)
+                minY = minOf(minY, point.y)
+                maxY = maxOf(maxY, point.y)
             }
 
             return CoordinateRanges(minX..maxX, minY..maxY)

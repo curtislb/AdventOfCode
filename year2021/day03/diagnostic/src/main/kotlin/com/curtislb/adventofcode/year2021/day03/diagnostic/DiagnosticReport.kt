@@ -103,7 +103,7 @@ class DiagnosticReport(lines: List<String>) {
 
         // Find the gamma rate by concatenating the most common bits for all columns
         val commonBits = bitSums.map { commonBit(it, boolGrid.height) }
-        _gammaRate = commonBits.digitsToInt(radix = 2)
+        _gammaRate = commonBits.digitsToInt(base = 2)
 
         // Find the epsilon rate by inverting the bits of the gamma rate
         val bitmask = (2 shl (boolGrid.width - 1)) - 1
@@ -139,7 +139,7 @@ class DiagnosticReport(lines: List<String>) {
 
         // Convert the selected row to an integer rating
         val ratingBits = boolGrid.mapRow(ratingRowIndex) { if (it) 1 else 0 }
-        return ratingBits.digitsToInt(radix = 2)
+        return ratingBits.digitsToInt(base = 2)
     }
 
     companion object {

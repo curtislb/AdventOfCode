@@ -33,7 +33,7 @@ class TreeField(treePattern: String) {
     fun countTreesAlongSlope(slope: Fraction?): Int {
         // Convert slope to a ray originating from the top-left corner
         require(slope == null || slope.numerator < 0L) { "Slope must be negative or null: $slope" }
-        val ray = Ray(source = Point.ORIGIN, slope = slope, isDirectionPositive = slope != null)
+        val ray = Ray(source = Point.ORIGIN, slope = slope, isPositive = slope != null)
 
         // Count trees at each point intersected by the ray
         var count = 0

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Tests various [Grid] extension functions.
+ * Tests [Grid] extension functions.
  */
 class GridExtensionsTest {
     @Test
