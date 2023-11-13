@@ -51,7 +51,7 @@ enum class Space(val symbol: Char, val isSafe: Boolean) {
          * @throws IllegalArgumentException If [symbol] has no corresponding space.
          */
         fun from(symbol: Char): Space {
-            return values().find { it.symbol == symbol }
+            return entries.find { it.symbol == symbol }
                 ?: throw IllegalArgumentException("Unknown space char: $symbol")
         }
 
