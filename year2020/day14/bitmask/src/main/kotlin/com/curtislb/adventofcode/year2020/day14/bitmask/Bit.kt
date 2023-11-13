@@ -31,7 +31,7 @@ enum class Bit(val symbol: Char) {
          * @throws IllegalArgumentException If [symbol] has no corresponding bit.
          */
         fun from(symbol: Char): Bit {
-            return entries.find { it.symbol == symbol }
+            return values().find { it.symbol == symbol }
                 ?: throw IllegalArgumentException("Unknown bit symbol: $symbol")
         }
     }

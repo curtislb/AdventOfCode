@@ -20,7 +20,7 @@ enum class Amphipod(val symbol: Char, val roomIndex: Int, val energyPerStep: Lon
          * @throws IllegalArgumentException If [char] does not correspond to a type of [Amphipod].
          */
         fun fromChar(char: Char): Amphipod =
-            Amphipod.entries.find { it.symbol == char }
+            Amphipod.values().find { it.symbol == char }
                 ?: throw IllegalArgumentException("Invalid amphipod character: $char")
     }
 }

@@ -14,7 +14,7 @@ object GreedyStrategy : Strategy {
         var paddleX: Int? = null
         var minDistance = Int.MAX_VALUE
 
-        // Find the closest ball and paddle on the board
+        // Find the closest ball and paddle on the board.
         val balls = board.findAll(Tile.BALL)
         val paddles = board.findAll(Tile.PADDLE)
         for (ball in balls) {

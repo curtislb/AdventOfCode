@@ -89,8 +89,9 @@ class Fraction private constructor(val numerator: Long, val denominator: Long) {
          *
          * @throws IllegalArgumentException If [denominator] is zero.
          */
-        fun valueOf(numerator: Int, denominator: Int): Fraction =
-            valueOf(numerator.toLong(), denominator.toLong())
+        fun valueOf(numerator: Int, denominator: Int): Fraction {
+            return valueOf(numerator.toLong(), denominator.toLong())
+        }
 
         /**
          * Returns a reduced-form fraction that represents the value of [numerator] / [denominator].

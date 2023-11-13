@@ -100,7 +100,7 @@ data class Burrow(
 
         // Subtract the over-counted energy cost for each room
         val excessDistancePerRoom = triangleNumber(roomCapacity - 1)
-        val excessEnergy = Amphipod.entries.sumOf { it.energyPerStep } * excessDistancePerRoom
+        val excessEnergy = Amphipod.values().sumOf { it.energyPerStep } * excessDistancePerRoom
         return hallwayEnergy + roomEnergy - excessEnergy
     }
 

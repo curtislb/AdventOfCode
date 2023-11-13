@@ -70,7 +70,7 @@ enum class Direction(private val clockwiseIndex: Int) {
         /**
          * A list of all directions in clockwise order, starting with [UP].
          */
-        private val clockwiseOrder: List<Direction> = entries.sortedBy { it.clockwiseIndex }
+        private val clockwiseOrder: List<Direction> = values().sortedBy { it.clockwiseIndex }
 
         /**
          * Returns an array of all cardinal directions.
