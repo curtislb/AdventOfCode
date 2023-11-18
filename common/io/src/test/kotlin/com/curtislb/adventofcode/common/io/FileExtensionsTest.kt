@@ -3,7 +3,6 @@ package com.curtislb.adventofcode.common.io
 import com.curtislb.adventofcode.common.testing.createTempFile
 import java.io.File
 import java.nio.file.Path
-import kotlin.test.assertEquals
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -33,7 +32,7 @@ class FileExtensionsTest {
         val file = tempDir.createTempFile("Hello!")
         val chars = mutableListOf<Char>()
         file.forEachChar { chars.add(it) }
-        assertEquals(listOf('H', 'e', 'l', 'l', 'o', '!'), chars.toList())
+        assertThat(chars).containsExactly('H', 'e', 'l', 'l', 'o', '!')
     }
 
     @Test

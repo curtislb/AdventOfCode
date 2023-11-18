@@ -34,7 +34,7 @@ class ScannerField(private val scanners: List<Scanner>) {
                 }
 
                 // Check each orientation to see if scanner beacons overlap with known set
-                for (orientation in ScannerOrientation.values()) {
+                for (orientation in ScannerOrientation.entries) {
                     val beacons = scanners[scannerIndex].getBeaconPositions(orientation)
                     val translation = findTranslation(beacons, knownBeacons, minOverlapCount)
                     if (translation != null) {

@@ -9,8 +9,8 @@ abstract class WeightedGraph<V> {
     /**
      * An edge from one node to another in a weighted graph.
      *
-     * @param node The destination node.
-     * @param weight The cost incurred by traversing this edge to the given [node].
+     * @property node The destination node.
+     * @property weight The cost incurred by traversing this edge to the given [node].
      */
     data class Edge<out T>(val node: T, val weight: Long)
 

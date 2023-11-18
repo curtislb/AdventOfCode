@@ -1,9 +1,16 @@
 plugins {
-    id("com.curtislb.adventofcode.kotlin-library")
+    val kotlinVersion: String by System.getProperties()
+    val koverVersion: String by System.getProperties()
+
+    kotlin("jvm") version kotlinVersion
+    id("org.jetbrains.kotlinx.kover") version koverVersion
 }
 
 dependencies {
-    implementation("org.assertj:assertj-core:${Versions.ASSERTJ}")
-    implementation("org.hamcrest:hamcrest:${Versions.HAMCREST}")
-    implementation("org.jetbrains.kotlin:kotlin-test:${Versions.KOTLIN}")
+    val assertjVersion: String by properties
+    val hamcrestVersion: String by properties
+    val kotlinVersion: String by System.getProperties()
+    implementation("org.assertj:assertj-core:$assertjVersion")
+    implementation("org.hamcrest:hamcrest:$hamcrestVersion")
+    implementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
 }

@@ -92,7 +92,7 @@ enum class BitsPacketType(val id: Int) {
          *
          * @throws IllegalArgumentException If [id] has no corresponding [BitsPacketType].
          */
-        fun fromID(id: Int): BitsPacketType = values().find { it.id == id }
+        fun fromID(id: Int): BitsPacketType = entries.find { it.id == id }
             ?: throw IllegalArgumentException("No packet type for ID: $id")
     }
 }

@@ -25,7 +25,7 @@ enum class BitsLengthType(val id: Int, val bitCount: Int) {
          *
          * @throws IllegalArgumentException If [id] has no corresponding [BitsLengthType].
          */
-        fun fromID(id: Int): BitsLengthType = values().find { it.id == id }
+        fun fromID(id: Int): BitsLengthType = entries.find { it.id == id }
             ?: throw IllegalArgumentException("No length type for ID: $id")
     }
 }

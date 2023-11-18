@@ -26,10 +26,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Run Gradle tasks
-        run: ./gradlew :build :koverMergedXmlReport
+        run: ./gradlew build koverXmlReport --rerun-tasks
 
       - name: Upload Codecov report
         uses: codecov/codecov-action@v3
         with:
-          files: ./build/reports/kover/merged/xml/report.xml
+          files: ./build/reports/kover/report.xml
           fail_ci_if_error: true

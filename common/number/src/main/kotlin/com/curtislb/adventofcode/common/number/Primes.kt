@@ -35,7 +35,7 @@ fun primeFactorization(n: Long): Map<Long, Int> {
 
         // All factors above 2 must be odd
         if (factor == 2L) {
-            factor++
+            factor = 3L
         } else {
             factor += 2L
         }
