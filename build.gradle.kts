@@ -25,10 +25,6 @@ subprojects {
 }
 
 dependencies {
-    val assertjVersion: String by properties
-    val junitVersion: String by properties
-    val kotlinVersion: String by System.getProperties()
-
     // Kover report dependencies
     kover(project(":common:collection"))
     kover(project(":common:comparison"))

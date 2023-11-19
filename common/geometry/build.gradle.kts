@@ -8,13 +8,15 @@ plugins {
 
 dependencies {
     val assertjVersion: String by properties
-    val junitVersion: String by properties
+    val junitJupiterVersion: String by properties
+    val junitPlatformVersion: String by properties
 
     implementation(project(":common:collection"))
     implementation(project(":common:number"))
     implementation(project(":common:range"))
     testImplementation(project(":common:testing"))
     testImplementation("org.assertj:assertj-core:$assertjVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
 }

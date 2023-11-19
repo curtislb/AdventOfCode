@@ -19,7 +19,7 @@ includes:
 
 ### Dependencies
 
-* [Gradle 7.6.3][gradle-link]
+* [Gradle 8.4][gradle-link]
 * [Java 17][java-link]
 * [Kotlin 1.9.20][kotlin-link]
 
@@ -67,7 +67,7 @@ Alternatively, the following commands can be run from the project root directory
 [build-link]: https://github.com/curtislb/AdventOfCode/actions/workflows/build.yml
 [coverage-badge]: https://img.shields.io/codecov/c/gh/curtislb/AdventOfCode?logo=codecov&logoColor=white&token=6UEPEBOEO6
 [coverage-link]: https://codecov.io/gh/curtislb/AdventOfCode
-[gradle-link]: https://docs.gradle.org/7.6.3/release-notes.html
+[gradle-link]: https://docs.gradle.org/8.4/release-notes.html
 [ij-gradle-link]: https://www.jetbrains.com/help/idea/gradle.html
 [ij-idea-link]: https://www.jetbrains.com/idea/
 [java-link]: https://openjdk.java.net/projects/jdk/17/
