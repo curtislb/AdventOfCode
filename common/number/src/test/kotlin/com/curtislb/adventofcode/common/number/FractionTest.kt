@@ -824,6 +824,40 @@ class FractionTest {
     }
 
     @Test
+    fun equals_nonFraction() {
+        val fraction = Fraction.valueOf(1)
+        assertThat(fraction).isNotEqualTo(1)
+    }
+
+    @Test
+    fun equals_differentNumerator() {
+        val fraction = Fraction.valueOf(1, 2)
+        val other = Fraction.valueOf(1, 3)
+        assertThat(fraction).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_differentDenominator() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(2, 5)
+        assertThat(fraction).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_negativeComplement() {
+        val fraction = Fraction.valueOf(1, 2)
+        val other = -Fraction.valueOf(1, 2)
+        assertThat(fraction).isNotEqualTo(other)
+    }
+
+    @Test
+    fun equals_nonReducedForm() {
+        val fraction = Fraction.valueOf(2, 3)
+        val other = Fraction.valueOf(4, 6)
+        assertThat(fraction).isEqualTo(other)
+    }
+
+    @Test
     fun toString_whenZero() {
         val fraction = Fraction.ZERO
         assertThat(fraction.toString()).isEqualTo("0/1")

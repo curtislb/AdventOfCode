@@ -455,6 +455,11 @@ class DigitsTest {
     }
 
     @Test
+    fun bigEndianDigit_ofNegativeNumber() {
+        assertThrows<IllegalArgumentException> { (-1).bigEndianDigit(0, base = 2) }
+    }
+
+    @Test
     fun bigEndianDigit_negativeBase() {
         assertThrows<IllegalArgumentException> { 1.bigEndianDigit(0, base = -1) }
     }
@@ -567,6 +572,11 @@ class DigitsTest {
     @Test
     fun littleEndianDigit_ofMultiDigitNumber_negativePosition_nonDefaultBase() {
         assertThrows<IllegalArgumentException> { 859.littleEndianDigit(-1, base = 256) }
+    }
+
+    @Test
+    fun littleEndianDigit_ofNegativeNumber() {
+        assertThrows<IllegalArgumentException> { (-1).littleEndianDigit(0, base = 2) }
     }
 
     @Test
