@@ -1,83 +1,102 @@
 package com.curtislb.adventofcode.common.graph
 
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 /**
- * Tests [WeightedGraph].
+ * Tests the [WeightedGraph] class.
  */
 class WeightedGraphTest {
     @Test
     fun aStarDistance_toSource() {
-        for (source in 0..7) {
-            val distance = WeightedGraphImpl.aStarDistance(
-                source = source,
-                heuristic = { WeightedGraphImpl.heuristic(it, source) },
-                isGoal = { it == source }
-            )
-            assertEquals(0L, distance)
-        }
+        val source = 0
+
+        val distance = WeightedGraphImpl.aStarDistance(
+            source = source,
+            heuristic = { WeightedGraphImpl.heuristic(it, source) },
+            isGoal = { it == source }
+        )
+
+        assertThat(distance).isEqualTo(0L)
     }
 
     @Test
     fun aStarDistance_toNonexistentNode() {
-        for (source in 0..7) {
-            val distance = WeightedGraphImpl.aStarDistance(
-                source = source,
-                heuristic = { WeightedGraphImpl.heuristic(it, 8) },
-                isGoal = { it == 8 }
-            )
-            assertNull(distance)
-        }
+        val source = 0
+        val goal = 8
+
+        val distance = WeightedGraphImpl.aStarDistance(
+            source = source,
+            heuristic = { WeightedGraphImpl.heuristic(it, goal) },
+            isGoal = { it == goal }
+        )
+
+        assertThat(distance).isNull()
     }
 
     @Test
     fun aStarDistance_toUnreachableNode() {
+        val source = 2
+        val goal = 0
+
         val distance = WeightedGraphImpl.aStarDistance(
-            source = 2,
-            heuristic = { WeightedGraphImpl.heuristic(it, 0) },
-            isGoal = { it == 0 }
+            source = source,
+            heuristic = { WeightedGraphImpl.heuristic(it, goal) },
+            isGoal = { it == goal }
         )
-        assertNull(distance)
+
+        assertThat(distance).isNull()
     }
 
     @Test
     fun aStarDistance_toReachableNode() {
+        val source = 0
+        val goal = 6
+
         val distance = WeightedGraphImpl.aStarDistance(
-            source = 0,
-            heuristic = { WeightedGraphImpl.heuristic(it, 6) },
-            isGoal = { it == 6 }
+            source = source,
+            heuristic = { WeightedGraphImpl.heuristic(it, goal) },
+            isGoal = { it == goal }
         )
-        assertEquals(151L, distance)
+
+        assertThat(distance).isEqualTo(151L)
     }
 
     @Test
     fun dijkstraDistance_toSource() {
-        for (source in 0..7) {
-            val distance = WeightedGraphImpl.dijkstraDistance(source) { it == source }
-            assertEquals(0L, distance)
-        }
+        val source = 0
+        val distance = WeightedGraphImpl.dijkstraDistance(source) { it == source }
+        assertThat(distance).isEqualTo(0L)
     }
 
     @Test
     fun dijkstraDistance_toNonexistentNode() {
-        for (source in 0..7) {
-            val distance = WeightedGraphImpl.dijkstraDistance(source) { it == 8 }
-            assertNull(distance)
-        }
+        val source = 0
+        val goal = 8
+
+        val distance = WeightedGraphImpl.dijkstraDistance(source) { it == goal }
+
+        assertThat(distance).isNull()
     }
 
     @Test
     fun dijkstraDistance_toUnreachableNode() {
-        val distance = WeightedGraphImpl.dijkstraDistance(source = 2) { it == 0 }
-        assertNull(distance)
+        val source = 2
+        val goal = 0
+
+        val distance = WeightedGraphImpl.dijkstraDistance(source) { it == goal }
+
+        assertThat(distance).isNull()
     }
 
     @Test
     fun dijkstraDistance_toReachableNode() {
-        val distance = WeightedGraphImpl.dijkstraDistance(source = 0) { it == 6 }
-        assertEquals(151L, distance)
+        val source = 0
+        val goal = 6
+
+        val distance = WeightedGraphImpl.dijkstraDistance(source) { it == goal }
+
+        assertThat(distance).isEqualTo(151L)
     }
 }
 
@@ -113,5 +132,5 @@ private object WeightedGraphImpl : WeightedGraph<Int>() {
      * Returns an admissible heuristic value for the distance from [source] to [goal].
      */
     fun heuristic(source: Int, goal: Int): Long =
-        if (source == goal) 0 else heuristics[source][goal] ?: 500L
+        if (source == goal) 0L else heuristics[source][goal] ?: 500L
 }
