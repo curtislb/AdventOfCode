@@ -5,7 +5,7 @@ import com.curtislb.adventofcode.common.grid.Grid
 import com.curtislb.adventofcode.common.grid.addRow
 import com.curtislb.adventofcode.common.grid.forEachPointValue
 import com.curtislb.adventofcode.common.grid.mutableGridOf
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 
 /**
  * A bingo game board, represented by a grid of numeric spaces that can be marked.
@@ -61,7 +61,7 @@ class BingoBoard private constructor(private val spaceGrid: Grid<BingoSpace>) {
         mutableGridOf<BingoSpace>().apply {
             for (rowString in rowStrings) {
                 addRow {
-                    for (number in rowString.toInts()) {
+                    for (number in rowString.parseInts()) {
                         add(BingoSpace(number))
                     }
                 }

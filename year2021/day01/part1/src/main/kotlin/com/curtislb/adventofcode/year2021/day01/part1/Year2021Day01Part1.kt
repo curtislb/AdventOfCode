@@ -68,7 +68,7 @@ How many measurements are larger than the previous measurement?
 
 package com.curtislb.adventofcode.year2021.day01.part1
 
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -78,7 +78,7 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int =
-    inputPath.toFile().readText().toInts().windowed(2).count { (depthA, depthB) -> depthA < depthB }
+    inputPath.toFile().readText().parseInts().windowed(2).count { (depthA, depthB) -> depthA < depthB }
 
 fun main() {
     println(solve())

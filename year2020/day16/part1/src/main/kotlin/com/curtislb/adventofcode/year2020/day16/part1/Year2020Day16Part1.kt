@@ -67,7 +67,7 @@ package com.curtislb.adventofcode.year2020.day16.part1
 
 import com.curtislb.adventofcode.common.io.forEachSection
 import com.curtislb.adventofcode.common.parse.toIntRange
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2020.day16.ticket.Ticket
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -117,7 +117,7 @@ private fun parseFieldsSection(lines: List<String>): List<IntRange> {
 }
 
 private fun parseNearbyTicketsSection(lines: List<String>): List<Ticket> {
-    return lines.subList(1, lines.size).map { Ticket(it.toInts()) }
+    return lines.subList(1, lines.size).map { Ticket(it.parseInts()) }
 }
 
 fun main() {

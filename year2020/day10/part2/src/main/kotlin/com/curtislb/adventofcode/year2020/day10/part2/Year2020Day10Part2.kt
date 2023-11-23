@@ -66,7 +66,7 @@ outlet to your device?
 
 package com.curtislb.adventofcode.year2020.day10.part2
 
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2020.day10.joltage.JoltageAdapters
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -78,7 +78,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
-    val adapters = JoltageAdapters(file.readText().toInts().toSet())
+    val adapters = JoltageAdapters(file.readText().parseInts().toSet())
     return adapters.countArrangements()
 }
 

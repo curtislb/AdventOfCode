@@ -3,7 +3,7 @@ package com.curtislb.adventofcode.year2021.day05.vents
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.geometry.Segment
 import com.curtislb.adventofcode.common.iteration.uniquePairs
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 
 /**
  * A field of hydrothermal vents, each represented by a segment in a 2D grid.
@@ -19,7 +19,7 @@ class VentField(ventStrings: List<String>, filterPredicate: (vent: Segment) -> B
      */
     private val vents: List<Segment> = mutableListOf<Segment>().apply {
         for (ventString in ventStrings) {
-            val (x1, y1, x2, y2) = ventString.toInts()
+            val (x1, y1, x2, y2) = ventString.parseInts()
             val segment = Segment.between(Point(x1, y1), Point(x2, y2))
             if (filterPredicate(segment)) {
                 add(segment)

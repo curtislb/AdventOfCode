@@ -17,7 +17,7 @@ Figure out which board will win last. Once it wins, what would its final score b
 package com.curtislb.adventofcode.year2021.day04.part2
 
 import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2021.day04.bingo.BingoBoard
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -32,7 +32,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val boards = mutableSetOf<BingoBoard>()
     inputPath.toFile().forEachSection { lines ->
         if (numbers.isEmpty()) {
-            numbers = lines.first().toInts()
+            numbers = lines.first().parseInts()
         } else {
             boards.add(BingoBoard(lines))
         }

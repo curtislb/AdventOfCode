@@ -26,11 +26,6 @@ class BigIntegerRange(
     /**
      * Creates a new instance of [BigIntegerRange] with the given [first] and [last] values.
      */
-    constructor(first: Int, last: Int) : this(first.toBigInteger(), last.toBigInteger())
-
-    /**
-     * Creates a new instance of [BigIntegerRange] with the given [first] and [last] values.
-     */
     constructor(first: Long, last: Long) : this(first.toBigInteger(), last.toBigInteger())
 
     override fun toString(): String = "BigIntegerRange($first, $last)"
@@ -62,7 +57,7 @@ class BigIntegerRange(
 /**
  * Returns a [BigIntegerRange] with the same integer values as this range.
  */
-fun IntRange.toBigIntegerRange(): BigIntegerRange = BigIntegerRange(first, last)
+fun IntRange.toBigIntegerRange(): BigIntegerRange = BigIntegerRange(first.toLong(), last.toLong())
 
 /**
  * Returns a [BigIntegerRange] with the same integer values as this range.

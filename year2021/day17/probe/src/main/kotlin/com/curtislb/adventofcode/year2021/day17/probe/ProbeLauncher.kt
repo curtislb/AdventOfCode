@@ -1,7 +1,7 @@
 package com.curtislb.adventofcode.year2021.day17.probe
 
 import com.curtislb.adventofcode.common.number.triangleNumber
-import com.curtislb.adventofcode.common.parse.toLongs
+import com.curtislb.adventofcode.common.parse.parseLongs
 import com.curtislb.adventofcode.common.search.bisect
 import com.curtislb.adventofcode.common.vector.longVectorOf
 import java.io.File
@@ -82,7 +82,7 @@ class ProbeLauncher(private val target: ProbeTarget) {
          * y-coordinate range for the target area.
          */
         fun fromFile(file: File): ProbeLauncher {
-            val (minX, maxX, minY, maxY) = file.readText().toLongs()
+            val (minX, maxX, minY, maxY) = file.readText().parseLongs()
             val target = ProbeTarget(minX..maxX, minY..maxY)
             return ProbeLauncher(target)
         }

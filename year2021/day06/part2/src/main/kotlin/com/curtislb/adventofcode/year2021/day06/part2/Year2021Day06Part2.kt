@@ -11,7 +11,7 @@ How many lanternfish would there be after 256 days?
 
 package com.curtislb.adventofcode.year2021.day06.part2
 
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2021.day06.lanternfish.School
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -30,7 +30,7 @@ fun solve(
     maturationDays: Int = 2,
     simulationDays: Int = 256
 ): Long {
-    val initialTimers = inputPath.toFile().readText().toInts()
+    val initialTimers = inputPath.toFile().readText().parseInts()
     val school = School(initialTimers, cycleDays, maturationDays).apply { update(simulationDays) }
     return school.countFish()
 }

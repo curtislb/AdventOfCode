@@ -83,7 +83,7 @@ final score be if you choose that board?
 package com.curtislb.adventofcode.year2021.day04.part1
 
 import com.curtislb.adventofcode.common.io.forEachSection
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2021.day04.bingo.BingoBoard
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -98,7 +98,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val boards = mutableListOf<BingoBoard>()
     inputPath.toFile().forEachSection { lines ->
         if (numbers.isEmpty()) {
-            numbers = lines.first().toInts()
+            numbers = lines.first().parseInts()
         } else {
             boards.add(BingoBoard(lines))
         }

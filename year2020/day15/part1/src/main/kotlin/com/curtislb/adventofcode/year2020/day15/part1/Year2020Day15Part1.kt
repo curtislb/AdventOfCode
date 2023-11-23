@@ -58,7 +58,7 @@ Given your starting numbers, what will be the 2020th number spoken?
 
 package com.curtislb.adventofcode.year2020.day15.part1
 
-import com.curtislb.adventofcode.common.parse.toInts
+import com.curtislb.adventofcode.common.parse.parseInts
 import com.curtislb.adventofcode.year2020.day15.memory.MemoryGame
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -70,7 +70,7 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int? {
     val file = inputPath.toFile()
-    val startingNums = file.readText().toInts()
+    val startingNums = file.readText().parseInts()
     val game = MemoryGame(startingNums).apply { playTurns(2020) }
     return game.lastNumber
 }
