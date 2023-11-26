@@ -37,7 +37,7 @@ class Counter<E> {
      * Any key not stored in a counter is treated as having a count of 0 in that counter.
      */
     operator fun contains(other: Counter<E>): Boolean =
-        (keys union other.keys).all { this[it] >= other[it] }
+        (keys + other.keys).all { this[it] >= other[it] }
 
     /**
      * Returns the count stored for [key] in the counter.

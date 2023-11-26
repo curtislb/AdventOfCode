@@ -19,16 +19,18 @@ class ProbeLauncher(private val target: ProbeTarget) {
      * the target area without overshooting it.
      */
     private val maxInitialYVelocity: Long by lazy {
-        val minOvershootVelocity = bisect(knownFalse = target.minY - 1L) { initialYVelocity ->
-            var yPosition = triangleNumber(initialYVelocity)
+        val baseVelocity = target.minY - 1L
+        val overshootDeltaVelocity = bisect { deltaVelocity ->
+            val initialVelocity = baseVelocity + deltaVelocity
+            var yPosition = triangleNumber(initialVelocity)
             var yVelocity = -1L
             while (yPosition > target.maxY) {
                 yPosition += yVelocity
                 yVelocity--
             }
             yPosition < target.minY
-        } ?: 1L
-        minOvershootVelocity - 1L
+        }
+        baseVelocity + overshootDeltaVelocity - 1L
     }
 
     /**

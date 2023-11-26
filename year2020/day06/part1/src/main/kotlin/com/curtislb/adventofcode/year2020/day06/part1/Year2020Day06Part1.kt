@@ -68,7 +68,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     var total = 0
     file.forEachSection { lines ->
-        total += lines.fold(emptySet<Char>()) { answers, line -> answers union line.toSet() }.size
+        total += lines.fold(emptySet<Char>()) { answers, line -> answers + line.toSet() }.size
     }
     return total
 }

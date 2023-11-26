@@ -75,10 +75,10 @@ import java.nio.file.Paths
  */
 fun solve(
     inputPath: Path = Paths.get("..", "input", "input.txt"),
-    shipSize: BigInteger = BigInteger("100"),
-    positionXFactor: BigInteger = BigInteger("10000")
-): BigInteger? {
-    // Find the first row that allows the ship to fit in the beam.
+    shipSize: BigInteger = BigInteger.valueOf(100),
+    positionXFactor: BigInteger = BigInteger.valueOf(10000)
+): BigInteger {
+    // Find the first row that allows the ship to fit in the beam
     val droneSystem = DroneSystem(inputPath.toFile())
     val shipRowDelta = shipSize - BigInteger.ONE
     val targetIndex = bisect { value ->
@@ -86,17 +86,12 @@ fun solve(
         overlap.size() >= shipSize
     }
 
-    return if (targetIndex != null) {
-        // Find the leftmost valid position for the ship in the row.
-        val topRowIndex = targetIndex.toBigInteger()
-        val overlap = droneSystem.findBeamOverlap(topRowIndex, shipRowDelta)
-        overlap.start * positionXFactor + topRowIndex
-    } else {
-        null
-    }
+    // Find the leftmost valid position for the ship in the row
+    val topRowIndex = targetIndex.toBigInteger()
+    val overlap = droneSystem.findBeamOverlap(topRowIndex, shipRowDelta)
+    return overlap.start * positionXFactor + topRowIndex
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("Unable to find a large enough area.")
-    else -> println(solution)
+fun main() {
+    println(solve())
 }

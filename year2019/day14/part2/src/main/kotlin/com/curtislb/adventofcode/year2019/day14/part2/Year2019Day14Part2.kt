@@ -34,24 +34,23 @@ fun solve(
     rawMaterial: String = "ORE",
     rawMaterialAvailableAmount: Long = 1_000_000_000_000L,
     desiredMaterial: String = "FUEL"
-): Long? {
+): Long {
     val factory = Nanofactory(inputPath.toFile())
 
-    // Binary search for the first product amount requiring more raw material than available.
+    // Binary search for the first product amount requiring more raw material than available
     val rawMaterials = setOf(rawMaterial)
     val productAmountLimit = bisect { amount ->
         val products = listOf(MaterialAmount(desiredMaterial, amount))
         val requiredMaterials = factory.findRequiredMaterials(rawMaterials, products)
         val rawMaterialNeeded =
             requiredMaterials?.find { (material, _) -> material == rawMaterial }?.amount
-                ?: throw IllegalStateException("Failed to produce $desiredMaterial during bisect.")
+                ?: error("Failed to produce $desiredMaterial during bisect")
         rawMaterialNeeded > rawMaterialAvailableAmount
     }
 
-    return if (productAmountLimit != null) productAmountLimit - 1L else null
+    return productAmountLimit - 1L
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("Unable to produce the desired material.")
-    else -> println(solution)
+fun main() {
+    println(solve())
 }

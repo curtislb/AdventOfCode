@@ -1,7 +1,8 @@
 package com.curtislb.adventofcode.year2020.day09.encryption
 
 import com.curtislb.adventofcode.common.collection.FifoCache
-import com.curtislb.adventofcode.common.search.findContiguousSubsetSum
+import com.curtislb.adventofcode.common.comparison.minMaxOrNull
+import com.curtislb.adventofcode.common.search.findNonNegativeSubarraySum
 import com.curtislb.adventofcode.common.search.findPairSum
 
 /**
@@ -15,7 +16,7 @@ class Xmas(private val values: List<Long>, private val preambleSize: Int) {
      * The first value after the preamble that is not the sum of [preambleSize] previous numbers.
      */
     val firstInvalidNumber: Long? by lazy {
-        // Search for a value (after the preamble) that meets the criteria.
+        // Search for a value (after the preamble) that meets the criteria
         val prevValues = FifoCache<Long>(preambleSize)
         for (value in values) {
             if (prevValues.isFull() && prevValues.findPairSum(value) == null) {
@@ -24,7 +25,7 @@ class Xmas(private val values: List<Long>, private val preambleSize: Int) {
             prevValues.add(value)
         }
 
-        // Failed to find an invalid value.
+        // Failed to find an invalid value
         null
     }
 
@@ -41,19 +42,14 @@ class Xmas(private val values: List<Long>, private val preambleSize: Int) {
      * `S`, or `null` if `S` does not exist.
      */
     fun findEncryptionWeakness(): Long? {
-        // Search for a contiguous subset that meets the criteria.
+        // Search for a subset that meets the criteria
         firstInvalidNumber?.let { targetSum ->
-            val subset = values.findContiguousSubsetSum(targetSum, minSize = 2)
-            if (subset != null) {
-                val minValue = subset.minOrNull()
-                val maxValue = subset.maxOrNull()
-                if (minValue != null && maxValue != null) {
-                    return minValue + maxValue
-                }
-            }
+            values.findNonNegativeSubarraySum(targetSum, minSize = 2)
+                ?.minMaxOrNull()
+                ?.let { return it.min + it.max }
         }
 
-        // Failed to find an encryption weakness.
+        // Failed to find an encryption weakness
         return null
     }
 }

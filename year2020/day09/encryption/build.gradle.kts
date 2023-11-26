@@ -13,6 +13,7 @@ dependencies {
     val kotlinVersion: String by System.getProperties()
 
     implementation(project(":common:collection"))
+    implementation(project(":common:comparison"))
     implementation(project(":common:search"))
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")

@@ -48,6 +48,7 @@ import java.nio.file.Paths
  * Returns the solution to the puzzle for 2020, day 9, part 2.
  *
  * @param inputPath The path to the input file for this puzzle.
+ * @param preambleSize The number of numbers that the preamble contains.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), preambleSize: Int = 25): Long? {
     val file = inputPath.toFile()
@@ -55,7 +56,9 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt"), preambleSize:
     return xmas.findEncryptionWeakness()
 }
 
-fun main() = when (val solution = solve()) {
-    null -> println("No solution found.")
-    else -> println(solution)
+fun main() {
+    when (val solution = solve()) {
+        null -> println("No solution")
+        else -> println(solution)
+    }
 }
