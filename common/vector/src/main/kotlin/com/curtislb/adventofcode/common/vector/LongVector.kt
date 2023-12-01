@@ -170,17 +170,15 @@ class LongVector internal constructor(private val components: LongArray) {
      * Returns all other vectors with the same [dimension] as this vector whose component values
      * differ from this vector by at most 1.
      */
-    fun neighbors(): List<LongVector> {
-        val neighborList = mutableListOf<LongVector>()
+    fun neighbors(): Sequence<LongVector> = sequence {
         nestedLoop(items = listOf(-1L, 0L, 1L), levelCount = dimension) { offsets ->
             if (offsets.any { it != 0L }) {
                 val neighbor = copy()
                 offsets.forEachIndexed { index, offset -> neighbor[index] += offset }
-                neighborList.add(neighbor)
+                yield(neighbor)
             }
             false // Keep iterating
         }
-        return neighborList
     }
 
     /**

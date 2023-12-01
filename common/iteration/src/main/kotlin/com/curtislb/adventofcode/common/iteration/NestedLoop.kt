@@ -41,7 +41,7 @@ package com.curtislb.adventofcode.common.iteration
  * @throws IllegalArgumentException If [levelCount] is negative, or if [overlapIndices] is `false`
  *  and [levelCount] is greater than the size of [items].
  */
-fun <T> nestedLoop(
+inline fun <T> nestedLoop(
     items: List<T>,
     levelCount: Int,
     overlapIndices: Boolean = true,
@@ -57,48 +57,31 @@ fun <T> nestedLoop(
     }
 
     val indexArray = IntArray(levelCount) { if (overlapIndices) 0 else it }
-    val maxOutermostIndex = maxIndexAt(0, items.size, levelCount, overlapIndices)
+    val maxOutermostIndex = if (overlapIndices) items.size - 1 else items.size - levelCount
     while (indexArray[0] <= maxOutermostIndex) {
         // Process the current iteration and terminate if needed
         if (process(indexArray.map { items[it] })) {
             return
         }
 
-        // Advance to the next innermost loop iteration
-        increment(indexArray, items.size, levelCount, overlapIndices)
-    }
-}
-
-/**
- * Returns the maximum index for a given loop [level], according to the parameters of the
- * [nestedLoop] function.
- */
-private fun maxIndexAt(level: Int, listSize: Int, levelCount: Int, overlapIndices: Boolean): Int =
-    if (overlapIndices) listSize - 1 else listSize - levelCount + level
-
-/**
- * Increments the given [indexArray], according to the parameters of the [nestedLoop] function.
- */
-private fun increment(
-    indexArray: IntArray,
-    listSize: Int,
-    levelCount: Int,
-    overlapIndices: Boolean
-) {
-    // Increment the rightmost index possible without overflowing
-    var carryIndex = 0
-    for (i in indexArray.lastIndex downTo 0) {
-        if (i == 0) {
-            indexArray[i]++
-        } else if (indexArray[i] < maxIndexAt(i, listSize, levelCount, overlapIndices)) {
-            indexArray[i]++
-            carryIndex = i
-            break
+        // Increment the rightmost index possible without overflowing
+        var carryIndex = 0
+        for (i in indexArray.lastIndex downTo 0) {
+            if (i == 0) {
+                indexArray[i]++
+            } else {
+                val maxIndex = if (overlapIndices) items.size - 1 else items.size - levelCount + i
+                if (indexArray[i] < maxIndex) {
+                    indexArray[i]++
+                    carryIndex = i
+                    break
+                }
+            }
         }
-    }
 
-    // Roll over each index following the one that was incremented
-    for (i in (carryIndex + 1)..indexArray.lastIndex) {
-        indexArray[i] = if (overlapIndices) 0 else indexArray[i - 1] + 1
+        // Roll over each index following the one that was incremented
+        for (i in (carryIndex + 1)..indexArray.lastIndex) {
+            indexArray[i] = if (overlapIndices) 0 else indexArray[i - 1] + 1
+        }
     }
 }

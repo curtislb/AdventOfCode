@@ -547,13 +547,13 @@ class LongVectorTest {
     @Test
     fun neighbors_whenEmpty() {
         val vector = longVectorOf()
-        assertThat(vector.neighbors()).isEmpty()
+        assertThat(vector.neighbors().toList()).isEmpty()
     }
 
     @Test
     fun neighbors_withOneComponent() {
         val vector = longVectorOf(10)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(longVectorOf(9), longVectorOf(11))
     }
@@ -561,7 +561,7 @@ class LongVectorTest {
     @Test
     fun neighbors_withTwoComponents() {
         val vector = longVectorOf(-47, 52)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(
                 longVectorOf(-46, 51),
@@ -578,7 +578,7 @@ class LongVectorTest {
     @Test
     fun neighbors_withThreeComponents() {
         val vector = longVectorOf(87, 1, -60)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(
                 longVectorOf(86, 0, -61),

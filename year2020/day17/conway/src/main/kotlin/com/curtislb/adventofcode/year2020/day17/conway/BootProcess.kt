@@ -14,11 +14,7 @@ internal object BootProcess : GameOfLife<MutableSet<IntVector>, IntVector, Boole
         key: IntVector,
         value: Boolean
     ): MutableSet<IntVector> {
-        return if (getValue(state, key) == value) {
-            state
-        } else {
-            state.apply { if (value) add(key) else remove(key) }
-        }
+        return state.apply { if (value) add(key) else remove(key) }
     }
 
     override fun getUpdatableKeys(state: MutableSet<IntVector>): Sequence<IntVector> {
@@ -33,7 +29,7 @@ internal object BootProcess : GameOfLife<MutableSet<IntVector>, IntVector, Boole
         state: MutableSet<IntVector>,
         key: IntVector
     ): Sequence<IntVector> {
-        return key.neighbors().asSequence()
+        return key.neighbors()
     }
 
     override fun applyUpdateRules(value: Boolean, neighbors: Sequence<Boolean>): Boolean {

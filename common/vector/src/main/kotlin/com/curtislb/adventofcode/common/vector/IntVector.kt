@@ -167,20 +167,18 @@ class IntVector internal constructor(private val components: IntArray) {
     }
 
     /**
-     * Returns all other vectors with the same [dimension] as this vector whose component values
-     * differ from this vector by at most 1.
+     * Returns a sequence of all other vectors with the same [dimension] as this vector whose
+     * component values differ from this vector by at most 1.
      */
-    fun neighbors(): List<IntVector> {
-        val neighborList = mutableListOf<IntVector>()
+    fun neighbors(): Sequence<IntVector> = sequence {
         nestedLoop(items = listOf(-1, 0, 1), levelCount = dimension) { offsets ->
             if (offsets.any { it != 0 }) {
                 val neighbor = copy()
                 offsets.forEachIndexed { index, offset -> neighbor[index] += offset }
-                neighborList.add(neighbor)
+                yield(neighbor)
             }
             false // Keep iterating
         }
-        return neighborList
     }
 
     /**

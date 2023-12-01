@@ -34,7 +34,7 @@ class EnergySource(initialActiveCubes: Set<IntVector>) {
      * - Each inactive cube that has exactly 3 active neighbors becomes active.
      */
     fun runBootProcess(cycleCount: Int) {
-        activeCubes = BootProcess.runSimulation(activeCubes, cycleCount)
+        activeCubes = BootProcess.simulate(activeCubes, cycleCount)
     }
 
     override fun toString(): String = activeCubes.toString()

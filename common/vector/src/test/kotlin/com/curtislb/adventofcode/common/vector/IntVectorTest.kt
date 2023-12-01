@@ -547,13 +547,13 @@ class IntVectorTest {
     @Test
     fun neighbors_whenEmpty() {
         val vector = intVectorOf()
-        assertThat(vector.neighbors()).isEmpty()
+        assertThat(vector.neighbors().toList()).isEmpty()
     }
 
     @Test
     fun neighbors_withOneComponent() {
         val vector = intVectorOf(10)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(intVectorOf(9), intVectorOf(11))
     }
@@ -561,7 +561,7 @@ class IntVectorTest {
     @Test
     fun neighbors_withTwoComponents() {
         val vector = intVectorOf(-47, 52)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(
                 intVectorOf(-46, 51),
@@ -578,7 +578,7 @@ class IntVectorTest {
     @Test
     fun neighbors_withThreeComponents() {
         val vector = intVectorOf(87, 1, -60)
-        assertThat(vector.neighbors())
+        assertThat(vector.neighbors().toList())
             .noneMatch { it === vector }
             .containsExactlyInAnyOrder(
                 intVectorOf(86, 0, -61),

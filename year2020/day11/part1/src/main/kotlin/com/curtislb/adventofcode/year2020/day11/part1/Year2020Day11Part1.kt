@@ -115,7 +115,7 @@ import java.nio.file.Paths
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int {
     val file = inputPath.toFile()
     val seatLayout = SeatLayout(file.readText(), maxNeighbors = 3) { grid, position ->
-        position.allNeighbors().asSequence().filter { it in grid }
+        position.allNeighbors().filter { it in grid }.asSequence()
     }
     return seatLayout.apply { updateUntilStable() }.countOccupied()
 }

@@ -40,7 +40,8 @@ class SeatLayout(
     }
 
     /**
-     * TODO
+     * A Game of Life simulation by which seats in the grid become occupied or empty, based on how
+     * many neighboring seats are occupied.
      */
     private val seatingProcess = object : GameOfLife<MutableGrid<Space>, Point, Space>() {
         override fun getValue(state: MutableGrid<Space>, key: Point): Space = state[key]
@@ -66,9 +67,14 @@ class SeatLayout(
 
         override fun applyUpdateRules(value: Space, neighbors: Sequence<Space>): Space =
             when (value) {
+                // A floor space never becomes empty or occupied
                 Space.FLOOR -> value
+
+                // An empty space becomes occupied if no neighboring space is occupied
                 Space.EMPTY ->
                     if (neighbors.none { it == Space.OCCUPIED }) Space.OCCUPIED else value
+
+                // An occupied space becomes empty if too many neighboring spaces are occupied
                 Space.OCCUPIED -> {
                     val occupiedCount = neighbors.count { it == Space.OCCUPIED }
                     if (occupiedCount > maxNeighbors) Space.EMPTY else value
@@ -79,8 +85,8 @@ class SeatLayout(
             state.toMutableGrid()
 
         override fun shouldTerminate(
-            previousState: MutableGrid<Space>,
-            state: MutableGrid<Space>
+            state: MutableGrid<Space>,
+            previousState: MutableGrid<Space>
         ): Boolean {
             return previousState == state
         }
@@ -89,10 +95,9 @@ class SeatLayout(
     /**
      * Returns the number of occupied seats in the current layout.
      */
-    fun countOccupied(): Int =
-        spaceGrid.sumRowsBy { row ->
-            row.count { it == Space.OCCUPIED }
-        }
+    fun countOccupied(): Int = spaceGrid.sumRowsBy { row ->
+        row.count { it == Space.OCCUPIED }
+    }
 
     /**
      * Updates the current layout by applying update rules to all spaces simultaneously until the
@@ -100,16 +105,15 @@ class SeatLayout(
      *
      * The rules for updating each space are as follows:
      *
-     * - An empty seat becomes occupied if no neighboring seat (see [getNeighboringSeats]) is
-     *   occupied.
+     * - An empty seat becomes occupied if no neighboring seat is occupied.
      * - An occupied seat becomes empty if [maxNeighbors] or more neighboring seats are occupied.
      * - In all other cases, the space does not change.
      */
     fun updateUntilStable() {
-        spaceGrid = seatingProcess.runSimulation(spaceGrid)
+        spaceGrid = seatingProcess.simulate(spaceGrid)
     }
 
     override fun toString(): String = spaceGrid.joinRowsToString(separator = "\n") { row ->
-        row.joinToString(separator = "") { space -> space.symbol.toString() }
+        row.joinToString(separator = "") { it.symbol.toString() }
     }
 }
