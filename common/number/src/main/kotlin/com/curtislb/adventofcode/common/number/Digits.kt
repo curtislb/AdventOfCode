@@ -6,6 +6,38 @@ import kotlin.math.log10
 import kotlin.math.log2
 
 /**
+ * A list of lowercase English words, representing the decimal digits from 0 to 9.
+ */
+val DIGIT_WORDS = listOf(
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine"
+)
+
+/**
+ * Returns the numeric value of the decimal digit represented by this lowercase English word string.
+ *
+ * @throws IllegalArgumentException If the string does not correspond to any decimal digit.
+ */
+fun String.digitWordToInt(): Int {
+    val digit = DIGIT_WORDS.indexOf(this)
+    require(digit != -1) { "Invalid digit word: $this" }
+    return digit
+}
+
+/**
+ * Returns `true` if this string represents a single decimal digit.
+ */
+fun String.isDigit(): Boolean = length == 1 && this[0] in '0'..'9'
+
+/**
  * Returns the integer given by concatenating the digits in this iterable with the given [base].
  *
  * @throws IllegalArgumentException If any number in this iterable is not a digit with the given

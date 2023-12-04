@@ -389,3 +389,21 @@ include("year2021:day24:part2")
 // Day 25: Sea Cucumber
 include("year2021:day25:cucumber")
 include("year2021:day25:part1")
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Advent of Code 2023
+
+// Day 1: Trebuchet?!
+include("year2023:day01:calibration")
+include("year2023:day01:part1")
+include("year2023:day01:part2")
+
+// Day 2: Cube Conundrum
+include("year2023:day02:cubes")
+include("year2023:day02:part1")
+include("year2023:day02:part2")
+
+// Day 3: Gear Ratios
+include("year2023:day03:engine")
+include("year2023:day03:part1")
+include("year2023:day03:part2")

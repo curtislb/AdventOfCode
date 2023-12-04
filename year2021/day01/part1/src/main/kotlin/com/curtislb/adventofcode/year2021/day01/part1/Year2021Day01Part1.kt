@@ -78,7 +78,7 @@ import java.nio.file.Paths
  * @param inputPath The path to the input file for this puzzle.
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Int =
-    inputPath.toFile().readText().parseInts().windowed(2).count { (depthA, depthB) -> depthA < depthB }
+    inputPath.toFile().readText().parseInts().windowed(2).count { it[0] < it[1] }
 
 fun main() {
     println(solve())

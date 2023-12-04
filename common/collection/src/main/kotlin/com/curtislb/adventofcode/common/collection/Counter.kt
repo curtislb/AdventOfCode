@@ -11,24 +11,31 @@ class Counter<E> {
     /**
      * A map that holds the nonzero key counts for the counter.
      */
-    private val counts: MutableMap<E, Long> = mutableMapOf()
+    private val countMap: MutableMap<E, Long> = mutableMapOf()
+
+    /**
+     * All nonzero counts stored in the counter. This includes duplicates if the same count is
+     * stored for multiple keys.
+     */
+    val counts: Collection<Long>
+        get() = countMap.values
 
     /**
      * All `(key, count)` entries in the counter for which `count != 0`.
      */
     val entries: Set<Map.Entry<E, Long>>
-        get() = counts.entries
+        get() = countMap.entries
 
     /**
      * All keys stored in the counter with a nonzero count.
      */
     val keys: Set<E>
-        get() = counts.keys
+        get() = countMap.keys
 
     /**
      * Returns `true` if [key] is stored in the counter with a nonzero count.
      */
-    operator fun contains(key: E): Boolean = key in counts
+    operator fun contains(key: E): Boolean = key in countMap
 
     /**
      * Returns `true` if the count for each key in the counter is greater than or equal to the
@@ -44,7 +51,7 @@ class Counter<E> {
      *
      * If [key] is not stored in the counter, this function instead returns 0.
      */
-    operator fun get(key: E): Long = counts.getOrDefault(key, 0L)
+    operator fun get(key: E): Long = countMap.getOrDefault(key, 0L)
 
     /**
      * Updates the [count] stored for [key] in the counter.
@@ -53,9 +60,9 @@ class Counter<E> {
      */
     operator fun set(key: E, count: Long) {
         if (count == 0L) {
-            counts.remove(key)
+            countMap.remove(key)
         } else {
-            counts[key] = count
+            countMap[key] = count
         }
     }
 
@@ -81,30 +88,57 @@ class Counter<E> {
      * Removes all keys with nonzero counts from the counter, resetting their counts to 0.
      */
     fun clear() {
-        counts.clear()
+        countMap.clear()
     }
 
     /**
      * Removes all keys with negative counts from the counter, resetting their counts to 0.
      */
     fun clearNegative() {
-        counts.entries.filter { it.value < 0L }.forEach { counts.remove(it.key) }
+        countMap.entries.filter { it.value < 0L }.forEach { countMap.remove(it.key) }
     }
+
+    /**
+     * Returns all positive counts in the counter. This includes duplicates if the same count is
+     * stored for multiple keys.
+     */
+    fun positiveCounts(): List<Long> = countMap.values.filter { it > 0L }
 
     /**
      * Returns all `(key, count)` entries in the counter for which `count > 0`.
      */
-    fun positiveEntries(): List<Map.Entry<E, Long>> = counts.entries.filter { it.value > 0L }
+    fun positiveEntries(): List<Map.Entry<E, Long>> = countMap.entries.filter { it.value > 0L }
 
     /**
      * Returns all keys with positive counts in the counter.
      */
-    fun positiveKeys(): List<E> = counts.entries.filter { it.value > 0L }.map { it.key }
+    fun positiveKeys(): List<E> = countMap.entries.filter { it.value > 0L }.map { it.key }
+
+    /**
+     * Updates the count for each key to match its count in [other], if the latter count is greater.
+     */
+    fun takeLarger(other: Counter<E>) {
+        val allKeys = keys + other.keys
+        for (key in allKeys) {
+            this[key] = maxOf(this[key], other[key])
+        }
+    }
 
     /**
      * Returns a map containing all `(key, count)` entries in the counter for which `count != 0`.
      */
-    fun toMap(): Map<E, Long> = counts.toMap()
+    fun toMap(): Map<E, Long> = countMap.toMap()
 
-    override fun toString() = counts.toString()
+    override fun toString() = countMap.toString()
+
+    companion object {
+        /**
+         * Returns a [Counter] initialized with `(key, count)` entries from the given [map].
+         */
+        fun <E> fromMap(map: Map<E, Long>) = Counter<E>().apply {
+            for ((key, count) in map.entries) {
+                this[key] = count
+            }
+        }
+    }
 }

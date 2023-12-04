@@ -255,4 +255,13 @@ dependencies {
     kover(project(":year2021:day24:part2"))
     kover(project(":year2021:day25:cucumber"))
     kover(project(":year2021:day25:part1"))
+    kover(project(":year2023:day01:calibration"))
+    kover(project(":year2023:day01:part1"))
+    kover(project(":year2023:day01:part2"))
+    kover(project(":year2023:day02:cubes"))
+    kover(project(":year2023:day02:part1"))
+    kover(project(":year2023:day02:part2"))
+    kover(project(":year2023:day03:engine"))
+    kover(project(":year2023:day03:part1"))
+    kover(project(":year2023:day03:part2"))
 }

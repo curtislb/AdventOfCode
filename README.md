@@ -14,6 +14,7 @@ includes:
 * [Advent of Code 2019][aoc-2019-link] (Days 1-25)
 * [Advent of Code 2020][aoc-2020-link] (Days 1-25)
 * [Advent of Code 2021][aoc-2021-link] (Days 1-25)
+* [Advent of Code 2023][aoc-2023-link] (Days 1-3)
 
 ## Getting Started
 
@@ -49,7 +50,7 @@ Alternatively, the following commands can be run from the project root directory
 
 ./gradlew test                       # Run all tests in the project
 
-./gradlew koverXmlReport             # Create a code coverage report (in build/reports/kover)
+./gradlew koverHtmlReport            # Create a code coverage report (in build/reports/kover)
 
 ./gradlew common:collection:test     # Run tests for a specific library
 
@@ -62,6 +63,7 @@ Alternatively, the following commands can be run from the project root directory
 [aoc-2019-link]: https://adventofcode.com/2019
 [aoc-2020-link]: https://adventofcode.com/2020
 [aoc-2021-link]: https://adventofcode.com/2021
+[aoc-2023-link]: https://adventofcode.com/2023
 [aoc-link]: https://adventofcode.com/
 [build-badge]: https://img.shields.io/github/actions/workflow/status/curtislb/AdventOfCode/build.yml?branch=main&logo=Gradle
 [build-link]: https://github.com/curtislb/AdventOfCode/actions/workflows/build.yml

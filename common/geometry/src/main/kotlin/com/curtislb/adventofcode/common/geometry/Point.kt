@@ -187,7 +187,7 @@ data class Point(val x: Int, val y: Int) {
          *
          * If [invertY] is `true`, the y-coordinate of the resulting [Point] will be negated.
          *
-         * @throws IllegalArgumentException If [string] is formatted incorrectly.
+         * @throws IllegalArgumentException If [string] is not formatted correctly.
          */
         fun fromString(string: String, invertY: Boolean = false): Point {
             val matchResult = POINT_REGEX.matchEntire(string)

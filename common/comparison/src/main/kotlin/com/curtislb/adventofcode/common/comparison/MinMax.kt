@@ -9,7 +9,7 @@ package com.curtislb.adventofcode.common.comparison
 data class MinMax<T>(val min: T, val max: T)
 
 /**
- * Returns the minimum and maximum elements from this iterable, or `null` there are no elements.
+ * Returns the minimum and maximum elements from this iterable, or `null` if there are no elements.
  */
 fun <T : Comparable<T>> Iterable<T>.minMaxOrNull(): MinMax<T>? {
     var minElement: T? = null
