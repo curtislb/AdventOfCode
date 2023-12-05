@@ -407,3 +407,8 @@ include("year2023:day02:part2")
 include("year2023:day03:engine")
 include("year2023:day03:part1")
 include("year2023:day03:part2")
+
+// Day 4: Scratchcards
+include("year2023:day04:part1")
+include("year2023:day04:part2")
+include("year2023:day04:scratchcard")

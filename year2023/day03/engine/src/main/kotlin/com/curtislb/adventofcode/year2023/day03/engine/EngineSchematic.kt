@@ -9,7 +9,7 @@ import com.curtislb.adventofcode.common.number.product
 import java.io.File
 
 /**
- * The schematic for a gondola engine, consisting of a grid of digits, symbols, and empty spaces.
+ * The schematic for a gondola lift engine, consisting of a grid of digits and symbols.
  *
  * @property grid The grid of characters that make up the schematic.
  *
