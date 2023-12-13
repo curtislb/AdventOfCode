@@ -83,7 +83,7 @@ private fun takeLargestPowers(
     factorization1: Map<Long, Int>,
     factorization2: Map<Long, Int>
 ): Map<Long, Int> {
-    val factors = factorization1.keys + factorization2.keys
+    val factors = factorization1.keys union factorization2.keys
     return factors.mapToMap { factor ->
         factor to maxOf(factorization1[factor] ?: 0, factorization2[factor] ?: 0)
     }

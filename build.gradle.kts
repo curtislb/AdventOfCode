@@ -267,4 +267,13 @@ dependencies {
     kover(project(":year2023:day04:part1"))
     kover(project(":year2023:day04:part2"))
     kover(project(":year2023:day04:scratchcard"))
+    kover(project(":year2023:day05:almanac"))
+    kover(project(":year2023:day05:part1"))
+    kover(project(":year2023:day05:part2"))
+    kover(project(":year2023:day06:boat"))
+    kover(project(":year2023:day06:part1"))
+    kover(project(":year2023:day06:part2"))
+    kover(project(":year2023:day07:cards"))
+    kover(project(":year2023:day07:part1"))
+    kover(project(":year2023:day07:part2"))
 }

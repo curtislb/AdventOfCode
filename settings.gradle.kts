@@ -412,3 +412,18 @@ include("year2023:day03:part2")
 include("year2023:day04:part1")
 include("year2023:day04:part2")
 include("year2023:day04:scratchcard")
+
+// Day 5: If You Give A Seed A Fertilizer
+include("year2023:day05:almanac")
+include("year2023:day05:part1")
+include("year2023:day05:part2")
+
+// Day 6: Wait For It
+include("year2023:day06:boat")
+include("year2023:day06:part1")
+include("year2023:day06:part2")
+
+// Day 7: Camel Cards
+include("year2023:day07:cards")
+include("year2023:day07:part1")
+include("year2023:day07:part2")

@@ -1,6 +1,6 @@
 package com.curtislb.adventofcode.year2020.day18.expression
 
-import com.curtislb.adventofcode.common.number.product
+import com.curtislb.adventofcode.common.number.productOf
 
 /**
  * TODO
@@ -52,7 +52,7 @@ fun evaluateAdvanced(expression: String): Long {
     }
 
     return if (simplifiedExpression.contains('*')) {
-        simplifiedExpression.split('*').map { evaluateAdvanced(it) }.product()
+        simplifiedExpression.split('*').productOf { evaluateAdvanced(it) }
     } else {
         simplifiedExpression.split('+').sumOf { it.trim().toLong() }
     }

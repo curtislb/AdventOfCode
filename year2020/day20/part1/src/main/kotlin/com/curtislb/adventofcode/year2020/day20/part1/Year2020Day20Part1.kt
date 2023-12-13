@@ -184,7 +184,7 @@ corner tiles?
 
 package com.curtislb.adventofcode.year2020.day20.part1
 
-import com.curtislb.adventofcode.common.number.product
+import com.curtislb.adventofcode.common.number.productOf
 import com.curtislb.adventofcode.year2020.day20.image.ImageData
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -197,7 +197,7 @@ import java.nio.file.Paths
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val file = inputPath.toFile()
     val imageData = ImageData(file)
-    return imageData.cornerTiles.map { it.id.toLong() }.product()
+    return imageData.cornerTiles.productOf { it.id.toLong() }
 }
 
 fun main() {

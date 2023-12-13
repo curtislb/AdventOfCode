@@ -44,7 +44,7 @@ class Counter<E> {
      * Any key not stored in a counter is treated as having a count of 0 in that counter.
      */
     operator fun contains(other: Counter<E>): Boolean =
-        (keys + other.keys).all { this[it] >= other[it] }
+        (keys union other.keys).all { this[it] >= other[it] }
 
     /**
      * Returns the count stored for [key] in the counter.
@@ -67,10 +67,10 @@ class Counter<E> {
     }
 
     /**
-     * Counts the given [keys] and adds the resulting counts to the counter.
+     * Counts the given [items] and adds the resulting counts to the counter.
      */
-    fun addAll(keys: Iterable<E>) {
-        for (key in keys) {
+    fun addAll(items: Iterable<E>) {
+        for (key in items) {
             this[key]++
         }
     }
@@ -118,7 +118,7 @@ class Counter<E> {
      * Updates the count for each key to match its count in [other], if the latter count is greater.
      */
     fun takeLarger(other: Counter<E>) {
-        val allKeys = keys + other.keys
+        val allKeys = keys union other.keys
         for (key in allKeys) {
             this[key] = maxOf(this[key], other[key])
         }
@@ -132,6 +132,11 @@ class Counter<E> {
     override fun toString() = countMap.toString()
 
     companion object {
+        /**
+         * Returns a [Counter] initialized by counting the given [items].
+         */
+        fun <E> fromItems(items: Iterable<E>) = Counter<E>().apply { addAll(items) }
+
         /**
          * Returns a [Counter] initialized with `(key, count)` entries from the given [map].
          */

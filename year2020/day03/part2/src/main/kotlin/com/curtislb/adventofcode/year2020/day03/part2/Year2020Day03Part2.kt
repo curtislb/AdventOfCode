@@ -20,7 +20,7 @@ together, these produce the answer 336.
 package com.curtislb.adventofcode.year2020.day03.part2
 
 import com.curtislb.adventofcode.common.number.Fraction
-import com.curtislb.adventofcode.common.number.product
+import com.curtislb.adventofcode.common.number.productOf
 import com.curtislb.adventofcode.year2020.day03.trees.TreeField
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -40,7 +40,7 @@ fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
         Fraction.valueOf(-1, 7),
         Fraction.valueOf(-2, 1)
     )
-    return slopes.map { field.countTreesAlongSlope(it).toLong() }.product()
+    return slopes.productOf { field.countTreesAlongSlope(it).toLong() }
 }
 
 fun main() {
