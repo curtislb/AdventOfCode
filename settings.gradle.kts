@@ -427,3 +427,8 @@ include("year2023:day06:part2")
 include("year2023:day07:cards")
 include("year2023:day07:part1")
 include("year2023:day07:part2")
+
+// Day 8: Haunted Wasteland
+include("year2023:day08:part1")
+include("year2023:day08:part2")
+include("year2023:day08:wasteland")

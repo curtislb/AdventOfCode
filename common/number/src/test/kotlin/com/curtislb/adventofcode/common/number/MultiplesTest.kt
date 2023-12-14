@@ -10,354 +10,367 @@ import org.junit.jupiter.api.assertThrows
  */
 class MultiplesTest {
     @Test
-    fun greatestCommonDivisor_ofInts_oneAndOne() {
+    fun greatestCommonDivisor_withInts_oneAndOne() {
         assertThat(greatestCommonDivisor(1, 1)).isEqualTo(1)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_oneAndTwo() {
+    fun greatestCommonDivisor_withInts_oneAndTwo() {
         assertThat(greatestCommonDivisor(1, 2)).isEqualTo(1)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_twoAndOne() {
+    fun greatestCommonDivisor_withInts_twoAndOne() {
         assertThat(greatestCommonDivisor(2, 1)).isEqualTo(1)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_twoAndTwo() {
+    fun greatestCommonDivisor_withInts_twoAndTwo() {
         assertThat(greatestCommonDivisor(2, 2)).isEqualTo(2)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_twoAndThree() {
+    fun greatestCommonDivisor_withInts_twoAndThree() {
         assertThat(greatestCommonDivisor(2, 3)).isEqualTo(1)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_twoAndFour() {
+    fun greatestCommonDivisor_withInts_twoAndFour() {
         assertThat(greatestCommonDivisor(2, 4)).isEqualTo(2)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_largeCoprimeNumbers() {
+    fun greatestCommonDivisor_withInts_largeCoprimeNumbers() {
         assertThat(greatestCommonDivisor(452713601, 662853842)).isEqualTo(1)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_largeNonCoprimeNumbers() {
+    fun greatestCommonDivisor_withInts_largeNonCoprimeNumbers() {
         assertThat(greatestCommonDivisor(452713601, 662853843)).isEqualTo(3581)
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_firstNumberZero() {
+    fun greatestCommonDivisor_withInts_firstNumberZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(0, 1) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_secondNumberZero() {
+    fun greatestCommonDivisor_withInts_secondNumberZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(1, 0) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_bothNumbersZero() {
+    fun greatestCommonDivisor_withInts_bothNumbersZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(0, 0) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_firstNumberNegative() {
+    fun greatestCommonDivisor_withInts_firstNumberNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(-1, 1) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_secondNumberNegative() {
+    fun greatestCommonDivisor_withInts_secondNumberNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(1, -1) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofInts_bothNumbersNegative() {
+    fun greatestCommonDivisor_withInts_bothNumbersNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(-1, -1) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_oneAndOne() {
+    fun greatestCommonDivisor_withLongs_oneAndOne() {
         assertThat(greatestCommonDivisor(1L, 1L)).isEqualTo(1L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_oneAndTwo() {
+    fun greatestCommonDivisor_withLongs_oneAndTwo() {
         assertThat(greatestCommonDivisor(1L, 2L)).isEqualTo(1L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_twoAndOne() {
+    fun greatestCommonDivisor_withLongs_twoAndOne() {
         assertThat(greatestCommonDivisor(2L, 1L)).isEqualTo(1L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_twoAndTwo() {
+    fun greatestCommonDivisor_withLongs_twoAndTwo() {
         assertThat(greatestCommonDivisor(2L, 2L)).isEqualTo(2L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_twoAndThree() {
+    fun greatestCommonDivisor_withLongs_twoAndThree() {
         assertThat(greatestCommonDivisor(2L, 3L)).isEqualTo(1L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_twoAndFour() {
+    fun greatestCommonDivisor_withLongs_twoAndFour() {
         assertThat(greatestCommonDivisor(2L, 4L)).isEqualTo(2L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_largeCoprimeNumbers() {
+    fun greatestCommonDivisor_withLongs_largeCoprimeNumbers() {
         assertThat(greatestCommonDivisor(452713601L, 662853842L)).isEqualTo(1L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_largeNonCoprimeNumbers() {
+    fun greatestCommonDivisor_withLongs_largeNonCoprimeNumbers() {
         assertThat(greatestCommonDivisor(452713601L, 662853843L)).isEqualTo(3581L)
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_firstNumberZero() {
+    fun greatestCommonDivisor_withLongs_firstNumberZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(0L, 1L) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_secondNumberZero() {
+    fun greatestCommonDivisor_withLongs_secondNumberZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(1L, 0L) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_bothNumbersZero() {
+    fun greatestCommonDivisor_withLongs_bothNumbersZero() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(0L, 0L) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_firstNumberNegative() {
+    fun greatestCommonDivisor_withLongs_firstNumberNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(-1L, 1L) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_secondNumberNegative() {
+    fun greatestCommonDivisor_withLongs_secondNumberNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(1L, -1L) }
     }
 
     @Test
-    fun greatestCommonDivisor_ofLongs_bothNumbersNegative() {
+    fun greatestCommonDivisor_withLongs_bothNumbersNegative() {
         assertThrows<IllegalArgumentException> { greatestCommonDivisor(-1L, -1L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_oneAndOne() {
+    fun leastCommonMultiple_withInts_oneAndOne() {
         assertThat(leastCommonMultiple(1, 1)).isEqualTo(1)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_oneAndTwo() {
+    fun leastCommonMultiple_withInts_oneAndTwo() {
         assertThat(leastCommonMultiple(1, 2)).isEqualTo(2)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_twoAndOne() {
+    fun leastCommonMultiple_withInts_twoAndOne() {
         assertThat(leastCommonMultiple(2, 1)).isEqualTo(2)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_twoAndTwo() {
+    fun leastCommonMultiple_withInts_twoAndTwo() {
         assertThat(leastCommonMultiple(2, 2)).isEqualTo(2)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_twoAndThree() {
+    fun leastCommonMultiple_withInts_twoAndThree() {
         assertThat(leastCommonMultiple(2, 3)).isEqualTo(6)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_twoAndFour() {
+    fun leastCommonMultiple_withInts_twoAndFour() {
         assertThat(leastCommonMultiple(2, 4)).isEqualTo(4)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_largeCoprimeNumbers() {
+    fun leastCommonMultiple_withInts_largeCoprimeNumbers() {
         assertThat(leastCommonMultiple(201, 172)).isEqualTo(34572)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_largeNonCoprimeNumbers() {
+    fun leastCommonMultiple_withInts_largeNonCoprimeNumbers() {
         assertThat(leastCommonMultiple(720, 920)).isEqualTo(16560)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_firstNumberZero() {
+    fun leastCommonMultiple_withInts_firstNumberZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(0, 1) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_secondNumberZero() {
+    fun leastCommonMultiple_withInts_secondNumberZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(1, 0) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_bothNumbersZero() {
+    fun leastCommonMultiple_withInts_bothNumbersZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(0, 0) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_firstNumberNegative() {
+    fun leastCommonMultiple_withInts_firstNumberNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(-1, 1) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_secondNumberNegative() {
+    fun leastCommonMultiple_withInts_secondNumberNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(1, -1) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoInts_bothNumbersNegative() {
+    fun leastCommonMultiple_withInts_bothNumbersNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(-1, -1) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_oneAndOne() {
+    fun leastCommonMultiple_withTwoLongs_oneAndOne() {
         assertThat(leastCommonMultiple(1L, 1L)).isEqualTo(1L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_oneAndTwo() {
+    fun leastCommonMultiple_withTwoLongs_oneAndTwo() {
         assertThat(leastCommonMultiple(1L, 2L)).isEqualTo(2L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_twoAndOne() {
+    fun leastCommonMultiple_withTwoLongs_twoAndOne() {
         assertThat(leastCommonMultiple(2L, 1L)).isEqualTo(2L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_twoAndTwo() {
+    fun leastCommonMultiple_withTwoLongs_twoAndTwo() {
         assertThat(leastCommonMultiple(2L, 2L)).isEqualTo(2L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_twoAndThree() {
+    fun leastCommonMultiple_withTwoLongs_twoAndThree() {
         assertThat(leastCommonMultiple(2L, 3L)).isEqualTo(6L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_twoAndFour() {
+    fun leastCommonMultiple_withTwoLongs_twoAndFour() {
         assertThat(leastCommonMultiple(2L, 4L)).isEqualTo(4L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_largeCoprimeNumbers() {
+    fun leastCommonMultiple_withTwoLongs_largeCoprimeNumbers() {
         assertThat(leastCommonMultiple(319993L, 703909L)).isEqualTo(225245952637L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_largeNonCoprimeNumbers() {
+    fun leastCommonMultiple_withTwoLongs_largeNonCoprimeNumbers() {
         assertThat(leastCommonMultiple(55250154L, 21071889L)).isEqualTo(20608307442L)
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_firstNumberZero() {
+    fun leastCommonMultiple_withTwoLongs_firstNumberZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(0L, 1L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_secondNumberZero() {
+    fun leastCommonMultiple_withTwoLongs_secondNumberZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, 0L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_bothNumbersZero() {
+    fun leastCommonMultiple_withTwoLongs_bothNumbersZero() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(0L, 0L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_firstNumberNegative() {
+    fun leastCommonMultiple_withTwoLongs_firstNumberNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(-1L, 1L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_secondNumberNegative() {
+    fun leastCommonMultiple_withTwoLongs_secondNumberNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, -1L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofTwoLongs_bothNumbersNegative() {
+    fun leastCommonMultiple_withTwoLongs_bothNumbersNegative() {
         assertThrows<IllegalArgumentException> { leastCommonMultiple(-1L, -1L) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_allOnes() {
-        assertThat(leastCommonMultiple(1L, 1L, 1L)).isEqualTo(1L)
+    fun leastCommonMultiple_withThreeLongs_allOnes() {
+        val numbers = listOf(1L, 1L, 1L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(1L)
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_twoAndOnes() {
-        assertThat(leastCommonMultiple(2L, 1L, 1L)).isEqualTo(2L)
+    fun leastCommonMultiple_withThreeLongs_twoAndOnes() {
+        val numbers = listOf(2L, 1L, 1L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(2L)
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_allCoprime() {
-        assertThat(leastCommonMultiple(8L, 9L, 7L)).isEqualTo(504L)
+    fun leastCommonMultiple_withThreeLongs_allCoprime() {
+        val numbers = listOf(8L, 9L, 7L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(504L)
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_notCoprime() {
-        assertThat(leastCommonMultiple(2L, 64L, 8L)).isEqualTo(64L)
+    fun leastCommonMultiple_withThreeLongs_notCoprime() {
+        val numbers = listOf(2L, 64L, 8L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(64L)
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_oneZero() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(0L, 1L, 2L) }
+    fun leastCommonMultiple_withThreeLongs_oneZero() {
+        val numbers = listOf(0L, 1L, 2L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_twoZeros() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, 0L, 0L) }
+    fun leastCommonMultiple_withThreeLongs_twoZeros() {
+        val numbers = listOf(1L, 0L, 0L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_allZero() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(0L, 0L, 0L) }
+    fun leastCommonMultiple_withThreeLongs_allZero() {
+        val numbers = listOf(0L, 0L, 0L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_oneNegative() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(-1L, 1L, 2L) }
+    fun leastCommonMultiple_withThreeLongs_oneNegative() {
+        val numbers = listOf(-1L, 1L, 2L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_twoNegative() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, -1L, -1L) }
+    fun leastCommonMultiple_withThreeLongs_twoNegative() {
+        val numbers = listOf(1L, -1L, -1L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofThreeLongs_allNegative() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(-1L, -1L, -1L) }
+    fun leastCommonMultiple_withThreeLongs_allNegative() {
+        val numbers = listOf(-1L, -1L, -1L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofSeveralLongs_allCoprime() {
-        assertThat(leastCommonMultiple(4L, 7L, 2L, 5L, 3L)).isEqualTo(420L)
+    fun leastCommonMultiple_withSeveralLongs_allCoprime() {
+        val numbers = listOf(4L, 7L, 2L, 5L, 3L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(420L)
     }
 
     @Test
-    fun leastCommonMultiple_ofSeveralLongs_notCoprime() {
-        assertThat(leastCommonMultiple(540330L, 424130L, 465962L, 357896L))
-            .isEqualTo(4871660667720L)
+    fun leastCommonMultiple_withSeveralLongs_notCoprime() {
+        val numbers = listOf(540330L, 424130L, 465962L, 357896L)
+        assertThat(leastCommonMultiple(numbers)).isEqualTo(4871660667720L)
     }
 
     @Test
-    fun leastCommonMultiple_ofSeveralLongs_withZero() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, 2L, 3L, 0L, 4L) }
+    fun leastCommonMultiple_withSeveralLongs_oneZero() {
+        val numbers = listOf(1L, 2L, 3L, 0L, 4L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test
-    fun leastCommonMultiple_ofSeveralLongs_withNegative() {
-        assertThrows<IllegalArgumentException> { leastCommonMultiple(1L, 2L, 3L, 4L, -1L) }
+    fun leastCommonMultiple_withSeveralLongs_oneNegative() {
+        val numbers = listOf(1L, 2L, 3L, 4L, -1L)
+        assertThrows<IllegalArgumentException> { leastCommonMultiple(numbers) }
     }
 
     @Test

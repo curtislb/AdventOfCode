@@ -58,20 +58,15 @@ fun leastCommonMultiple(m: Long, n: Long): Long {
 }
 
 /**
- * Returns the smallest whole number that can be evenly divided by [m], [n], and all of [nums].
+ * Returns the smallest whole number that can be evenly divided by each of the given [numbers].
  *
- * @throws IllegalArgumentException If [m], [n], or any value in [nums] is negative or 0.
+ * @throws IllegalArgumentException If any value in [numbers] is negative or 0.
  */
-fun leastCommonMultiple(m: Long, n: Long, vararg nums: Long): Long {
-    require(m > 0L) { "First argument must be positive: $m" }
-    require(n > 0L) { "Second argument must be positive: $n" }
-
-    val initialPowers = takeLargestPowers(primeFactorization(m), primeFactorization(n))
-    val factorization = nums.fold(initialPowers) { acc, num ->
+fun leastCommonMultiple(numbers: Iterable<Long>): Long {
+    val factorization = numbers.fold(emptyMap<Long, Int>()) { acc, num ->
         require(num > 0L) { "Each vararg value must be positive: $num" }
         takeLargestPowers(acc, primeFactorization(num))
     }
-
     return factorization.entries.fold(1L) { acc, (factor, power) -> acc * factor.pow(power) }
 }
 

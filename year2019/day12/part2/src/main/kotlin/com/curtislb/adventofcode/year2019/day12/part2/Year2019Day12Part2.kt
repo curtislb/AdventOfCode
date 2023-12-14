@@ -62,8 +62,8 @@ import java.nio.file.Paths
  */
 fun solve(inputPath: Path = Paths.get("..", "input", "input.txt")): Long {
     val system = NBodySystem(inputPath.toFile())
-    val periods = system.findPerAxisPeriods()
-    return leastCommonMultiple(periods.x.toLong(), periods.y.toLong(), periods.z.toLong())
+    val periods = system.findPerAxisPeriods().toLongVector()
+    return leastCommonMultiple(listOf(periods.x, periods.y, periods.z))
 }
 
 fun main() {
