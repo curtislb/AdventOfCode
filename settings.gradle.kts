@@ -432,3 +432,8 @@ include("year2023:day07:part2")
 include("year2023:day08:part1")
 include("year2023:day08:part2")
 include("year2023:day08:wasteland")
+
+// Day 9: Mirage Maintenance
+include("year2023:day09:oasis")
+include("year2023:day09:part1")
+include("year2023:day09:part2")
