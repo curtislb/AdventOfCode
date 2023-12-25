@@ -3,7 +3,8 @@ package com.curtislb.adventofcode.common.grid
 import com.curtislb.adventofcode.common.geometry.Point
 
 /**
- * Performs the given [action] on each element and its row and column indices in this grid.
+ * Performs the given [action] on each element and its row and column indices in this grid, in
+ * row-major order.
  */
 inline fun <T> Grid<T>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, value: T) -> Unit) {
     for (rowIndex in rowIndices) {
@@ -14,7 +15,8 @@ inline fun <T> Grid<T>.forEachIndexed(action: (rowIndex: Int, colIndex: Int, val
 }
 
 /**
- * Performs the given [action] on each element and its point position in this grid.
+ * Performs the given [action] on each element and its point position in this grid, in row-major
+ * order.
  */
 inline fun <T> Grid<T>.forEachPointValue(action: (point: Point, value: T) -> Unit) {
     forEachIndexed { rowIndex, colIndex, value ->
@@ -51,6 +53,19 @@ inline fun <T, R> Grid<T>.mapPointValues(transform: (point: Point, value: T) -> 
  */
 inline fun <T, R> Grid<T>.mapRow(rowIndex: Int, transform: (value: T) -> R): List<R> =
     shallowRow(rowIndex).map(transform)
+
+/**
+ * Returns the point location of the first grid element (in row-major order) for which the
+ * [predicate] function returns `true`, or `null` if no element matches the predicate.
+ */
+inline fun <T> Grid<T>.pointOfFirst(predicate: (value: T) -> Boolean): Point? {
+    forEachIndexed { rowIndex, colIndex, value ->
+        if (predicate(value)) {
+            return Point.fromMatrixCoordinates(rowIndex, colIndex)
+        }
+    }
+    return null
+}
 
 /**
  * Returns the sum of the values given by applying the [transform] function to each row in the grid.

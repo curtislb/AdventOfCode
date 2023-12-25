@@ -437,3 +437,8 @@ include("year2023:day08:wasteland")
 include("year2023:day09:oasis")
 include("year2023:day09:part1")
 include("year2023:day09:part2")
+
+// Day 10: Pipe Maze
+include("year2023:day10:part1")
+include("year2023:day10:part2")
+include("year2023:day10:pipes")
