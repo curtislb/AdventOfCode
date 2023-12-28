@@ -442,3 +442,8 @@ include("year2023:day09:part2")
 include("year2023:day10:part1")
 include("year2023:day10:part2")
 include("year2023:day10:pipes")
+
+// Day 11: Cosmic Expansion
+include("year2023:day11:galaxies")
+include("year2023:day11:part1")
+include("year2023:day11:part2")
