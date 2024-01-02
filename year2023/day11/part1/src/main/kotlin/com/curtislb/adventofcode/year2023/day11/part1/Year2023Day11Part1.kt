@@ -125,7 +125,7 @@ is the sum of these lengths?
 
 package com.curtislb.adventofcode.year2023.day11.part1
 
-import com.curtislb.adventofcode.year2023.day11.galaxies.ExpandedUniverse
+import com.curtislb.adventofcode.year2023.day11.expansion.ExpandedUniverse
 import java.nio.file.Path
 import java.nio.file.Paths
 

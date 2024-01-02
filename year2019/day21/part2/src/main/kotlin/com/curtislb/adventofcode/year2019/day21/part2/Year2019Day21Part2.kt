@@ -22,21 +22,20 @@ does the springdroid now report?
 
 package com.curtislb.adventofcode.year2019.day21.part2
 
-import com.curtislb.adventofcode.year2019.day21.spring.Register.A
-import com.curtislb.adventofcode.year2019.day21.spring.Register.B
-import com.curtislb.adventofcode.year2019.day21.spring.Register.C
-import com.curtislb.adventofcode.year2019.day21.spring.Register.D
-import com.curtislb.adventofcode.year2019.day21.spring.Register.E
-import com.curtislb.adventofcode.year2019.day21.spring.Register.F
-import com.curtislb.adventofcode.year2019.day21.spring.Register.H
-import com.curtislb.adventofcode.year2019.day21.spring.Register.J
-import com.curtislb.adventofcode.year2019.day21.spring.Register.T
-import com.curtislb.adventofcode.year2019.day21.spring.SpringDroid
-import com.curtislb.adventofcode.year2019.day21.spring.SpringScript
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.A
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.B
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.C
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.D
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.E
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.F
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.H
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.J
+import com.curtislb.adventofcode.year2019.day21.springdroid.Register.T
+import com.curtislb.adventofcode.year2019.day21.springdroid.SpringDroid
+import com.curtislb.adventofcode.year2019.day21.springdroid.SpringScript
 import java.math.BigInteger
 import java.nio.file.Path
 import java.nio.file.Paths
-import kotlin.system.measureTimeMillis
 
 /**
  * Returns the solution to the puzzle for 2019, day 21, part 2.

@@ -121,7 +121,7 @@ include("year2019:day20:part2")
 // Day 21: Springdroid Adventure
 include("year2019:day21:part1")
 include("year2019:day21:part2")
-include("year2019:day21:spring")
+include("year2019:day21:springdroid")
 
 // Day 22: Slam Shuffle
 include("year2019:day22:part1")
@@ -444,6 +444,11 @@ include("year2023:day10:part2")
 include("year2023:day10:pipes")
 
 // Day 11: Cosmic Expansion
-include("year2023:day11:galaxies")
+include("year2023:day11:expansion")
 include("year2023:day11:part1")
 include("year2023:day11:part2")
+
+// Day 12: Hot Springs
+include("year2023:day12:part1")
+include("year2023:day12:part2")
+include("year2023:day12:spring")

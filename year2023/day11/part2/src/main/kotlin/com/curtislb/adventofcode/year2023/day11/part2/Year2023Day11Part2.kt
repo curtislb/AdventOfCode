@@ -18,7 +18,7 @@ the length of the shortest path between every pair of galaxies. What is the sum 
 
 package com.curtislb.adventofcode.year2023.day11.part2
 
-import com.curtislb.adventofcode.year2023.day11.galaxies.ExpandedUniverse
+import com.curtislb.adventofcode.year2023.day11.expansion.ExpandedUniverse
 import java.nio.file.Path
 import java.nio.file.Paths
 

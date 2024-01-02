@@ -17,7 +17,7 @@ dependencies {
     val junitPlatformVersion: String by properties
     val kotlinVersion: String by System.getProperties()
 
-    implementation(project(":year2019:day21:spring"))
+    implementation(project(":year2019:day21:springdroid"))
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
