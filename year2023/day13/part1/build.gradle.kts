@@ -8,7 +8,7 @@ plugins {
 }
 
 application {
-    mainClass.set("com.curtislb.adventofcode.year2023.day10.part1.Year2023Day10Part1Kt")
+    mainClass.set("com.curtislb.adventofcode.year2023.day13.part1.Year2023Day13Part1Kt")
 }
 
 dependencies {
@@ -16,7 +16,9 @@ dependencies {
     val junitJupiterVersion: String by properties
     val junitPlatformVersion: String by properties
 
-    implementation(project(":year2023:day10:pipes"))
+    implementation(project(":common:grid"))
+    implementation(project(":common:io"))
+    implementation(project(":year2023:day13:mirrors"))
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")

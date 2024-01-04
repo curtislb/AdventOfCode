@@ -16,32 +16,32 @@ import java.io.File
 class Almanac(private val categoryMaps: Map<String, CategoryMap>) {
     /**
      * Returns the list of values that result from converting the given input [values] from the
-     * specified [sourceCategory] to [destCategory].
+     * specified [sourceCategory] to [targetCategory].
      *
-     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [destCategory].
+     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [targetCategory].
      */
     fun convertValues(
         values: List<Long>,
         sourceCategory: String,
-        destCategory: String
+        targetCategory: String
     ): List<Long> {
-        return foldOverCategoryMaps(values, sourceCategory, destCategory) { result, categoryMap ->
+        return foldOverCategoryMaps(values, sourceCategory, targetCategory) { result, categoryMap ->
             categoryMap.convertValues(result)
         }
     }
 
     /**
      * Returns a list of value ranges that result from converting the given input [ranges] from the
-     * specified [sourceCategory] to [destCategory].
+     * specified [sourceCategory] to [targetCategory].
      *
-     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [destCategory].
+     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [targetCategory].
      */
     fun convertRanges(
         ranges: Set<LongRange>,
         sourceCategory: String,
-        destCategory: String
+        targetCategory: String
     ): Set<LongRange> {
-        return foldOverCategoryMaps(ranges, sourceCategory, destCategory) { result, categoryMap ->
+        return foldOverCategoryMaps(ranges, sourceCategory, targetCategory) { result, categoryMap ->
             categoryMap.convertRanges(result)
         }
     }
@@ -49,23 +49,23 @@ class Almanac(private val categoryMaps: Map<String, CategoryMap>) {
     /**
      * Returns the result of applying the specified [operation] to an [initial] value and subsequent
      * result values for each category map in the almanac that can be used (in order) to map values
-     * from [sourceCategory] to [destCategory].
+     * from [sourceCategory] to [targetCategory].
      *
-     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [destCategory].
+     * @throws IllegalArgumentException If [sourceCategory] can't be converted to [targetCategory].
      */
     private inline fun <T> foldOverCategoryMaps(
         initial: T,
         sourceCategory: String,
-        destCategory: String,
+        targetCategory: String,
         operation: (result: T, categoryMap: CategoryMap) -> T
     ): T {
         var result = initial
         var category = sourceCategory
-        while (category != destCategory) {
+        while (category != targetCategory) {
             val categoryMap = categoryMaps[category]
             require(categoryMap != null) { "No map for category: $category" }
             result = operation(result, categoryMap)
-            category = categoryMap.destCategory
+            category = categoryMap.targetCategory
         }
         return result
     }

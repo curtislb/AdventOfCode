@@ -30,9 +30,6 @@ class BoatRace(private val time: Long, private val distance: Long) {
         val ceilTime = ceil(roots.second).toLong()
         val maxHoldTime = if (isWinningHoldTime(ceilTime)) ceilTime else ceilTime - 1
 
-        println("BoatRace(time = $time, distance = $distance)")
-        println("minHoldTime = $minHoldTime, maxHoldTime = $maxHoldTime")
-
         return maxHoldTime - minHoldTime + 1L
     }
 

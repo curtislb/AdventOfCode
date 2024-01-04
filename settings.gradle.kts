@@ -452,3 +452,8 @@ include("year2023:day11:part2")
 include("year2023:day12:part1")
 include("year2023:day12:part2")
 include("year2023:day12:spring")
+
+// Day 13: Point of Incidence
+include("year2023:day13:mirrors")
+include("year2023:day13:part1")
+include("year2023:day13:part2")

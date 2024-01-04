@@ -7,16 +7,16 @@ import com.curtislb.adventofcode.common.range.size
  * A map that provides rules converting values of one category to new values of another category.
  *
  * @property sourceCategory The category of values that can be converted by this map.
- * @property destCategory The category of new values that are produced by this map.
- * @property mappedRanges A list of pairs, where each pair `(sourceValues, destValues)` defines a
- *  range of `sourceValues` that are mapped to corresponding `destValues`.
+ * @property targetCategory The category of new values that are produced by this map.
+ * @property mappedRanges A list of pairs, where each pair `(sourceValues, targetValues)` defines a
+ *  range of `sourceValues` that are mapped to corresponding `targetValues`.
  *
  * @constructor Creates a new instance of [CategoryMap] with the given [sourceCategory],
- *  [destCategory], and [mappedRanges].
+ *  [targetCategory], and [mappedRanges].
  */
 class CategoryMap(
     val sourceCategory: String,
-    val destCategory: String,
+    val targetCategory: String,
     private val mappedRanges: List<Pair<LongRange, LongRange>>
 ) {
     init {
@@ -29,14 +29,14 @@ class CategoryMap(
 
     /**
      * Returns the values that result from converting the given [values] from [sourceCategory] to
-     * [destCategory].
+     * [targetCategory].
      */
     fun convertValues(values: List<Long>): List<Long> {
         val convertedValues = values.toMutableList()
         convertedValues.forEachIndexed { index, value ->
-            for ((sourceRange, destRange) in mappedRanges) {
+            for ((sourceRange, targetRange) in mappedRanges) {
                 if (value in sourceRange) {
-                    convertedValues[index] = value + destRange.first - sourceRange.first
+                    convertedValues[index] = value + targetRange.first - sourceRange.first
                     break
                 }
             }
@@ -46,7 +46,7 @@ class CategoryMap(
 
     /**
      * Returns the value ranges that result from converting the given value [ranges] from
-     * [sourceCategory] to [destCategory].
+     * [sourceCategory] to [targetCategory].
      */
     fun convertRanges(ranges: Set<LongRange>): Set<LongRange> {
         val convertedRanges = mutableSetOf<LongRange>()
@@ -71,9 +71,9 @@ class CategoryMap(
     }
 
     override fun toString(): String = buildString {
-        appendLine("$sourceCategory-to-$destCategory map:")
-        for ((sourceRange, destRange) in mappedRanges) {
-            appendLine("${destRange.first} ${sourceRange.first} ${sourceRange.size()}")
+        appendLine("$sourceCategory-to-$targetCategory map:")
+        for ((sourceRange, targetRange) in mappedRanges) {
+            appendLine("${targetRange.first} ${sourceRange.first} ${sourceRange.size()}")
         }
     }
 
@@ -86,19 +86,19 @@ class CategoryMap(
         mappedRange: Pair<LongRange, LongRange>
     ): List<LongRange> {
         // Find overlap between range and the mapped source range
-        val (sourceRange, destRange) = mappedRange
+        val (sourceRange, targetRange) = mappedRange
         val sourceOverlap = range overlap sourceRange
         if (sourceOverlap.isEmpty()) {
             return listOf(range)
         }
 
         // Create new ranges with overlapping values mapped to their destination
-        val destOverlapStart = destRange.first + (sourceOverlap.first - sourceRange.first)
-        val destOverlapEnd = destRange.last - (sourceRange.last - sourceOverlap.last)
+        val targetOverlapStart = targetRange.first + (sourceOverlap.first - sourceRange.first)
+        val targetOverlapEnd = targetRange.last - (sourceRange.last - sourceOverlap.last)
         val newRanges = listOf(
             range.first..<sourceOverlap.first,
             (sourceOverlap.last + 1)..range.last,
-            destOverlapStart..destOverlapEnd
+            targetOverlapStart..targetOverlapEnd
         )
 
         // Remove empty ranges from the output
@@ -107,7 +107,7 @@ class CategoryMap(
 
     companion object {
         /**
-         * A regex used to parse the source and dest categories of a category map from its title.
+         * A regex used to parse the source and target categories of a category map from its title.
          */
         private val TITLE_REGEX = Regex("""(\w+)-to-(\w+) map:""")
 
@@ -117,13 +117,13 @@ class CategoryMap(
         private val MAPPING_REGEX = Regex("""\s*(\d+)\s+(\d+)\s+(\d+)\s*""")
 
         /**
-         * Returns a [CategoryMap] with [sourceCategory], [destCategory], and [mappedRanges] read
+         * Returns a [CategoryMap] with [sourceCategory], [targetCategory], and [mappedRanges] read
          * from the given [lines] of text.
          *
          * The [lines] must have the following format:
          *
          * ```
-         * $sourceCategory-to-$destCategory map:
+         * $sourceCategory-to-$targetCategory map:
          * $dst1 $src1 $len1
          * $dst2 $src2 $len2
          * ...
@@ -138,10 +138,10 @@ class CategoryMap(
         fun fromLines(lines: List<String>): CategoryMap {
             require(lines.isNotEmpty()) { "Lines list must be non-empty" }
 
-            // Read the source and dest category from the first line
+            // Read the source and target category from the first line
             val titleMatchResult = TITLE_REGEX.matchEntire(lines[0])
             require(titleMatchResult != null) { "Malformed category map title: ${lines[0]}" }
-            val (sourceCategory, destCategory) = titleMatchResult.destructured
+            val (sourceCategory, targetCategory) = titleMatchResult.destructured
 
             // Read all mapped ranges from subsequent lines
             val mappedRanges = mutableListOf<Pair<LongRange, LongRange>>()
@@ -150,16 +150,16 @@ class CategoryMap(
                 require(mappingMatchResult != null) { "Malformed mapping entry: ${lines[index]}" }
 
                 // Convert start + length representation to ranges
-                val (destString, sourceString, sizeString) = mappingMatchResult.destructured
+                val (targetString, sourceString, sizeString) = mappingMatchResult.destructured
                 val sourceStart = sourceString.toLong()
-                val destStart = destString.toLong()
+                val targetStart = targetString.toLong()
                 val rangeSize = sizeString.toLong()
                 val sourceRange = sourceStart..<(sourceStart + rangeSize)
-                val destRange = destStart..<(destStart + rangeSize)
-                mappedRanges.add(sourceRange to destRange)
+                val targetRange = targetStart..<(targetStart + rangeSize)
+                mappedRanges.add(sourceRange to targetRange)
             }
 
-            return CategoryMap(sourceCategory, destCategory, mappedRanges)
+            return CategoryMap(sourceCategory, targetCategory, mappedRanges)
         }
     }
 }
