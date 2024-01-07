@@ -2,9 +2,8 @@ package com.curtislb.adventofcode.year2023.day10.pipes
 
 import com.curtislb.adventofcode.common.geometry.Point
 import com.curtislb.adventofcode.common.grid.Grid
+import com.curtislb.adventofcode.common.grid.mutableGridOf
 import com.curtislb.adventofcode.common.grid.pointOfFirst
-import com.curtislb.adventofcode.common.grid.toGrid
-import com.curtislb.adventofcode.common.io.mapLines
 import java.io.File
 
 /**
@@ -79,10 +78,12 @@ class PipeMaze(private val grid: Grid<Tile>) {
          * @throws IllegalArgumentException If [file] has the wrong format.
          */
         fun fromFile(file: File): PipeMaze {
-            val rows = file.mapLines { line ->
-                line.map { Tile.fromChar(it) }
+            val grid = mutableGridOf<Tile>()
+            file.forEachLine { line ->
+                val row = line.map { Tile.fromChar(it) }
+                grid.addShallowRow(row)
             }
-            return PipeMaze(rows.toGrid())
+            return PipeMaze(grid)
         }
     }
 }

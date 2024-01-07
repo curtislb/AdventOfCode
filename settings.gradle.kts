@@ -457,3 +457,8 @@ include("year2023:day12:spring")
 include("year2023:day13:mirrors")
 include("year2023:day13:part1")
 include("year2023:day13:part2")
+
+// Day 14: Parabolic Reflector Dish
+include("year2023:day14:dish")
+include("year2023:day14:part1")
+include("year2023:day14:part2")

@@ -66,7 +66,7 @@ enum class Tile(val symbol: Char, val directions: List<Direction>) {
          * @throws IllegalArgumentException If [char] has no corresponding [Tile].
          */
         fun fromChar(char: Char): Tile =
-            entries.find { it.symbol == char }
+            entries.firstOrNull { it.symbol == char }
                 ?: throw IllegalArgumentException("Invalid symbol character: $char")
     }
 }
