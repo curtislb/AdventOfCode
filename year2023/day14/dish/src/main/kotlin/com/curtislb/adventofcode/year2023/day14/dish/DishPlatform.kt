@@ -25,7 +25,7 @@ class DishPlatform(initialGrid: Grid<Rock>) {
      *
      * The total load is given by adding together the loads contributed by all [Rock.ROUND] rocks on
      * the platform. The load for each rock is equal to the height of the grid minus the index of
-     * the row in which the rock is located (starting from the top row with an index of 0).
+     * the row in which the rock is located (starting from index 0 for the top row).
      */
     fun findNorthBeamLoad(): Int = grid.shallowRows().withIndex().sumOf { (rowIndex, row) ->
         (grid.height - rowIndex) * row.count { it == Rock.ROUND }

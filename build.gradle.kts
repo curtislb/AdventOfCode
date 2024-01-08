@@ -297,4 +297,7 @@ dependencies {
     kover(project(":year2023:day14:dish"))
     kover(project(":year2023:day14:part1"))
     kover(project(":year2023:day14:part2"))
+    kover(project(":year2023:day15:hash"))
+    kover(project(":year2023:day15:part1"))
+    kover(project(":year2023:day15:part2"))
 }

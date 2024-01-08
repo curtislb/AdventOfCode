@@ -462,3 +462,8 @@ include("year2023:day13:part2")
 include("year2023:day14:dish")
 include("year2023:day14:part1")
 include("year2023:day14:part2")
+
+// Day 15: Lens Library
+include("year2023:day15:hash")
+include("year2023:day15:part1")
+include("year2023:day15:part2")
