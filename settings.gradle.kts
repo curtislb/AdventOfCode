@@ -467,3 +467,8 @@ include("year2023:day14:part2")
 include("year2023:day15:hash")
 include("year2023:day15:part1")
 include("year2023:day15:part2")
+
+// Day 16: The Floor Will Be Lava
+include("year2023:day16:beam")
+include("year2023:day16:part1")
+include("year2023:day16:part2")

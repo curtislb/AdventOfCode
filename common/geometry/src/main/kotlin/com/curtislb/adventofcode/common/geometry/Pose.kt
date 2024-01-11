@@ -19,9 +19,15 @@ data class Pose(val position: Point, val direction: Direction) {
      * Note that [distance] is *not* the same as the Euclidean distance, as diagonally adjacent
      * positions are considered to have a [distance] of 1.
      */
-    fun move(moveDirection: Direction = direction, distance: Int = 1): Pose {
-        return Pose(position.move(moveDirection, distance), direction)
-    }
+    fun move(moveDirection: Direction = direction, distance: Int = 1): Pose =
+        Pose(position.move(moveDirection, distance), direction)
+
+    /**
+     * Returns the pose given by turning the actor to face a specified [newDirection] and then
+     * moving the actor [distance] grid units in that direction.
+     */
+    fun turnAndMove(newDirection: Direction, distance: Int = 1): Pose =
+        Pose(position.move(newDirection, distance), newDirection)
 
     /**
      * Returns the pose given by turning the actor 180 degrees.

@@ -300,4 +300,7 @@ dependencies {
     kover(project(":year2023:day15:hash"))
     kover(project(":year2023:day15:part1"))
     kover(project(":year2023:day15:part2"))
+    kover(project(":year2023:day16:beam"))
+    kover(project(":year2023:day16:part1"))
+    kover(project(":year2023:day16:part2"))
 }

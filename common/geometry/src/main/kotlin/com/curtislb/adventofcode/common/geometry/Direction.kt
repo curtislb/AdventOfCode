@@ -49,6 +49,16 @@ enum class Direction(private val clockwiseIndex: Int) {
     UP_LEFT(clockwiseIndex = 7);
 
     /**
+     * Returns `true` if the direction is horizontal.
+     */
+    fun isHorizontal(): Boolean = this == RIGHT || this == LEFT
+
+    /**
+     * Returns `true` if the direction is vertical.
+     */
+    fun isVertical(): Boolean = this == UP || this == DOWN
+
+    /**
      * Returns the direction given by turning 180 degrees from this one.
      */
     fun reverse(): Direction =

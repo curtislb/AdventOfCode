@@ -3,6 +3,21 @@ package com.curtislb.adventofcode.common.grid
 import com.curtislb.adventofcode.common.geometry.Point
 
 /**
+ * Returns the number of elements in the grid for which the [predicate] function returns `true`.
+ */
+inline fun <T> Grid<T>.count(predicate: (value: T) -> Boolean): Int {
+    var count = 0
+    for (rowIndex in rowIndices) {
+        for (colIndex in columnIndices) {
+            if (predicate(this[rowIndex, colIndex])) {
+                count++
+            }
+        }
+    }
+    return count
+}
+
+/**
  * Performs the given [action] on each element and its row and column indices in this grid, in
  * row-major order.
  */
