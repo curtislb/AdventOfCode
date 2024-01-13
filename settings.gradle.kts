@@ -472,3 +472,8 @@ include("year2023:day15:part2")
 include("year2023:day16:beam")
 include("year2023:day16:part1")
 include("year2023:day16:part2")
+
+// Day 17: Clumsy Crucible
+include("year2023:day17:crucible")
+include("year2023:day17:part1")
+include("year2023:day17:part2")
