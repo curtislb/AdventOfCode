@@ -59,6 +59,14 @@ enum class Direction(private val clockwiseIndex: Int) {
     fun isVertical(): Boolean = this == UP || this == DOWN
 
     /**
+     * Returns `true` if the direction is diagonal.
+     */
+    fun isDiagonal(): Boolean = when (this) {
+        UP, RIGHT, DOWN, LEFT -> false
+        UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT -> true
+    }
+
+    /**
      * Returns the direction given by turning 180 degrees from this one.
      */
     fun reverse(): Direction =

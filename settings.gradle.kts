@@ -477,3 +477,8 @@ include("year2023:day16:part2")
 include("year2023:day17:crucible")
 include("year2023:day17:part1")
 include("year2023:day17:part2")
+
+// Day 18: Lavaduct Lagoon
+include("year2023:day18:dig")
+include("year2023:day18:part1")
+include("year2023:day18:part2")
