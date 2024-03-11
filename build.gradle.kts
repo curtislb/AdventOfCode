@@ -309,4 +309,7 @@ dependencies {
     kover(project(":year2023:day18:dig"))
     kover(project(":year2023:day18:part1"))
     kover(project(":year2023:day18:part2"))
+    kover(project(":year2023:day19:part1"))
+    kover(project(":year2023:day19:part2"))
+    kover(project(":year2023:day19:workflow"))
 }

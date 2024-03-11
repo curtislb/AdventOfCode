@@ -482,3 +482,8 @@ include("year2023:day17:part2")
 include("year2023:day18:dig")
 include("year2023:day18:part1")
 include("year2023:day18:part2")
+
+// Day 19: Aplenty
+include("year2023:day19:part1")
+include("year2023:day19:part2")
+include("year2023:day19:workflow")
