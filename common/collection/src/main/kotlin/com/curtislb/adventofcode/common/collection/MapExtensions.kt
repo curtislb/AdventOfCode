@@ -2,15 +2,10 @@ package com.curtislb.adventofcode.common.collection
 
 /**
  * Returns a map with `(key, value)` entry pairs given by applying the [transform] function to each
- * element in this iterable.
+ * element in the collection.
  */
-inline fun <E, K, V> Iterable<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> {
-    val map = mutableMapOf<K, V>()
-    for (item in this) {
-        map += transform(item)
-    }
-    return map
-}
+inline fun <E, K, V> Iterable<E>.mapToMap(transform: (item: E) -> Pair<K, V>): Map<K, V> =
+    mapToMutableMap(transform)
 
 /**
  * Returns a map with `(key, value)` entry pairs given by applying the [transform] function to each
@@ -20,6 +15,20 @@ inline fun <K, V, A, B> Map<K, V>.mapToMap(
     transform: (entry: Map.Entry<K, V>) -> Pair<A, B>
 ): Map<A, B> {
     return entries.mapToMap(transform)
+}
+
+/**
+ * Returns a mutable map with `(key, value)` entry pairs given by applying the [transform] function
+ * to each element in the collection.
+ */
+inline fun <E, K, V> Iterable<E>.mapToMutableMap(
+    transform: (item: E) -> Pair<K, V>
+): MutableMap<K, V> {
+    val map = mutableMapOf<K, V>()
+    for (item in this) {
+        map += transform(item)
+    }
+    return map
 }
 
 /**

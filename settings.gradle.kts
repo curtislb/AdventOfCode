@@ -487,3 +487,8 @@ include("year2023:day18:part2")
 include("year2023:day19:part1")
 include("year2023:day19:part2")
 include("year2023:day19:workflow")
+
+// Day 20: Pulse Propagation
+include("year2023:day20:part1")
+include("year2023:day20:part2")
+include("year2023:day20:pulse")

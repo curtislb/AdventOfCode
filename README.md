@@ -14,7 +14,7 @@ includes:
 * [Advent of Code 2019][aoc-2019-link] (Days 1-25)
 * [Advent of Code 2020][aoc-2020-link] (Days 1-25)
 * [Advent of Code 2021][aoc-2021-link] (Days 1-25)
-* [Advent of Code 2023][aoc-2023-link] (Days 1-19)
+* [Advent of Code 2023][aoc-2023-link] (Days 1-20)
 
 ## Getting Started
 
