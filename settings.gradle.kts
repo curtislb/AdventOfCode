@@ -492,3 +492,8 @@ include("year2023:day19:workflow")
 include("year2023:day20:part1")
 include("year2023:day20:part2")
 include("year2023:day20:pulse")
+
+// Day 21: Step Counter
+include("year2023:day21:garden")
+include("year2023:day21:part1")
+include("year2023:day21:part2")

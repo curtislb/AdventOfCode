@@ -85,6 +85,11 @@ private fun takeLargestPowers(
 }
 
 /**
+ * Returns the result of "rounding down" this number (toward zero) to the nearest multiple of [n].
+ */
+fun Long.floorToMultipleOf(n: Long): Long = this - (this % n)
+
+/**
  * Returns the least positive integer greater than [n] that is a multiple of this one.
  *
  * @throws IllegalArgumentException If this number is negative or 0, or if [n] is negative.
