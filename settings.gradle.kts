@@ -497,3 +497,8 @@ include("year2023:day20:pulse")
 include("year2023:day21:garden")
 include("year2023:day21:part1")
 include("year2023:day21:part2")
+
+// Day 22: Sand Slabs
+include("year2023:day22:bricks")
+include("year2023:day22:part1")
+include("year2023:day22:part2")
