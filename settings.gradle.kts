@@ -502,3 +502,8 @@ include("year2023:day21:part2")
 include("year2023:day22:bricks")
 include("year2023:day22:part1")
 include("year2023:day22:part2")
+
+// Day 23: A Long Walk
+include("year2023:day23:hike")
+include("year2023:day23:part1")
+include("year2023:day23:part2")

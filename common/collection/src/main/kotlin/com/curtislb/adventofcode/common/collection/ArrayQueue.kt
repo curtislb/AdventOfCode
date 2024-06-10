@@ -40,7 +40,7 @@ class ArrayQueue<E> : Collection<E> {
 }
 
 /**
- * Returns a new instance of [ArrayQueue] with the specified [elements] in FIFO order.
+ * Returns a new instance of [ArrayQueue] with the given [elements] in FIFO order.
  */
 fun <T> arrayQueueOf(vararg elements: T): ArrayQueue<T> = ArrayQueue<T>().apply {
     for (element in elements) {

@@ -34,8 +34,8 @@ abstract class WeightedGraph<V> {
         heuristic: (node: V) -> Long,
         isGoal: (node: V) -> Boolean
     ): Long? {
-        val distanceMap = mutableMapOf(source to 0L)
         val nodeHeap = MinimumHeap<V>().apply { addOrDecreaseKey(source, heuristic(source)) }
+        val distanceMap = mutableMapOf(source to 0L)
         while (!nodeHeap.isEmpty()) {
             // Check the next node with the lowest f-score
             val (node, _) = nodeHeap.popMinimum()
@@ -49,8 +49,8 @@ abstract class WeightedGraph<V> {
                 val oldDistance = distanceMap[edge.node]
                 val newDistance = distance + edge.weight
                 if (oldDistance == null || oldDistance > newDistance) {
-                    distanceMap[edge.node] = newDistance
                     nodeHeap.addOrDecreaseKey(edge.node, newDistance + heuristic(edge.node))
+                    distanceMap[edge.node] = newDistance
                 }
             }
         }
@@ -66,8 +66,8 @@ abstract class WeightedGraph<V> {
      * If there is no path from [source] to any goal node, this function instead returns `null`.
      */
     fun dijkstraDistance(source: V, isGoal: (node: V) -> Boolean): Long? {
-        val visited = mutableSetOf<V>()
         val nodeHeap = MinimumHeap<V>().apply { addOrDecreaseKey(source, 0L) }
+        val visited = mutableSetOf<V>()
         while (!nodeHeap.isEmpty()) {
             // Check the next node with the shortest distance
             val (node, distance) = nodeHeap.popMinimum()
@@ -77,14 +77,18 @@ abstract class WeightedGraph<V> {
 
             visited.add(node)
 
-            // Update the shortest known distance to each unvisited neighbor
-            for (edge in getEdges(node)) {
-                if (edge.node !in visited) {
-                    val oldDistance = nodeHeap[edge.node]
-                    val newDistance = distance + edge.weight
-                    if (oldDistance == null || oldDistance > newDistance) {
-                        nodeHeap.addOrDecreaseKey(edge.node, newDistance)
-                    }
+            // Process edges from this node and update distances to neighbors
+            for ((neighbor, edgeWeight) in getEdges(node)) {
+                // Don't re-add a previously visited node
+                if (neighbor in visited) {
+                    continue
+                }
+
+                // Update the shortest known distance if needed
+                val oldDistance = nodeHeap[neighbor]
+                val newDistance = distance + edgeWeight
+                if (oldDistance == null || oldDistance > newDistance) {
+                    nodeHeap.addOrDecreaseKey(neighbor, newDistance)
                 }
             }
         }

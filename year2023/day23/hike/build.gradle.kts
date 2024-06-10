@@ -11,9 +11,9 @@ dependencies {
     val junitJupiterVersion: String by properties
     val junitPlatformVersion: String by properties
 
+    api(project(":common:grid"))
     implementation(project(":common:collection"))
-    implementation(project(":common:heap"))
-    testImplementation(project(":common:testing"))
+    implementation(project(":common:geometry"))
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")

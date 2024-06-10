@@ -1,5 +1,7 @@
 package com.curtislb.adventofcode.common.graph
 
+import com.curtislb.adventofcode.common.collection.arrayQueueOf
+
 /**
  * A graph consisting of unique nodes of type [V], connected by directed edges.
  */
@@ -17,26 +19,21 @@ abstract class UnweightedGraph<V> {
      * or until [process] returns `true`, indicating that the search should be terminated early.
      */
     fun bfsApply(source: V, process: (node: V, distance: Long) -> Boolean) {
-        val searchQueue = ArrayDeque<Pair<V, Long>>().apply { addLast(Pair(source, 0L)) }
-        val visited = mutableSetOf<V>()
-        while (searchQueue.isNotEmpty()) {
-            val (node, distance) = searchQueue.removeFirst()
-
-            // Ignore this node if it was previously visited
-            if (node in visited) {
-                continue
-            }
-
-            // Process this node, terminating the search if necessary
+        val nodeQueue = arrayQueueOf(source)
+        val distanceMap = mutableMapOf(source to 0L)
+        while (nodeQueue.isNotEmpty()) {
+            // Dequeue and process the next node, terminating if necessary
+            val node = nodeQueue.poll()
+            val distance = distanceMap[node]!!
             if (process(node, distance)) {
                 return
             }
 
-            // Enqueue all unvisited neighboring nodes with distances
-            visited.add(node)
+            // Enqueue all new neighboring nodes, and set their distances
             for (neighbor in getNeighbors(node)) {
-                if (neighbor !in visited) {
-                    searchQueue.addLast(Pair(neighbor, distance + 1L))
+                if (neighbor !in distanceMap) {
+                    nodeQueue.offer(neighbor)
+                    distanceMap[neighbor] = distance + 1L
                 }
             }
         }

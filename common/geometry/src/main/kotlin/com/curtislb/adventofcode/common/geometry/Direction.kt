@@ -101,10 +101,10 @@ enum class Direction(private val clockwiseIndex: Int) {
          * @throws IllegalArgumentException If [char] has no corresponding direction.
          */
         fun fromChar(char: Char): Direction = when (char) {
-            'U', 'u' -> UP
-            'R', 'r' -> RIGHT
-            'D', 'd' -> DOWN
-            'L', 'l' -> LEFT
+            'U', 'u', '^' -> UP
+            'R', 'r', '>' -> RIGHT
+            'D', 'd', 'v' -> DOWN
+            'L', 'l', '<' -> LEFT
             else -> throw IllegalArgumentException("No direction for char: $char")
         }
     }
